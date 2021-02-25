@@ -1,0 +1,78 @@
+OceanBasinQ,StudyID,CiteYear,YearRange,YearEnd,LocatName,LocatSpan, LocatLatitude,LocatLongitude,pred_life
+Mediterranean,Bello1999,1999,1992,1992,SW Adriatic,"Adriatic Sea, near Mola & Monopoli, Italy",41.096462,17.512247,juvenile
+Mediterranean,Bello1999,1999,1994,1994,SW Adriatic,"Adriatic Sea, near Mola & Monopoli, Italy",41.2,17.512247,juvenile
+Mediterranean,Catalan2007,2007,1996,1996,Mallorca Island,SW Mallorcan (Balearic Islands) shelf slope,39.5615,3.6,larvae
+Mediterranean,Consoli2008,2008,2005–06,2006,Central Mediterranean Sea,NE coast of Sicily,38.744181,15.059509,"juvenile, adult"
+Mediterranean,Goni2011,2011,2005,2005,Balearic,Balearic Sea,40.158082,5,juvenile
+Mediterranean,Goni2011,2011,2006,2006,S Adriatic,South Adriatic Sea,41.824403,16.766758,juvenile
+Mediterranean,Goni2011,2011,2008,2008,Tyrrhenian,"Tyrrhenian sea, large span",40.658373,11.445351,"juvenile, adult"
+Mediterranean,Monaco1888,1888,1888,1888,NA,NA,34.061761,19.209595,adult
+Mediterranean,Romeo2012,2012,2002–08,2008,central Mediterranean Sea,S. Tyrrhenian sea and Strait of Messina,38.6,15,juvenile
+Mediterranean,Salman&Karakulak2009,2009,2007,2007,Antalya Bay (Levantine Sea),Antalya Bay (Levantine Sea),36.5,31.5,juvenile
+NE Atlantic,Aloncle1973,1973,1968–71,1971,NE Atlantic,"36˚N to 51˚N, Spain, France, Azores, NE Atlantic",44.632016,-5.5,"juvenile, adult"
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1928,1928,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1929,1929,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1930,1930,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1931,1931,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1932,1932,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Bouxin&Legendre,1934; 1936; 1940,1933,1933,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",48,10,adult
+NE Atlantic,Goni2011,2011,2004,2004,Bay of Biscay (Zone 2),Bay of Biscay,47.8,-10,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2005,2005,Bay of Biscay (Zone 1),Bay of Biscay,48,-13,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2005,2005,Bay of Biscay (Zone 2),Bay of Biscay,47.8,-10,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2005,2005,Bay of Biscay (Zone 3),Bay of Biscay,46.7,-5.6,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2005,2005,Bay of Biscay (Zone 5),Bay of Biscay,44,-2.7,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2006,2006,Bay of Biscay (Zone 2),Bay of Biscay,47.8,-10,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2006,2006,Bay of Biscay (Zone 3),Bay of Biscay,46.7,-5.6,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2006,2006,Bay of Biscay (Zone 4),Bay of Biscay,45.4,-3.5,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2006,2006,Bay of Biscay (Zone 5),Bay of Biscay,44,-2.7,"juvenile, adult"
+NE Atlantic,Goni2011,2011,2007,2007,Bay of Biscay (Zone 5),Bay of Biscay,44,-2.7,"juvenile, adult"
+NE Atlantic,Joubin1918,1918,1918,1918,Golfe de Gascogne,Large array Golfe de Gascogne,46.307336,-12.25,adult
+NE Atlantic,OrtizZarate1987,1987,1968,1968,Bay of Biscay,Bay of Biscay,46.986108,-5.407589,"juvenile, adult"
+NE Atlantic,Pusineri2005,2005,1993,1993,Bay of Biscay,NW Bay of Biscay,45,-17.5,juvenile
+NE Indian,Uotani1981,1981,1977–78,1978,"NW Australia, Indianc Ocean","Indian Ocean, N of Exmouth to Dampier Peninsula, S of Indonesia",-15,117.5,larvae
+NE Indian,Young&Davis1990,1990,1987,1987,"NE Indian, 16°30'S, 115°50'E","NE Indian Ocean, N of Port Headland",-16.5,115.833333,larvae
+NE Pacific,Bernard1985,1985,1983,1983,"USA, CA, southern CA, 33 59' to 36 44' N and 122 19' to 122 30' W",CA-S,35.358333,-121.9083335,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,A,Cape Mendocino south-Point Arguello,38,126,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,A-B,"Cape Mendocino south-Point Arguello, Point Arguello- Mexican border",36.046601,-123.6211254,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,A-B-C,"Cape Mendocino south-Point Arguello,  Point Arguello- Mexican border, South Mexican Border-Point San Eugenio",32.5,-121.835632,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,B,Point Arguello- Mexican border,33.5,-121.835632,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,B-C,"Point Arguello- Mexican border, South Mexican Border-Point San Eugenio",31.5,-119.5,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,C,South Mexican Border-Point San Eugenio,30,-120,juvenile
+NE Pacific,Clemens&Iselin1963,1963,1955–61,1961,D,South of Point Eugenio,26,-115,juvenile
+NE Pacific,Glaser2015,2015,2005–06,2006,"Mexico to Canada, northern Baja California to Vancouver Island",span Canada to Mexico,42,-128.992307,"juvenile, adult"
+NE Pacific,Hart1948,1948,1941,1941,Vancouver Island,"Vancouver Island, large span",49.117928,-127.546089,juvenile
+NE Pacific,Hart1948,1948,1941,1941,Washington Coast,"Washington Coast, large span",47.046499,-124.79124,juvenile
+NE Pacific,Hart1948,1948,1945,1945,Washington Coast,"Washington Coast, large span",47.046499,-124.79124,juvenile
+NE Pacific,Hart1948,1948,1946,1946,Vancouver Island,"Vancouver Island, large span",49.117928,-127.546089,juvenile
+NE Pacific,Hart1948,1948,1946,1946,Washington Coast,"Washington Coast, large span",47.046499,-124.79124,juvenile
+NE Pacific,Hart1948,1948,1947,1947,Deck Collection Washington Coast,"Washington Coast, large span",47.046499,-124.79124,juvenile
+NE Pacific,Hart1948,1948,1947,1947,Washington Coast,"Washington Coast, large span",47.046499,-124.79124,juvenile
+NE Pacific,Iversen1962,1962,1950–57,1957,NE Pacific,"Hawaii, Marquesas, CA-N to Mexico",15,-150,juvenile
+NE Pacific,Jordan1880,1880,1880,1880,"C Cal, Santa Barbara Channel","C Cal, Santa Barbara Channel",34.345859,-119.723274,juvenile
+NE Pacific,Madigan2015,2015,2008–10,2010,Mexico to California,"span Mexico to California, large study area",34.633208,-124.292542,juvenile
+NE Pacific,McHugh1952,1952,1949,1949,"Mexico to USA, Baja to northern California",CA-N to Mexico,32.5,-121,juvenile
+NE Pacific,Pinkas1971,1971,1968,1968,Central California (Region 2),Central California,35.28333333,-122,"juvenile, adult"
+NE Pacific,Pinkas1971,1971,1968,1968,Oregon-Washington (Region 3),Oregon-Washington,45,-126,"juvenile, adult"
+NE Pacific,Pinkas1971,1971,1968,1968,Southern California (Region 1),Southern California,32,-119.5,"juvenile, adult"
+NE Pacific,Pinkas1971,1971,1969,1969,Oregon-Washington (Region 3),Oregon-Washington,45,-126,"juvenile, adult"
+NE Pacific,Pinkas1971,1971,1969,1969,Southern California (Region 1),Southern California,32,-119.5,"juvenile, adult"
+NW Atlantic,Logan2013,2013,2001–02,2002,North Atlantic,"Central & West North Atlantic, large, Longline sets extended from 35N to 43N in June–July, 2001and from 23N to 36N in May–June, 2002",29.5,-70,adult
+NW Atlantic,Matthews1977,1977,1957–64,1964,NW Atlantic,"NW Atlantic, large span",38,-56,adult
+NW Atlantic,Teffer2015,2015,2007–10,2010,Cape Cod and the Islands of Massachusetts,Cape Cod and the Islands of Massachusetts,41.475596,-70.285034,adult
+NW Indian ,Romanov2020,2020,2001-2015,2015,Indian Monsoon Gyre Province,,-8,57,adult
+NW Pacific,Watanabe-etal2004,2004,2001,2001,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",40,163,juvenile
+NW Pacific,Watanabe-etal2004,2004,2002,2002,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,juvenile
+SE Atlantic,Romanov2020,2020,2013-14,2014,"Atlantic Ocean off Cape Town, South Africa",,-35,18,adult
+SE Atlantic,Romanov2020,2020,2013–14,2014,"Atlantic Ocean off Cape Town, South Africa",,-32,35,adult
+SW Atlantic,DosSantos&Haimovici2002,2002,1980–1998,1998,Southern Brazil,Southern Brazil,-30,-47.035828,NA
+SW Indian ,Romanov2020,2020,2003-14,2014,"Indian South Subtropical Gyre Province, Reunion Island",,-19,53,adult
+SW Indian ,Romanov2020,2020,2003-14,2014,"Mozambique Channel, Madagascar",,-18,48,adult
+SW Pacific,Williams2015,2015,2008,2008,New Zealand,SW New Zealand,-42.5,170,"juvenile, adult"
+SW Pacific,Williams2015,2015,2009,2009,New Zealand,SW New Zealand,-42.5,170,"juvenile, adult"
+SW Pacific,Williams2015,2015,2010,2010,New Caledonia,New Caledonia,-19,168,"juvenile, adult"
+SW Pacific,Williams2015,2015,2010,2010,New Zealand,NE New Zealand,-40,178,"juvenile, adult"
+SW Pacific,Williams2015,2015,2010,2010,New Zealand,NE New Zealand L,-40,178,"juvenile, adult"
+SW Pacific,Williams2015,2015,2010,2010,New Zealand,NE New Zealand T,-40,178,"juvenile, adult"
+SW Pacific,Williams2015,2015,2010,2010,Tonga,Tonga,-20,-175.093115,"juvenile, adult"
+SW Pacific,Young2010,2010,2004–06,2006,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,-31,160,adult
+SW Pacific,Young2010,2010,2004–06,2006,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,-30,160,"juvenile, adult"

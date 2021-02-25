@@ -1,0 +1,80 @@
+OceanBasinQ,YearEnd,StudyID,LocatName,LocatSpan,pred_life,LocatLatitude,LocatLongitude,temp_trop
+Mediterranean,1888,Monaco1888,NA,NA,adult,34.061761,19.209595,temperate
+Mediterranean,1992,Bello1999,SW Adriatic,"Adriatic Sea, near Mola & Monopoli, Italy",juvenile,41.096462,17.512247,temperate
+Mediterranean,1994,Bello1999,SW Adriatic,"Adriatic Sea, near Mola & Monopoli, Italy",juvenile,41.096462,17.512247,temperate
+Mediterranean,1994,Bello1999,SW Adriatic,"Adriatic Sea, near Mola & Monopoli, Italy",juvenile,41.096462,17.512247,temperate
+Mediterranean,1996,Catalan2007,Mallorca Island,SW Mallorcan (Balearic Islands) shelf slope,larvae,39.5615,2.192702,temperate
+Mediterranean,2005,Goni2011,Balearic,Balearic Sea,juvenile,40.158082,1.716886,temperate
+Mediterranean,2006,Consoli2008,Central Mediterranean Sea,NE coast of Sicily,"juvenile, adult",37.718319,12.392578,temperate
+Mediterranean,2006,Goni2011,S Adriatic,South Adriatic Sea,juvenile,41.824403,16.766758,temperate
+Mediterranean,2007,Salman&Karakulak2009,Antalya Bay (Levantine Sea),Antalya Bay (Levantine Sea),juvenile,32.247652,31.113281,temperate
+Mediterranean,2008,Goni2011,Tyrrhenian,Tyrrhenian sea,"juvenile, adult",40.658373,11.445351,temperate
+Mediterranean,2008,Romeo2012,central Mediterranean Sea,S. Tyrrhenian sea and Strait of Messina,juvenile,39.337218,11.12478,temperate
+NE Atlantic,1918,Joubin1918,Golfe de Gascogne,Large array Golfe de Gascogne,adult,46.307336,-4.441214,temperate
+NE Atlantic,1928,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1929,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1930,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1931,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1932,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1933,Bouxin&Legendre,Golfe de Gascogne,"Large tract of NE Atlantic, south of Iceland to Azorez and coast of W Europe",adult,48,-11.680527,temperate
+NE Atlantic,1968,OrtizZarate1987,Bay of Biscay,Bay of Biscay,"juvenile, adult",46.986108,-5.407589,temperate
+NE Atlantic,1971,Aloncle1973,NE Atlantic,"36?N to 51?N, Spain, France, Azores, NE Atlantic","juvenile, adult",44.632016,-5.5,temperate
+NE Atlantic,1993,Pusineri2005,Bay of Biscay,NW Bay of Biscay,juvenile,46.883662,-5.277972,temperate
+NE Atlantic,2004,Goni2011,Bay of Biscay (Zone 2),Bay of Biscay,"juvenile, adult",48.376549,-7.516041,temperate
+NE Atlantic,2005,Goni2011,Bay of Biscay (Zone 1),Bay of Biscay,"juvenile, adult",48.919341,-8.89893,temperate
+NE Atlantic,2005,Goni2011,Bay of Biscay (Zone 2),Bay of Biscay,"juvenile, adult",48.376549,-7.516041,temperate
+NE Atlantic,2005,Goni2011,Bay of Biscay (Zone 3),Bay of Biscay,"juvenile, adult",47.419028,-6.373963,temperate
+NE Atlantic,2005,Goni2011,Bay of Biscay (Zone 5),Bay of Biscay,"juvenile, adult",46.307336,-4.441214,temperate
+NE Atlantic,2006,Goni2011,Bay of Biscay (Zone 2),Bay of Biscay,"juvenile, adult",48.376549,-7.516041,temperate
+NE Atlantic,2006,Goni2011,Bay of Biscay (Zone 3),Bay of Biscay,"juvenile, adult",47.419028,-6.373963,temperate
+NE Atlantic,2006,Goni2011,Bay of Biscay (Zone 4),Bay of Biscay,"juvenile, adult",46.986108,-5.407589,temperate
+NE Atlantic,2006,Goni2011,Bay of Biscay (Zone 5),Bay of Biscay,"juvenile, adult",46.307336,-4.441214,temperate
+NE Atlantic,2007,Goni2011,Bay of Biscay (Zone 5),Bay of Biscay,"juvenile, adult",46.307336,-4.441214,temperate
+NE Indian,1978,Uotani1981,"NW Australia, Indianc Ocean","Indian Ocean, N of Exmouth to Dampier Peninsula, S of Indonesia",larvae,-27.203343,113.108368,temperate
+NE Indian,1987,Young&Davis1990,"NE Indian, 16°30'S, 115°50'E","NE Indian Ocean, N of Port Headland",larvae,-16.589804,117.134728,tropical
+NE Pacific,1880,Jordan1880,"C Cal, Santa Barbara Channel","C Cal, Santa Barbara Channel",juvenile,34.345859,-119.723274,temperate
+NE Pacific,1941,Hart1942,Vancouver Island,Quatsino Sound,juvenile,50.529883,-127.59927,temperate
+NE Pacific,1941,Hart1942,Washington Coast,Washington Coast,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1941,Hart1948,Vancouver Island,Vancouver Island,juvenile,49.117928,-127.546089,temperate
+NE Pacific,1941,Hart1948,Washington Coast,Washington,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1945,Hart1948,Washington Coast,Washington,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1946,Hart1948,Vancouver Island,Vancouver Island,juvenile,49.117928,-127.546089,temperate
+NE Pacific,1946,Hart1948,Washington Coast,Washington,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1947,Hart1948,Deck Collection Washington Coast,Washington,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1947,Hart1948,Washington Coast,Washington,juvenile,47.046499,-124.79124,temperate
+NE Pacific,1949,McHugh1952,"Mexico to USA, Baja to northern California",CA-N to Mexico,juvenile,39.853423,-125.202024,temperate
+NE Pacific,1957,Iversen1962,NE Pacific,"Hawaii, Marquesas, CA-N to Mexico",juvenile,18.519981,-138.942367,tropical
+NE Pacific,1961,Clemens&Iselin1963,A,Cape Mendocino south-Point Arguello,juvenile,40.293406,-123.6211254,temperate
+NE Pacific,1961,Clemens&Iselin1963,A-B,"Cape Mendocino south-Point Arguello, Point Arguello- Mexican border",juvenile,36.046601,-123.6211254,temperate
+NE Pacific,1961,Clemens&Iselin1963,A-B-C,"Cape Mendocino south-Point Arguello, Point Arguello- Mexican border, South Mexican Border-Point San Eugenio",juvenile,36.046601,-123.6211254,temperate
+NE Pacific,1961,Clemens&Iselin1963,B,Point Arguello- Mexican border,juvenile,35.089574,-121.835632,temperate
+NE Pacific,1961,Clemens&Iselin1963,B-C,"Point Arguello- Mexican border, South Mexican Border-Point San Eugenio",juvenile,33.760882,-121.835632,temperate
+NE Pacific,1961,Clemens&Iselin1963,C,South Mexican Border-Point San Eugenio,juvenile,28.380527,-118,temperate
+NE Pacific,1961,Clemens&Iselin1963,D,South of Point Eugenio,juvenile,27.326025,-116.806641,temperate
+NE Pacific,1968,Pinkas1971,Central California (Region 2),Central California,"juvenile, adult",36.472236,-122.95087,temperate
+NE Pacific,1968,Pinkas1971,Central California (Region 2),Central California,"juvenile, adult",36.472236,-122.95087,temperate
+NE Pacific,1968,Pinkas1971,Oregon-Washington (Region 3),Oregon-Washington,"juvenile, adult",44.739905,-126.2182,temperate
+NE Pacific,1968,Pinkas1971,Southern California (Region 1),Southern California,"juvenile, adult",33.088521,-121.805378,temperate
+NE Pacific,1969,Pinkas1971,Oregon-Washington (Region 3),Oregon-Washington,"juvenile, adult",44.739905,-126.2182,temperate
+NE Pacific,1969,Pinkas1971,Southern California (Region 1),Southern California,"juvenile, adult",33.088521,-121.805378,temperate
+NE Pacific,1983,Bernard1985,"USA, CA, southern CA, 33 59' to 36 44' N and 122 19' to 122 30' W",CA-S,juvenile,33.9666667,-122.5,temperate
+NE Pacific,2001,Watanabe-etal2004,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",juvenile,40,163,temperate
+NE Pacific,2002,Watanabe-etal2004,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",juvenile,36,160,temperate
+NE Pacific,2006,Glaser2015,"Mexico to Canada, northern Baja California to Vancouver Island",span Canada to Mexico,"juvenile, adult",39.853423,-125.202024,temperate
+NE Pacific,2010,Madigan2015,Mexico to California,span Mexico to California,juvenile,34.633208,-124.292542,temperate
+NW Atlantic,1964,Matthews1977,NW Atlantic,NW Atlantic,adult,40.428133,-60.335317,temperate
+NW Atlantic,2002,Logan2013,North Atlantic,Central & West North Atlantic,adult,40.695217,-29.762752,temperate
+NW Atlantic,2002,Logan2013,North Atlantic,Central North Atlantic,adult,40.695217,-29.762752,temperate
+NW Atlantic,2010,Teffer2015,Cape Cod and the Islands of Massachusetts,Cape Cod and the Islands of Massachusetts,adult,41.475596,-70.285034,temperate
+SW Atlantic,1998,DosSantos&Haimovici2002,Southern Brazil,Southern Brazil,NA,-30,-47.035828,temperate
+SW Pacific,2006,Young2010,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,adult,-36.85545,121.216455,temperate
+SW Pacific,2006,Young2010,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,adult,-36.85545,121.216455,temperate
+SW Pacific,2006,Young2010,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,"juvenile, adult",-36.85545,121.216455,temperate
+SW Pacific,2006,Young2010,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",samples span AFMA's Eastern Tuna and Billfish Fishery from the Coral Sea to Tasmania,"juvenile, adult",-36.85545,121.216455,temperate
+SW Pacific,2008,Williams2015,New Zealand,SW New Zealand,"juvenile, adult",-46.595675,171.199371,temperate
+SW Pacific,2009,Williams2015,New Zealand,SW New Zealand,"juvenile, adult",-46.595675,171.199371,temperate
+SW Pacific,2010,Williams2015,New Caledonia,New Caledonia,"juvenile, adult",-20.900192,165.629883,tropical
+SW Pacific,2010,Williams2015,New Zealand,NE New Zealand,"juvenile, adult",-37.132951,173.747085,temperate
+SW Pacific,2010,Williams2015,New Zealand,NE New Zealand L,"juvenile, adult",-37.132951,173.747085,temperate
+SW Pacific,2010,Williams2015,New Zealand,NE New Zealand T,"juvenile, adult",-37.132951,173.747085,temperate
+SW Pacific,2010,Williams2015,Tonga,Tonga,"juvenile, adult",-21.097984,-175.093115,tropical

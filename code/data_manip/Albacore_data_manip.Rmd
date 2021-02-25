@@ -1,0 +1,918 @@
+---
+title: "Albacore Review Data Manipulation & Graphs"
+author: "Natasha Hardy"
+date: "October 10, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/Helder/Documents/GitHub/Tuna_postdoc")
+```
+
+```{r Load Workspace, echo=FALSE}
+
+#R documentation
+library(pander)
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+#Graphics
+library(graphics)
+library(ggplot2)
+library(RColorBrewer)
+library(Hmisc)
+library(lattice)
+library(gridExtra)
+library(captioner)
+library(unmarked)
+#Analyses
+library(lme4)
+library(mgcv)
+library(mvabund)
+library(tweedie)
+
+```
+
+## Albacore Review Dataframes
+
+### Prey morphometric measuremetns
+We first want to load in and clean the prey morphometric measurements, check data and calculate eye to body and body shape ratios, and summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.
+
+```{r Prey Morph Data Clean}
+
+#Load prey morphometric measurement data
+prey_morph <- read.csv(here("data/prey_morphometrics.csv"), header=TRUE) 
+#Issues reading in the data, everything was read in as a factor, 
+#Can use the following argument when reading in:
+#stringsAsFactors = FALSE
+#I'm going to read in as is, then convert to character --> numeric.
+str(prey_morph)
+#glimpse(prey_morph)
+#names(prey_morph[,12:17])
+
+#Convert relevant columns to character/numeric values
+#prey_morph[,12:17] <- sapply(prey_morph[,12:17], as.character)
+prey_morph[,12:17] <- sapply(prey_morph[,12:17], as.numeric)
+
+#Check again
+str(prey_morph)
+#prey_morph[,"s_length":"eye_diameter"] <- as.numeric(prey_morph[, "s_length":"eye_diameter"]) #Does not appear to take the column names
+
+#Additional data checks
+dim(prey_morph) #1290 rows and 21 columns
+names(prey_morph)
+unique(prey_morph$image_type)
+
+#Data cleaning
+#Note:
+#This data still contains rows of NA's for juvenile and larval images that have not been scored yet, so we want to remove any NA values.
+#We want just adults and mainly the values for body_shape_r & eye_body_r
+prey_morph_clean = prey_morph %>%
+  #dplyr::filter(life_stage == "adult") %>% #currently df already split by age group
+  dplyr::filter(use %in% c("yes", "maybe")) %>% #c("no", "NA")
+  #filter out everything but adult life_stage, filter out images that are use = "no"
+  drop_na(t_length, b_height, eye_diameter) %>% #filter out any NA's in the desired columns
+  mutate(b_shape_r = t_length/b_height, 
+         eye_body_r = eye_diameter/t_length,
+         standard_total = s_length/t_length)
+
+str(prey_morph_clean)
+#Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them).
+#These ratios are based on adults only.
+
+```
+
+```{r Prey Morph Summarise}
+
+#Checking data
+str(prey_morph_clean) #1239 observations for prey species morphometrics
+sum(prey_morph_clean$t_length) #588152.1
+sum(prey_morph_clean$b_height) #129932.2
+
+#Calculate ratios/summarise data
+prey_morph_sum = prey_morph_clean %>% 
+  dplyr::select(prey_class:prey_sp, b_shape_r, eye_body_r, standard_total) %>% #life_stage, 
+  group_by(prey_sp) %>% #, life_stage
+  dplyr::summarize(b_shape_r = mean(b_shape_r), eye_body_r = mean(eye_body_r), standard_total = mean(standard_total))
+#b_shape_se = sd(b_shape_r)/sqrt(length(b_shape_r)), eye_body_se = sd(eye_body_r)/sqrt(length(eye_body_r))
+
+#Here we obtain species level ratios for body shape, eye diameter to body, and standard to total length.
+
+str(prey_morph_sum) #293 average values for 308 species (originally)
+
+write.csv(prey_morph_sum, here("data/prey_morph_sum.csv"))
+
+```
+
+```{r LOAD prey_morph_sum}
+
+prey_morph_sum = read.csv(here("/data/prey_morph_sum.csv")) %>%
+  dplyr::select(-X)
+
+```
+
+
+### Prey Quality Data
+
+These include data obtained for prey quality nutritional information based on wet weight measured %lipid content, %protein and energy density.
+Provide more info about these data.
+
+```{r Prey Qual Data Upload & Manip}
+#Load prey trait db
+prey_qual <- read.csv(here("data/prey_quality_ww.csv"))
+str(prey_qual) #Check data
+prey_qual$percent_lipid <- as.numeric(prey_qual$percent_lipid)
+
+#Summarise, we want an average value for each of the three metrics - ED, %L and %P for each species.
+prey_qual_sum = prey_qual %>%
+  #dplyr::select(prey_class:percent_lipid) %>% #life_stage, 
+  #drop_na(energy_density:percent_lipid) %>% #filter out any NA's in the desired columns
+  group_by(prey_sp) %>% #, life_stage
+  dplyr::summarize(energy_density = mean(energy_density, na.rm=TRUE), percent_protein = mean(percent_protein, na.rm=TRUE), percent_lipid = mean(percent_lipid, na.rm=TRUE))
+str(prey_qual_sum)
+
+write.csv(prey_qual_sum, here("data/prey_qual_sum.csv"))
+
+```
+
+```{r LOAD prey_qual_sum}
+prey_qual_sum = read.csv(here("/data/prey_qual_sum.csv")) %>%
+  dplyr::select(-X)
+
+```
+
+
+### Albacore prey trait db
+
+```{r Prey trait data load}
+#Load prey trait db
+prey_trait <- read.csv(here("data/prey_trait_db.csv"))
+str(prey_trait) #Check data
+#glimpse(prey_trait)
+
+#Additional Troubleshooting - done for previous iterations of data
+#More data cleaning
+summary(prey_trait$l_min_type)
+#checking l_min_type is good, also l_max_type
+#Noticed problem with defense_cat trait --> corrected in DB
+#summary(prey_trait$defense_cat)
+#unique(prey_trait$defense_cat)
+#glimpse(prey_trait)
+
+#Prey Trait selection
+
+prey_trait_select = prey_trait %>%
+  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status)
+
+```
+
+```{r Prey traits adults - data extract}
+
+prey_trait_adult = prey_trait %>%
+  dplyr::filter(life_stage == "adult") %>% #currently df already split by age group
+  dplyr::select(prey_class:prey_sp, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status) #select traits we want to analyse
+  
+str(prey_trait_adult) #Extracting 308 species and 18 variables
+str(prey_trait)
+```
+
+### Prey Size / Morph tasks
+
+```{r Data Merge: FOR SIZE TASK --> Morph & Traits dbs}
+
+#Now need to split the min vs. max lengths to reshape those data and merge again later.
+prey_min = prey_trait %>% 
+  dplyr::select(prey_class:prey_sp, life_stage, l_min:l_min_type) %>%
+  tidyr::gather(key = "l_min", value = "length", l_min) %>%
+  dplyr::rename(measure = l_min, l_type = l_min_type)
+
+prey_max = prey_trait %>% 
+  dplyr::select(prey_class:prey_sp, life_stage, l_max:l_max_type) %>%
+  tidyr::gather(key = "l_max", value = "length", l_max) %>%
+  dplyr::rename(measure = l_max, l_type = l_max_type)
+
+#Gathering the wide didn't work well, because we want to retain 2/4 columns.
+#prey_trait_size <- gather(prey_trait, measure, length, factor_key=TRUE, 
+                          #-(prey_class:life_stage))
+
+#Now we want to bind this data again
+#names(prey_min) #check column names are the same for both dfs
+
+prey_length <- rbind(prey_min, prey_max)
+
+summary(prey_length$l_type)
+
+##NEED TO CLEAN THE L_TYPE VALUES
+
+prey_length = prey_length %>% #Note can use case_when() or if_ele() BUT you need to write one for each value and not try to combine them as strings using c()
+  mutate(`l_type_use`=case_when(prey_length$`l_type` == "TL" ~ "TL",
+                                prey_length$`l_type` == "SL" ~ "SL",
+                                prey_length$`l_type` == "FL" ~ "TL", #fork length in some pelagic fishes ~ TL
+                                prey_length$`l_type` == "NL" ~ "TL", #Notochord length in larvae ~ TL
+                                prey_length$`l_type` == "CL" ~ "TL", #Carapace length in some crustaceans ~ TL
+                                prey_length$`l_type` == "BL" ~ "TL", #Body length in larvae ~ TL
+                                prey_length$`l_type` == "GL" ~ "SL", #Gladius length = Mantle length ~ standard length
+                                prey_length$`l_type` == "ML" ~ "SL", #Mantle length ~ standard length
+                                prey_length$`l_type` == "AN" ~ "TL", #Anterior nectophore, appears only in a gastropod, going to take is as TL
+                                prey_length$`l_type` == "PCL" ~ "SL" #Pre-claval length for sunfish
+                                ) 
+         )
+
+#Next we need to merge our ratios data set and our lengths datasets.
+#Example: prey_trait_merge <-  merge(x = prey_trait_cats, y = prey_morph_sum, by = c("prey_sp", "life_stage"))
+prey_length_data = prey_length %>% 
+  left_join(prey_morph_sum, by="prey_sp") #%>% #c("prey_sp", "life_stage")
+
+prey_length_data = prey_length_data %>%
+  mutate(`length_tl`=if_else(prey_length_data$`l_type_use`=="SL", length/standard_total, length))
+  
+unique(prey_length_data$l_type_use)
+#Note we probably don't need the other ratios here right now, just standard_total
+
+##Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
+prey_length_wide = prey_length_data %>%
+  dplyr::select(prey_class:life_stage, measure, length_tl) %>%
+  spread(life_stage, length_tl, convert=TRUE) %>%
+  mutate(larva_adult = 100*larva/adult, juve_adult = 100*juvenile/adult)
+#we're going to want the maximum values out of this to use as cut-offs
+
+unique(prey_length_wide$prey_sp)
+str(prey_length_wide)
+#View(prey_length_wide)
+
+```
+
+```{r Prey length ratio summaries}
+
+dim(prey_length_wide)
+
+##Summarise means of larval and juvenile to adult body length ratios, by family, order and class:
+#Note that mean() function returns "NaN" whereas sum()/length() returns zeros for missing data.
+
+#By class
+prey_length_class <- plyr::ddply(prey_length_wide, c("prey_class", "measure"), summarise,
+                            larva_adult_c = mean(larva_adult, na.rm=TRUE),
+                            juve_adult_c = mean(juve_adult, na.rm=TRUE))
+
+#By order
+prey_length_order <- plyr::ddply(prey_length_wide, c("prey_order", "measure"), summarise,
+                            larva_adult_o = mean(larva_adult, na.rm=TRUE),
+                            juve_adult_o = mean(juve_adult, na.rm=TRUE))
+
+#By family
+prey_length_fam <- plyr::ddply(prey_length_wide, 
+                                c("prey_class", "prey_order", "prey_family", "measure"), 
+                                summarise,
+                                larva_adult_f = mean(larva_adult, na.rm=TRUE),
+                                juve_adult_f = mean(juve_adult, na.rm=TRUE))
+
+##Merge these data to calculate prey cut-offs for family, order and class
+#--> Code such that we use first family level mean, then order, then class, to fill in missing information for prey size cut-offs
+
+prey_length_ratios = prey_length_fam %>%
+  left_join(prey_length_order, by= c("prey_order", "measure")) %>% #join prey_order info
+  left_join(prey_length_class, by= c("prey_class", "measure")) %>% #join prey_class info
+  mutate(larva_adult_u = if_else(larva_adult_f == "NaN", 
+                                 if_else(larva_adult_o == "NaN", larva_adult_c, larva_adult_o), 
+                                 larva_adult_f),
+         juve_adult_u = if_else(juve_adult_f == "NaN", 
+                                if_else(juve_adult_o == "NaN", juve_adult_c, juve_adult_o), 
+                                juve_adult_f)) 
+##Make a cut-off selection based on family > order > class level information
+
+##Now we need to merge this back onto species, and make selection again based on whether the species level info is there
+#And remove troublesome NA's in original dataset
+prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
+prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
+
+prey_length_ratiosp = prey_length_wide %>%
+  dplyr::filter(measure == "l_max") %>%
+  dplyr::rename(l_larva = "larva", l_juve = "juvenile", l_adult = "adult") %>%
+  left_join(prey_length_ratios, by = c("prey_family", "prey_order", "prey_class", "measure")) %>%
+  #dplyr::select(prey_class:measure, larva_adult:juve_adult, larva_adult_u:juve_adult_u) %>%
+  mutate(larva_adult_use = if_else(larva_adult == "NaN", larva_adult_u, larva_adult),
+         juve_adult_use = if_else(juve_adult == "NaN", juve_adult_u, juve_adult)
+         ) %>%
+  dplyr::select(prey_class:l_larva, larva_adult_use:juve_adult_use) #%>%
+  #dplyr::filter(larva_adult_use != "NaN")
+
+names(prey_length_ratiosp)
+
+#---> Here we obtain size ratios for all 308 species in trait db
+##Problem with NA values
+glimpse(prey_length_wide) #includes min and max in longer df
+glimpse(prey_length_ratiosp)
+
+```
+
+``` {r Prey size ratios graphs}
+#Check the ratios out with graphs
+prey_length_ratios %>% 
+  dplyr::filter(prey_class %in% c("Cephalopoda")) %>% #"Actinopterygii", , "Malacostraca"
+  ggplot() +
+  geom_boxplot(aes(x=prey_order, y=larva_adult_o, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Larva to adult length ratio")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+#Note significant variation in family-level mean l_max and l_min values
+
+
+
+#This never seems to work for me
+#prey_length_ratios = prey_length_wide %>% 
+#  group_by(prey_class, measure) %>%
+#  plyr::summarise(larva_adult_m = mean(larva_adult)) #%>%
+#   group_vars(larva_adult)
+
+
+
+```
+
+
+The code above provides us with the following data that can be extracted:
+(i) prey trait data as rows for 3x life stages
+(ii) prey length, measurement and type info + average ratio metrics x3 for x3 life stages
+We also have gape length and width formula for yellowfin tuna applied here to albacore.
+
+We then need: 
+--> what we especially need are max lengths for adults, juveniles and larvae with which to classify probable prey life stage based on either measured or estimated sizes.
+(i) length conversions: to convert any measurements that are not TL into TL, and also estimate body height from that.
+(ii) identify cut-offs for larval size ratios that are specific to the prey class
+(iii) identify cut-off for length at maturity or max juvenile size for cephalopods and crustaceans when that information is missing
+(iv) create a series of useable re
+--> we can then select the appropriate life stage information
+
+
+## Albacore diet review data
+
+Here we need to load up the albacore global diet data to clean and select what we want.
+Tasks:
+(i) Need to make prey probable life stage selection
+(ii) Need to merge the probable prey life stage with the appropriate trait in the trait db
+
+```{r Albacore diet data load & manipulation}
+
+#Load diet data spreadsheet
+#need this: prey_length_ratiosp
+#This contains species as rows (#232) for which we have useable species through to class-level ratio information on larval:adult and juvenile:adult lengths
+
+#Also need prey_length_wide data for l_max for adult column
+#Should be able to get this from prey_length_ratiosp
+
+alb_global = read.csv(here("data/albacore_diet_master.csv")) %>%
+  dplyr::filter(TaxLev == "species") %>% #There are ~1103 observations when we filter by species
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1026 when we remove larval albacore diet studies (there are 3)
+  #dplyr::rename() %>%
+  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>%
+  left_join(prey_morph_sum, by="prey_sp") %>% #need to add morph data to convert maxsl_use to maxtl_use
+  mutate(maxtl_use=if_else(alb_global$maxl_type %in% c("SL", "ML"), maxl_use/standard_total, maxl_use),
+         prey_age_reported_1=case_when(
+                             #prey_age_reported_1 == "NA" ~ "none",
+                             prey_age_reported_1 == "larvae" ~ "larva",
+                             prey_age_reported_1 == "juvenile" ~ "juvenile",
+                             prey_age_reported_1 == "adult" ~ "adult")
+         ) #%>%
+#Previous code for troubleshooting the size info available
+  #mutate(maxtl_use=if_else(alb_global$prey_class %in% c("Actinopterygii", "Cephalopoda"), maxl_use/standard_total, maxl_use)) 
+  #need to convert maxsl_use data
+  #Amazing now we have all the diet data and something like a useable length column
+
+#The NA's in the reported age for prey column cause problems later and need to be assigned a categorical value
+alb_global$prey_age_reported_1 <- as.character(alb_global$prey_age_reported_1)
+alb_global$prey_age_reported_1 <- replace_na(alb_global$prey_age_reported_1, "none")
+unique(alb_global$prey_age_reported_1)
+#Check this
+#View(alb_global)
+#glimpse(alb_global)
+
+#Save total df
+write.csv(alb_global, here("data/alb_global_diet_total.csv")) #1026 observations and 39 variables
+
+```
+
+```{r LOAD alb_global}
+
+#Reload data
+alb_global = read.csv(here("data/alb_global_diet_total.csv")) %>%
+  dplyr::select(-X)
+unique(alb_global$StudyID) #26 papers in analyses
+
+```
+
+
+```{r Alb adult diet metrics summary}
+
+alb_global_ad_metrics = alb_global %>%
+  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %>%
+  group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE)) 
+
+str(alb_global_ad_metrics)
+
+write.csv(alb_global_ad_metrics, here("data/alb_global_ad_metrics"))
+```
+
+
+```{r Albacore diet data + probably life stage estimation}
+
+alb_global_ratios = alb_global %>%
+  inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) #%>%
+  #In using an inner_join I am selecting only rows for which we have all length-based data
+#Check this
+#glimpse(alb_global_ratios)  
+
+alb_global_prob = alb_global_ratios %>%
+  mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, gape_lmax)) %>%
+  mutate(prey_frac = 100*prey_length/l_adult) %>%
+  mutate(prey_proba = if_else(prey_frac < larva_adult_use, "larva", if_else(prey_frac<juve_adult_use, "juvenile", "adult"))) %>%
+  mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1))
+  
+str(alb_global_prob)
+
+#Check age output
+unique(alb_global_prob$prey_select)
+
+#And remove troublesome NA's in dataset
+#Because we need to give these a life stage, I am assigning them as "adult" because of their l_max typically was < gape limit.
+alb_global_prob$life_stage[is.na(alb_global_prob$life_stage)] <- "adult"
+
+## SAVE DATA
+write.csv(alb_global_prob, here("data/alb_global_diet_prob.csv")) #1007 observations 48 variables
+#This include data for which we are able to make an assessment of probable life stage --> therefore will exclude coarse taxonomic classifications
+
+```
+
+```{r LOAD alb_global_prob}
+
+alb_global_prob = read.csv(here("data/alb_global_diet_prob.csv")) %>%
+  dplyr::select(-X)
+
+```
+
+
+```{r Alb probable diet metrics summary}
+
+#All combinations of life stages and species consumed
+alb_global_prob_list = alb_global_prob %>%
+  dplyr::select(prey_class:prey_sp, life_stage, pFOuse, pN, pM) %>%
+  group_by(prey_sp, life_stage) %>%
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))
+
+str(alb_global_prob_list)
+View(alb_global_prob_list)
+#Save data if needed
+write.csv(alb_global_prob_list, "alb_global_prob_list.csv")
+
+#But we need to select the main one...
+
+```
+
+```{r Albacore prey life stages lists}
+#Need to summarise prey life stages and attach trait data
+unique(as.factor(alb_global_prob_list$prey_sp)) #there are 303 unique species
+#So we should obtain 303 species in the following code.
+
+str(alb_global_prob_list$maxFO)
+glimpse(alb_global_prob_list)
+
+#The most common life stage and species consumed!!
+alb_global_prob_metrics = alb_global_prob_list %>%
+  group_by(prey_sp) %>%
+  top_n(1, maxFO) %>% #WHY ARE THERE 304 SPECIES??? No idea but I guess one of these rows has to go, will have to do it randomly.
+  sample_n(1)
+
+write.csv(alb_global_prob_metrics, here("data/alb_global_prob_metrics"))
+
+```
+
+Note:
+The maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.
+
+
+## DATA SETS
+
+```{r Prey adult traits + morph + qual data}
+
+prey_adults_merge = prey_trait_adult %>% 
+  left_join(prey_morph_sum, by="prey_sp") %>% 
+  left_join(prey_qual_sum, by="prey_sp") %>%
+  left_join(alb_global_ad_metrics, by="prey_sp")
+
+dim(prey_adults_merge) #308 spp and ~27 traits
+
+str(prey_adults_merge)
+
+write.csv(prey_adults_merge, here("data/prey_adults_traits.csv"))
+prey_adults_merge = read.csv(here("data/prey_adults_traits.csv"))
+
+```
+
+```{r ORDINAL Prey adult traits + morph + qual data}
+
+prey_adults_ord = prey_trait %>% 
+  filter(prey_sp %in% prey_adults_merge$prey_sp,
+         life_stage == "adult") %>%
+  select(prey_class:prey_sp, life_stage, vert_primary_ordinal, horz_habitat_ordinal, diel_migrant, refuge, season_migrant, body_shape_ordinal, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_ordinal)
+  #left_join(prey_morph_sum, by="prey_sp") %>% 
+  #left_join(prey_qual_sum, by="prey_sp") %>%
+  #left_join(alb_global_ad_metrics, by="prey_sp")
+
+dim(prey_adults_ord) #308 spp and ~17 traits
+
+str(prey_adults_ord)
+
+write.csv(prey_adults_ord, here("data/prey_adults_traits_ord.csv"))
+
+```
+
+```{r BINARY Prey adult traits + morph + qual data}
+
+prey_adults_ord = prey_trait %>% 
+  filter(prey_sp %in% prey_adults_merge$prey_sp,
+         life_stage == "adult") %>%
+  select(prey_class:prey_sp, life_stage, vert_primary_ordinal, horz_habitat_ordinal, diel_migrant, refuge, season_migrant, body_shape_ordinal, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_ordinal)
+  #left_join(prey_morph_sum, by="prey_sp") %>% 
+  #left_join(prey_qual_sum, by="prey_sp") %>%
+  #left_join(alb_global_ad_metrics, by="prey_sp")
+
+dim(prey_adults_ord) #308 spp and ~17 traits
+
+str(prey_adults_ord)
+
+write.csv(prey_adults_ord, here("data/prey_adults_traits_ord.csv"))
+
+```
+
+```{r Prey probable list + traits + morph + qual data}
+
+prey_probable_merge = alb_global_prob_metrics %>%
+  left_join(prey_trait_select, by=c("prey_sp", "life_stage")) %>% 
+  left_join(prey_morph_sum, by="prey_sp") %>% 
+  left_join(prey_qual_sum, by="prey_sp") %>%
+  dplyr::select(prey_class:prey_family, prey_sp:life_stage, vert_habitat:percent_lipid, maxFO:maxM)
+
+dim(prey_probable_merge) #303 spp and ~28 traits
+View(prey_probable_merge)
+
+write.csv(prey_probable_merge, here("data/prey_probable_traits.csv"))
+
+#prey_probable_merge = read.csv(here("data/prey_probable_traits.csv"))
+#View(prey_probable_merge)
+
+```
+
+
+```{r ORDINAL Prey probable traits + morph + qual data}
+
+prey_probable_merge = read.csv(here("data/prey_probable_traits.csv"))
+
+prey_prob_ord = prey_probable_merge %>% 
+  select(prey_sp:life_stage) %>%
+  left_join(prey_trait, by=c("prey_sp", "life_stage")) %>%
+  select(prey_class:prey_family, prey_sp, life_stage, vert_primary_ordinal, horz_habitat_ordinal, diel_migrant, refuge, season_migrant, body_shape_ordinal, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_ordinal)
+  #left_join(prey_morph_sum, by="prey_sp") %>% 
+  #left_join(prey_qual_sum, by="prey_sp") %>%
+  #left_join(alb_global_ad_metrics, by="prey_sp")
+
+dim(prey_adults_ord) #303 spp and ~17 traits
+
+str(prey_prob_ord)
+
+write.csv(prey_prob_ord, here("data/prey_prob_traits_ord.csv"))
+
+```
+
+
+```{r Covariates}
+
+alb_covars = alb_global %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:pred_life_est) %>%
+  distinct(StudyID, CiteYear, OceanBasinQ, LocatLatitude, LocatLongitude, YearEnd, pred_life) %>%
+  mutate(lat_cat = if_else(abs(LocatLatitude) > 23.43662, "temperate", "tropical"),
+         pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "adult" ~ "adult"))
+
+write.csv(alb_covars, here("data/alb_covars.csv"))
+
+```
+
+Could edit the Longhurst doc to separate biomes and codes as per province definitions:
+https://en.wikipedia.org/wiki/Longhurst_code#:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions 
+
+```{r Covars + Longhurst + Diet data + Adult prey traits + metrics}
+
+alb_covars_geog <- read.csv(here("data/alb_covar_longhurst.csv")) %>%
+  dplyr::select(StudyID, lat_cat:code) %>%
+  group_by(StudyID) %>%
+  sample_n(1)
+names(alb_covars_geog)
+#Need to merge this with diet data first overall data then probable prey consumed
+unique(alb_covars_geog$code)
+
+#check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
+
+alb_global_diet = alb_global %>%
+  left_join(alb_covars_geog) #looks good #, by = "StudyID"
+
+str(alb_global_diet)
+unique(alb_global_diet$code) #Check this.
+unique(alb_global_diet$Include)
+
+#upload the cluster info:
+alb_adult_traits = read.csv(here("data/adult.prey.clusternum.habgreg.aggl.k9.csv")) %>%
+  dplyr::select(prey_sp:adult.clust.num)
+
+#Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
+alb_global_dietfo = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pFOuse) %>%
+  filter(pFOuse >= 1) %>% #set this value to include or exclude species
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pFOuse, fill = 0, convert = FALSE)
+
+#range(alb_global_dietfo$pFOuse) #0 to 100 need to exclude zeros as they are not true zeros --> 0.1 to 100%
+
+#Check covariate representation
+summary(as.factor(alb_global_dietfo$lat_cat))
+summary(as.factor(alb_global_dietfo$code))
+summary(as.factor(alb_global_dietfo$OceanBasin))
+summary(as.factor(alb_global_dietfo$OceanBasinQ))
+
+write.csv(alb_global_dietfo, here("data/alb_global_wide_dietfo.csv"))
+#Need corresponding species and probable age
+#range(alb_global_dietn$pN)
+
+#Extract for %N data
+alb_global_dietn = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pN) %>%
+  filter(pN > 0) %>%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pN, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietn$lat_cat))
+summary(as.factor(alb_global_dietn$code))
+summary(as.factor(alb_global_dietn$OceanBasin))
+summary(as.factor(alb_global_dietn$OceanBasinQ))
+
+write.csv(alb_global_dietn, here("data/alb_global_wide_dietn.csv"))
+
+#Extract for %M data
+#range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
+
+alb_global_dietm = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pM) %>%
+  filter(pM > 0) %>%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pM, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietm$lat_cat))
+summary(as.factor(alb_global_dietm$code))
+summary(as.factor(alb_global_dietm$OceanBasin))
+summary(as.factor(alb_global_dietm$OceanBasinQ))
+
+write.csv(alb_global_dietm, here("data/alb_global_wide_dietm.csv"))
+
+
+#Repeat for probable age data
+#alb_global_dietfo = alb_global_diet %>%
+#  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pFOuse) %>%
+
+```
+
+```{r PROBABLE COVARS}
+
+#Do we need probable life stage covars? Or can I subset?
+
+```
+
+
+```{r PREY SIZE GRAPHS}
+
+##Now we need cut offs for larva and juveniles maybe based either at class, order or family levels
+## GRAPH THIS!
+
+## Visualising raw values
+### For larvae
+prey_length_data %>% 
+  filter(life_stage == "larva") %>%
+  ggplot() +
+  geom_boxplot(aes(x=prey_class, y=length_tl, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Length")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+
+## Note:
+#For crustaceans, there are very few that would be consumed as larvae, as their sizes are so small, there may be other ways to select a probable life stage.
+#For cephalopods, appears to be group 1 ~ 4 cm, with median ~ 1.5-2 cm
+#For fish, there is at least a group cut off < 4 cm, and 1st quartile ~ 2.5 cm, median ~ 3 cm.
+## Need to calculate ratios
+
+#Calculate mean?
+### For juveniles
+prey_length_data %>% 
+  filter(life_stage == "juvenile") %>%
+  ggplot() +
+  geom_boxplot(aes(x=prey_class, y=length_tl, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Length")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+
+## Note:
+#For crustaceans ...
+#For cephalopods ...
+#For fish, where data missing use 1/3 adult size
+summary(prey_length_wide$prey_class)
+
+##Visualise using ratios
+### For larvae
+prey_length_wide %>% 
+  dplyr::filter(prey_class %in% c("Actinopterygii", "Cephalopoda", "Malacostraca")) %>%
+  ggplot() +
+  geom_boxplot(aes(x=prey_class, y=larva_adult, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Larval to adult length ratio")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+#Save output
+ggsave(here("output_figures/diet_mvtraits/larva_adult_ratio.jpg"), width = 10, height = 5)
+
+prey_length_wide %>% 
+  dplyr::filter(prey_class %in% c("Actinopterygii", "Cephalopoda", "Malacostraca")) %>%
+  ggplot() +
+  geom_boxplot(aes(x=prey_class, y=juve_adult, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Juvenile to adult length ratio")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+
+ggsave(here("output_figures/diet_mvtraits/juve_adult_ratio.jpg"), width = 10, height = 5)
+
+```
+
+
+## OLD DATASETS
+### Phylograph Input files
+
+```{r Prey traits - Phylographs draft}
+
+#For phylo graphs
+prey_traits_graphs = prey_trait_cats %>%
+  select(prey_class:life_stage, vert_habitat, horz_habitat, diel_migrant, refuge, season_migrant, body_shape, phys_defense, transparent, col_disrupt, countershade, photophore_PA, gregarious_primary, trophic_level) %>% #Could add later for fisherman paper: IUCN_status, commercial, recreational
+  dplyr::filter(life_stage == "adult") 
+  #dplyr::filter( %in% ) %>% #c("no", "NA")
+  #filter out everything but adult life_stage, filter out images that are use = "no"
+  #drop_na(t_length, b_height, eye_diameter) %>% #filter out any NA's in the desired columns
+  #mutate(b_shape_r = t_length/b_height, eye_body_r = eye_diameter/t_length)
+
+str(prey_traits_graphs)
+names(prey_trait_cats)
+dim(prey_trait_cats) #809 rows for adult data
+
+
+#FOR BASIC PHYLO TREE
+my_prey = prey_traits_graphs %>%
+  dplyr::select(prey_class:prey_sp)
+
+write.csv(my_prey, "my_prey.csv")
+
+```
+
+```{r Prey traits - Clusters}
+
+#Need the categorical traits for the cluster analyses
+prey_traits_cats = prey_trait %>%
+  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, refuge_cat, season_cat, body_shape, defense_cat, gregarious_primary) %>% #Could add later for fisherman paper: IUCN_status, commercial, recreational
+  dplyr::filter(life_stage == "adult") 
+  #dplyr::filter( %in% ) %>% #c("no", "NA")
+  #filter out everything but adult life_stage, filter out images that are use = "no"
+  #drop_na(t_length, b_height, eye_diameter) %>% #filter out any NA's in the desired columns
+  #mutate(b_shape_r = t_length/b_height, eye_body_r = eye_diameter/t_length)
+
+write.csv(prey_traits_cats, "prey_traits_cats.csv")
+
+glimpse(prey_traits_cats)
+dim(prey_traits_cats) #809 rows for adult data
+```
+
+
+```{r Albacore diet data load for rarefaction curves}
+getwd()
+
+# need total unfiltered data for rarefaction curve
+prey_total <- read.csv("prey_total.csv", header = TRUE)
+head(prey_total)
+
+
+# cleaned dataset, filtered for fish & cephalopods only, for include = yes, for FO > 0% and excluding NAs, for albacore adult diet.
+prey_long <- read.csv("prey_long_clean.csv", header = TRUE)
+
+
+```
+
+## Plastics project rarefaction fig code
+
+```{r plastics project rarefaction code}
+
+#### RAREFACTION CURVE ----
+## MAX'S RAREFACTION CURVE
+## Cumulative unique entries in list of vectors
+
+cum_unique <- function(l) {
+  result <- integer(length(l))
+  for (i in 1:length(l)) {
+    result[i] <- length(unique(unlist(l[1:i])))
+  }
+  result
+}
+
+prey_rare <-  prey_total %>% 
+  group_by(OceanBasinQ,YearSample) %>% 
+  summarize(species = list(unique(PreySP))) #,
+#            annual_N = sum(N)) %>% 
+#  ungroup %>% 
+#  mutate(cum_species = cum_unique(species),
+#         cum_n = cumsum(annual_N),
+#         cpue = cum_species / cum_n)
+
+View(prey_rare)
+
+d_rarefaction_ingest_only <-  d_full %>%  
+  filter(prop_w_plastic > 0) %>% 
+  group_by(publication_year) %>% 
+  summarize(species = list(unique(binomial)),
+            annual_N = sum(N)) %>% 
+  ungroup %>% 
+  mutate(cum_species = cum_unique(species),
+         cum_n = cumsum(annual_N),
+         cpue = cum_species / cum_n)
+
+rarefaction_plot <- ggplot() +
+  geom_line(data = d_rarefaction_all, aes(cum_n, cum_species), color = "dark blue") +
+  geom_line(data = d_rarefaction_ingest_only, aes(cum_n, cum_species), color = "dark red") +
+  geom_point(data = d_rarefaction_all, aes(cum_n, cum_species)) +
+  geom_point(data = d_rarefaction_ingest_only, aes(cum_n, cum_species)) +
+  geom_text_repel(data = d_rarefaction_all, 
+                  aes(cum_n, cum_species, label = publication_year), 
+                  nudge_x = -1500, nudge_y = 10,
+                  segment.color = "black") +
+  geom_text_repel(data = d_rarefaction_ingest_only, 
+                  aes(cum_n, cum_species, label = publication_year), 
+                  nudge_x = 1500, nudge_y = -10,
+                  segment.color = "black") +
+  labs(x = "Cumulative number of individuals sampled",
+       y = "Cumuluative number of species sampled") + 
+  theme_classic(base_size = 14)
+rarefaction_plot
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

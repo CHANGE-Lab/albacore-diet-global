@@ -1,0 +1,662 @@
+---
+title: "Albacore RLQ Tutorial"
+author: "Natasha Hardy"
+date: "October 7, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "/Users/natasha/Documents/POSTDOC/TUNA DIETS/TUNASTATS/data")
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+## RLQ ade4 tutorial
+Tutorial doc here:
+http://www.esapubs.org/archive/ecol/E095/002/suppl-1.pdf
+ade4 manual:
+https://cran.r-project.org/web/packages/ade4/ade4.pdf
+
+Legendre et al. supplementary data:
+https://figshare.com/collections/Combining_the_fourth-corner_and_the_RLQ_methods_for_assessing_trait_responses_to_environmental_variation/3306393
+Paper: Combining the fourth-corner and the RLQ methods for assessing trait responses to environmental variation
+https://esajournals.onlinelibrary.wiley.com/doi/10.1890/13-0196.1
+
+RLQ semi-explained: https://www.r-bloggers.com/r-for-ecologists-rlq-analysis-semi-explained/
+
+### Loading the package and the data
+The aravo dataset contains the abundances of 82 species in 75 sites. Species are described by 8 traits
+and 6 environmental variables have been measured in the sites.
+
+```{r loading}
+
+# load package
+library(ade4)
+
+# load data
+data(aravo)
+dim(aravo$spe) #75 observation (rows) & 82 species (columns)
+dim(aravo$traits) #82 species (rows) & 8 traits (columns)
+dim(aravo$env) #75 observation (rows) & 6 environmental variables (columns)
+
+View(aravo$traits)
+
+str(aravo$spe)
+str(aravo$traits) #mix of numeric and integer data
+str(aravo$env) #factors and integers
+```
+
+### RLQ start
+A preliminary step of RLQ analysis is to perform the separate analyses of each table. Correspondence
+analysis (dudi.coa) is applied to the species table. For traits data, all variables are quantitative and
+thus we applied a principal component analyses (dudi.pca). The environmental table contains both
+quantitative and categorical variables. In this case, we used the dudi.hillsmith function that allows to
+consider mix of different types of variables. Note that to proceed RLQ analysis, separate analyses of traits and environmental variables should be weighted by the sites and species weights derived from the previous correspondence analysis.
+
+```{r initial analyses}
+
+afcL.aravo <- dudi.coa(aravo$spe, scannf = FALSE)
+acpR.aravo <- dudi.hillsmith(aravo$env, row.w = afcL.aravo$lw,
+                             scannf = FALSE)
+acpQ.aravo <- dudi.pca(aravo$traits, row.w = afcL.aravo$cw,
+                       scannf = FALSE)
+rlq.aravo <- rlq(acpR.aravo, afcL.aravo, acpQ.aravo,
+                 scannf = FALSE)
+
+```
+
+RLQ analysis finds coefficents (in $c1) to obtain a linear combination of traits (species scores in $lQ)
+and coefficients (in $l1) to obtain a linear combination of environmental variables (site scores in $lR). The covariance between these two sets scores is maximized and equal to the square root of the corresponding eigenvalue.
+The different outputs of the analysis are obtained by the plot function:
+The different figures can be obtained separately by plotting the different elements contained in the
+rlq.aravo object:
+
+```{r plot RLQ}
+
+plot(rlq.aravo)
+
+par(mfrow = c(1, 3))
+s.arrow(rlq.aravo$l1)
+s.arrow(rlq.aravo$c1)
+s.label(rlq.aravo$lQ, boxes = FALSE)
+
+```
+
+## Albacore data trial
+
+Load albacore review data, remove zero-sum columns and extract traits that correspond to remaining species. Also check that all dimensions match.
+
+```{r load albacore}
+getwd()
+
+# load data
+# Data contains
+prey_db <- read.csv("prey_mv_20191009.csv", header = TRUE, check.names=FALSE) # remember to check.names = FALSE, otherwise your col names will convert the space between genus and species to a "." and stuff up downstream code.
+str(prey_db)
+
+# need to change columns of prey data to numeric
+# looping does not work
+#for (i in 5:ncol(prey_db)){
+#data[,i] <- as.numeric(as.character(prey_db[,i]))
+#}
+#use sapply
+#don't run
+#sapply(prey_db[,5:244], class)
+
+
+# to convert all prey data to numeric
+#prey_db[,6:ncol(prey_db)] <- sapply(prey_db[,6:ncol(prey_db)], as.numeric)
+
+# to convert all prey data to integer
+prey_db[,6:ncol(prey_db)] <- sapply(prey_db[,6:ncol(prey_db)], round)
+prey_db[,6:ncol(prey_db)] <- sapply(prey_db[,6:ncol(prey_db)], as.integer)
+
+# prey matrix
+prey_sp <- prey_db[,6:ncol(prey_db)]
+dim(prey_sp) #146 spp, 39 obs
+# note some columns are integers and others are numeric? could this be an issue? ## solved!
+
+# If there are zero's in the db
+which(colSums(prey_sp)==0) # there aren't so no need to remove columns
+# if there were, we need to remove zero sum columns
+prey_sp2 = prey_sp[,-which(colSums(prey_sp)==0)]
+dim(prey_sp2) #40 observations and 134 species
+str(prey_sp2)
+
+# traits matrix
+#contains trait data for Fish and Cephalopods only (not crustaceans)
+#can run this for traits_20191009 first or B documents depending on treating diel migration as NA
+
+traits <- read.csv("traits_20191009_B.csv", header = TRUE, row.names = 1)
+dim(traits) #193 species, 8 traits
+str(traits)
+# Some additional cleaning was needed
+#summary(traits)
+#unique(traits$habitat_combi) #9
+#unique(traits$vert_habitat) #7
+#unique(traits$horz_habitat) #7 #need to correct NA's, deep-sea and continental issue
+#unique(traits$PhysDefense) #7
+
+#select the traits that match our species (colnameS) in our MV dataframe
+traits_sp = traits[colnames(prey_sp2),] #takes the trait values that equal the remaining cleaned sp in prey data
+dim(traits_sp) #134 spp, 8 traits
+
+
+is.na(traits_sp)
+#leave out trophic level
+traits_sp <- traits_sp[,c(1:6,8)]
+str(traits_sp)
+
+#remove NA's
+traits_xna = traits_sp %>%
+  drop_na()
+dim(traits_xna) #100 spp, 7 traits after taking out trophic level
+
+# new multivariate prey sp db containing only species that we have traits for
+prey_sp3 = prey_sp2[,rownames(traits_xna)]
+#View(prey_sp3)
+dim(prey_sp3) #100 spp, 39 obs
+
+# could use presence/absence?
+#prey_sp3 = prey_sp2[,rownames(traits_xna)]
+#prey_PA <- prey_sp3
+#prey_PA[prey_PA>0] = 1
+
+#make trait selections
+#for trait model 0: includes vert & horz habitat, diel migration, refuge, body shape, phys defense and trophic level
+#note the model didn't converge with a continuous variable, trophic trait in it.
+#traits0 = traits_sp[,2:8] #146 spp 7 traits
+
+#for trait model 1: includes vert & horz habitat, diel migration, refuge, body shape, phys defense
+traits1 = traits_xna[,2:7] #100 spp 6 traits
+
+#using habitat combi, and other traits
+traits2 = traits_xna[,c(1,4:7)] #100 spp 5 traits
+
+# env matrix
+env_ocean <- prey_db[,1:2]
+dim(env_ocean) #39 obs, 2 factors
+
+#dim(prey_sp) #43 observation (rows) & 159 species (columns)
+#dim(traits2) #159 species (rows) & 8 traits (columns)
+#dim(env_ocean) #66 observation (rows) & 2 environmental variables (columns)
+
+#dim(prey_sp2) #40 observation (rows) & 88 species (columns)
+#dim(traits_xna) #88 species (rows) & 7 traits (columns)
+#dim(env_ocean) #40 observations & 2 env vars
+
+#str(env_ocean) #similar to tute, mix of factors and integers
+#str(traits_xna) #mix of factors and integers
+```
+
+```{r albacore matrix analyses & troubleshoot}
+
+alb.cor <- dudi.coa(prey_sp3, scannf = FALSE)
+# the problem might be with the prey matrix (where column weights are exceptionally small) 
+# or with the traits for reasons I don't know
+
+alb.env <- dudi.hillsmith(env_ocean$OceanBasinQ, row.w = alb.cor$lw, scannf = FALSE)
+
+alb.traits <- dudi.pca(traits3[,1:2], row.w = alb.cor$cw, scannf = FALSE) #
+# problems!!!
+# have removed all NA's from the trait matrix, and then subsetted all other matrices for prey and env values with same dimensions
+# have tried using both columns of env_ocean or just env_ocean$OceanBasinQ.
+# Error in v * row.w : non-numeric argument to binary operator
+# "row.w" = an optional row weights (by default, uniform row weights)
+# Ongoing problems with this even after removing all zero sum columns and obtaining row and column weights that are of the same order magnitude as in the tute. Prior to that my weight values were tiny.
+
+?dudi.pca
+
+rlq.aravo <- rlq(acpR.aravo, afcL.aravo, acpQ.aravo, scannf = FALSE)
+
+```
+
+```{r albacore 4th corner setup}
+
+str(env_ocean)
+glimpse(env_ocean$OceanBasinQ)
+View(env_ocean)
+
+# prey matrix: 
+#prey_sp3
+dim(prey_sp3) #40 observations, 100 species
+
+#save it
+#write.csv(prey_sp3, "prey_mv_clean2.csv")
+
+# trait matrix:
+#traits1 and traits2 depending on how to treat habitat as separate or combi
+
+#make a test subset
+#traits_sub = traits3[,c(1:5,7)] #remove trophic level because it is a continuous variable that has been coerced to a factor
+
+traits1 = data.frame(apply(traits1, 2, as.factor))
+traits2 = data.frame(apply(traits2, 2, as.factor))
+str(traits1)
+
+# env matrix:
+#env_ocean
+ocean = env_ocean$OceanBasinQ
+levels(ocean) 
+
+# may change later as the Mediterranean is the reference now
+#"Mediterranean" "NE Atlantic"   "NE Pacific"    "SW Pacific"
+ocean <- factor(ocean, levels = c("SW Pacific", "NE Pacific", "NE Atlantic", "Mediterranean"))
+
+# additional matrix dimensions check
+rownames(traits1) == colnames(prey_sp3) #TRUE = awesome
+
+
+```
+
+```{r albacore test manyglm model}
+
+## Run trial manyglm() to check for problems
+test_manyglm <-manyglm(prey_sp2~env_ocean$OceanBasinQ, data=prey_db, family="negative.binomial")
+prey_sp2 = as.mvabund(prey_sp2)
+is.mvabund(prey_sp2) #TRUE
+
+## problems with manyglm
+plot(test_manyglm)
+# data were badly skewed so fitted neg.bin model # way better!
+
+test_anova <- anova.manyglm(test_manyglm)
+# Get anova result
+test_anova
+
+# species significantly differ by ocean basin
+
+
+```
+
+```{r relevelling factors}
+
+#Env matrix: ocean_env
+
+levels(ocean)
+ocean <- factor(ocean, levels = c("SW Pacific", "NE Pacific", "NE Atlantic", "Mediterranean"))
+
+#Traits: traits1 & traits2
+
+str(traits1)
+levels(traits2$habitat_combi)
+traits2$habitat_combi <- factor(traits2$habitat_combi, levels = c("reef-associated", "benthopelagic", "continental benthic",  "continental demersal", "deep-sea demersal", "coastal epipelagic", "oceanic epipelagic", "mesopelagic", "bathypelagic"))
+
+levels(traits1$vert_habitat)
+#traits1$vert_habitat <- factor(traits1$vert_habitat, levels = c("benthic", "demersal", "benthopelagic", "epipelagic", "mesopelagic", "bathypelagic"))
+
+levels(traits1$horz_habitat)
+#can relevel to compare coastal to other levels of factor
+#traits1$horz_habitat <- factor(traits1$horz_habitat, levels = c("reef-associated", "coastal", "continental shelf", "continental slope", "oceanic"))
+
+levels(traits1$BodyShapeI)
+#traits1$BodyShapeI <- factor(traits1$BodyShapeI, levels = c("compressiform", "globiform", "fusiform", "elongated", "eel-like"))
+
+
+```
+
+
+```{r albacore Traits*Env model}
+
+# Model setup notes
+#use negative.binomial, as data are overdispersed
+#can run with either fitting method as manyglm or glm1path
+#find out difference between manyglm and glm1path methods
+#with MED as reference level
+trait_model1a <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits1, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+#with SW PAC as reference level
+trait_model1 <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits1, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+unique(traits1$vert_habitat) #6
+unique(traits1$horz_habitat) #5
+
+#using glm1path method
+trait_model1b <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits1, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    #method="manyglm",
+                    method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+# Model run using habitat_combi instead of two habitat traits (vert & horz)
+trait_model2 <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits2, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+#trait_model$fourth
+#summary(trait_model)
+
+trait_model2b <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits2, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    #method="manyglm",
+                    method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+# running test on trait model and below on species model
+anova(trait_model, trait_spp, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+
+#Using block resampling... 
+#Resampling begins for test 1.
+#Resampling run 0 finished. Time elapsed: 0.52 minutes...
+#Time elapsed: 0 hr 32 min 41 sec
+#Analysis of Deviance Table
+
+#Model  1: traitglm(L = prey_sp2, R = env_ocean$OceanBasinQ, Q = traits_sub,     family = "negative.binomial", method = "manyglm", composition = FALSE,     get.fourth = FALSE)
+#Model  2: traitglm(L = prey_sp2, R = env_ocean$OceanBasinQ, Q = traits_sub,     family = "negative.binomial", method = "manyglm", composition = FALSE)
+
+#Multivariate test:
+#                          Res.Df Df.diff   Dev Pr(>Dev)   
+#Main effects only           3234                          
+#env:trait (fourth corner)   3189      45 139.7     0.01 **
+#---
+#Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#Arguments: P-value calculated using 99 resampling iterations via PIT-trap block resampling (to account for correlation in testing).
+
+trait_model2 <- traitglm(L = prey_sp2, 
+                    R= env_ocean$OceanBasinQ, #could include date if we get the model to work
+                    Q = traits_sub, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    #method="manyglm", #will use this by default
+                    #method="glm1path",
+                    composition=FALSE)
+
+# troubleshoot notes
+# it should not matter whether L matrix is numeric, integer or mixed, neither does it matter if the R or Q matrices are mixed integers, numeric, or factors
+# removing zero sum columns of data in the L matrix matters a lot!!
+# so does making sure that ncols(L) = nrow(Q) --> that there are the same number of species as columns in the prey matrix and as rows in the trait matrix.
+# AND nrow(L) = nrow(R) --> this should always be the case if you subset your L and R matrices from your observation DB.
+# Now we have the Xvariable issue going on with the 4th corner output
+# tried line of code to make mvabund treat traits as factors
+# Need to take out Trophic Level, because this trait is continuous and has been converted to a factor to make the model converge.
+# Trying a model with method=manyglm to see how it treats my data
+
+```
+
+```{r albacore PA binom model}
+
+# Model setup notes
+#use negative.binomial, as data are overdispersed
+#can run with either fitting method as manyglm or glm1path
+#find out difference between manyglm and glm1path methods
+trait_model0 <- traitglm(L = prey_PA, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits1, #problem involved needing traits to be treated as factors
+                    family="binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+#using glm1path method
+trait_model0b <- traitglm(L = prey_PA, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits1, #problem involved needing traits to be treated as factors
+                    family="binomial",
+                    #method="manyglm",
+                    method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+# Model run using habitat_combi instead of two habitat traits (vert & horz)
+trait_model2 <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    Q = traits2, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+#trait_model$fourth
+#summary(trait_model)
+
+
+```
+
+```{r albacore SPP*Env model}
+
+# use negative.binomial
+
+trait_sppA <- traitglm(L = prey_sp3, 
+                    R= ocean, #could include date if we get the model to work
+                    #Q = traits_sub, #problem involved needing traits to be treated as factors
+                    family="negative.binomial",
+                    method="manyglm",
+                    #method="glm1path",
+                    composition=FALSE) #If TRUE this includes a row effect, such as for making predictions
+
+# running test on trait model and below on species model
+anova(trait_model1, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+
+## FO data
+# Resampling begins for test 1.
+#	Resampling run 0 finished. Time elapsed: 0.80 minutes...
+#Time elapsed: 0 hr 48 min 48 sec
+#Analysis of Deviance Table
+#
+#Model  1: traitglm(L = prey_sp3, R = ocean, Q = traits1, family = "negative.binomial",     #method = "manyglm", composition = FALSE, get.fourth = FALSE)
+#Model  2: traitglm(L = prey_sp3, R = ocean, Q = traits1, family = "negative.binomial",     #method = "manyglm", composition = FALSE)
+#                          Res.Df Df.diff   Dev Pr(>Dev)   
+#Main effects only           3797                          
+#env:trait (fourth corner)   3752      45 176.4     0.01 **
+#---
+#Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#Arguments: P-value calculated using 99 resampling iterations via PIT-trap block resampling #(to account for correlation in testing).
+
+## Using PA data
+#anova(trait_model0, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+#Using block resampling... 
+#Resampling begins for test 1.
+#	Resampling run 0 finished. Time elapsed: 0.06 minutes...
+#Time elapsed: 0 hr 7 min 1 sec
+#Analysis of Deviance Table
+
+#Model  1: traitglm(L = prey_PA, R = ocean, Q = traits1, family = "binomial",     method = "manyglm", composition = FALSE, get.fourth = FALSE)
+#Model  2: traitglm(L = prey_PA, R = ocean, Q = traits1, family = "binomial",     method = "manyglm", composition = FALSE)
+#                          Res.Df Df.diff   Dev Pr(>Dev)
+#Main effects only           3797                       
+#env:trait (fourth corner)   3752      45 6.063      0.8
+
+
+
+## Using habitat combi traits
+#anova(trait_model2, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+
+# Species SDMs model
+anova(trait_sppA, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+
+#No traits matrix entered, so will fit SDMs with different env response for each spp 
+#Using block resampling... 
+#Resampling begins for test 1.
+	#Resampling run 0 finished. Time elapsed: 0.78 minutes...
+	#Time elapsed: 1 hr 29 min 28 sec
+
+#Analysis of Deviance Table
+
+#Model  1: traitglm(L = prey_sp3, R = ocean, family = "negative.binomial",     method = "manyglm", composition = FALSE, get.fourth = FALSE)
+#Model  2: traitglm(L = prey_sp3, R = ocean, family = "negative.binomial",     method = "manyglm", composition = FALSE)
+
+#Multivariate test:
+#                          Res.Df Df.diff   Dev Pr(>Dev)   
+#Main effects only           3797                          
+#env:trait (fourth corner)   3500     297 665.5     0.01 **
+
+
+```
+
+```{r 4th corner model outputs}
+
+# Check residuals TEST
+qqnorm(residuals(trait_sppA)[which(residuals(trait_sppA)<10000)]); abline(c(0,1),col="red")
+# these are looking pretty good
+
+#omit non-finite residuals 
+resids.full = residuals(trait_model)[is.finite((residuals(trait_model)))]
+plot(resids.full) #residuals look good
+#abline(c(0,0),col="red")
+
+# Check fourth corner output for Fish Subset
+trait_model$fourth.corner
+
+trait_model$coefficients
+
+# anova.traitglm output
+anova(trait_model, nBoot=99, resamp="pit.trap", test="LR", block = NULL, show.time="all", bootID=NULL)
+
+```
+
+```{r 4th plot,fig.width=12, fig.height=18, echo=FALSE,message=FALSE, warning=FALSE}
+
+#### 4th Corner Plot
+
+#pdf("4plot.pdf") #, fig.width=12, fig.height=18
+
+## Plot 4th corner
+a        = max( abs(trait_model1$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) 
+temp = t(as.matrix(trait_model1$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "...")
+plot.4th = levelplot(temp, 
+                     xlab=list("Ocean Basin", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+dev.copy2pdf(file="albacore_traits_4th.pdf", width=25, height=25)
+
+```
+
+```{r 3rd plot,echo=FALSE,message=FALSE, warning=FALSE}
+## Plot 3rd corner ----
+#Halve the prey list
+trait_model1$coefficients[]
+
+#a        = max( abs(t_fullA$coefficients[42:2]) )
+#FishthirdA = t(as.matrix(t_fullA$coefficients[42:2]))
+
+#rownames(FishthirdA) = " "
+#Reverse colnames for FishthirdA
+#rev(sort(colnames(FishthirdA)))
+#colnames(FishthirdA) = c( list spp. )
+
+#2nd Half of data: [43:85]
+#repeat above code
+#plot.3rdA = levelplot(FishthirdA, 
+#                      xlab=list("Coefficient", cex=1.5),
+#                      ylab=list("Species", cex=1.5), 
+#                      col.regions=colort(100), at=seq(-a, a, length=100),
+#                      scales = list(x=list(rot = 45, cex=1.2, tck=0, tick.number=1),
+#                                    y=list(cex=1.2)), colorkey=list(labels=list(cex=1.2)))
+#print(plot.3rdA)
+
+#plot.3rdB = levelplot(FishthirdB, 
+#                      xlab=list("Coefficient", cex=1.5),
+#                      ylab=list("Species", cex=1.5), 
+#                      col.regions=colort(100), at=seq(-a, a, length=100),
+#                      scales = list(x=list(rot = 45, cex=1.2, tck=0, tick.number=1),
+#                                    y=list(cex=1.2)), colorkey=list(labels=list(cex=1.2)))
+
+#print(plot.3rdB)
+
+```
+
+```{r 2nd plot,echo=FALSE,message=FALSE, warning=FALSE}
+
+## Plot 2nd ----
+#find model coeffs
+#trait_model$coefficients[89:106]
+trait_model1b$coefficients[]
+
+a        = max( abs(trait_model$coefficients[20:30]))
+second = t(as.matrix(trait_model$coefficients[89:106]))
+View(second)
+#rownames(second) = " "
+#colnames(second) = c("Region: South",
+#                     "Site type: Haul-out",
+#                     "Trophic group: Benthic Invertivore",
+#                     "Trophic group: Browsing Herbivore",
+#                     "Trophic group: Mesopredator",
+#                     "Trophic group: Planktivore",
+#                     "Gregariousness: Solitary",
+#                     "Gregariousness: Pairs",
+#                     "Gregariousness: Schools",
+#                     "Seal prey: yes")
+plot.2nd = levelplot(second, 
+                     xlab=list("Coefficients", cex=1.5),
+                     ylab=list("Main Effects", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3, tck=0, tick.number=1),
+                                   y=list(cex=1.2)), colorkey=list(labels=list(cex=1.3)))
+print(plot.2nd)
+```
+
+## 4TH corner mvabund tutorial
+Tutorial docs...
+
+```{r 4th corner model tute}
+
+#### 4th corner Tutorial Code ####
+
+# load and check data
+data(antTraits)
+View(antTraits)
+str(antTraits$abund) # L = all prey abund data are integers
+str(antTraits$env) # R = can be int, num or factor apparently
+str(antTraits$traits) # Q = can be int, num or factor apparently
+
+# build and run model
+ft=traitglm(antTraits$abund,antTraits$env,antTraits$traits,method="manyglm")
+ft$fourth #print fourth corner terms
+
+# plotting 4th corner outputs
+library(lattice)
+a = max( abs(ft$fourth.corner) )
+colort = colorRampPalette(c("blue","white","red"))
+plot.4th = levelplot(t(as.matrix(ft$fourth.corner)), xlab="Environmental Variables",
+ylab="Species traits", col.regions=colort(100), at=seq(-a, a, length=100),
+scales = list( x= list(rot = 45)))
+print(plot.4th)
+plot(ft) # for a Dunn-smyth residual plot
+qqnorm(residuals(ft)); abline(c(0,1),col="red") # for a normal quantile plot.
+
+# predict to the first five sites
+predict(ft,newR=antTraits$env[1:5,])
+# refit using LASSO and less variables, including row effects and only two interaction terms:
+ft1=traitglm(antTraits$abund,antTraits$env[,3:4],antTraits$traits[,c(1,3)],
+             formula=~Shrub.cover:Femur.length+Shrub.cover:Pilosity,composition=TRUE,method="glm1path")
+ft1$fourth #notice LASSO penalty has one interaction to zero
+
+```
+

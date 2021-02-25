@@ -1,0 +1,134 @@
+################################################################################################
+# Map Longhurst provinces, align them with locations of albacore diet sampling
+################################################################################################
+
+#### Workspace ----
+install.packages("rnaturalearth")
+
+library(sf)
+library(rnaturalearth)
+library(ggplot2)
+library(dplyr)
+library(rgeos)
+library(sp)
+library(rgdal)
+
+getwd()
+#setwd("/Users/natasha/Documents/POSTDOC/TUNA DIETS/TUNASTATS/Longhurst")
+list.files()
+
+#### Map base ----
+
+# Base map
+world_map <- rnaturalearth::ne_countries(scale = 'small', returnclass = c("sf"))
+baseMap <- ggplot() +
+  geom_sf(data = world_map, size = .2, fill = "gray80", col = "gray90") +
+  theme(panel.grid.major = element_line(color = gray(0.9), linetype = "dashed", size = 0.5))
+baseMap
+
+# Add longhurst regions information:
+longhurst <- sf::read_sf(here("code/Longhurst/longhurst/Longhurst_world_v4_2010.shp")) 
+# or wherever you have it stored
+names(longhurst)
+head(longhurst)
+
+# simplify the object to make it 'usable'
+# Gives a warning, one/some of the regions may be off?
+longhurst <- longhurst %>% 
+  sf::st_simplify(dTolerance = 0.01) %>% 
+  dplyr::group_by(ProvCode,ProvDescr) %>% 
+  dplyr::summarise()
+
+#Warning messages:
+#1: In st_is_longlat(x) :
+#  bounding box has potentially an invalid value range for longlat data
+#2: In st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance) :
+#  st_simplify does not correctly simplify longitude/latitude data, dTolerance needs to be in decimal degrees
+
+plot(longhurst)
+
+
+# Plot provinces
+longMap <- baseMap + 
+  geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
+  ggtitle(paste("Longhurst Biogeochemical Provinces -", length(unique(longhurst$ProvCode)),"provinces"))+
+  theme(legend.position="none")+
+  geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
+               colour = "grey20", check_overlap=TRUE)+
+  #scale_fill_viridis()+
+  coord_sf(expand = FALSE)
+longMap
+
+# Longhurst shapefile
+longs <- readOGR("code/Longhurst/longhurst/Longhurst_world_v4_2010.shp")
+
+list.files(path="code/Longhurst")
+
+#### Albacore data ----
+
+#### March 2020 data ----
+# Albacore locations
+alb <- read.csv("alb_locn.csv", head = TRUE, sep= ",")
+# Set coordinates
+View(alb)
+coordinates(alb) <- ~ LocatLongitude + LocatLatitude
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(alb) <- proj4string(longs)
+
+# Extract province associated with each diet sampling data point
+# Note diet study longitudes are inconsistent: some in degrees east, some in degrees west? See map below
+provinces <- over(alb, longs)
+alb$province <- provinces$ProvDescr
+write.csv(alb, "Extracted Longhurst Regions ALB Diet Studies.csv")
+
+# Map
+albMap <- longMap + 
+  geom_point(data = as.data.frame(alb), aes(x = LocatLongitude, y = LocatLatitude))
+#Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S4 object with class SpatialPointsDataFrame
+albMap
+
+#### July 2020 updated data ----
+
+#alb_covars <- read.csv("alb_covars.csv", head = TRUE, sep= ",") #update file path
+View(alb_covars$data)
+
+coordinates(alb_covars) <- ~ LocatLongitude + LocatLatitude
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(alb_covars) <- proj4string(longs)
+
+# Extract province associated with each diet sampling data point
+# Note diet study longitudes are inconsistent: some in degrees east, some in degrees west? See map below
+provinces <- over(alb_covars, longs)
+alb_covars$province <- provinces$ProvDescr
+alb_covars$code <- provinces$ProvCode
+write.csv(alb_covars, "alb_covar_longhurst.csv")
+
+View(provinces)
+# Map
+albMap2 <- longMap + 
+  geom_point(data = as.data.frame(alb_covars), aes(x = LocatLongitude, y = LocatLatitude))
+#Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S4 object with class SpatialPointsDataFrame
+albMap2
+
+#### August 2020 updated data ----
+
+#alb_covars <- read.csv("alb_covars.csv", head = TRUE, sep= ",") #update file path
+View(alb_covars)
+
+coordinates(alb_covars) <- ~ LocatLongitude + LocatLatitude
+# Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
+proj4string(alb_covars) <- proj4string(longs)
+
+# Extract province associated with each diet sampling data point
+# Note diet study longitudes are inconsistent: some in degrees east, some in degrees west? See map below
+provinces <- over(alb_covars, longs)
+alb_covars$province <- provinces$ProvDescr
+alb_covars$code <- provinces$ProvCode
+write.csv(alb_covars, here("data/alb_covar_longhurst.csv"))
+
+View(provinces)
+# Map
+albMap2 <- longMap + 
+  geom_point(data = as.data.frame(alb_covars), aes(x = LocatLongitude, y = LocatLatitude)) #fill = code
+#Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S4 object with class SpatialPointsDataFrame
+albMap2
