@@ -10,27 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r Prey Morph Summarise}
-
-#Checking data
-str(prey_morph_clean) #1239 observations for prey species morphometrics
-sum(prey_morph_clean$t_length) #588152.1
-sum(prey_morph_clean$b_height) #129932.2
-
-#Calculate ratios/summarise data
-prey_morph_sum = prey_morph_clean %>% 
-  dplyr::select(prey_class:prey_sp, b_shape_r, eye_body_r, standard_total) %>% #life_stage, 
-  group_by(prey_sp) %>% #, life_stage
-  dplyr::summarize(b_shape_r = mean(b_shape_r), eye_body_r = mean(eye_body_r), standard_total = mean(standard_total))
-#b_shape_se = sd(b_shape_r)/sqrt(length(b_shape_r)), eye_body_se = sd(eye_body_r)/sqrt(length(eye_body_r))
-
-#Here we obtain species level ratios for body shape, eye diameter to body, and standard to total length.
-
-str(prey_morph_sum) #293 average values for 308 species (originally)
-
-write.csv(prey_morph_sum, here("data/prey_morph_sum.csv"))
-
-```
+## LOAD IN CLEAN DATASETS HERE
 
 ```{r LOAD prey_morph_sum}
 
@@ -40,28 +20,6 @@ prey_morph_sum = read.csv(here("/data/prey_morph_sum.csv")) %>%
 ```
 
 
-### Prey Quality Data
-
-These include data obtained for prey quality nutritional information based on wet weight measured %lipid content, %protein and energy density.
-Provide more info about these data.
-
-```{r Prey Qual Data Upload & Manip}
-#Load prey trait db
-prey_qual <- read.csv(here("data/prey_quality_ww.csv"))
-str(prey_qual) #Check data
-prey_qual$percent_lipid <- as.numeric(prey_qual$percent_lipid)
-
-#Summarise, we want an average value for each of the three metrics - ED, %L and %P for each species.
-prey_qual_sum = prey_qual %>%
-  #dplyr::select(prey_class:percent_lipid) %>% #life_stage, 
-  #drop_na(energy_density:percent_lipid) %>% #filter out any NA's in the desired columns
-  group_by(prey_sp) %>% #, life_stage
-  dplyr::summarize(energy_density = mean(energy_density, na.rm=TRUE), percent_protein = mean(percent_protein, na.rm=TRUE), percent_lipid = mean(percent_lipid, na.rm=TRUE))
-str(prey_qual_sum)
-
-write.csv(prey_qual_sum, here("data/prey_qual_sum.csv"))
-
-```
 
 ```{r LOAD prey_qual_sum}
 prey_qual_sum = read.csv(here("/data/prey_qual_sum.csv")) %>%
@@ -72,27 +30,6 @@ prey_qual_sum = read.csv(here("/data/prey_qual_sum.csv")) %>%
 
 ### Albacore prey trait db
 
-```{r Prey trait data load}
-#Load prey trait db
-prey_trait <- read.csv(here("data/prey_trait_db.csv"))
-str(prey_trait) #Check data
-#glimpse(prey_trait)
-
-#Additional Troubleshooting - done for previous iterations of data
-#More data cleaning
-summary(prey_trait$l_min_type)
-#checking l_min_type is good, also l_max_type
-#Noticed problem with defense_cat trait --> corrected in DB
-#summary(prey_trait$defense_cat)
-#unique(prey_trait$defense_cat)
-#glimpse(prey_trait)
-
-#Prey Trait selection
-
-prey_trait_select = prey_trait %>%
-  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status)
-
-```
 
 ```{r Prey traits adults - data extract}
 
@@ -104,134 +41,6 @@ str(prey_trait_adult) #Extracting 308 species and 18 variables
 str(prey_trait)
 ```
 
-### Prey Size / Morph tasks
-
-```{r Data Merge: FOR SIZE TASK --> Morph & Traits dbs}
-
-#Now need to split the min vs. max lengths to reshape those data and merge again later.
-prey_min = prey_trait %>% 
-  dplyr::select(prey_class:prey_sp, life_stage, l_min:l_min_type) %>%
-  tidyr::gather(key = "l_min", value = "length", l_min) %>%
-  dplyr::rename(measure = l_min, l_type = l_min_type)
-
-prey_max = prey_trait %>% 
-  dplyr::select(prey_class:prey_sp, life_stage, l_max:l_max_type) %>%
-  tidyr::gather(key = "l_max", value = "length", l_max) %>%
-  dplyr::rename(measure = l_max, l_type = l_max_type)
-
-#Gathering the wide didn't work well, because we want to retain 2/4 columns.
-#prey_trait_size <- gather(prey_trait, measure, length, factor_key=TRUE, 
-                          #-(prey_class:life_stage))
-
-#Now we want to bind this data again
-#names(prey_min) #check column names are the same for both dfs
-
-prey_length <- rbind(prey_min, prey_max)
-
-summary(prey_length$l_type)
-
-##NEED TO CLEAN THE L_TYPE VALUES
-
-prey_length = prey_length %>% #Note can use case_when() or if_ele() BUT you need to write one for each value and not try to combine them as strings using c()
-  mutate(`l_type_use`=case_when(prey_length$`l_type` == "TL" ~ "TL",
-                                prey_length$`l_type` == "SL" ~ "SL",
-                                prey_length$`l_type` == "FL" ~ "TL", #fork length in some pelagic fishes ~ TL
-                                prey_length$`l_type` == "NL" ~ "TL", #Notochord length in larvae ~ TL
-                                prey_length$`l_type` == "CL" ~ "TL", #Carapace length in some crustaceans ~ TL
-                                prey_length$`l_type` == "BL" ~ "TL", #Body length in larvae ~ TL
-                                prey_length$`l_type` == "GL" ~ "SL", #Gladius length = Mantle length ~ standard length
-                                prey_length$`l_type` == "ML" ~ "SL", #Mantle length ~ standard length
-                                prey_length$`l_type` == "AN" ~ "TL", #Anterior nectophore, appears only in a gastropod, going to take is as TL
-                                prey_length$`l_type` == "PCL" ~ "SL" #Pre-claval length for sunfish
-                                ) 
-         )
-
-#Next we need to merge our ratios data set and our lengths datasets.
-#Example: prey_trait_merge <-  merge(x = prey_trait_cats, y = prey_morph_sum, by = c("prey_sp", "life_stage"))
-prey_length_data = prey_length %>% 
-  left_join(prey_morph_sum, by="prey_sp") #%>% #c("prey_sp", "life_stage")
-
-prey_length_data = prey_length_data %>%
-  mutate(`length_tl`=if_else(prey_length_data$`l_type_use`=="SL", length/standard_total, length))
-  
-unique(prey_length_data$l_type_use)
-#Note we probably don't need the other ratios here right now, just standard_total
-
-##Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
-prey_length_wide = prey_length_data %>%
-  dplyr::select(prey_class:life_stage, measure, length_tl) %>%
-  spread(life_stage, length_tl, convert=TRUE) %>%
-  mutate(larva_adult = 100*larva/adult, juve_adult = 100*juvenile/adult)
-#we're going to want the maximum values out of this to use as cut-offs
-
-unique(prey_length_wide$prey_sp)
-str(prey_length_wide)
-#View(prey_length_wide)
-
-```
-
-```{r Prey length ratio summaries}
-
-dim(prey_length_wide)
-
-##Summarise means of larval and juvenile to adult body length ratios, by family, order and class:
-#Note that mean() function returns "NaN" whereas sum()/length() returns zeros for missing data.
-
-#By class
-prey_length_class <- plyr::ddply(prey_length_wide, c("prey_class", "measure"), summarise,
-                            larva_adult_c = mean(larva_adult, na.rm=TRUE),
-                            juve_adult_c = mean(juve_adult, na.rm=TRUE))
-
-#By order
-prey_length_order <- plyr::ddply(prey_length_wide, c("prey_order", "measure"), summarise,
-                            larva_adult_o = mean(larva_adult, na.rm=TRUE),
-                            juve_adult_o = mean(juve_adult, na.rm=TRUE))
-
-#By family
-prey_length_fam <- plyr::ddply(prey_length_wide, 
-                                c("prey_class", "prey_order", "prey_family", "measure"), 
-                                summarise,
-                                larva_adult_f = mean(larva_adult, na.rm=TRUE),
-                                juve_adult_f = mean(juve_adult, na.rm=TRUE))
-
-##Merge these data to calculate prey cut-offs for family, order and class
-#--> Code such that we use first family level mean, then order, then class, to fill in missing information for prey size cut-offs
-
-prey_length_ratios = prey_length_fam %>%
-  left_join(prey_length_order, by= c("prey_order", "measure")) %>% #join prey_order info
-  left_join(prey_length_class, by= c("prey_class", "measure")) %>% #join prey_class info
-  mutate(larva_adult_u = if_else(larva_adult_f == "NaN", 
-                                 if_else(larva_adult_o == "NaN", larva_adult_c, larva_adult_o), 
-                                 larva_adult_f),
-         juve_adult_u = if_else(juve_adult_f == "NaN", 
-                                if_else(juve_adult_o == "NaN", juve_adult_c, juve_adult_o), 
-                                juve_adult_f)) 
-##Make a cut-off selection based on family > order > class level information
-
-##Now we need to merge this back onto species, and make selection again based on whether the species level info is there
-#And remove troublesome NA's in original dataset
-prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
-prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
-
-prey_length_ratiosp = prey_length_wide %>%
-  dplyr::filter(measure == "l_max") %>%
-  dplyr::rename(l_larva = "larva", l_juve = "juvenile", l_adult = "adult") %>%
-  left_join(prey_length_ratios, by = c("prey_family", "prey_order", "prey_class", "measure")) %>%
-  #dplyr::select(prey_class:measure, larva_adult:juve_adult, larva_adult_u:juve_adult_u) %>%
-  mutate(larva_adult_use = if_else(larva_adult == "NaN", larva_adult_u, larva_adult),
-         juve_adult_use = if_else(juve_adult == "NaN", juve_adult_u, juve_adult)
-         ) %>%
-  dplyr::select(prey_class:l_larva, larva_adult_use:juve_adult_use) #%>%
-  #dplyr::filter(larva_adult_use != "NaN")
-
-names(prey_length_ratiosp)
-
-#---> Here we obtain size ratios for all 308 species in trait db
-##Problem with NA values
-glimpse(prey_length_wide) #includes min and max in longer df
-glimpse(prey_length_ratiosp)
-
-```
 
 ``` {r Prey size ratios graphs}
 #Check the ratios out with graphs
@@ -258,69 +67,6 @@ prey_length_ratios %>%
 #   group_vars(larva_adult)
 
 
-
-```
-
-
-The code above provides us with the following data that can be extracted:
-(i) prey trait data as rows for 3x life stages
-(ii) prey length, measurement and type info + average ratio metrics x3 for x3 life stages
-We also have gape length and width formula for yellowfin tuna applied here to albacore.
-
-We then need: 
---> what we especially need are max lengths for adults, juveniles and larvae with which to classify probable prey life stage based on either measured or estimated sizes.
-(i) length conversions: to convert any measurements that are not TL into TL, and also estimate body height from that.
-(ii) identify cut-offs for larval size ratios that are specific to the prey class
-(iii) identify cut-off for length at maturity or max juvenile size for cephalopods and crustaceans when that information is missing
-(iv) create a series of useable re
---> we can then select the appropriate life stage information
-
-
-## Albacore diet review data
-
-Here we need to load up the albacore global diet data to clean and select what we want.
-Tasks:
-(i) Need to make prey probable life stage selection
-(ii) Need to merge the probable prey life stage with the appropriate trait in the trait db
-
-```{r Albacore diet data load & manipulation}
-
-#Load diet data spreadsheet
-#need this: prey_length_ratiosp
-#This contains species as rows (#232) for which we have useable species through to class-level ratio information on larval:adult and juvenile:adult lengths
-
-#Also need prey_length_wide data for l_max for adult column
-#Should be able to get this from prey_length_ratiosp
-
-alb_global = read.csv(here("data/albacore_diet_master.csv")) %>%
-  dplyr::filter(TaxLev == "species") %>% #There are ~1103 observations when we filter by species
-  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1026 when we remove larval albacore diet studies (there are 3)
-  #dplyr::rename() %>%
-  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, pFOuse, pN, pM, maxl_use, maxl_type) %>%
-  mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>%
-  left_join(prey_morph_sum, by="prey_sp") %>% #need to add morph data to convert maxsl_use to maxtl_use
-  mutate(maxtl_use=if_else(alb_global$maxl_type %in% c("SL", "ML"), maxl_use/standard_total, maxl_use),
-         prey_age_reported_1=case_when(
-                             #prey_age_reported_1 == "NA" ~ "none",
-                             prey_age_reported_1 == "larvae" ~ "larva",
-                             prey_age_reported_1 == "juvenile" ~ "juvenile",
-                             prey_age_reported_1 == "adult" ~ "adult")
-         ) #%>%
-#Previous code for troubleshooting the size info available
-  #mutate(maxtl_use=if_else(alb_global$prey_class %in% c("Actinopterygii", "Cephalopoda"), maxl_use/standard_total, maxl_use)) 
-  #need to convert maxsl_use data
-  #Amazing now we have all the diet data and something like a useable length column
-
-#The NA's in the reported age for prey column cause problems later and need to be assigned a categorical value
-alb_global$prey_age_reported_1 <- as.character(alb_global$prey_age_reported_1)
-alb_global$prey_age_reported_1 <- replace_na(alb_global$prey_age_reported_1, "none")
-unique(alb_global$prey_age_reported_1)
-#Check this
-#View(alb_global)
-#glimpse(alb_global)
-
-#Save total df
-write.csv(alb_global, here("data/alb_global_diet_total.csv")) #1026 observations and 39 variables
 
 ```
 

@@ -1,0 +1,1051 @@
+ID,prey_class,prey_order,prey_family,prey_sp,prey_common,energy_density,percent_protein,percent_lipid
+1,Actinopterygii,Aulopiformes,Anotopteridae,Anotopterus pharao,daggertooth,10.87,NA,NA
+2,Actinopterygii,Aulopiformes,Chlorothalmidae,Chlorophthalmus agassizi,shortnose greeneye,NA,22.34,0.53
+3,Actinopterygii,Aulopiformes,Chlorothalmidae,Chlorophthalmus agassizi,shortnose greeneye,4.43,NA,NA
+4,Actinopterygii,Aulopiformes,Omusdidae,Omosudis lowii,hammerjaw,NA,NA,NA
+5,Actinopterygii,Aulopiformes,Paralepididae,Arctozenus risso,spotted barracudina,4.3,15.8,2.5
+6,Actinopterygii,Aulopiformes,Paralepididae,Arctozenus risso,spotted barracudina,NA,NA,6.73
+7,Actinopterygii,Aulopiformes,Paralepididae,Lestidiops sphyrenoides,NA,NA,NA,NA
+8,Actinopterygii,Aulopiformes,Paralepididae,Macroparalepis affinis,NA,NA,NA,NA
+9,Actinopterygii,Aulopiformes,Paralepididae,Paralepis coregonoides,sharpchin barracudina,NA,NA,NA
+10,Actinopterygii,Aulopiformes,Paralepididae,Paralepis speciosa,NA,NA,NA,NA
+11,Actinopterygii,Aulopiformes,Paralepididae,Sudis hyalina,NA,NA,NA,NA
+12,Actinopterygii,Beloniformes,Belonidae,Belone belone,garfish,6.2,20.1,2.9
+13,Actinopterygii,Beloniformes,Scomberesocidae,Scomberesox saurus,Atlantic saury,5.8,22.9,2.1
+14,Actinopterygii,Clupeiformes,Clupeidae,Sardina pilchardus,European sardine,8.7,17.8,11.7
+15,Actinopterygii,Clupeiformes,Clupeidae,Sardina pilchardus,European sardine,6.03,NA,NA
+16,Actinopterygii,Clupeiformes,Clupeidae,Sardinella aurita,round sardinella,NA,19.85125,7.155
+17,Actinopterygii,Clupeiformes,Clupeidae,Sardinella aurita,round sardinella,5.64,NA,NA
+18,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,European anchovy,5.8,19.6,3.4
+19,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,European anchovy,5.35,NA,NA
+20,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,European anchovy,5.8,NA,NA
+21,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,European anchovy,NA,19.65,2
+22,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,European anchovy,4.645,NA,NA
+23,Actinopterygii,Clupeiformes,Engraulidae,Engraulis japonicus,Japanese anchovy,6.29,18.3,7.7
+24,Actinopterygii,Clupeiformes,Engraulidae,Engraulis japonicus,Japanese anchovy,4.54,NA,NA
+25,Actinopterygii,Gadiformes,Gadidae,Micromesistius poutassou,blue whiting,4.4,17.4,1.5
+26,Actinopterygii,Gadiformes,Gadidae,Micromesistius poutassou,blue whiting,4.9,NA,NA
+27,Actinopterygii,Gadiformes,Gadidae,Micromesistius poutassou,blue whiting,NA,16.1,3.9
+28,Actinopterygii,Gadiformes,Lotidae,Gaidropsarus vulgaris,three-bearded rockling,5.5,17.2,2.6
+29,Actinopterygii,Myctophiformes,Myctophidae,Benthosema glaciale,glacier lantern fish,8.26,NA,NA
+30,Actinopterygii,Myctophiformes,Myctophidae,Benthosema glaciale,glacier lantern fish,5.9,13.9,7.5
+31,Actinopterygii,Myctophiformes,Myctophidae,Benthosema glaciale,glacier lantern fish,NA,14,13.7
+32,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus maderensis,madiera lantern fish,7.22,NA,NA
+33,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus maderensis,madiera lantern fish,NA,NA,8.2
+34,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,warming's lantern fish,NA,NA,5.1
+35,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,warming's lantern fish,NA,11.5,20.6
+36,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,warming's lantern fish,NA,NA,1.8
+37,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,warming's lantern fish,NA,NA,1.8
+38,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,warming's lantern fish,NA,NA,1.9
+39,Actinopterygii,Myctophiformes,Myctophidae,Diaphus luetkeni,Luetken's lanternfish,NA,NA,NA
+40,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,13.3,4.9
+41,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,12.13,10.7,24.2
+42,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,6.67,NA,NA
+43,Actinopterygii,Myctophiformes,Myctophidae,Electrona rissoi,electric lantern fish,NA,NA,NA
+44,Actinopterygii,Myctophiformes,Myctophidae,Electrona rissoi,electric lantern fish,5.155,NA,NA
+45,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus alatus,winged lanternfish,NA,NA,2.4
+46,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus alatus,winged lanternfish,3.838,13.8,0.2
+47,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus crocodilus,jewel lanternfish,4.1,16.1,1.6
+48,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus intricarius,diamindcheek lanternfish,NA,NA,NA
+49,Actinopterygii,Myctophiformes,Myctophidae,Lobianchia gemellarii,Cocco's lantern fish,8.6,18.8,8.6
+50,Actinopterygii,Myctophiformes,Myctophidae,Lobianchia gemellarii,Cocco's lantern fish,2.883,9.5,1.6
+51,Actinopterygii,Myctophiformes,Myctophidae,Myctophum punctatum,spotted lanternfish,NA,NA,NA
+52,Actinopterygii,Myctophiformes,Myctophidae,Notoscopelus kroyeri,lancet fish,7.9,16.6,11.9
+53,Actinopterygii,Ophidiiformes,Aphyonidae,Barathronus parfaiti,NA,NA,NA,NA
+54,Actinopterygii,Perciformes,Blenniidae,Blennius ocellaris,butterfly blenny,NA,NA,NA
+55,Actinopterygii,Perciformes,Bramidae,Brama orcini,bigtooth pomfret,NA,NA,NA
+56,Actinopterygii,Perciformes,Bramidae,Pterycombus petersii,prickly fanfish,NA,NA,NA
+57,Actinopterygii,Perciformes,Caproidae,Antigonia capros,deepbody boarfish,6.59,NA,NA
+58,Actinopterygii,Perciformes,Caproidae,Antigonia capros,deepbody boarfish,NA,15.95,2.16
+59,Actinopterygii,Perciformes,Caproidae,Capros aper,boarfish,6.2,17.2,4.8
+60,Actinopterygii,Perciformes,Carangidae,Selene setapinnis,Atlantic moonfish,NA,NA,NA
+61,Actinopterygii,Perciformes,Carangidae,Trachinotus ovatus,pompano,NA,17.27,10.31
+62,Actinopterygii,Perciformes,Carangidae,Trachurus japonicus,Japanese jack mackerel,5.64,3.71,21.41
+63,Actinopterygii,Perciformes,Carangidae,Trachurus trachurus,Atlantic horse mackerel,6,18.2,5
+64,Actinopterygii,Perciformes,Carangidae,Trachurus trachurus,Atlantic horse mackerel,6.03,NA,NA
+65,Actinopterygii,Perciformes,Carangidae,Trachurus trachurus,Atlantic horse mackerel,7,NA,NA
+66,Actinopterygii,Perciformes,Carangidae,Trachurus trachurus,Atlantic horse mackerel,NA,19.6,1.1
+67,Actinopterygii,Perciformes,Centrolophidae,Centrolophus niger,rudderfish,NA,17.25,6.074
+68,Actinopterygii,Perciformes,Gempylidae,Diplospinus multistriatus,striped escolar,10.21,NA,NA
+69,Actinopterygii,Perciformes,Gempylidae,Nealotus tripes,black snake mackerel,NA,NA,NA
+70,Actinopterygii,Perciformes,Gempylidae,Nesiarchus nasutus,black gemfish,NA,NA,NA
+71,Actinopterygii,Perciformes,Mullidae,Mullus barbatus barbatus,red mullet,NA,19.21,4.2
+72,Actinopterygii,Perciformes,Mullidae,Mullus barbatus barbatus,red mullet,4.79,18.5,4.61
+73,Actinopterygii,Perciformes,Nomeidae,Cubiceps gracilis,driftfish,NA,NA,NA
+74,Actinopterygii,Perciformes,Nomeidae,Psenes pellucidus,bluefin driftfish,NA,NA,NA
+75,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,21.6,0.92
+76,Actinopterygii,Perciformes,Scombridae,Scomber scombrus,Atlantic mackerel,7.9,17.5,10.5
+77,Actinopterygii,Perciformes,Scombridae,Scomber scombrus,Atlantic mackerel,7.17,NA,NA
+78,Actinopterygii,Perciformes,Scombridae,Scomber scombrus,Atlantic mackerel,8.4,12.3,13.2
+79,Actinopterygii,Perciformes,Sparidae,Boops boops,bogue,8,19.8,5.8
+80,Actinopterygii,Perciformes,Sparidae,Diplodus sargus,white seabream,NA,18.7,2.01
+81,Actinopterygii,Perciformes,Sparidae,Spondyliosoma cantharus,black seabream,6.9,18.3,6.8
+82,Actinopterygii,Perciformes,Tetragonuridae,Tetragonurus atlanticus,bigeye squaretail,NA,NA,NA
+83,Actinopterygii,Pleuronectiformes,Bothidae,Arnoglossus imperialis,imperial saldfish,5.4,18.8,1.8
+84,Actinopterygii,Scorpaeniformes,Gonatidae,Helicolenus dactylopterus,blackbelly rosefish,NA,20.25,0.82
+85,Actinopterygii,Scorpaeniformes,Gonatidae,Helicolenus dactylopterus,blackbelly rosefish,3.52,NA,NA
+86,Actinopterygii,Scorpaeniformes,Gonatidae,Helicolenus dactylopterus,blackbelly rosefish,9.2,18.2,12.2
+87,Actinopterygii,Scorpaeniformes,Peristediidae,Peristedion gracile,slender searobin,NA,NA,NA
+88,Actinopterygii,Scorpaeniformes,Triglidae,Eutrigla gurnardus,grey gurnard,NA,NA,1.55
+89,Actinopterygii,Stomiiformes,Sternoptychidae,Argyropelecus olfersii,NA,3.5,14.8,1.3
+90,Actinopterygii,Stomiiformes,Sternoptychidae,Maurolicus imperatorius,emperor seamount lightfish,NA,NA,NA
+91,Actinopterygii,Stomiiformes,Sternoptychidae,Maurolicus muelleri,silvery lightfish,4.097,14.9,1.4
+92,Actinopterygii,Stomiiformes,Sternoptychidae,Maurolicus muelleri,silvery lightfish,NA,12.3,17.8
+93,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,NA,8.2,2.01
+94,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,2.867,10.2,1.1
+95,Actinopterygii,Sygnathiformes,Centriscidae,Macroramphosus scolopax,longspine snipefish,4.88,NA,NA
+96,Actinopterygii,Syngnathiformes,Syngnathidae,Entelurus aequoreus,snake pipefish,4.7,14.7,1.9
+97,Cephalopoda,Decapodiformes,Chtenopterygidae,Chtenopteryx sicula,Sicilian comb-finned squid,NA,NA,NA
+98,Cephalopoda,Myopsida,Loliginidae,Alloteuthis subulata,European common squid,3.9,16.4,1.3
+99,Cephalopoda,Octopoda,Alloposidae,Haliphron atlanticus,seven-arm octopus,NA,NA,NA
+100,Cephalopoda,Octopoda,Amphitretidae,Japetella diaphana,pelagic octopus,NA,NA,NA
+101,Cephalopoda,Octopoda,Amphitretidae,Japetella heathi,pelagic octopoda,2.8,13.8,NA
+102,Cephalopoda,Octopoda,Amphitretidae,Japetella heathi,pelagic octopoda,NA,0.225,NA
+103,Cephalopoda,Octopoda,Argonautidae,Argonauta argo,greater argonaut,NA,NA,NA
+104,Cephalopoda,Octopoda,Argonautidae,Argonauta nodosus,knobbed argonaut,NA,NA,NA
+105,Cephalopoda,Octopoda,Eledonidae,Eledone cirrhosa,curled octopus,4.7,16.2,2.8
+106,Cephalopoda,Octopoda,Octopodidae,Octopus vulgaris,common octopus,NA,15.16,0.82
+107,Cephalopoda,Octopoda,Octopodidae,Octopus vulgaris,common octopus,NA,15.79,0.45
+108,Cephalopoda,Octopoda,Octopodidae,Octopus vulgaris,common octopus,NA,15.52,0.21
+109,Cephalopoda,Octopoda,Octopodidae,Octopus vulgaris,common octopus,3.42,17.9,0.75
+110,Cephalopoda,Octopoda,Octopodidae,Octopus vulgaris,common octopus,NA,NA,1.885
+111,Cephalopoda,Octopoda,Octopodidae,Pteroctopus tetracirrhus,fourhorn octopus,NA,NA,NA
+112,Cephalopoda,Octopoda,Octopodidae,Scaeurgus unicirrhus,unihorn octopus,NA,NA,NA
+113,Cephalopoda,Octopoda,Tremoctopodidae,Tremoctopus violaceus,violet blacket octopods,NA,NA,NA
+114,Cephalopoda,Oegopsida,Ancistrocheiridae,Ancistrocheirus lesueurii,sharpear enope squid,NA,NA,NA
+115,Cephalopoda,Oegopsida,Brachioteuthidae,Brachioteuthis riisei,common arm squid,NA,NA,NA
+116,Cephalopoda,Oegopsida,Chiroteuthidae,Chiroteuthis veranii,long-armed squid,NA,NA,1.2
+117,Cephalopoda,Oegopsida,Cranchiidae,Galiteuthis armata,armed cranch squid,NA,NA,NA
+118,Cephalopoda,Oegopsida,Cranchiidae,Helicocranchia pfefferi,Pfeffer's cranch squid,NA,NA,NA
+119,Cephalopoda,Oegopsida,Cranchiidae,Liocranchia reinhardtii,Reinhardt's cranch squid,NA,NA,NA
+120,Cephalopoda,Oegopsida,Cranchiidae,Teuthowenia megalops,NA,1.69,NA,NA
+121,Cephalopoda,Oegopsida,Enoploteuthidae,Abralia redfieldi,NA,NA,NA,NA
+122,Cephalopoda,Oegopsida,Enoploteuthidae,Abraliopsis felis,enoploteuthid squid,4.4,17.4,NA
+123,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,3.93,3.19,11.33
+124,Cephalopoda,Oegopsida,Gonatidae,Gonatus berryi,berry armhook squid,5,8.9,6.2
+125,Cephalopoda,Oegopsida,Gonatidae,Gonatus steenstrupi,Atlantic gonate squid,3.78,NA,NA
+126,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis bonnellii,umbrella squid,NA,NA,NA
+127,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis reversa,elongate jewell squid,NA,NA,NA
+128,Cephalopoda,Oegopsida,Lycoteuthidae,Lycoteuthis lorigera,NA,NA,NA,3.2
+129,Cephalopoda,Oegopsida,Octopoteuthidae,Octopoteuthis sicula,Rüppell's octopus squid,4.5,17.4,NA
+130,Cephalopoda,Oegopsida,Octopoteuthidae,Octopoteuthis sicula,Rüppell's octopus squid,3.08,NA,NA
+131,Cephalopoda,Oegopsida,Ocythoidae,Ocythoe tuberculata,tuberculate pelagic octopus,NA,NA,NA
+132,Cephalopoda,Oegopsida,Ommastrephidae,Hyaloteuthis pelagica,glassy flying squid,NA,NA,NA
+133,Cephalopoda,Oegopsida,Ommastrephidae,Illex argentinus,Argentine shortfin squid,5.014,NA,NA
+134,Cephalopoda,Oegopsida,Ommastrephidae,Illex argentinus,Argentine shortfin squid,NA,NA,1.12
+135,Cephalopoda,Oegopsida,Ommastrephidae,Illex argentinus,Argentine shortfin squid,NA,16,NA
+136,Cephalopoda,Oegopsida,Ommastrephidae,Illex coindetii,shortfin squid,4.3,17.3,1.9
+137,Cephalopoda,Oegopsida,Ommastrephidae,Illex coindetii,shortfin squid,NA,NA,1.02
+138,Cephalopoda,Oegopsida,Ommastrephidae,Ommastrephes bartramii,neon flying squid,NA,NA,0.96
+139,Cephalopoda,Oegopsida,Ommastrephidae,Ornithoteuthis antillarum,bird squid,NA,NA,NA
+140,Cephalopoda,Oegopsida,Ommastrephidae,Ornithoteuthis volatilis,shiny bird squid,NA,NA,NA
+141,Cephalopoda,Oegopsida,Ommastrephidae,Sthenoteuthis oualaniensis,purpleback flying squid,NA,NA,NA
+142,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes pacificus,Japanese flying squid,NA,17.675,1.935
+143,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes pacificus,Japanese flying squid,NA,16.5,1.01
+144,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes pacificus,Japanese flying squid,3.75,NA,NA
+145,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes sagittatus,European flying squid,4.01,NA,NA
+146,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes sagittatus,European flying squid,NA,NA,11.02
+147,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes sagittatus,European flying squid,NA,NA,1.7
+148,Cephalopoda,Oegopsida,Ommastrephidae,Todaropsis eblanae,lesser flying squid,4.4,18,2.4
+149,Cephalopoda,Oegopsida,Onychoteuthidae,Ancistroteuthis lichtensteinii,angel squid,NA,NA,NA
+150,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis banksii,common clubhook squid,4.27,NA,NA
+151,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.6,12.8,NA
+152,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,6.1,NA,NA
+153,Cephalopoda,Oegopsida,Pyroteuthidae,Pterygioteuthis giardi,roundear enope squid,NA,NA,NA
+154,Cephalopoda,Oegopsida,Pyroteuthidae,Pyroteuthis margaritifera,jewel enope squid,NA,NA,NA
+155,Cephalopoda,Sepiida,Sepiolidae,Heteroteuthis dispar,odd bobtail,NA,NA,NA
+156,Cephalopoda,Sepiida,Sepiolidae,Sepietta oweniana,common bobtail squid,NA,NA,NA
+157,Gastropoda,Caenogastropoda,Epitoniodea,Janthina exigua,dwarf janthina,NA,NA,NA
+158,Gastropoda,Littorinimorpha,Atlantidae,Atlanta peronii,NA,NA,NA,NA
+159,Gastropoda,Littorinimorpha,Carinariidae,Carinaria lamarckii,NA,NA,NA,NA
+160,Hexanauplia,Calanoida,Calanidae,Calanus finmarchicus,NA,NA,NA,7.54
+161,Hexanauplia,Calanoida,Calanidae,Calanus finmarchicus,NA,6.36,NA,9.44
+162,Hexanauplia,Calanoida,Calanidae,Calanus finmarchicus,NA,NA,11,6.9
+163,Hydrozoa,Siphonophorae,Diphyidae,Chelophyes appendiculata,NA,NA,NA,NA
+164,Malacostraca,Amphipoda,Brachyscelidae,Brachyscelus crusculum,NA,NA,NA,NA
+165,Malacostraca,Amphipoda,Eupronoidae,Parapronoe crustulum,NA,NA,NA,NA
+166,Malacostraca,Amphipoda,Hyperiidae,Hyperia galba,NA,1.9491,8.99,1.5648
+167,Malacostraca,Amphipoda,Hyperiidae,Hyperia galba,NA,NA,3.9445,2.415
+168,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,NA,3.107,NA,NA
+169,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,NA,NA,NA,3.7
+170,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,NA,NA,NA,1.77
+171,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,NA,NA,NA,2.12
+172,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,NA,2.88,7.5,2.2
+173,Malacostraca,Amphipoda,Lanceolidae,Lanceola sayana,NA,NA,NA,NA
+174,Malacostraca,Amphipoda,Oxyccephalidae,Leptocotis tenuirostris,NA,NA,NA,NA
+175,Malacostraca,Amphipoda,Oxyccephalidae,Streetsia challengeri,NA,NA,NA,NA
+176,Malacostraca,Amphipoda,Phrosinidae,Anchylomera blossevillei,NA,NA,NA,NA
+177,Malacostraca,Amphipoda,Phrosinidae,Phrosina semilunata,NA,NA,NA,NA
+178,Malacostraca,Amphipoda,Phrosinidae,Primno macropa,NA,4.076,8.25,4.75
+179,Malacostraca,Amphipoda,Phrosinidae,Primno macropa,NA,NA,NA,1.24
+180,Malacostraca,Amphipoda,Phrosinidae,Primno macropa,NA,NA,4.8,NA
+181,Malacostraca,Amphipoda,Platyscelidae,Platyscelus ovoides,NA,NA,NA,NA
+182,Malacostraca,Amphipoda,Platyscelidae,Platyscelus serratulus,NA,NA,NA,NA
+183,Malacostraca,Amphipoda,Vibiliidae,Vibilia gibbosa,NA,NA,NA,NA
+184,Malacostraca,Decapoda,Acanthephyridae,Acanthephyra pelagica,deep-sea shrimp,NA,NA,3.4
+185,Malacostraca,Decapoda,Acanthephyridae,Acanthephyra pelagica,deep-sea shrimp,NA,NA,3.8
+186,Malacostraca,Decapoda,Acanthephyridae,Acanthephyra pelagica,deep-sea shrimp,NA,NA,13.75
+187,Malacostraca,Decapoda,Acanthephyridae,Acanthephyra pelagica,deep-sea shrimp,NA,NA,5.2
+188,Malacostraca,Decapoda,Alpheidae,Alpheus glaber,red snapping shrimp,NA,NA,NA
+189,Malacostraca,Decapoda,Axiidae,Axius stirhynchus,shrimp,NA,NA,NA
+190,Malacostraca,Decapoda,Benthesicymidae,Gennadas elegans,shrimp,NA,NA,5.6
+191,Malacostraca,Decapoda,Oplophpridae,Systellaspis debilis,NA,3.156,9.3,1.9
+192,Malacostraca,Decapoda,Oplophpridae,Systellaspis debilis,NA,NA,NA,3.5
+193,Malacostraca,Decapoda,Oplophpridae,Systellaspis debilis,NA,NA,NA,2.37
+194,Malacostraca,Decapoda,Palinuridae,Palinurus mauritanicus,pink spiny lobster,NA,NA,NA
+195,Malacostraca,Decapoda,Pasiphaeidae,Parapasiphae sulcatifrons,grooveback shrimp,NA,NA,14.6
+196,Malacostraca,Decapoda,Polybiidae,Polybius henslowii,Henslow's swimming crab,4.2,14.1,1.4
+197,Malacostraca,Decapoda,Scyllaridae,Scyllarus arctus,small European locust lobster,NA,NA,NA
+198,Malacostraca,Decapoda,Sergestidae,Eusergestes arcticus,sergestid shrimp,NA,15.5,9.4
+199,Malacostraca,Decapoda,Sergestidae,Robustosergia robusta,sergestid shrimp,NA,NA,NA
+200,Malacostraca,Euphausiacea,Euphausiidae,Meganyctiphanes norvegica,Norwegian Krill,3.9,15.8,1.2
+201,Malacostraca,Euphausiacea,Euphausiidae,Meganyctiphanes norvegica,Norwegian Krill,NA,15.5,5.5
+202,Malacostraca,Euphausiacea,Euphausiidae,Meganyctiphanes norvegica,Norwegian Krill,NA,12.452,3.784
+203,Malacostraca,Euphausiacea,Euphausiidae,Meganyctiphanes norvegica,Norwegian Krill,NA,NA,2
+204,Malacostraca,Euphausiacea,Euphausiidae,Nematoscelis megalops,krill,NA,NA,2.625
+205,Malacostraca,Euphausiacea,Euphausiidae,Nematoscelis megalops,krill,NA,NA,1.5
+206,Malacostraca,Euphausiacea,Euphausiidae,Nyctiphanes australis,NA,3,NA,NA
+207,Malacostraca,Euphausiacea,Euphausiidae,Stylocheiron abbreviatum,NA,NA,NA,2.4
+208,Malacostraca,Euphausiacea,Euphausiidae,Stylocheiron abbreviatum,NA,NA,NA,1.66
+209,Malacostraca,Isopoda,Idoteidae,Idotea metallica,NA,NA,NA,NA
+210,Malacostraca,Isopoda,Idoteidae,Idotea metallica,NA,NA,NA,NA
+211,Malacostraca,Lophogastrida,Gnathophausiidae,Neognathophausia ingens,giant red mysid,2.005,3.5,2.5
+212,Malacostraca,Lophogastrida,Gnathophausiidae,Neognathophausia ingens,giant red mysid,NA,6.6137,7.9607
+213,Malacostraca,Lophogastrida,Gnathophausiidae,Neognathophausia ingens,giant red mysid,NA,1.49,1.7
+214,Actinopterygii,Argentiniformes,Bathylagidae,Bathylagoides wesethi,snubnose blacksmelt,2.85,8.5,2.4
+215,Actinopterygii,Argentiniformes,Bathylagidae,Leuroglossus stilbius,California smoothtongue,3.899,6.9,6.2
+216,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,2.6
+217,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,2.5
+218,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,3
+219,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.5
+220,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,2.3
+221,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,2.1
+222,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1
+223,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1
+224,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.4
+225,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,0.8
+226,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,0.6
+227,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,0.7
+228,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.2
+229,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.2
+230,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.4
+231,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.3
+232,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.33
+233,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.17
+234,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.13
+235,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,jacksmelt,NA,NA,1.45
+236,Actinopterygii,Aulopiformes,Anotopteridae,Anotopterus nikparini,North Pacific daggertooth,NA,NA,NA
+237,Actinopterygii,Aulopiformes,Anotopteridae,Anotopterus pharao,daggertooth,NA,NA,NA
+238,Actinopterygii,Aulopiformes,Paralepididae,Lestidiops ringens,slender barracudina,NA,NA,NA
+239,Actinopterygii,Aulopiformes,Paralepididae,Magnisudis atlantica,duckbill barracudina,NA,NA,6.19
+240,Actinopterygii,Beloniformes,Belonidae,Strongylura exilis,Californian needlfish,NA,NA,NA
+241,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,7.61,20,11.1
+242,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,33.3
+243,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,4.5666,19.141665,3.308248
+244,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,5.382,19.162611,4.929912
+245,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,NA
+246,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.4
+247,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.1
+248,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,2.8
+249,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.3
+250,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.4
+251,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.4
+252,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,2.7
+253,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,2.9
+254,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,8.9
+255,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,6.4
+256,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.4
+257,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,16.3
+258,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,15.7
+259,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,12
+260,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,14.4
+261,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,18.1
+262,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,13.7
+263,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,10.7
+264,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,9.2
+265,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,11.1
+266,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,7.6
+267,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,6.8
+268,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,12.6
+269,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,8.1
+270,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,11
+271,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,9.5
+272,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,5.9
+273,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,5.5
+274,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,4.5
+275,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,3.9
+276,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,6.5
+277,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,NA,7.7
+278,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,6.427,NA,NA
+279,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,NA,20.8,NA
+280,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,Pacific saury,7.5,NA,NA
+281,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.84,NA,NA
+282,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,NA
+283,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,NA
+284,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,NA
+285,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,14.1,NA
+286,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,3.69,NA,2.352
+287,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.84,NA,7.4236
+288,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,5.7
+289,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,4.3
+290,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,4.8
+291,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,3.5
+292,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,10.4
+293,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,11.4
+294,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,4.7
+295,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,8
+296,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,14.2
+297,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.4,14.5,17.9
+298,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.6,12.8,5.6
+299,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8.7,16,15.1
+300,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,7.9,17.1,12.2
+301,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5,16.8,4.4
+302,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.9,17,6.8
+303,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8.5,16.6,14.3
+304,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.8,17.3,17.3
+305,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.4,17,16.4
+306,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.7,16.1,20.4
+307,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,6.24,18.3,7.04
+308,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8.04,15.84,13.33
+309,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8.64,15.48,15.18
+310,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.56,15.45,6.75
+311,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.62,15.09,7.1
+312,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.95,14.21,5.74
+313,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.59,15.53,20.51
+314,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.04,15.21,15.87
+315,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.95,16.77,7.09
+316,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.46,15.15,17.6
+317,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,13.3
+318,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,4.4
+319,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,6.6944,NA,NA
+320,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4392,NA,NA
+321,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,6.276,NA,NA
+322,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4392,NA,NA
+323,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.6024,NA,NA
+324,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4392,NA,NA
+325,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,6.276,NA,NA
+326,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.6024,NA,NA
+327,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4392,NA,NA
+328,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.184,NA,NA
+329,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.6232,NA,NA
+330,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,13.8072,NA,NA
+331,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.2048,NA,NA
+332,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,12.1336,NA,NA
+333,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,12.1336,NA,NA
+334,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,13.8072,NA,NA
+335,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.46,NA,NA
+336,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,12.552,NA,NA
+337,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,12.552,NA,NA
+338,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.8784,NA,NA
+339,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,3.431,12.1,1.43
+340,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.7,NA,NA
+341,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8,NA,NA
+342,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.4,NA,NA
+343,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.6,NA,NA
+344,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.7,NA,NA
+345,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.7,NA,NA
+346,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.1,NA,NA
+347,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.2,NA,NA
+348,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.4,NA,NA
+349,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.4,NA,NA
+350,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.2,NA,NA
+351,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4,NA,NA
+352,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.7,NA,NA
+353,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.1,NA,NA
+354,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.1,NA,NA
+355,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.3,NA,NA
+356,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.6,NA,NA
+357,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.8,NA,NA
+358,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.6,NA,NA
+359,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,6,NA,NA
+360,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.4,NA,NA
+361,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5,NA,NA
+362,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.8,NA,NA
+363,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.2,NA,NA
+364,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,3.9,NA,NA
+365,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,2.6,NA,NA
+366,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,3.1,NA,NA
+367,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.5,NA,NA
+368,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.6,NA,NA
+369,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.6,NA,NA
+370,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.4,NA,NA
+371,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.3,NA,NA
+372,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,2.5,NA,NA
+373,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,3.5,NA,NA
+374,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.5,NA,NA
+375,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,4.6,NA,NA
+376,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.9,NA,NA
+377,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,5.5,NA,NA
+378,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,20,5.1
+379,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,18.5,12.2
+380,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,16.3,18
+381,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8.4,14.9,12.5
+382,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,8,12.4,12.9
+383,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.1,16.5,13.1
+384,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.1,16,13.6
+385,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.4,16.7,13.9
+386,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.8,13.2,17.2
+387,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.3,16.9,16.1
+388,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.1,15.9,16.3
+389,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.1,15.2,16.7
+390,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.3,15.9,16.8
+391,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.4,15.1,17.6
+392,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.1,13.9,14.8
+393,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.7,17.6,16.8
+394,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.1,15.2,16.7
+395,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.8,15,15.9
+396,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.4,15.2,14.9
+397,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10.4,15.5,17.1
+398,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.9,14.6,16.4
+399,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,9.9,14.2,16.8
+400,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,10,15,16.5
+401,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,8
+402,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,8.1
+403,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,6.4
+404,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,5.1
+405,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,5.2
+406,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,3.3
+407,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,6.36
+408,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,2.02
+409,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,3.13
+410,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,3.38
+411,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,7.59
+412,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,Pacific herring,NA,NA,5.65
+413,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,4.5
+414,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,5
+415,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,5.8
+416,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,6
+417,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,6.6
+418,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,5.2
+419,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,3.1
+420,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,2.6
+421,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,2.8
+422,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,3
+423,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,3.7
+424,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,4.7
+425,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,7.2
+426,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,7.1
+427,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,4.5
+428,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,3.7
+429,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,1.8
+430,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,2.2
+431,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,3.7
+432,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,6
+433,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,7
+434,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,17.7,13.73
+435,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,17.81,13.3
+436,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,18.33,18.6
+437,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,17.04,19.87
+438,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,16.64,21.02
+439,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,16.32,19.38
+440,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,17.18,18.68
+441,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,5.5,17.9,2.2
+442,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,9.2,17.1,12.9
+443,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,9.08,NA,12.4
+444,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,8.17
+445,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,17.24
+446,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,20.38
+447,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,19.27
+448,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+449,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+450,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+451,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+452,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+453,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+454,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,Pacific sardine,NA,NA,NA
+455,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,6.35,13.8,10.7
+456,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+457,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,5.15,NA,NA
+458,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+459,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+460,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+461,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+462,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+463,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+464,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,NA
+465,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,5.48,NA,4.8
+466,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,9.58,NA,NA
+467,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,6.6,NA,NA
+468,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,0.92
+469,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,9.73
+470,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,4.91
+471,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,California anchovy,NA,NA,5.68
+472,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,3.45,NA,NA
+473,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,NA,NA,2.7
+474,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,NA,NA,2.2
+475,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,3.04,NA,1.14595
+476,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,3.16,NA,0.72373
+477,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,NA,NA,1.2
+478,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,NA,NA,1.6
+479,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,NA,NA,1.3
+480,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,2.7,8.8,3.9
+481,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,4.7,12.3,4.3
+482,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,4.6,11.7,4.5
+483,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,4.7,11.7,4.7
+484,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,Pacific tomcod,4.3,10.3,4.6
+485,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,3.77,14.5,3.6
+486,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,NA,11.6,1.3
+487,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,3.77,NA,1.3
+488,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,6.15048,NA,NA
+489,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,NA,21,NA
+490,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,NA,16.1,2.5
+491,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,North Pacific hake,2.594,9.913,0.595
+492,Actinopterygii,Lampriformes,Trachipteridae,Desmodema polystictum,polka-dot ribonfish,NA,NA,NA
+493,Actinopterygii,Lampriformes,Trachipteridae,Trachipterus trachypterus,Mediterranean dealfish,NA,NA,NA
+494,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,NA,NA,9.2
+495,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,NA,NA,9.6
+496,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,NA,NA,7.6
+497,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,5.67,9.3,9.4
+498,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,9.39,9.7,19.3
+499,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,dogtooth lampfish,6.41,8.6,11.9
+500,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,8.57,12.2,16.4
+501,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,7.1
+502,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,7.8
+503,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,7
+504,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,4.8
+505,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,11.5
+506,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,15.8
+507,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,3.5
+508,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,NA,11.5
+509,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,12.6,NA
+510,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,12.13,10.7,24.2
+511,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,6.67,NA,NA
+512,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,California headlightfish,NA,10.756,NA
+513,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus mexicanus,lanterfish,NA,NA,NA
+514,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium regale,pinpoint lampfish,7.6,11.8,12.1
+515,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,5.66,9.2,9.5
+516,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,7.96,9.7,15.5
+517,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,9.2,10.3,18.5
+518,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,NA,NA,14.2
+519,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,NA,NA,15.4
+520,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,NA,NA,6
+521,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,NA,NA,11.7
+522,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,6.937,11.6,12.1825
+523,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,broadfin lampfish,NA,7.211,NA
+524,Actinopterygii,Myctophiformes,Myctophidae,Protomyctophum crockeri,California flashlightfish,NA,NA,5.2
+525,Actinopterygii,Myctophiformes,Myctophidae,Protomyctophum crockeri,California flashlightfish,NA,NA,1.4
+526,Actinopterygii,Myctophiformes,Myctophidae,Protomyctophum crockeri,California flashlightfish,NA,NA,4.6
+527,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,7.38,10.6,13.1
+528,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,NA,NA,17.3
+529,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,8.54,NA,NA
+530,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,NA,NA,15.6
+531,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,NA,NA,15.7
+532,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,NA,NA,18.7
+533,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,7.97,10.7,13.7
+534,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,10.59,12.6,19.1
+535,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,NA,10.802,NA
+536,Actinopterygii,Myctophiformes,Myctophidae,Stenobrachius leucopsarus,northern lampfish,9.324,NA,16.919397
+537,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,4.26,13.5,3.8
+538,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,NA,2.6
+539,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,NA,3.6
+540,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,NA,3
+541,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,NA,2.1
+542,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,NA,4.1
+543,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,NA,14.058,NA
+544,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,3.75,NA,NA
+545,Actinopterygii,Myctophiformes,Myctophidae,Tarletonbeania crenularis,blue lanternfish,5.37,NA,NA
+546,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,6.99,8.8,13
+547,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,NA,NA,13
+548,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,NA,NA,8.4
+549,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,NA,NA,13.5
+550,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,NA,NA,13.3
+551,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,Mexican lampfish,NA,NA,14.5
+552,Actinopterygii,Ophidiiformes,Ophdiidae,Chilara taylori,spotted cusk-eel,3.39,NA,NA
+553,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,7.49,NA,14.5
+554,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,19
+555,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+556,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+557,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.7,NA,NA
+558,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+559,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+560,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+561,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+562,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+563,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+564,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+565,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+566,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+567,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+568,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+569,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+570,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+571,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.62,NA,NA
+572,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.7,NA,NA
+573,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.7,NA,NA
+574,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,12.55,NA,NA
+575,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+576,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+577,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+578,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+579,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.46,NA,NA
+580,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+581,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+582,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,11.3,NA,NA
+583,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.88,NA,NA
+584,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.7,NA,NA
+585,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,13.9
+586,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,11.1
+587,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,13.3
+588,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,12.4
+589,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,14.3
+590,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,15.1
+591,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,15.9
+592,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,NA,14.8
+593,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.79,12.07,14.92
+594,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.84,12.06,14.89
+595,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.79,11.92,14.6
+596,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.79,15.12
+597,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.97,15.04
+598,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.99,20.53
+599,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.22,19.6
+600,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,10.94,17.92
+601,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.96,18.64
+602,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.51,18.32
+603,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.61,17.35
+604,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.61,19.01
+605,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.51,18.31
+606,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.37,17.11
+607,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.94,21.68
+608,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.31,19.57
+609,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.51,18.96
+610,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.19,18.47
+611,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.26,18.08
+612,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.57,16.75
+613,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12,17.4
+614,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.65,19.68
+615,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.07,19.01
+616,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.14,18.85
+617,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.98,21.42
+618,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.45,18.98
+619,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.47,19.23
+620,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.58,20.33
+621,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,11.92,17.41
+622,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.62,20.26
+623,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,13.14,8.7
+624,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.73,20.14
+625,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.71,20.28
+626,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.58,19.25
+627,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.17,19.19
+628,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.54,20.49
+629,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,12.52,19.86
+630,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.35,12.22,18.93
+631,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,10.12,13.03,20.6
+632,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.5,13.98,15.61
+633,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.41,12.44,16.21
+634,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,6.44,11.04,11.59
+635,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,8.95,13,17.4
+636,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.42,13.26,18.54
+637,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.52,12.72,19.1
+638,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,9.14,12.14,18.4
+639,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,eulachon,NA,14.6,6.25
+640,Actinopterygii,Perciformes,Anarhichadidae,Anarrhichthys ocellatus,wolf eel,NA,NA,NA
+641,Actinopterygii,Perciformes,Bramidae,Brama brama,Atlantic pomfret,NA,NA,NA
+642,Actinopterygii,Perciformes,Bramidae,Brama orcini,bigtooth pomfret,NA,NA,NA
+643,Actinopterygii,Perciformes,Bramidae,Taractes asper,rough pomfret,NA,NA,NA
+644,Actinopterygii,Perciformes,Carangidae,Trachurus symmetricus,Pacific jack mackerel,NA,NA,6.4
+645,Actinopterygii,Perciformes,Carangidae,Trachurus symmetricus,Pacific jack mackerel,6.4,NA,NA
+646,Actinopterygii,Perciformes,Centrolophidae,Icichthys lockingtoni,medusafish,NA,NA,NA
+647,Actinopterygii,Perciformes,Chiasmodontidae,Chiasmodon niger,black swallower,NA,NA,56.89
+648,Actinopterygii,Perciformes,Coryphaenidae,Coryphaena hippurus,mahi mahi,NA,NA,NA
+649,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,0.46
+650,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,4.68,NA,NA
+651,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,13.7,NA
+652,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,4.1
+653,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3.6
+654,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3.6
+655,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,1.1
+656,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,1.3
+657,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,0.8
+658,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.6
+659,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3.8
+660,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.8
+661,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.5
+662,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.2
+663,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.1
+664,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3
+665,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3.1
+666,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,3.6
+667,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.4
+668,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2.6
+669,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,shiner perch,NA,NA,2
+670,Actinopterygii,Perciformes,Gempylidae,Gempylus serpens,snake mackerel,NA,NA,NA
+671,Actinopterygii,Perciformes,Gobiidae,Rhinogobiops nicholsii,blaceye giby,NA,NA,NA
+672,Actinopterygii,Perciformes,Gobiidae,Rhinogobiops nicholsii,blaceye giby,NA,NA,NA
+673,Actinopterygii,Perciformes,Kyphosidae,Medialuna californiensis,halfmoon,NA,19.8,NA
+674,Actinopterygii,Perciformes,Labridae,Halichoeres nicholsi,spinster wrasse,NA,NA,NA
+675,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,1.5
+676,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,2.9
+677,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,4.6
+678,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,5
+679,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,3.4
+680,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,2.6
+681,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,4.6
+682,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,5.6
+683,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,6.6
+684,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,8.9
+685,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,3.2
+686,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,3.6
+687,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,3.7
+688,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,8.2
+689,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,6.7
+690,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,2.6
+691,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,2.9
+692,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,3.4
+693,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,6.9
+694,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,NA,2.2
+695,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.50196,16.82,5.09
+696,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.183976,17.67,3.25
+697,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.619136,17.26,2.05
+698,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.857624,17.88,2.5
+699,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,7.836632,16.12,11.55
+700,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,NA,17.56,2.42
+701,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.58281888,17.45,2.8
+702,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.39713296,17.4,2.1
+703,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,3.95388,16.6,2.2
+704,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.30947816,16.1,3.3
+705,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.51872,16.4,3.5
+706,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.7798016,16.4,4
+707,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.87436,16.1,4.7
+708,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.22966528,16.7,4.9
+709,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.226862,16.2,5
+710,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.50982592,17.5,4.9
+711,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.98992208,17.3,3.8
+712,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.8735232,18.6,3.1
+713,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.6024,17.6,2.6
+714,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.49010144,17.5,2.2
+715,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.31654912,16.7,2.8
+716,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.4438264,15.8,3.6
+717,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.5588864,16.8,3.7
+718,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.7264556,16.6,3.8
+719,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.93712,16.4,4.8
+720,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.3456876,16.5,5.2
+721,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.56329744,16.8,5.5
+722,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.8316592,17.4,6
+723,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,5.00021472,17.8,3.5
+724,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,flathead grey mullet,4.91402432,18.64,3.1
+725,Actinopterygii,Perciformes,Nomeidae,Cubiceps gracilis,driftfish,NA,NA,18.9
+726,Actinopterygii,Perciformes,Nomeidae,Cubiceps gracilis,driftfish,3.809,NA,NA
+727,Actinopterygii,Perciformes,Pomacentridae,Chromis punctipinnis,blackfish,NA,NA,NA
+728,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,24,1.59
+729,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,22.7,1.68
+730,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,22.4,1.75
+731,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,23.4,1.81
+732,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,22.7,2.57
+733,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,25.5,1.88
+734,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,25.5,1.9
+735,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,NA,24.13,0.41
+736,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,6.0668,NA,NA
+737,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,skipjack tuna,6.19232,NA,NA
+738,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,NA,8.1
+739,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,9.037,NA,NA
+740,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,NA,2.2
+741,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,18.83,19.58
+742,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,21.9,9.04
+743,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,18.12,18.62
+744,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,4.51,18.6,3
+745,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,Pacific chub mackerel,NA,NA,2
+746,Actinopterygii,Perciformes,Stomateidae,Peprilus simillimus,Pacific pompano,NA,NA,NA
+747,Actinopterygii,Perciformes,Tetragonuridae,Tetragonurus cuvieri,smalleye squarefish,NA,NA,NA
+748,Actinopterygii,Pleuronectiformes,Paralichthyidae,Citharichthys sordidus,Pacific sanddab,3.47,NA,NA
+749,Actinopterygii,Pleuronectiformes,Paralichthyidae,Citharichthys sordidus,Pacific sanddab,NA,NA,15.9
+750,Actinopterygii,Pleuronectiformes,Paralichthyidae,Citharichthys sordidus,Pacific sanddab,NA,NA,18.1
+751,Actinopterygii,Pleuronectiformes,Paralichthyidae,Citharichthys sordidus,Pacific sanddab,NA,17,1.6
+752,Actinopterygii,Pleuronectiformes,Pleuronectidae,Pleuronichthys decurrens,curlfin sole,NA,NA,NA
+753,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,2.86,NA,1.0248
+754,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,NA,NA,1.03
+755,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,NA,NA,9
+756,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,NA,7.14,NA
+757,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,NA,15.2,0.8
+758,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,NA,16.8,0.95
+759,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,dove sole,3.43,12.7,3.5
+760,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,NA,1
+761,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,NA,1.2
+762,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,NA,1.2
+763,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,9.02,NA
+764,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,16.6,0.7
+765,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,3.02,NA,NA
+766,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,2.427,9.265,0.454
+767,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,rex sole,NA,16.7,0.71
+768,Actinopterygii,Scorpaeniformes,Agonidae,Bathyagonus pentacanthus,bigeye poacher,NA,NA,NA
+769,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,2.64,NA,1.3
+770,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,NA,NA
+771,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,NA,2.6
+772,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,4.6,NA,NA
+773,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,4.6,NA,NA
+774,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+775,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,4.6,NA,NA
+776,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,6.28,NA,NA
+777,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.86,NA,NA
+778,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,4.6,NA,NA
+779,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+780,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+781,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,8.37,NA,NA
+782,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,6.28,NA,NA
+783,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.86,NA,NA
+784,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.44,NA,NA
+785,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+786,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.86,NA,NA
+787,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+788,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+789,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.02,NA,NA
+790,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,8.6,NA
+791,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,12.9,15.2
+792,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,12.8,8.4
+793,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,11.5,5.6
+794,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,9.8,5.2
+795,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,5.481,8.908,9.14
+796,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,sablefish,NA,13.8,15.1
+797,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes aleutianus,rougheye rockfish,NA,NA,NA
+798,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes brevispinis,silvergray rockfish,NA,NA,NA
+799,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes diploproa,splitnose rockfish,NA,11,NA
+800,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes diploproa,splitnose rockfish,2.9288,11.114,0.645
+801,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes helvomaculatus,rosethorn rockfish,NA,NA,NA
+802,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes maliger,quillback rockfish,NA,NA,NA
+803,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes miniatus,vermilion rockfish,NA,NA,NA
+804,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes proriger,redstripe rockfish,NA,NA,NA
+805,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes wilsoni,pygmy rockfish,NA,NA,NA
+806,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes zacentrus,sharpchin rockfish,NA,NA,NA
+807,Actinopterygii,Stephanoberyciformes,Melamphaidae,Melamphaes lugubris,highsnout melamphid,15.27,10.2,32.3
+808,Actinopterygii,Stephanoberyciformes,Melamphaidae,Scopelogadus mizolepis bispinosus,twospine bigscales,2.88,6.7298,3.0457
+809,Actinopterygii,Stephanoberyciformes,Melamphaidae,Scopelogadus mizolepis bispinosus,twospine bigscales,1.78,6.3,0.8
+810,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria lucetia,Panama lightfish,5.15,NA,NA
+811,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria lucetia,Panama lightfish,5.2,NA,NA
+812,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,2.67,9,5.4
+813,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,1.92,6.4,4.6
+814,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,3.61,9.2,8.3
+815,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,NA,7.035,NA
+816,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,diaphanous hatchet fish,2.867,10.2,1.1
+817,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx obscura,diaphanous hatchetfish,2.87,11.3442,1.898
+818,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx obscura,diaphanous hatchetfish,2.83,10.2,1
+819,Actinopterygii,Stomiiformes,Stomiidae,Bathophilus flemingi,highfin dragonfish,NA,NA,NA
+820,Actinopterygii,Stomiiformes,Stomiidae,Melanostomias valdiviae,Valdivia black dragon fish,NA,NA,NA
+821,Actinopterygii,Stomiiformes,Stomiidae,Photonectes margarita,NA,NA,NA,NA
+822,Actinopterygii,Sygnathiformes,Centriscidae,Macroramphosus scolopax,longspine snipefish,3.934,NA,NA
+823,Actinopterygii,Syngnathiformes,Syngnathidae,Syngnathus californiensis,kelp pipefish,NA,NA,NA
+824,Actinopterygii,Tetraodontiformes,Ostaciidae,Lactoria diaphana,roundbelly cowfish,NA,NA,NA
+825,Cephalopoda,Myopsida,Loliginidae,Doryteuthis opalescens,opalescent inshore squid,3.56,16.6,1.4
+826,Cephalopoda,Myopsida,Loliginidae,Doryteuthis opalescens,opalescent inshore squid,3.85,NA,1.4
+827,Cephalopoda,Myopsida,Loliginidae,Doryteuthis opalescens,opalescent inshore squid,2.979,16.4,0.2
+828,Cephalopoda,Myopsida,Loliginidae,Doryteuthis opalescens,opalescent inshore squid,3.6,NA,NA
+829,Cephalopoda,Octopoda,Amphitretidae,Japetella heathi,pelagic octopoda,2.8,13.8,NA
+830,Cephalopoda,Octopoda,Argonautidae,Argonauta argo,greater argonaut,NA,NA,NA
+831,Cephalopoda,Octopoda,Argonautidae,Argonauta nouryi,rough-keeled argonaut,NA,NA,NA
+832,Cephalopoda,Octopoda,Octopodidae,Octopus bimaculatus,California two-spot octopus,NA,NA,NA
+833,Cephalopoda,Octopoda,Opisthoteuthidae,Opisthoteuthis californiana,flapjack octopus,NA,NA,1.2
+834,Cephalopoda,Oegopsida,Cranchiidae,Cranchia scabra,rough cranch squid,NA,NA,NA
+835,Cephalopoda,Oegopsida,Cranchiidae,Galiteuthis phyllura,cockatoo squid,3.51,9.3,3.3
+836,Cephalopoda,Oegopsida,Enoploteuthidae,Abraliopsis affinis,enoploteuthid squid,NA,NA,NA
+837,Cephalopoda,Oegopsida,Enoploteuthidae,Abraliopsis felis,enoploteuthid squid,NA,NA,NA
+838,Cephalopoda,Oegopsida,Gonatidae,Berryteuthis anonychus,smallfin gonate squid,NA,NA,1.4
+839,Cephalopoda,Oegopsida,Gonatidae,Berryteuthis anonychus,smallfin gonate squid,NA,NA,1.3
+840,Cephalopoda,Oegopsida,Gonatidae,Berryteuthis anonychus,smallfin gonate squid,4.26,10.6,NA
+841,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,4.71,NA,NA
+842,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,4.83,NA,NA
+843,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,2.91,9.1,1.9
+844,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,3.81,11.7,2.7
+845,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,4.12,10.8,3.9
+846,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,NA,NA,1.1
+847,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,boreopacific gonate squid,4.6024,NA,NA
+848,Cephalopoda,Oegopsida,Gonatidae,Gonatus californiensis,California armhook squid,NA,NA,NA
+849,Cephalopoda,Oegopsida,Gonatidae,Gonatus onyx,clawed armhook squid,39.33,NA,20-Dec
+850,Cephalopoda,Oegopsida,Gonatidae,Gonatus pyros,fiery armhook squid,NA,NA,NA
+851,Cephalopoda,Oegopsida,Gonatidae,Gonatus steenstrupi,Atlantic gonate squid,3.78,NA,NA
+852,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis heteropsis,strawberry squid,NA,NA,NA
+853,Cephalopoda,Oegopsida,Mastigoteuthidae,Mastigoteuthis dentata,mastigoteuthid squid,NA,NA,NA
+854,Cephalopoda,Oegopsida,Octopoteuthidae,Octopoteuthis nielseni,oceanic squid,NA,NA,NA
+855,Cephalopoda,Oegopsida,Octopoteuthidae,Octopoteuthis sicula,Rüppell's octopus squid,NA,NA,NA
+856,Cephalopoda,Oegopsida,Ocythoidae,Ocythoe tuberculata,tuberculate pelagic octopus,NA,NA,NA
+857,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,4.22,NA,NA
+858,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,6.569,NA,NA
+859,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,NA,NA,0.2
+860,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,NA,NA,0.3
+861,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,NA,NA,NA
+862,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,jumbo flying squid,NA,14.5,0.6
+863,Cephalopoda,Oegopsida,Ommastrephidae,Eucleoteuthis luminosa,luminous flying squid,NA,NA,1.5
+864,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis banksii,common clubhook squid,4.53,NA,NA
+865,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.02,NA,NA
+866,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,6.69,NA,NA
+867,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,6.69,NA,NA
+868,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.02,NA,NA
+869,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.03,NA,NA
+870,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.02,NA,NA
+871,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.4392,NA,NA
+872,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,4.6,NA,NA
+873,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,boreal clubhook squid,5.02,NA,NA
+874,Cephalopoda,Oegopsida,Onychoteuthidae,Onykia robusta,robust clubhook squid,NA,NA,NA
+875,Cephalopoda,Oegopsida,Pyroteuthidae,Pterygioteuthis microlampas,pyroteuthid squid,NA,NA,NA
+876,Cephalopoda,Vampyromorpha,Vampyroteuthidae,Vampyroteuthis infernalis,vampire squid,NA,NA,NA
+877,Gastropoda,Littorinimorpha,Carinariidae,Carinaria lamarckii,NA,NA,NA,NA
+878,Malacostraca,Amphipoda,Brachyscelidae,Brachyscelus macrocephalus,NA,NA,NA,NA
+879,Malacostraca,Amphipoda,Phrosinidae,Phrosina semilunata,NA,NA,NA,NA
+880,Malacostraca,Amphipoda,Platyscelidae,Platyscelus armatus,NA,NA,NA,NA
+881,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,3.933,NA,NA
+882,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,3,NA,NA
+883,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,NA,NA,NA
+884,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,NA,NA,NA
+885,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,NA,3.3,0.85
+886,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,pelagic red crab,13.142,37.2,NA
+887,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,NA,NA,12.47
+888,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,NA,NA,NA
+889,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,3.345,10.9,1.4
+890,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,4.349,14.4,1.8
+891,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,3.968,12.6,1.9
+892,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,5.337,18.3,1.7
+893,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,3.378,11.2,1.3
+894,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,3.131,10.4,1.1
+895,Malacostraca,Decapoda,Sergestidae,Sergestes,sergestid shrimp,3.726,12.5,2
+896,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.6
+897,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.9
+898,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.7
+899,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.7
+900,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,1.7
+901,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,1.8
+902,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.8
+903,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.8
+904,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,1
+905,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,0.9
+906,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,3.6
+907,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,6.2
+908,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,6.2
+909,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,3.8
+910,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,3.3
+911,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,5.3
+912,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,5.5
+913,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+914,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+915,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+916,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+917,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+918,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+919,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+920,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+921,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+922,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+923,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+924,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+925,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+926,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+927,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+928,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+929,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+930,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+931,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+932,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,NA
+933,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,11.3078,3.1323
+934,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,isada krill,NA,NA,1.3
+935,Malacostraca,Lophogastrida,Gnathophausiidae,Neognathophausia gigas,NA,NA,NA,NA
+936,Malacostraca,Stomatopoda,Odontodactylidae,Odontodactylus hansenii,NA,NA,NA,NA
+937,Malacostraca,Stromatopoda,Protosquillidae,Echinosquilla guerinii,urchin mantis shrimp,NA,NA,NA
+938,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,9.1104,5.02
+939,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,7.3278,4.96
+940,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,3.18
+941,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,3.95
+942,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,1
+943,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,2
+944,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,3
+945,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,5
+946,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,NA,NA,9
+947,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,NA,5.13,19.7,5.2
+948,Actinopterygii,Perciformes,Nomeidae,Cubiceps pauciradiatus,NA,NA,NA,NA
+949,Actinopterygii,Perciformes,Nomeidae,Cubiceps capensis,NA,NA,NA,NA
+950,Actinopterygii,Aulopiformes,Notosudidae,Scopelosaurus hoedti,NA,NA,NA,NA
+951,Actinopterygii,Aulopiformes,Paralepididae,Lestrolepis intermedia,NA,NA,NA,NA
+952,Actinopterygii,Aulopiformes,Scopelarchidae,Scopelarchus analis,NA,NA,NA,NA
+953,Actinopterygii,Beryciformes,Diretmidae,Diretmus argenteus,NA,NA,NA,NA
+954,Actinopterygii,Gadiformes,Moridae,Antimora rostrata,NA,NA,NA,0.29
+955,Actinopterygii,Gadiformes,Moridae,Antimora rostrata,NA,4.32825,NA,NA
+956,Actinopterygii,Gadiformes,Bregmacerotidae,Bregmaceros mcclellandi,NA,NA,15,1.6
+957,Actinopterygii,Myctophiformes,Myctophidae,Diaphus effulgens,NA,NA,16.54,4.86
+958,Actinopterygii,Myctophiformes,Myctophidae,Diaphus lucidus,NA,NA,NA,NA
+959,Actinopterygii,Myctophiformes,Myctophidae,Diaphus ostenfeldi,NA,NA,NA,NA
+960,Actinopterygii,Myctophiformes,Myctophidae,Hygophum hygomii,NA,6.06,NA,NA
+961,Actinopterygii,Myctophiformes,Myctophidae,Hygophum hygomii,NA,NA,NA,1.8
+962,Actinopterygii,Myctophiformes,Myctophidae,Hygophum hygomii,NA,NA,NA,1.7
+963,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+964,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+965,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+966,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+967,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+968,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+969,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+970,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+971,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+972,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+973,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+974,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+975,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+976,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,15,18
+977,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,14,22
+978,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,14,25
+979,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,14.5,17
+980,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,16,12
+981,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,14.8
+982,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,20
+983,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,NA,NA,NA,NA
+984,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus barnardi,NA,NA,NA,NA
+985,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus evermanni,NA,NA,NA,3.1
+986,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus evermanni,NA,NA,13,NA
+987,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus evermanni,NA,NA,13,NA
+988,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus evermanni,NA,NA,13,NA
+989,Actinopterygii,Osmeriformes,Microstomatidae,Nansenia macrolepis,NA,NA,NA,NA
+990,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,NA,NA,20.1
+991,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,NA,NA,18.9
+992,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,NA,NA,20.3
+993,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,NA,16.4,18.34
+994,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,NA,17,21
+995,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,NA,10.16,16.978,19.407
+996,Actinopterygii,Tetraodontiformes,Balistidae,Canthidermis maculata,NA,3.84,NA,NA
+997,Actinopterygii,Tetraodontiformes,Balistidae,Canthidermis maculata,NA,0,20.58,0.59
+998,Actinopterygii,Tetraodontiformes,Ostraciidae,Ostracion cubicus,NA,NA,NA,NA
+999,Actinopterygii,Tetraodontiformes,Tetraodontidae,Lagocephalus lagocephalus,NA,NA,NA,NA
+1000,Actinopterygii,Myctophiformes,Myctophidae,Diaphus perspicillatus,NA,NA,NA,2.1
+1001,Actinopterygii,Myctophiformes,Myctophidae,Diaphus perspicillatus,NA,NA,NA,4.2
+1002,Actinopterygii,Perciformes,Carangidae,Decapterus macarellus,NA,6.52704,NA,NA
+1003,Actinopterygii,Perciformes,Carangidae,Decapterus macrosoma,NA,NA,22.97,9.8
+1004,Actinopterygii,Perciformes,Carangidae,Decapterus macrosoma,NA,NA,24.1,9.63
+1005,Actinopterygii,Perciformes,Carangidae,Decapterus macrosoma,NA,NA,68.7,0.22
+1006,Actinopterygii,Perciformes,Gempylidae,Rexea prometheoides,NA,NA,NA,NA
+1007,Actinopterygii,Perciformes,Gempylidae,Thyrsitoides marleyi,NA,NA,NA,NA
+1008,Actinopterygii,Perciformes,Istiophoridae,Makaira mazara,NA,NA,24.4,2.7
+1009,Actinopterygii,Perciformes,Priacanthidae,Cookeolus japonicus,NA,NA,NA,NA
+1010,Actinopterygii,Perciformes,Scombrolabracidae,Scombrolabrax heterolepis,NA,NA,NA,NA
+1011,Actinopterygii,Scorpaeniformes,Dactylopteridae,Dactyloptena orientalis,NA,NA,NA,NA
+1012,Actinopterygii,Tetraodontiformes,Balistidae,Balistes punctatus,NA,NA,NA,NA
+1013,Actinopterygii,Tetraodontiformes,Molidae,Masturus lanceolatus,NA,NA,NA,NA
+1014,Actinopterygii,Tetraodontiformes,Molidae,Ranzania laevis,NA,NA,NA,NA
+1015,Actinopterygii,Ateleopodiformes,Ateleopodidae,Ateleopus natalensis,NA,NA,NA,NA
+1016,Actinopterygii,Aulopiformes,Alepisauridae,Alepisaurus ferox,NA,1.7,NA,NA
+1017,Actinopterygii,Aulopiformes,Paralepididae,Lestidiops similis,NA,NA,NA,NA
+1018,Actinopterygii,Beryciformes,Berycidae,Beryx splendens,NA,NA,16.42,3.13
+1019,Actinopterygii,Beryciformes,Berycidae,Beryx splendens,NA,NA,23,2.1
+1020,Actinopterygii,Lophiiformes,Ceratiidae,Ceratias tentaculatus,NA,NA,NA,NA
+1021,Actinopterygii,Myctophiformes,Myctophidae,Lampadena luminosa,NA,3.971,11.2,1
+1022,Actinopterygii,Myctophiformes,Myctophidae,Myctophum asperum,NA,NA,NA,10.8
+1023,Actinopterygii,Myctophiformes,Myctophidae,Myctophum asperum,NA,NA,NA,NA
+1024,Actinopterygii,Osmeriformes,Opisthoproctidae,Monacoa grimaldii,NA,NA,NA,NA
+1025,Actinopterygii,Stomiiformes,Sternoptychidae,Argyropelecus aculeatus,NA,3.428,11.3,1
+1026,Cephalopoda,Oegopsida,Enoploteuthidae,Abraliopsis morisii,NA,NA,NA,NA
+1027,Cephalopoda,Oegopsida,Enoploteuthidae,Abraliopsis gilchristi,NA,NA,NA,NA
+1028,Cephalopoda,Oegopsida,Histioteuthidae,Stigmatoteuthis hoylei,NA,NA,NA,NA
+1029,Cephalopoda,Oegopsida,Octopoteuthidae,Octopoteuthis rugosa,NA,NA,NA,NA
+1030,Cephalopoda,Oegopsida,Octopoteuthidae,Taningia danae,NA,NA,NA,NA
+1031,Cephalopoda,Oegopsida,Onychoteuthidae,Walvisteuthis rancureli,NA,NA,NA,NA
+1032,Cephalopoda,Spirulida,Spirulidae,Spirula spirula,NA,NA,NA,NA
+1033,Cephalopoda,Oegopsida,Thysanoteuthidae,Thysanoteuthis rhombus,NA,NA,NA,NA
+1034,Cephalopoda,Octopoda,Tremoctopodidae,Tremoctopus gracilis,NA,NA,NA,NA
+1035,Cephalopoda,Oegopsida,Chiroteuthidae,Grimalditeuthis bonplandi,NA,NA,1.84,NA
+1036,Cephalopoda,Oegopsida,Histioteuthidae,Stigmatoteuthis dofleini,NA,2.65,NA,NA
+1037,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis meleagroteuthis,NA,NA,NA,NA
+1038,Cephalopoda,Oegopsida,Onychoteuthidae,Onykia loennbergii,NA,NA,NA,NA
+1039,Malacostraca,Amphipoda,Cyphocarididae,Cyphocaris faurei,NA,NA,NA,NA
+1040,Malacostraca,Stomatopoda,Lysiosquillidae,Lysiosquilla tredecimdentata,NA,NA,NA,NA
+1041,Malacostraca,Stomatopoda,Squilllidae,Neoanchisquilla tuberculata,NA,NA,NA,NA
+1042,Malacostraca,Decapoda,Pandalidae,Heterocarpus laevigatus,NA,NA,NA,NA
+1043,Malacostraca,Decapoda,Penaeidae,Funchalia taaningi,NA,NA,NA,NA
+1044,Malacostraca,Decapoda,Penaeidae,Funchalia woodwardi,NA,NA,NA,NA
+1045,Malacostraca,Stomatopoda,Odontodacylidae,Odontodactylus scyllarus,NA,NA,NA,NA
+1046,Malacostraca,Decapoda,Oplophoroidae,Oplophorus typus,NA,NA,NA,NA
+1047,Malacostraca,Decapoda,Oplophoroidae,Janicella spinicauda,NA,NA,NA,NA
+1048,Malacostraca,Decapoda,Scyllaridae,Parribacus antarcticus,NA,NA,NA,NA
+1049,Malacostraca,Stomatopoda,Squillidae,Natosquilla investigatoris,NA,NA,NA,NA
+1050,Thaliacea,Salpida,Salpidae,Salpa maxima,NA,NA,NA,NA
