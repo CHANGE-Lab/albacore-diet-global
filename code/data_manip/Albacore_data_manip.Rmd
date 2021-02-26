@@ -323,7 +323,7 @@ alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.
   dplyr::filter(TaxLev == "species") %>% #There are ~1105 observations when we filter by species
   dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %>%
-  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
   mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>%
   #calculates the gape length and height limits
   #Add reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
@@ -350,4 +350,39 @@ write.csv(alb_global, here("data/output_data/alb_global_diet_total.csv"))
 
 ```
 
+The following summarises the max observed FO, N and M for each species in the dataset.
+
+```{r Alb adult diet metrics summary}
+
+alb_global_ad_metrics = alb_global %>%
+  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %>%
+  group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE)) 
+
+#write.csv(alb_global_ad_metrics, here("data/alb_global_ad_metrics"))
+```
+
+Here we want to estimate the probable life stage of the species consumed based on their size ratios and relationship to albacore tuna gape limits.
+
+```{r Albacore diet data + probably life stage estimation}
+
+alb_global_prob = alb_global %>%
+  inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) %>%
+  #In using an inner_join I am selecting only rows for which we have all length-based data
+  mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, gape_lmax)) %>%
+  mutate(prey_frac = 100*prey_length/l_adult) %>%
+  mutate(prey_proba = if_else(prey_frac < larva_adult_use, "larva", if_else(prey_frac<juve_adult_use, "juvenile", "adult"))) %>%
+  mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1))
+
+#And remove troublesome NA's in dataset
+#Because we need to give these a life stage, I am assigning them as "adult" because of their l_max typically was < gape limit.
+alb_global_prob$life_stage[is.na(alb_global_prob$life_stage)] <- "adult"
+
+## SAVE DATA
+write.csv(alb_global_prob, here("data/output_data/alb_global_diet_prob.csv")) 
+#985 observations 53 variables
+#This include data for which we are able to make an assessment of probable life stage --> therefore will exclude coarse taxonomic classifications
+
+```
 

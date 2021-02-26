@@ -80,49 +80,6 @@ unique(alb_global$StudyID) #26 papers in analyses
 ```
 
 
-```{r Alb adult diet metrics summary}
-
-alb_global_ad_metrics = alb_global %>%
-  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
-  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %>%
-  group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE)) 
-
-str(alb_global_ad_metrics)
-
-write.csv(alb_global_ad_metrics, here("data/alb_global_ad_metrics"))
-```
-
-
-```{r Albacore diet data + probably life stage estimation}
-
-alb_global_ratios = alb_global %>%
-  inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) #%>%
-  #In using an inner_join I am selecting only rows for which we have all length-based data
-#Check this
-#glimpse(alb_global_ratios)  
-
-alb_global_prob = alb_global_ratios %>%
-  mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, gape_lmax)) %>%
-  mutate(prey_frac = 100*prey_length/l_adult) %>%
-  mutate(prey_proba = if_else(prey_frac < larva_adult_use, "larva", if_else(prey_frac<juve_adult_use, "juvenile", "adult"))) %>%
-  mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1))
-  
-str(alb_global_prob)
-
-#Check age output
-unique(alb_global_prob$prey_select)
-
-#And remove troublesome NA's in dataset
-#Because we need to give these a life stage, I am assigning them as "adult" because of their l_max typically was < gape limit.
-alb_global_prob$life_stage[is.na(alb_global_prob$life_stage)] <- "adult"
-
-## SAVE DATA
-write.csv(alb_global_prob, here("data/alb_global_diet_prob.csv")) #1007 observations 48 variables
-#This include data for which we are able to make an assessment of probable life stage --> therefore will exclude coarse taxonomic classifications
-
-```
-
 ```{r LOAD alb_global_prob}
 
 alb_global_prob = read.csv(here("data/alb_global_diet_prob.csv")) %>%
