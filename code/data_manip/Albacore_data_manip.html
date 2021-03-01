@@ -231,96 +231,58 @@ library(tweedie)</code></pre>
 <h2>Trait Dataframes</h2>
 <div id="prey-morphometric-measurements" class="section level3">
 <h3>Prey morphometric measurements</h3>
-<p>We first want to load in and clean the prey morphometric measurements for adult taxa only, we did not finish or find many images to work with for juveniles or larvae of most species. The following code aims to: * Check data &amp; select relevant data, * Calculate eye to body and body shape ratios, and * Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them). * These ratios are based on adults only.</p>
+<p>We first want to load in and clean the prey morphometric measurements for adult taxa only, we did not finish or find many images to work with for juveniles or larvae of most species. The following code aims to:</p>
+<ul>
+<li><p>Check &amp; select relevant data,</p></li>
+<li><p>Calculate eye to body and body shape ratios, based on adult specimen images and morphometrics only.</p></li>
+<li><p>Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them).</p></li>
+<li><p>Summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.</p></li>
+</ul>
 <pre class="r"><code>#Load prey morphometric measurement data
 
 prey_morph = as.data.frame(read_xlsx(here(&quot;data/input_data/prey_morphometrics.xlsx&quot;), 
                                                  sheet = &quot;prey_adult_morphometrics&quot;))
-#Check dataframe
-#str(prey_morph)
 
 #Convert relevant columns to character/numeric values
-#prey_morph[,12:17] &lt;- sapply(prey_morph[,12:17], as.character)
-prey_morph[,12:17] &lt;- sapply(prey_morph[,12:17], as.numeric)
+prey_morph[,12:17] &lt;- sapply(prey_morph[,12:17], as.numeric) #as.character
 
-#Additional data checks
-dim(prey_morph) #1290 rows and 21 columns</code></pre>
-<pre><code>## [1] 1290   21</code></pre>
-<pre class="r"><code>names(prey_morph)</code></pre>
-<pre><code>##  [1] &quot;prey_class&quot;     &quot;prey_family&quot;    &quot;prey_sp&quot;        &quot;measurer&quot;      
-##  [5] &quot;file_name&quot;      &quot;use&quot;            &quot;number_reps&quot;    &quot;source&quot;        
-##  [9] &quot;life_stage&quot;     &quot;image_type&quot;     &quot;scale_bar&quot;      &quot;s_length&quot;      
-## [13] &quot;t_length&quot;       &quot;b_height&quot;       &quot;t_height&quot;       &quot;f_height&quot;      
-## [17] &quot;eye_diameter&quot;   &quot;status_type&quot;    &quot;fin_arm_status&quot; &quot;annotations&quot;   
-## [21] &quot;nh_annotation&quot;</code></pre>
-<pre class="r"><code>#Data cleaning
-#Select &amp; calculate values for body_shape_r &amp; eye_body_r
+#Data cleaning
 prey_morph_clean = prey_morph %&gt;%
   dplyr::filter(use %in% c(&quot;yes&quot;, &quot;maybe&quot;)) %&gt;% #c(&quot;no&quot;, &quot;NA&quot;)
   #filter out images that are use = &quot;no&quot;
   drop_na(t_length, b_height, eye_diameter) %&gt;% #filter out any NA&#39;s in the desired columns
   mutate(b_shape_r = t_length/b_height, 
          eye_body_r = eye_diameter/t_length,
-         standard_total = s_length/t_length)
+         standard_total = s_length/t_length) #calculate values for body_shape_r &amp; eye_body_r
 
-str(prey_morph_clean)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    1233 obs. of  24 variables:
-##  $ prey_class    : chr  &quot;Cephalopoda&quot; &quot;Cephalopoda&quot; &quot;Malacostraca&quot; &quot;Actinopterygii&quot; ...
-##  $ prey_family   : chr  &quot;Enoploteuthidae&quot; &quot;Enoploteuthidae&quot; &quot;Alpheidae&quot; &quot;Sternoptychidae&quot; ...
-##  $ prey_sp       : chr  &quot;Abralia redfieldi&quot; &quot;Abraliopsis affinis&quot; &quot;Alpheus glaber&quot; &quot;Argyropelecus olfersii&quot; ...
-##  $ measurer      : chr  &quot;CM&quot; &quot;NA&quot; &quot;IG&quot; &quot;CM&quot; ...
-##  $ file_name     : chr  &quot;Abralia_redfieldi_adult_3.jpg&quot; &quot;Abraliopsis_affinis_adult_2.jpg&quot; &quot;Alpheus_glaber_adult_1.jpg&quot; &quot;Argyropelecus_olfersii_adult_6.jpg&quot; ...
-##  $ use           : chr  &quot;maybe&quot; &quot;yes&quot; &quot;maybe&quot; &quot;maybe&quot; ...
-##  $ number_reps   : num  4 1 6 6 1 1 1 6 2 2 ...
-##  $ source        : chr  &quot;wikipedia; sciencephoto.com; tolweb.org&quot; NA &quot;J. Lecomte; FAO; v3.boldsystems.org&quot; &quot;fishbase&quot; ...
-##  $ life_stage    : chr  &quot;adult&quot; &quot;adult&quot; &quot;adult&quot; &quot;adult&quot; ...
-##  $ image_type    : chr  &quot;simple sketch&quot; &quot;institute&quot; &quot;amateur&quot; &quot;simple sketch&quot; ...
-##  $ scale_bar     : chr  &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; ...
-##  $ s_length      : num  140 236 631 520 NA ...
-##  $ t_length      : num  270 534 696 674 203 ...
-##  $ b_height      : num  59.8 94.2 117.7 362.1 36.8 ...
-##  $ t_height      : num  122 240 118 471 43 ...
-##  $ f_height      : num  38.9 97.5 NA 65.7 6 ...
-##  $ eye_diameter  : num  22 40 22.2 60 0 ...
-##  $ status_type   : chr  &quot;arm&quot; &quot;NA&quot; &quot;position&quot; &quot;fin&quot; ...
-##  $ fin_arm_status: chr  &quot;visible&quot; &quot;NA&quot; &quot;top&quot; &quot;visible&quot; ...
-##  $ annotations   : chr  NA NA &quot;Top-Down View --&gt; body height as measured is really body width&quot; NA ...
-##  $ nh_annotation : chr  &quot;NH checked&quot; &quot;NH measured&quot; &quot;Noted&quot; &quot;NH checked&quot; ...
-##  $ b_shape_r     : num  4.52 5.67 5.91 1.86 5.51 ...
-##  $ eye_body_r    : num  0.0814 0.0749 0.0319 0.089 0 ...
-##  $ standard_total: num  0.518 0.442 0.907 0.772 NA ...</code></pre>
-<p>Next, we want to summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.</p>
-<pre class="r"><code>#Checking data
-str(prey_morph_clean) #1239 observations for prey species morphometrics</code></pre>
-<pre><code>## &#39;data.frame&#39;:    1233 obs. of  24 variables:
-##  $ prey_class    : chr  &quot;Cephalopoda&quot; &quot;Cephalopoda&quot; &quot;Malacostraca&quot; &quot;Actinopterygii&quot; ...
-##  $ prey_family   : chr  &quot;Enoploteuthidae&quot; &quot;Enoploteuthidae&quot; &quot;Alpheidae&quot; &quot;Sternoptychidae&quot; ...
-##  $ prey_sp       : chr  &quot;Abralia redfieldi&quot; &quot;Abraliopsis affinis&quot; &quot;Alpheus glaber&quot; &quot;Argyropelecus olfersii&quot; ...
-##  $ measurer      : chr  &quot;CM&quot; &quot;NA&quot; &quot;IG&quot; &quot;CM&quot; ...
-##  $ file_name     : chr  &quot;Abralia_redfieldi_adult_3.jpg&quot; &quot;Abraliopsis_affinis_adult_2.jpg&quot; &quot;Alpheus_glaber_adult_1.jpg&quot; &quot;Argyropelecus_olfersii_adult_6.jpg&quot; ...
-##  $ use           : chr  &quot;maybe&quot; &quot;yes&quot; &quot;maybe&quot; &quot;maybe&quot; ...
-##  $ number_reps   : num  4 1 6 6 1 1 1 6 2 2 ...
-##  $ source        : chr  &quot;wikipedia; sciencephoto.com; tolweb.org&quot; NA &quot;J. Lecomte; FAO; v3.boldsystems.org&quot; &quot;fishbase&quot; ...
-##  $ life_stage    : chr  &quot;adult&quot; &quot;adult&quot; &quot;adult&quot; &quot;adult&quot; ...
-##  $ image_type    : chr  &quot;simple sketch&quot; &quot;institute&quot; &quot;amateur&quot; &quot;simple sketch&quot; ...
-##  $ scale_bar     : chr  &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; ...
-##  $ s_length      : num  140 236 631 520 NA ...
-##  $ t_length      : num  270 534 696 674 203 ...
-##  $ b_height      : num  59.8 94.2 117.7 362.1 36.8 ...
-##  $ t_height      : num  122 240 118 471 43 ...
-##  $ f_height      : num  38.9 97.5 NA 65.7 6 ...
-##  $ eye_diameter  : num  22 40 22.2 60 0 ...
-##  $ status_type   : chr  &quot;arm&quot; &quot;NA&quot; &quot;position&quot; &quot;fin&quot; ...
-##  $ fin_arm_status: chr  &quot;visible&quot; &quot;NA&quot; &quot;top&quot; &quot;visible&quot; ...
-##  $ annotations   : chr  NA NA &quot;Top-Down View --&gt; body height as measured is really body width&quot; NA ...
-##  $ nh_annotation : chr  &quot;NH checked&quot; &quot;NH measured&quot; &quot;Noted&quot; &quot;NH checked&quot; ...
-##  $ b_shape_r     : num  4.52 5.67 5.91 1.86 5.51 ...
-##  $ eye_body_r    : num  0.0814 0.0749 0.0319 0.089 0 ...
-##  $ standard_total: num  0.518 0.442 0.907 0.772 NA ...</code></pre>
-<pre class="r"><code>#sum(prey_morph_clean$t_length) #588152.1
-#sum(prey_morph_clean$b_height) #129932.2
-
-#Calculate ratios/summarise data
+glimpse(prey_morph_clean)</code></pre>
+<pre><code>## Rows: 1,233
+## Columns: 24
+## $ prey_class     &lt;chr&gt; &quot;Cephalopoda&quot;, &quot;Cephalopoda&quot;, &quot;Malacostraca&quot;, &quot;Actinop…
+## $ prey_family    &lt;chr&gt; &quot;Enoploteuthidae&quot;, &quot;Enoploteuthidae&quot;, &quot;Alpheidae&quot;, &quot;St…
+## $ prey_sp        &lt;chr&gt; &quot;Abralia redfieldi&quot;, &quot;Abraliopsis affinis&quot;, &quot;Alpheus g…
+## $ measurer       &lt;chr&gt; &quot;CM&quot;, &quot;NA&quot;, &quot;IG&quot;, &quot;CM&quot;, &quot;CM&quot;, &quot;CM&quot;, &quot;CM&quot;, &quot;CM&quot;, &quot;CM&quot;, …
+## $ file_name      &lt;chr&gt; &quot;Abralia_redfieldi_adult_3.jpg&quot;, &quot;Abraliopsis_affinis_…
+## $ use            &lt;chr&gt; &quot;maybe&quot;, &quot;yes&quot;, &quot;maybe&quot;, &quot;maybe&quot;, &quot;maybe&quot;, &quot;maybe&quot;, &quot;m…
+## $ number_reps    &lt;dbl&gt; 4, 1, 6, 6, 1, 1, 1, 6, 2, 2, 5, 5, 5, 1, 4, 4, 1, 3, …
+## $ source         &lt;chr&gt; &quot;wikipedia; sciencephoto.com; tolweb.org&quot;, NA, &quot;J. Lec…
+## $ life_stage     &lt;chr&gt; &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, …
+## $ image_type     &lt;chr&gt; &quot;simple sketch&quot;, &quot;institute&quot;, &quot;amateur&quot;, &quot;simple sketc…
+## $ scale_bar      &lt;chr&gt; &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;, &quot;N&quot;,…
+## $ s_length       &lt;dbl&gt; 140.014, 236.294, 631.165, 520.010, NA, 2275.500, 174.…
+## $ t_length       &lt;dbl&gt; 270.333, 534.294, 695.520, 674.000, 202.540, 2491.400,…
+## $ b_height       &lt;dbl&gt; 59.755, 94.157, 117.720, 362.130, 36.751, 288.560, 25.…
+## $ t_height       &lt;dbl&gt; 122.500, 240.205, 117.720, 471.341, 43.001, 288.560, 4…
+## $ f_height       &lt;dbl&gt; 38.880, 97.473, NA, 65.674, 6.000, 0.000, 8.002, 0.000…
+## $ eye_diameter   &lt;dbl&gt; 22.000, 40.032, 22.204, 60.008, 0.000, 57.395, 17.334,…
+## $ status_type    &lt;chr&gt; &quot;arm&quot;, &quot;NA&quot;, &quot;position&quot;, &quot;fin&quot;, &quot;fin&quot;, &quot;fin&quot;, &quot;fin&quot;, &quot;…
+## $ fin_arm_status &lt;chr&gt; &quot;visible&quot;, &quot;NA&quot;, &quot;top&quot;, &quot;visible&quot;, &quot;visible&quot;, &quot;absent&quot;…
+## $ annotations    &lt;chr&gt; NA, NA, &quot;Top-Down View --&gt; body height as measured is …
+## $ nh_annotation  &lt;chr&gt; &quot;NH checked&quot;, &quot;NH measured&quot;, &quot;Noted&quot;, &quot;NH checked&quot;, &quot;N…
+## $ b_shape_r      &lt;dbl&gt; 4.5240231, 5.6745011, 5.9082569, 1.8612101, 5.5111426,…
+## $ eye_body_r     &lt;dbl&gt; 0.08138111, 0.07492504, 0.03192432, 0.08903264, 0.0000…
+## $ standard_total &lt;dbl&gt; 0.5179316, 0.4422546, 0.9074721, 0.7715282, NA, 0.9133…</code></pre>
+<pre class="r"><code>#Calculate ratios/summarise data
 prey_morph_sum = prey_morph_clean %&gt;% 
   dplyr::select(prey_class:prey_sp, b_shape_r, eye_body_r, standard_total) %&gt;% #life_stage, 
   group_by(prey_sp) %&gt;% #, life_stage
@@ -331,17 +293,18 @@ prey_morph_sum = prey_morph_clean %&gt;%
 
 #Here we obtain species level ratios for body shape, eye diameter to body, and standard to total length.
 
-str(prey_morph_sum) #292 average values for 308 species (originally)</code></pre>
-<pre><code>## tibble [292 × 4] (S3: tbl_df/tbl/data.frame)
-##  $ prey_sp       : chr [1:292] &quot;Abralia redfieldi&quot; &quot;Abraliopsis affinis&quot; &quot;Abraliopsis felis&quot; &quot;Abraliopsis gilchristi&quot; ...
-##  $ b_shape_r     : num [1:292] 3.91 5.35 5.28 5.63 8.39 ...
-##  $ eye_body_r    : num [1:292] 0.0849 0.0698 0.0508 0.0501 0.0421 ...
-##  $ standard_total: num [1:292] 0.527 0.457 0.458 0.422 0.349 ...</code></pre>
+glimpse(prey_morph_sum) #292 average values for 308 species (originally)</code></pre>
+<pre><code>## Rows: 292
+## Columns: 4
+## $ prey_sp        &lt;chr&gt; &quot;Abralia redfieldi&quot;, &quot;Abraliopsis affinis&quot;, &quot;Abraliops…
+## $ b_shape_r      &lt;dbl&gt; 3.914416, 5.345385, 5.280579, 5.630847, 8.389906, 6.23…
+## $ eye_body_r     &lt;dbl&gt; 0.08487754, 0.06979495, 0.05075453, 0.05010374, 0.0421…
+## $ standard_total &lt;dbl&gt; 0.5267561, 0.4569214, 0.4583028, 0.4224399, 0.3493369,…</code></pre>
 <pre class="r"><code>write.csv(prey_morph_sum, here(&quot;data/output_data/prey_morph_sum.csv&quot;))</code></pre>
 </div>
 <div id="prey-quality-data" class="section level3">
 <h3>Prey Quality Data</h3>
-<p>These include data obtained for prey quality nutritional information based on wet weight measured %lipid content, %protein and energy density. Note that Zach put together meta-data for this dataframe.</p>
+<p>These include data obtained for prey quality nutritional information for %lipid content, %protein and energy density, typically representing an average value per study for each species of prey, and based on wet weight measured. Note that Zach put together meta-data for this dataframe.</p>
 <pre class="r"><code>#Load prey trait db
 prey_qual &lt;- read.csv(here(&quot;data/input_data/prey_quality_ww.csv&quot;))
 str(prey_qual) #Check data</code></pre>
@@ -355,7 +318,8 @@ str(prey_qual) #Check data</code></pre>
 ##  $ energy_density : num  10.87 NA 4.43 NA 4.3 ...
 ##  $ percent_protein: num  NA 22.3 NA NA 15.8 ...
 ##  $ percent_lipid  : chr  NA &quot;0.53&quot; NA NA ...</code></pre>
-<pre class="r"><code>prey_qual$percent_lipid &lt;- as.numeric(prey_qual$percent_lipid)
+<pre class="r"><code>#Correct data type
+prey_qual$percent_lipid &lt;- as.numeric(prey_qual$percent_lipid)
 
 #Summarise, we want an average value for each of the three metrics - ED, %L and %P for each species.
 prey_qual_sum = prey_qual %&gt;%
@@ -363,17 +327,19 @@ prey_qual_sum = prey_qual %&gt;%
   #drop_na(energy_density:percent_lipid) %&gt;% #filter out any NA&#39;s in the desired columns
   group_by(prey_sp) %&gt;% #, life_stage
   dplyr::summarize(energy_density = mean(energy_density, na.rm=TRUE), percent_protein = mean(percent_protein, na.rm=TRUE), percent_lipid = mean(percent_lipid, na.rm=TRUE))
-str(prey_qual_sum)</code></pre>
-<pre><code>## tibble [303 × 4] (S3: tbl_df/tbl/data.frame)
-##  $ prey_sp        : chr [1:303] &quot;Abralia redfieldi&quot; &quot;Abraliopsis affinis&quot; &quot;Abraliopsis felis&quot; &quot;Abraliopsis gilchristi&quot; ...
-##  $ energy_density : num [1:303] NaN NaN 4.4 NaN NaN NaN 1.7 3.9 NaN NaN ...
-##  $ percent_protein: num [1:303] NaN NaN 17.4 NaN NaN NaN NaN 16.4 NaN NaN ...
-##  $ percent_lipid  : num [1:303] NaN NaN NaN NaN NaN ...</code></pre>
+
+glimpse(prey_qual_sum)</code></pre>
+<pre><code>## Rows: 303
+## Columns: 4
+## $ prey_sp         &lt;chr&gt; &quot;Abralia redfieldi&quot;, &quot;Abraliopsis affinis&quot;, &quot;Abraliop…
+## $ energy_density  &lt;dbl&gt; NaN, NaN, 4.40000, NaN, NaN, NaN, 1.70000, 3.90000, N…
+## $ percent_protein &lt;dbl&gt; NaN, NaN, 17.40000, NaN, NaN, NaN, NaN, 16.40000, NaN…
+## $ percent_lipid   &lt;dbl&gt; NaN, NaN, NaN, NaN, NaN, 6.5375, NaN, 1.3000, NaN, Na…</code></pre>
 <pre class="r"><code>write.csv(prey_qual_sum, here(&quot;data/output_data/prey_qual_sum.csv&quot;))</code></pre>
 </div>
 <div id="albacore-prey-trait-db" class="section level3">
 <h3>Albacore prey trait db</h3>
-<p>Loading in and selecting key species coarse traits (for habitat association, morphological characteristics and aggregation behaviour).</p>
+<p>Loading in and selecting key species coarse traits: for habitat association, morphological characteristics and aggregation behaviour.</p>
 <pre class="r"><code>#Load prey trait db
 prey_trait &lt;- as.data.frame(read_xlsx(here(&quot;data/input_data/prey_trait_db.xlsx&quot;),
                                            sheet = &quot;prey_trait_db&quot;))</code></pre>
@@ -382,13 +348,46 @@ prey_trait &lt;- as.data.frame(read_xlsx(here(&quot;data/input_data/prey_trait_d
 <pre class="r"><code>#Prey Trait selection
 
 prey_trait_select = prey_trait %&gt;%
-  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status)</code></pre>
+  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status)
+
+str(prey_trait_select)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    855 obs. of  23 variables:
+##  $ prey_class        : chr  &quot;Hydrozoa&quot; &quot;Malacostraca&quot; &quot;Malacostraca&quot; &quot;Malacostraca&quot; ...
+##  $ prey_order        : chr  &quot;Siphonophorae&quot; &quot;Decapoda&quot; &quot;Decapoda&quot; &quot;Decapoda&quot; ...
+##  $ prey_family       : chr  &quot;Diphyidae&quot; &quot;Acanthephyridae&quot; &quot;Acanthephyridae&quot; &quot;Munididae&quot; ...
+##  $ prey_sp           : chr  &quot;Chelophyes appendiculata&quot; &quot;Acanthephyra pelagica&quot; &quot;Acanthephyra pelagica&quot; &quot;Pleuroncodes planipes&quot; ...
+##  $ life_stage        : chr  &quot;adult&quot; &quot;adult&quot; &quot;juvenile&quot; &quot;larva&quot; ...
+##  $ vert_habitat      : chr  &quot;epipelagic&quot; &quot;mesopelagic&quot; &quot;mesopelagic&quot; &quot;epipelagic&quot; ...
+##  $ horz_habitat      : chr  &quot;continental shelf&quot; &quot;oceanic&quot; &quot;oceanic&quot; &quot;continental shelf&quot; ...
+##  $ diel_migrant      : chr  &quot;1.0&quot; &quot;1.0&quot; &quot;1.0&quot; &quot;0.0&quot; ...
+##  $ diel_migrant_cat  : chr  &quot;diel_yes&quot; &quot;diel_yes&quot; &quot;diel_yes&quot; &quot;diel_no&quot; ...
+##  $ refuge            : chr  &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; ...
+##  $ refuge_cat        : chr  &quot;refuge_no&quot; &quot;refuge_no&quot; &quot;refuge_no&quot; &quot;refuge_no&quot; ...
+##  $ season_migrant    : chr  &quot;1.0&quot; &quot;1.0&quot; &quot;1.0&quot; &quot;1.0&quot; ...
+##  $ season_cat        : chr  &quot;season_yes&quot; &quot;season_yes&quot; &quot;season_yes&quot; &quot;season_yes&quot; ...
+##  $ body_shape        : chr  &quot;fusiform&quot; &quot;elongated&quot; &quot;elongated&quot; &quot;globiform&quot; ...
+##  $ l_max             : num  0.2 27 2.8 0.72 1.7 ...
+##  $ phys_defense      : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ transparent       : chr  &quot;1.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;1.0&quot; ...
+##  $ col_disrupt       : chr  &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; ...
+##  $ silver            : chr  &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; ...
+##  $ countershade      : chr  &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; ...
+##  $ gregarious_primary: chr  &quot;schooling&quot; &quot;schooling&quot; &quot;schooling&quot; &quot;schooling&quot; ...
+##  $ trophic_level     : chr  &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ fisheries_status  : chr  &quot;none&quot; &quot;none&quot; &quot;none&quot; &quot;none&quot; ...</code></pre>
 </div>
 </div>
 <div id="life-stage-size-ratio-calculations" class="section level2">
 <h2>Life stage size ratio calculations</h2>
-<p>In this section of code we calculate size ratios and threshold ratios for larval, juvenile and adult life stages of prey species, based on: * Existing lmin and lmax data for each life stage; * Where those data are missing for a species or genus, etc, we calculate those ratios based on data for related species (from genus, family, and so on) to fill in those missing ratios.</p>
-<p>We typically need: –&gt; what we especially need are max lengths for adults, juveniles and larvae with which to classify probable prey life stage based on either measured or estimated sizes. (i) length conversions calculated previously as ‘standard_total’: to convert any measurements that are not TL into TL, and also estimate body height from that. (ii) identify cut-offs for larval size ratios that are specific to the prey species through to class (iii) identify cut-off for length at maturity or max juvenile size for cephalopods and crustaceans when that information is missing (iv) create a series of useable ratios –&gt; we can then select the appropriate life stage information</p>
+<p>In this section of code we calculate size ratios and threshold ratios for larval, juvenile and adult life stages of prey species, through the following:</p>
+<ul>
+<li><p>Length conversions calculated previously as ‘standard_total’: to convert any measurements that are not TL into TL.</p></li>
+<li><p>Existing lmin and lmax data for each life stage are used to calculate ratios based on exisiting data;</p></li>
+<li><p>Where those data are missing for a species or genus, etc, we calculate those ratios based on data for related species (from genus, family, and so on) to fill in those missing ratios.</p></li>
+<li><p>This therefore create useable ratios for all taxa, using ratios at higher levels of classification when needed.</p></li>
+</ul>
+<div id="manipulate-length-information" class="section level3">
+<h3>Manipulate length information</h3>
 <pre class="r"><code>#Now need to split the min vs. max lengths to reshape those data and merge again later.
 prey_min = prey_trait %&gt;% 
   dplyr::select(prey_class:prey_sp, life_stage, l_min:l_min_type) %&gt;%
@@ -400,15 +399,10 @@ prey_max = prey_trait %&gt;%
   tidyr::gather(key = &quot;l_max&quot;, value = &quot;length&quot;, l_max) %&gt;%
   dplyr::rename(measure = l_max, l_type = l_max_type)
 
-#Gathering the wide didn&#39;t work well, because we want to retain 2/4 columns.
-#prey_trait_size &lt;- gather(prey_trait, measure, length, factor_key=TRUE, 
-                          #-(prey_class:life_stage))
-
 #Now we want to bind this data again
 #names(prey_min) #check column names are the same for both dfs
 prey_length &lt;- rbind(prey_min, prey_max)</code></pre>
-<pre class="r"><code>##NEED TO CLEAN THE L_TYPE VALUES
-
+<pre class="r"><code>#Here we clean the &#39;l_type&#39; values
 prey_length = prey_length %&gt;% #Note can use case_when() or if_ele() BUT you need to write one for each value and not try to combine them as strings using c()
   mutate(`l_type_use`=case_when(prey_length$`l_type` == &quot;TL&quot; ~ &quot;TL&quot;,
                                 prey_length$`l_type` == &quot;SL&quot; ~ &quot;SL&quot;,
@@ -431,6 +425,9 @@ prey_length = prey_length %&gt;% #Note can use case_when() or if_ele() BUT you n
                                 #Pre-claval length for sunfish
                                 ) 
          )</code></pre>
+</div>
+<div id="calculate-ratios" class="section level3">
+<h3>Calculate ratios</h3>
 <p>Below, we obtain a dataset where we have rows for both lmin and lmax for adult, juvenile and larval life stages in columns, as well as the juvenile:adult and larva:adult size ratios where those data exist. We have a number of NAs still, and we will fill those in in the following chunk.</p>
 <pre class="r"><code>#Next we need to merge our ratios data set and our lengths datasets.
 prey_length_data = prey_length %&gt;% 
@@ -439,7 +436,7 @@ prey_length_data = prey_length %&gt;%
 prey_length_data = prey_length_data %&gt;%
   mutate(`length_tl`=if_else(prey_length_data$`l_type_use`==&quot;SL&quot;, length/standard_total, length))
 
-##Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
+#Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
 prey_length_wide = prey_length_data %&gt;%
   dplyr::select(prey_class:life_stage, measure, length_tl) %&gt;%
   spread(life_stage, length_tl, convert=TRUE) %&gt;%
@@ -484,6 +481,9 @@ prey_length_ratios = prey_length_fam %&gt;%
 #And remove troublesome NA&#39;s in original dataset
 prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] &lt;- NaN
 prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] &lt;- NaN</code></pre>
+</div>
+<div id="length-ratio-data" class="section level3">
+<h3>Length ratio data</h3>
 <p>Finally, the code below provides us with the following data that can be extracted: (i) prey trait data as rows for 3x life stages as columns; (ii) prey length, measurement and type info + average ratio metrics x3 for x3 life stages We can use these to see what essentially fits in albacore jaws, by using gape length and width formulas for yellowfin tuna applied. These are calculated in a later chunk.</p>
 <pre class="r"><code>##Now we need to merge this back onto species, and make selection again based on whether the species level info is there
 
@@ -514,9 +514,15 @@ glimpse(prey_length_ratiosp)</code></pre>
 ## $ larva_adult_use &lt;dbl&gt; 15.910658, 20.761202, Inf, 5.250552, 10.405454, 5.208…
 ## $ juve_adult_use  &lt;dbl&gt; 42.11736, 42.11736, 43.00000, 35.55556, 40.22302, 29.…</code></pre>
 </div>
+</div>
 <div id="albacore-diet-review-data" class="section level2">
 <h2>Albacore diet review data</h2>
-<p>Here we need to load up the albacore global diet data to clean and select what we want. Tasks: (i) Need to make prey probable life stage selection (ii) Need to merge the probable prey life stage with the appropriate trait in the trait db (iii) Need to retain frequency of occurrence + stomach sampled information for traitglm</p>
+<p>Here we need to load up the albacore global diet data to clean and select what we want. Tasks performed in these chunks:</p>
+<ul>
+<li><p>Select prey probable life stage;</p></li>
+<li><p>Merge probable prey life stage with appropriate traits;</p></li>
+<li><p>Retain frequency of occurrence + stomach sampled information for traitglm.</p></li>
+</ul>
 <pre class="r"><code>#Load diet data spreadsheet
 #need this: prey_length_ratiosp
 #This contains species as rows for which we have useable species through to class-level ratio information on larval:adult and juvenile:adult lengths
@@ -526,8 +532,10 @@ glimpse(prey_length_ratiosp)</code></pre>
 
 alb_global = as.data.frame(read_xlsx(here(&quot;data/input_data/albacore_diet_global.xlsx&quot;),
                       sheet = &quot;albacore_diet_global&quot;)) %&gt;%
-  dplyr::filter(TaxLev == &quot;species&quot;) %&gt;% #There are ~1105 observations when we filter by species
-  dplyr::filter(Include %in% c(&quot;Yes&quot;, &quot;Maybe&quot;) &amp; !pred_life == &quot;larvae&quot;) %&gt;% #1028 when we remove larval albacore diet studies (there are 3)
+  dplyr::filter(TaxLev == &quot;species&quot;) %&gt;% 
+  #There are ~1105 observations when we filter by species
+  dplyr::filter(Include %in% c(&quot;Yes&quot;, &quot;Maybe&quot;) &amp; !pred_life == &quot;larvae&quot;) %&gt;% 
+  #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %&gt;%
   dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %&gt;%
   mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %&gt;%
@@ -535,9 +543,11 @@ alb_global = as.data.frame(read_xlsx(here(&quot;data/input_data/albacore_diet_gl
   #Add reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
   left_join(prey_morph_sum, by=&quot;prey_sp&quot;) 
 
+#Correct data type
 alb_global$maxl_use &lt;- as.numeric(alb_global$maxl_use)
 
-alb_global = alb_global %&gt;% #need to add morph data to convert maxsl_use to maxtl_use
+#Cleaning metrics
+alb_global = alb_global %&gt;% 
   mutate(maxtl_use = if_else(alb_global$maxl_type %in% c(&quot;SL&quot;, &quot;ML&quot;), maxl_use/standard_total, maxl_use),
          prey_age_reported_1=case_when(
                              #prey_age_reported_1 == &quot;NA&quot; ~ &quot;none&quot;,
@@ -553,7 +563,7 @@ alb_global$prey_age_reported_1 &lt;- replace_na(alb_global$prey_age_reported_1, 
 #Save total df
 write.csv(alb_global, here(&quot;data/output_data/alb_global_diet_total.csv&quot;)) 
 #1028 observations and 40 variables</code></pre>
-<p>The following summarises the max observed FO, N and M for each species in the dataset.</p>
+<p>The following summarises the max observed FO, N and M for each species in the dataset. This information can be useful when investigating the relative importance of species in albacore diets.</p>
 <pre class="r"><code>alb_global_ad_metrics = alb_global %&gt;%
   #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
   dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %&gt;%
@@ -578,6 +588,29 @@ alb_global_prob$life_stage[is.na(alb_global_prob$life_stage)] &lt;- &quot;adult&
 write.csv(alb_global_prob, here(&quot;data/output_data/alb_global_diet_prob.csv&quot;)) 
 #985 observations 53 variables
 #This include data for which we are able to make an assessment of probable life stage --&gt; therefore will exclude coarse taxonomic classifications</code></pre>
+<p>The following summarises the max observed FO, N and M for each species in the dataset AND for each life stage likely consumed.</p>
+<pre class="r"><code>#All combinations of life stages and species consumed
+alb_global_prob_metrics = alb_global_prob %&gt;%
+  dplyr::select(prey_class:prey_sp, life_stage, pFOuse, pN, pM) %&gt;%
+  group_by(prey_sp, life_stage) %&gt;%
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;. You can override using the `.groups` argument.</code></pre>
+<p>AND we need to select the max observed.</p>
+<pre class="r"><code>#Need to summarise prey life stages and attach trait data
+#unique(as.factor(alb_global_prob_metrics$prey_sp)) #there are 303 unique species
+#So we should obtain 300 species in the following code.
+
+#The most common life stage and species consumed!!
+alb_global_prob_metrics = alb_global_prob_metrics %&gt;%
+  group_by(prey_sp) %&gt;%
+  top_n(1, maxFO) %&gt;%
+  sample_n(1)
+
+write.csv(alb_global_prob_metrics, here(&quot;data/output_data/alb_global_prob_metrics&quot;))</code></pre>
+<p>*Note: the maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.</p>
+</div>
+<div id="data-sets" class="section level2">
+<h2>DATA SETS</h2>
 </div>
 
 

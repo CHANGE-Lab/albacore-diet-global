@@ -49,10 +49,14 @@ library(tweedie)
 ### Prey morphometric measurements
 
 We first want to load in and clean the prey morphometric measurements for adult taxa only, we did not finish or find many images to work with for juveniles or larvae of most species. The following code aims to:
-* Check data & select relevant data,
-* Calculate eye to body and body shape ratios, and
-* Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them).
-* These ratios are based on adults only.
+
+- Check & select relevant data,
+
+- Calculate eye to body and body shape ratios, based on adult specimen images and morphometrics only.
+
+- Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them).
+
+- Summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.
 
 ```{r Prey Morph Data Clean}
 
@@ -60,39 +64,24 @@ We first want to load in and clean the prey morphometric measurements for adult 
 
 prey_morph = as.data.frame(read_xlsx(here("data/input_data/prey_morphometrics.xlsx"), 
                                                  sheet = "prey_adult_morphometrics"))
-#Check dataframe
-#str(prey_morph)
 
 #Convert relevant columns to character/numeric values
-#prey_morph[,12:17] <- sapply(prey_morph[,12:17], as.character)
-prey_morph[,12:17] <- sapply(prey_morph[,12:17], as.numeric)
-
-#Additional data checks
-dim(prey_morph) #1290 rows and 21 columns
-names(prey_morph)
+prey_morph[,12:17] <- sapply(prey_morph[,12:17], as.numeric) #as.character
 
 #Data cleaning
-#Select & calculate values for body_shape_r & eye_body_r
 prey_morph_clean = prey_morph %>%
   dplyr::filter(use %in% c("yes", "maybe")) %>% #c("no", "NA")
   #filter out images that are use = "no"
   drop_na(t_length, b_height, eye_diameter) %>% #filter out any NA's in the desired columns
   mutate(b_shape_r = t_length/b_height, 
          eye_body_r = eye_diameter/t_length,
-         standard_total = s_length/t_length)
+         standard_total = s_length/t_length) #calculate values for body_shape_r & eye_body_r
 
-str(prey_morph_clean)
+glimpse(prey_morph_clean)
 
 ```
 
-Next, we want to summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.
-
 ```{r Prey Morph Summarise}
-
-#Checking data
-str(prey_morph_clean) #1239 observations for prey species morphometrics
-#sum(prey_morph_clean$t_length) #588152.1
-#sum(prey_morph_clean$b_height) #129932.2
 
 #Calculate ratios/summarise data
 prey_morph_sum = prey_morph_clean %>% 
@@ -105,7 +94,7 @@ prey_morph_sum = prey_morph_clean %>%
 
 #Here we obtain species level ratios for body shape, eye diameter to body, and standard to total length.
 
-str(prey_morph_sum) #292 average values for 308 species (originally)
+glimpse(prey_morph_sum) #292 average values for 308 species (originally)
 
 write.csv(prey_morph_sum, here("data/output_data/prey_morph_sum.csv"))
 
@@ -114,13 +103,15 @@ write.csv(prey_morph_sum, here("data/output_data/prey_morph_sum.csv"))
 
 ### Prey Quality Data
 
-These include data obtained for prey quality nutritional information based on wet weight measured %lipid content, %protein and energy density.
+These include data obtained for prey quality nutritional information for %lipid content, %protein and energy density, typically representing an average value per study for each species of prey, and based on wet weight measured.
 Note that Zach put together meta-data for this dataframe.
 
 ```{r Prey Qual Data Clean & Summarise}
 #Load prey trait db
 prey_qual <- read.csv(here("data/input_data/prey_quality_ww.csv"))
 str(prey_qual) #Check data
+
+#Correct data type
 prey_qual$percent_lipid <- as.numeric(prey_qual$percent_lipid)
 
 #Summarise, we want an average value for each of the three metrics - ED, %L and %P for each species.
@@ -129,7 +120,8 @@ prey_qual_sum = prey_qual %>%
   #drop_na(energy_density:percent_lipid) %>% #filter out any NA's in the desired columns
   group_by(prey_sp) %>% #, life_stage
   dplyr::summarize(energy_density = mean(energy_density, na.rm=TRUE), percent_protein = mean(percent_protein, na.rm=TRUE), percent_lipid = mean(percent_lipid, na.rm=TRUE))
-str(prey_qual_sum)
+
+glimpse(prey_qual_sum)
 
 write.csv(prey_qual_sum, here("data/output_data/prey_qual_sum.csv"))
 
@@ -137,7 +129,7 @@ write.csv(prey_qual_sum, here("data/output_data/prey_qual_sum.csv"))
 
 ### Albacore prey trait db
 
-Loading in and selecting key species coarse traits (for habitat association, morphological characteristics and aggregation behaviour).
+Loading in and selecting key species coarse traits: for habitat association, morphological characteristics and aggregation behaviour.
 
 ```{r Prey trait data load}
 #Load prey trait db
@@ -149,22 +141,22 @@ prey_trait <- as.data.frame(read_xlsx(here("data/input_data/prey_trait_db.xlsx")
 prey_trait_select = prey_trait %>%
   dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status)
 
-
+str(prey_trait_select)
 ```
 
 ## Life stage size ratio calculations
 
-In this section of code we calculate size ratios and threshold ratios for larval, juvenile and adult life stages of prey species, based on:
-* Existing lmin and lmax data for each life stage;
-* Where those data are missing for a species or genus, etc, we calculate those ratios based on data for related species (from genus, family, and so on) to fill in those missing ratios.
+In this section of code we calculate size ratios and threshold ratios for larval, juvenile and adult life stages of prey species, through the following:
 
-We typically need: 
---> what we especially need are max lengths for adults, juveniles and larvae with which to classify probable prey life stage based on either measured or estimated sizes.
-(i) length conversions calculated previously as 'standard_total': to convert any measurements that are not TL into TL, and also estimate body height from that.
-(ii) identify cut-offs for larval size ratios that are specific to the prey species through to class
-(iii) identify cut-off for length at maturity or max juvenile size for cephalopods and crustaceans when that information is missing
-(iv) create a series of useable ratios
---> we can then select the appropriate life stage information
+- Length conversions calculated previously as 'standard_total': to convert any measurements that are not TL into TL.
+
+- Existing lmin and lmax data for each life stage are used to calculate ratios based on exisiting data;
+
+- Where those data are missing for a species or genus, etc, we calculate those ratios based on data for related species (from genus, family, and so on) to fill in those missing ratios.
+
+- This therefore create useable ratios for all taxa, using ratios at higher levels of classification when needed.
+
+### Manipulate length information
 
 ```{r Lmin & Lmax for each species}
 
@@ -179,18 +171,14 @@ prey_max = prey_trait %>%
   tidyr::gather(key = "l_max", value = "length", l_max) %>%
   dplyr::rename(measure = l_max, l_type = l_max_type)
 
-#Gathering the wide didn't work well, because we want to retain 2/4 columns.
-#prey_trait_size <- gather(prey_trait, measure, length, factor_key=TRUE, 
-                          #-(prey_class:life_stage))
-
 #Now we want to bind this data again
 #names(prey_min) #check column names are the same for both dfs
 prey_length <- rbind(prey_min, prey_max)
 ```
 
 ```{r Cleaning L type values}
-##NEED TO CLEAN THE L_TYPE VALUES
 
+#Here we clean the 'l_type' values
 prey_length = prey_length %>% #Note can use case_when() or if_ele() BUT you need to write one for each value and not try to combine them as strings using c()
   mutate(`l_type_use`=case_when(prey_length$`l_type` == "TL" ~ "TL",
                                 prey_length$`l_type` == "SL" ~ "SL",
@@ -215,6 +203,8 @@ prey_length = prey_length %>% #Note can use case_when() or if_ele() BUT you need
          )
 ```
 
+### Calculate ratios
+
 Below, we obtain a dataset where we have rows for both lmin and lmax for adult, juvenile and larval life stages in columns, as well as the juvenile:adult and larva:adult size ratios where those data exist. We have a number of NAs still, and we will fill those in in the following chunk.
 
 ```{r Merge length and morph data}
@@ -225,7 +215,7 @@ prey_length_data = prey_length %>%
 prey_length_data = prey_length_data %>%
   mutate(`length_tl`=if_else(prey_length_data$`l_type_use`=="SL", length/standard_total, length))
 
-##Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
+#Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
 prey_length_wide = prey_length_data %>%
   dplyr::select(prey_class:life_stage, measure, length_tl) %>%
   spread(life_stage, length_tl, convert=TRUE) %>%
@@ -276,6 +266,8 @@ prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
 prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
 ```
 
+### Length ratio data
+
 Finally, the code below provides us with the following data that can be extracted:
 (i) prey trait data as rows for 3x life stages as columns;
 (ii) prey length, measurement and type info + average ratio metrics x3 for x3 life stages
@@ -304,10 +296,13 @@ glimpse(prey_length_ratiosp)
 ## Albacore diet review data
 
 Here we need to load up the albacore global diet data to clean and select what we want.
-Tasks:
-(i) Need to make prey probable life stage selection
-(ii) Need to merge the probable prey life stage with the appropriate trait in the trait db
-(iii) Need to retain frequency of occurrence + stomach sampled information for traitglm
+Tasks performed in these chunks:
+
+- Select prey probable life stage;
+
+- Merge probable prey life stage with appropriate traits;
+
+- Retain frequency of occurrence + stomach sampled information for traitglm.
 
 ```{r Albacore diet data load & manipulation}
 
@@ -320,8 +315,10 @@ Tasks:
 
 alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.xlsx"),
                       sheet = "albacore_diet_global")) %>%
-  dplyr::filter(TaxLev == "species") %>% #There are ~1105 observations when we filter by species
-  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1028 when we remove larval albacore diet studies (there are 3)
+  dplyr::filter(TaxLev == "species") %>% 
+  #There are ~1105 observations when we filter by species
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% 
+  #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %>%
   dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
   mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>%
@@ -329,9 +326,11 @@ alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.
   #Add reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
   left_join(prey_morph_sum, by="prey_sp") 
 
+#Correct data type
 alb_global$maxl_use <- as.numeric(alb_global$maxl_use)
 
-alb_global = alb_global %>% #need to add morph data to convert maxsl_use to maxtl_use
+#Cleaning metrics
+alb_global = alb_global %>% 
   mutate(maxtl_use = if_else(alb_global$maxl_type %in% c("SL", "ML"), maxl_use/standard_total, maxl_use),
          prey_age_reported_1=case_when(
                              #prey_age_reported_1 == "NA" ~ "none",
@@ -350,7 +349,7 @@ write.csv(alb_global, here("data/output_data/alb_global_diet_total.csv"))
 
 ```
 
-The following summarises the max observed FO, N and M for each species in the dataset.
+The following summarises the max observed FO, N and M for each species in the dataset. This information can be useful when investigating the relative importance of species in albacore diets.
 
 ```{r Alb adult diet metrics summary}
 
@@ -386,6 +385,8 @@ write.csv(alb_global_prob, here("data/output_data/alb_global_diet_prob.csv"))
 
 ```
 
+The following summarises the max observed FO, N and M for each species in the dataset AND for each life stage likely consumed.
+
 ```{r Alb probable diet metrics summary}
 
 #All combinations of life stages and species consumed
@@ -394,30 +395,29 @@ alb_global_prob_metrics = alb_global_prob %>%
   group_by(prey_sp, life_stage) %>%
   dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))
 
-#Save data if needed
-#write.csv(alb_global_prob_metrics, here("alb_global_prob_list.csv"))
-
 ```
+
+AND we need to select the max observed.
 
 ```{r Albacore prey life stages lists}
 #Need to summarise prey life stages and attach trait data
-unique(as.factor(alb_global_prob_list$prey_sp)) #there are 303 unique species
-#So we should obtain 303 species in the following code.
-
-str(alb_global_prob_list$maxFO)
-glimpse(alb_global_prob_list)
+#unique(as.factor(alb_global_prob_metrics$prey_sp)) #there are 303 unique species
+#So we should obtain 300 species in the following code.
 
 #The most common life stage and species consumed!!
-alb_global_prob_metrics = alb_global_prob_list %>%
+alb_global_prob_metrics = alb_global_prob_metrics %>%
   group_by(prey_sp) %>%
-  top_n(1, maxFO) %>% #WHY ARE THERE 304 SPECIES??? No idea but I guess one of these rows has to go, will have to do it randomly.
+  top_n(1, maxFO) %>%
   sample_n(1)
 
-write.csv(alb_global_prob_metrics, here("data/alb_global_prob_metrics"))
+write.csv(alb_global_prob_metrics, here("data/output_data/alb_global_prob_metrics"))
 
 ```
 
-Note:
-The maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.
+*Note: the maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.
+
+## DATA SETS NEEDED
+
+
 
 
