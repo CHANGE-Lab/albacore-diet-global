@@ -386,3 +386,38 @@ write.csv(alb_global_prob, here("data/output_data/alb_global_diet_prob.csv"))
 
 ```
 
+```{r Alb probable diet metrics summary}
+
+#All combinations of life stages and species consumed
+alb_global_prob_metrics = alb_global_prob %>%
+  dplyr::select(prey_class:prey_sp, life_stage, pFOuse, pN, pM) %>%
+  group_by(prey_sp, life_stage) %>%
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))
+
+#Save data if needed
+#write.csv(alb_global_prob_metrics, here("alb_global_prob_list.csv"))
+
+```
+
+```{r Albacore prey life stages lists}
+#Need to summarise prey life stages and attach trait data
+unique(as.factor(alb_global_prob_list$prey_sp)) #there are 303 unique species
+#So we should obtain 303 species in the following code.
+
+str(alb_global_prob_list$maxFO)
+glimpse(alb_global_prob_list)
+
+#The most common life stage and species consumed!!
+alb_global_prob_metrics = alb_global_prob_list %>%
+  group_by(prey_sp) %>%
+  top_n(1, maxFO) %>% #WHY ARE THERE 304 SPECIES??? No idea but I guess one of these rows has to go, will have to do it randomly.
+  sample_n(1)
+
+write.csv(alb_global_prob_metrics, here("data/alb_global_prob_metrics"))
+
+```
+
+Note:
+The maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.
+
+
