@@ -54,11 +54,11 @@ getwd()
 
 ### Frequency of Occurrence Data
 
-```{r Species %FO (L)}
+```{r Species %FO (L) - load}
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
-alb_adult_fo = read.csv(paste(here("data/alb_global_wide_dietfo.csv"),
+alb_adult_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"),
                                    sep=""), check.names=FALSE, row.names = 1) %>%
   dplyr::select(StudyID:ncol(.), -grouped_id) #-c(, `Diplospinus multistriatus`, `Sardina pilchardus`)
 
@@ -67,23 +67,22 @@ alb_adult_fo = read.csv(paste(here("data/alb_global_wide_dietfo.csv"),
 
 #Main DF
 head(alb_adult_fo)
+```
 
+```{r Species %FO (L) - manipulate}
 #Check for empty columns
 which(colSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0) #None! #Otherwise remove these
 #Check for empty rows
 which(rowSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0) #Remove these - this becomes a thing once we start removing outlier species
-alb_adult_fo2 = alb_adult_fo[-which(rowSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0),]
-#223 observations of 150 traits
+#None
 
 #Subset species df
 #If removing species
-#alb_adult_prey = alb_adult_fo2[,14:ncol(alb_adult_fo2)]
 alb_adult_prey = alb_adult_fo[,14:ncol(alb_adult_fo)]
 names(alb_adult_prey) <- str_replace_all(names(alb_adult_prey), " ", "_")
-#names(alb_adult_prey)
 
 #check df
-#dim(alb_adult_prey) #158 species & 253 observations
+#dim(alb_adult_prey) #137 species & 225 observations
 #str(alb_adult_prey) #data are integers & numeric
 
 #Round to no decimal places if needed
@@ -93,7 +92,8 @@ names(alb_adult_prey) <- str_replace_all(names(alb_adult_prey), " ", "_")
 #Try numeric
 alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adult_prey)], as.numeric)
 
-alb_adult_prey_mv <- as.mvabund(alb_adult_prey) #make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+#make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+alb_adult_prey_mv <- as.mvabund(alb_adult_prey) 
 
 #All species names have to match up for both dfs
 colnames(alb_adult_prey_mv) == names(alb_adult_prey) #hell yes
@@ -145,13 +145,8 @@ species.scores$species <- rownames(species.scores)
 
 #REMOVING OUTLIERS
 #1 BY SPECIES: Can be done by checking species scores and removing columns (species) that contribute to MV dispersion
-alb_adult_fo2 = read.csv(paste(here("data/alb_global_wide_dietfo.csv"),
-                                   sep=""), check.names=FALSE, row.names = 1) %>%
-  dplyr::select(StudyID:ncol(.), -c(grouped_id, 
-                                    `Diplospinus multistriatus`, `Sardina pilchardus`, `Todaropsis eblanae`, `Nyctiphanes australis`, 
-                                    `Euphausia pacifica`, `Anchylomera blossevillei`, `Benthosema glaciale`, `Scomber scombrus`,
-                                    `Trachurus japonicus`, `Illex coindetii`, `Hyaloteuthis pelagica`, `Pteroctopus tetracirrhus`,
-                                    `Ancistroteuthis lichtensteinii`, `Histioteuthis heteropsis`, `Trachinotus ovatus`, `Scaeurgus unicirrhus`)) #, 
+#alb_adult_fo2 = alb_adult_fo %>%
+#  dplyr::select(StudyID:ncol(.), -c(grouped_id, `Diplospinus multistriatus`, `Sardina pilchardus`, `Todaropsis eblanae`, `Nyctiphanes australis`, `Euphausia pacifica`, `Anchylomera blossevillei`, `Benthosema glaciale`, `Scomber scombrus`, `Trachurus japonicus`, `Illex coindetii`, `Hyaloteuthis pelagica`, `Pteroctopus tetracirrhus`,  `Ancistroteuthis lichtensteinii`, `Histioteuthis heteropsis`, `Trachinotus ovatus`, `Scaeurgus unicirrhus`)) #, 
 
 #OR
 #2 BY ROWS/OBSERVATIONS: Can be done by checking treatment scores and removing rows, and subsequently corresponding columns (species) that contribute to MV dispersion.
@@ -396,53 +391,6 @@ write.csv(alb_adult_prey4, here("data/alb_adult_prey4.csv"))
 
 ```
 
-
-### Presence/Absence data
-
-```{r Species PA (L)}
-
-#Convert to presence/absence
-alb_adult_preyPA = alb_adult_prey
-alb_adult_preyPA[alb_adult_preyPA>0] = 1
-alb_adult_preyPA_df = cbind(alb_adult_fo[,1:13], alb_adult_preyPA)
-
-
-#Remove low occurrence species?
-#Remove columns that contain < 2 occurrences #can vary this number
-alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
-#Not sure why some explanatory variable columns disappear also, so adding them back in:
-alb_adult_preyPA_df3 = cbind(alb_adult_preyPA_df2[,1:13], alb_adult_preyPA_df2[,12:ncol(alb_adult_preyPA_df2)])
-#Then delete rows that sum to zero for the trait occurrences
-alb_adult_preyPA_df2.0 = alb_adult_preyPA_df3[-which(rowSums(alb_adult_preyPA_df3[14:ncol(alb_adult_preyPA_df3)])==0),] #209 observations of 144 traits
-
-alb_adult_site_PA <- as.data.frame(alb_adult_preyPA_df2.0[,1:13])
-alb_adult_spp_PA <- alb_adult_preyPA_df2.0[,14:ncol(alb_adult_preyPA_df2.0)] #144 trait columns
-
-#write.csv(review_traits_mv, "review_traits_mv.csv")
-#review_traits_mv <- read_csv("review_traits4.0V.scsv")
-
-
-
-```
-
-```{r Visualise - nMDS ordinations PA}
-
-
-#PA
-alb_adult_nMDS_pa = metaMDS(alb_adult_spp_PA, 
-                         distance="bray", 
-                         trymax = 100, #1000
-                         k=3) #could increase to k = 4
-
-#Note pb with this!! insufficient data?
-
-pl <- ordiplot(alb_adult_nMDS_pa, type = "none")
-points(pl, "sites", pch=21, col="red", bg="yellow")
-text(pl, "species", col="blue", cex=0.9)
-
-###Issues 
-#First excluded species with < 1% 
-```
 
 ### Covars
 
@@ -1046,8 +994,6 @@ Need to add the following code:
 # load correction to traitglm:
 source("traitglm.R")
 source("get_polys.R")
-
-
 
 ### Original data - Predator life stage
 
