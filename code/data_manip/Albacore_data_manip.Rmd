@@ -144,6 +144,16 @@ prey_trait_select = prey_trait %>%
 str(prey_trait_select)
 ```
 
+And select the traits for adult life stage only.
+
+```{r Prey traits adults - data extract}
+
+prey_trait_adult = prey_trait %>%
+  dplyr::filter(life_stage == "adult") %>% #currently df already split by age group
+  dplyr::select(prey_class:prey_sp, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status) #select traits we want to analyse
+
+```
+
 ## Life stage size ratio calculations
 
 In this section of code we calculate size ratios and threshold ratios for larval, juvenile and adult life stages of prey species, through the following:
@@ -418,6 +428,160 @@ write.csv(alb_global_prob_metrics, here("data/output_data/alb_global_prob_metric
 
 ## DATA SETS NEEDED
 
+#### Prey traits - adult life stage
 
+```{r Prey adult traits + morph + qual data}
+
+#Mixed categorical, and other traits
+
+prey_adults_merge = prey_trait_adult %>% 
+  left_join(prey_morph_sum, by="prey_sp") %>% 
+  left_join(prey_qual_sum, by="prey_sp") %>%
+  left_join(alb_global_ad_metrics, by="prey_sp")
+
+#308 spp and ~31 traits
+glimpse(prey_adults_merge)
+
+#Save
+write.csv(prey_adults_merge, here("data/output_data/prey_adults_traits.csv"))
+
+#Reload
+#prey_adults_merge = read.csv(here("data/output_data/prey_adults_traits.csv"))
+
+```
+
+#### Prey traits - probable life stage
+
+```{r Prey probable list + traits + morph + qual data}
+
+prey_probable_merge = alb_global_prob_metrics %>%
+  left_join(prey_trait_select, by=c("prey_sp", "life_stage")) %>% 
+  left_join(prey_morph_sum, by="prey_sp") %>% 
+  left_join(prey_qual_sum, by="prey_sp") %>%
+  dplyr::select(prey_class:prey_family, prey_sp:life_stage, vert_habitat:percent_lipid, maxFO:maxM)
+
+#303 spp and ~28 traits
+glimpse(prey_probable_merge)
+
+write.csv(prey_probable_merge, here("data/output_data/prey_probable_traits.csv"))
+
+#prey_probable_merge = read.csv(here("data/prey_probable_traits.csv"))
+
+```
+
+#### Covariates for analyses
+
+```{r Covariates}
+
+alb_covars = alb_global %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:pred_life_est) %>% #, stomachs_used
+  distinct(StudyID, CiteYear, OceanBasinQ, LocatLatitude, LocatLongitude, YearEnd, pred_life) %>% 
+  #, stomachs_used
+  mutate(lat_cat = if_else(abs(LocatLatitude) > 23.43662, "temperate", "tropical"),
+         pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "adult" ~ "adult"))
+
+write.csv(alb_covars, here("data/output_data/alb_covars.csv"))
+
+```
+
+Could edit the Longhurst doc to separate biomes and codes as per province definitions:
+https://en.wikipedia.org/wiki/Longhurst_code#:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions 
+
+```{r Covars + Longhurst}
+#Covars + Longhurst
+
+alb_covars_geog <- read.csv(here("data/output_data/alb_covars_longhurst.csv")) %>%
+  dplyr::select(StudyID, lat_cat:code) %>%
+  group_by(StudyID) %>%
+  sample_n(1)
+names(alb_covars_geog)
+
+#Need to merge this with diet data first overall data then probable prey consumed
+unique(alb_covars_geog$code)
+
+#check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
+```
+
+
+**NOTE** Below we include the adult cluster number but need to use the cluster number from probable life stage if we stick to this for final analysis.
+
+
+```{r Covars + Longhurst + Diet data F)}
+
+#Covars + Longhurst + Diet data FO
+
+alb_global_diet = alb_global %>%
+  left_join(alb_covars_geog) #looks good #, by = "StudyID"
+
+#Upload the cluster info: 
+##This is where we choose to either upload cluster data from adult-based or probable-consumed cluster analysis.
+alb_adult_traits = read.csv(here("data/output_data/adult.prey.clusternum.habgreg.aggl.k9.csv")) %>%
+  dplyr::select(prey_sp:adult.clust.num)
+
+#Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
+alb_global_dietfo = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pFOuse) %>%
+  filter(pFOuse >= 1) %>% #set this value to include or exclude species
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pFOuse, fill = 0, convert = FALSE)
+
+#Before spreading data - range(alb_global_dietfo$pFOuse) 
+#0 to 100 need to exclude zeros as they are not true zeros --> 0.1 to 100%
+
+#Check covariate representation
+#summary(as.factor(alb_global_dietfo$lat_cat))
+#summary(as.factor(alb_global_dietfo$code))
+#summary(as.factor(alb_global_dietfo$OceanBasin))
+#summary(as.factor(alb_global_dietfo$OceanBasinQ))
+
+write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"))
+
+```
+
+```{r Covars + Longhurst + Diet data N}
+#Extract for %N data
+alb_global_dietn = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pN) %>%
+  filter(pN > 0) %>%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pN, fill = 0, convert = FALSE)
+
+#Check covariate representation
+#summary(as.factor(alb_global_dietn$lat_cat))
+#summary(as.factor(alb_global_dietn$code))
+#summary(as.factor(alb_global_dietn$OceanBasin))
+#summary(as.factor(alb_global_dietn$OceanBasinQ))
+
+write.csv(alb_global_dietn, here("data/alb_global_wide_dietn.csv"))
+```
+
+```{r Covars + Longhurst + Diet data M}
+#Extract for %M data
+#range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
+
+alb_global_dietm = alb_global_diet %>%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pM) %>%
+  filter(pM > 0) %>%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pM, fill = 0, convert = FALSE)
+
+#Check covariate representation
+#summary(as.factor(alb_global_dietm$lat_cat))
+#summary(as.factor(alb_global_dietm$code))
+#summary(as.factor(alb_global_dietm$OceanBasin))
+#summary(as.factor(alb_global_dietm$OceanBasinQ))
+
+write.csv(alb_global_dietm, here("data/alb_global_wide_dietm.csv"))
+
+```
 
 

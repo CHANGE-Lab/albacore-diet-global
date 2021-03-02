@@ -375,6 +375,10 @@ str(prey_trait_select)</code></pre>
 ##  $ gregarious_primary: chr  &quot;schooling&quot; &quot;schooling&quot; &quot;schooling&quot; &quot;schooling&quot; ...
 ##  $ trophic_level     : chr  &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
 ##  $ fisheries_status  : chr  &quot;none&quot; &quot;none&quot; &quot;none&quot; &quot;none&quot; ...</code></pre>
+<p>And select the traits for adult life stage only.</p>
+<pre class="r"><code>prey_trait_adult = prey_trait %&gt;%
+  dplyr::filter(life_stage == &quot;adult&quot;) %&gt;% #currently df already split by age group
+  dplyr::select(prey_class:prey_sp, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status) #select traits we want to analyse</code></pre>
 </div>
 </div>
 <div id="life-stage-size-ratio-calculations" class="section level2">
@@ -609,8 +613,211 @@ alb_global_prob_metrics = alb_global_prob_metrics %&gt;%
 write.csv(alb_global_prob_metrics, here(&quot;data/output_data/alb_global_prob_metrics&quot;))</code></pre>
 <p>*Note: the maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.</p>
 </div>
-<div id="data-sets" class="section level2">
-<h2>DATA SETS</h2>
+<div id="data-sets-needed" class="section level2">
+<h2>DATA SETS NEEDED</h2>
+<div id="prey-traits---adult-life-stage" class="section level4">
+<h4>Prey traits - adult life stage</h4>
+<pre class="r"><code>#Mixed categorical, and other traits
+
+prey_adults_merge = prey_trait_adult %&gt;% 
+  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) %&gt;% 
+  left_join(prey_qual_sum, by=&quot;prey_sp&quot;) %&gt;%
+  left_join(alb_global_ad_metrics, by=&quot;prey_sp&quot;)
+
+#308 spp and ~31 traits
+glimpse(prey_adults_merge)</code></pre>
+<pre><code>## Rows: 308
+## Columns: 31
+## $ prey_class         &lt;chr&gt; &quot;Hydrozoa&quot;, &quot;Malacostraca&quot;, &quot;Malacostraca&quot;, &quot;Malac…
+## $ prey_order         &lt;chr&gt; &quot;Siphonophorae&quot;, &quot;Decapoda&quot;, &quot;Decapoda&quot;, &quot;Decapoda…
+## $ prey_family        &lt;chr&gt; &quot;Diphyidae&quot;, &quot;Acanthephyridae&quot;, &quot;Oplophpridae&quot;, &quot;P…
+## $ prey_sp            &lt;chr&gt; &quot;Chelophyes appendiculata&quot;, &quot;Acanthephyra pelagica…
+## $ vert_habitat       &lt;chr&gt; &quot;epipelagic&quot;, &quot;mesopelagic&quot;, &quot;mesopelagic&quot;, &quot;epipe…
+## $ horz_habitat       &lt;chr&gt; &quot;continental shelf&quot;, &quot;oceanic&quot;, &quot;oceanic&quot;, &quot;contin…
+## $ diel_migrant       &lt;chr&gt; &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;NA&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1…
+## $ diel_migrant_cat   &lt;chr&gt; &quot;diel_yes&quot;, &quot;diel_yes&quot;, &quot;diel_yes&quot;, &quot;diel_UN&quot;, &quot;di…
+## $ refuge             &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;…
+## $ refuge_cat         &lt;chr&gt; &quot;refuge_no&quot;, &quot;refuge_no&quot;, &quot;refuge_no&quot;, &quot;refuge_yes…
+## $ season_migrant     &lt;chr&gt; &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;…
+## $ season_cat         &lt;chr&gt; &quot;season_yes&quot;, &quot;season_yes&quot;, &quot;season_yes&quot;, &quot;season_…
+## $ body_shape         &lt;chr&gt; &quot;fusiform&quot;, &quot;elongated&quot;, &quot;elongated&quot;, &quot;depressifor…
+## $ l_max              &lt;dbl&gt; 0.2, 27.0, 1.7, 4.4, 110.0, 60.0, 37.0, 8.0, 31.0,…
+## $ phys_defense       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ transparent        &lt;chr&gt; &quot;1.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;…
+## $ col_disrupt        &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;…
+## $ silver             &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;…
+## $ countershade       &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;…
+## $ gregarious_primary &lt;chr&gt; &quot;schooling&quot;, &quot;schooling&quot;, &quot;schooling&quot;, &quot;shoaling&quot;,…
+## $ trophic_level      &lt;chr&gt; &quot;NA&quot;, &quot;NA&quot;, &quot;3.32&quot;, &quot;3.46&quot;, &quot;4.43&quot;, &quot;3.63&quot;, &quot;4.5&quot;,…
+## $ fisheries_status   &lt;chr&gt; &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;highly commercial…
+## $ b_shape_r          &lt;dbl&gt; 4.105854, 6.237058, 8.425900, NA, 3.517372, 5.5988…
+## $ eye_body_r         &lt;dbl&gt; 0.00000000, 0.02214046, 0.02530975, NA, 0.03949694…
+## $ standard_total     &lt;dbl&gt; 1.0000000, 0.8005450, 0.8591838, NA, 0.9093951, 0.…
+## $ energy_density     &lt;dbl&gt; NaN, NaN, 3.156000, 4.200000, 6.129560, 7.823333, …
+## $ percent_protein    &lt;dbl&gt; NaN, NaN, 9.30000, 14.10000, 23.79125, 14.90000, 1…
+## $ percent_lipid      &lt;dbl&gt; NaN, 6.53750, 2.59000, 1.40000, 1.69875, 11.85000,…
+## $ maxFO              &lt;dbl&gt; 16.00000, 38.88889, 8.00000, 51.42857, 0.60000, 1.…
+## $ maxN               &lt;dbl&gt; 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0.4259…
+## $ maxM               &lt;dbl&gt; 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, …</code></pre>
+<pre class="r"><code>#Save
+write.csv(prey_adults_merge, here(&quot;data/output_data/prey_adults_traits.csv&quot;))
+
+#Reload
+#prey_adults_merge = read.csv(here(&quot;data/output_data/prey_adults_traits.csv&quot;))</code></pre>
+</div>
+<div id="prey-traits---probable-life-stage" class="section level4">
+<h4>Prey traits - probable life stage</h4>
+<pre class="r"><code>prey_probable_merge = alb_global_prob_metrics %&gt;%
+  left_join(prey_trait_select, by=c(&quot;prey_sp&quot;, &quot;life_stage&quot;)) %&gt;% 
+  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) %&gt;% 
+  left_join(prey_qual_sum, by=&quot;prey_sp&quot;) %&gt;%
+  dplyr::select(prey_class:prey_family, prey_sp:life_stage, vert_habitat:percent_lipid, maxFO:maxM)
+
+#303 spp and ~28 traits
+glimpse(prey_probable_merge)</code></pre>
+<pre><code>## Rows: 300
+## Columns: 32
+## Groups: prey_sp [300]
+## $ prey_class         &lt;chr&gt; &quot;Cephalopoda&quot;, &quot;Cephalopoda&quot;, &quot;Cephalopoda&quot;, &quot;Ceph…
+## $ prey_order         &lt;chr&gt; &quot;Oegopsida&quot;, &quot;Oegopsida&quot;, &quot;Oegopsida&quot;, &quot;Oegopsida&quot;…
+## $ prey_family        &lt;chr&gt; &quot;Enoploteuthidae&quot;, &quot;Enoploteuthidae&quot;, &quot;Enoploteuth…
+## $ prey_sp            &lt;chr&gt; &quot;Abralia redfieldi&quot;, &quot;Abraliopsis affinis&quot;, &quot;Abral…
+## $ life_stage         &lt;chr&gt; &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adult&quot;, &quot;adul…
+## $ vert_habitat       &lt;chr&gt; &quot;mesopelagic&quot;, &quot;mesopelagic&quot;, &quot;mesopelagic&quot;, &quot;meso…
+## $ horz_habitat       &lt;chr&gt; &quot;oceanic&quot;, &quot;oceanic&quot;, &quot;oceanic&quot;, &quot;continental slop…
+## $ diel_migrant       &lt;chr&gt; &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;…
+## $ diel_migrant_cat   &lt;chr&gt; &quot;diel_yes&quot;, &quot;diel_yes&quot;, &quot;diel_yes&quot;, &quot;diel_yes&quot;, &quot;d…
+## $ refuge             &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;…
+## $ refuge_cat         &lt;chr&gt; &quot;refuge_no&quot;, &quot;refuge_no&quot;, &quot;refuge_no&quot;, &quot;refuge_no&quot;…
+## $ season_migrant     &lt;chr&gt; &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;1.0&quot;, &quot;NA&quot;, &quot;1.0&quot;, …
+## $ season_cat         &lt;chr&gt; &quot;season_NA&quot;, &quot;season_NA&quot;, &quot;season_NA&quot;, &quot;season_NA&quot;…
+## $ body_shape         &lt;chr&gt; &quot;fusiform&quot;, &quot;fusiform&quot;, &quot;fusiform&quot;, &quot;fusiform&quot;, &quot;f…
+## $ l_max              &lt;dbl&gt; 3.60, 4.30, 8.00, 5.10, 3.50, 27.00, NA, 7.80, 0.4…
+## $ phys_defense       &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0,…
+## $ transparent        &lt;chr&gt; &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;…
+## $ col_disrupt        &lt;chr&gt; &quot;1.0&quot;, &quot;1.0&quot;, &quot;1.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;…
+## $ silver             &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;1.0&quot;, &quot;…
+## $ countershade       &lt;chr&gt; &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;0.0&quot;, &quot;…
+## $ gregarious_primary &lt;chr&gt; &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;schooling&quot;, &quot;school…
+## $ trophic_level      &lt;chr&gt; &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;N…
+## $ fisheries_status   &lt;chr&gt; &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;n…
+## $ b_shape_r          &lt;dbl&gt; 3.914416, 5.345385, 5.280579, 5.630847, 8.389906, …
+## $ eye_body_r         &lt;dbl&gt; 0.08487754, 0.06979495, 0.05075453, 0.05010374, 0.…
+## $ standard_total     &lt;dbl&gt; 0.5267561, 0.4569214, 0.4583028, 0.4224399, 0.3493…
+## $ energy_density     &lt;dbl&gt; NaN, NaN, 4.40000, NaN, NaN, NaN, 1.70000, 3.90000…
+## $ percent_protein    &lt;dbl&gt; NaN, NaN, 17.40000, NaN, NaN, NaN, NaN, 16.40000, …
+## $ percent_lipid      &lt;dbl&gt; NaN, NaN, NaN, NaN, NaN, 6.5375, NaN, 1.3000, NaN,…
+## $ maxFO              &lt;dbl&gt; 5.000000, 1.162791, 36.400000, 0.700000, 4.900000,…
+## $ maxN               &lt;dbl&gt; 0.00000000, 0.07651109, 11.30000000, 0.20000000, 3…
+## $ maxM               &lt;dbl&gt; 0.000000000, 0.006092434, 2.132352045, 0.100000000…</code></pre>
+<pre class="r"><code>write.csv(prey_probable_merge, here(&quot;data/output_data/prey_probable_traits.csv&quot;))
+
+#prey_probable_merge = read.csv(here(&quot;data/prey_probable_traits.csv&quot;))</code></pre>
+</div>
+<div id="covariates-for-analyses" class="section level4">
+<h4>Covariates for analyses</h4>
+<pre class="r"><code>alb_covars = alb_global %&gt;%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:pred_life_est) %&gt;% #, stomachs_used
+  distinct(StudyID, CiteYear, OceanBasinQ, LocatLatitude, LocatLongitude, YearEnd, pred_life) %&gt;% 
+  #, stomachs_used
+  mutate(lat_cat = if_else(abs(LocatLatitude) &gt; 23.43662, &quot;temperate&quot;, &quot;tropical&quot;),
+         pred_life=case_when(pred_life == &quot;juvenile&quot; ~ &quot;juvenile&quot;,
+                             pred_life == &quot;juvenile, adult&quot; ~ &quot;mixed&quot;,
+                             pred_life == &quot;adult&quot; ~ &quot;adult&quot;))
+
+write.csv(alb_covars, here(&quot;data/output_data/alb_covars.csv&quot;))</code></pre>
+<p>Could edit the Longhurst doc to separate biomes and codes as per province definitions: <a href="https://en.wikipedia.org/wiki/Longhurst_code#" class="uri">https://en.wikipedia.org/wiki/Longhurst_code#</a>:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions</p>
+<pre class="r"><code>#Covars + Longhurst
+
+alb_covars_geog &lt;- read.csv(here(&quot;data/output_data/alb_covars_longhurst.csv&quot;)) %&gt;%
+  dplyr::select(StudyID, lat_cat:code) %&gt;%
+  group_by(StudyID) %&gt;%
+  sample_n(1)
+names(alb_covars_geog)</code></pre>
+<pre><code>## [1] &quot;StudyID&quot;  &quot;lat_cat&quot;  &quot;province&quot; &quot;code&quot;</code></pre>
+<pre class="r"><code>#Need to merge this with diet data first overall data then probable prey consumed
+unique(alb_covars_geog$code)</code></pre>
+<pre><code>##  [1] &quot;NADR&quot; &quot;MEDI&quot; &quot;CCAL&quot; &quot;SATL&quot; &quot;NPTG&quot; &quot;NASW&quot; &quot;NECS&quot; &quot;ISSG&quot; &quot;NPPF&quot; &quot;SPSG&quot;
+## [11] &quot;ARCH&quot;</code></pre>
+<pre class="r"><code>#check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p><strong>NOTE</strong> Below we include the adult cluster number but need to use the cluster number from probable life stage if we stick to this for final analysis.</p>
+<pre class="r"><code>#Covars + Longhurst + Diet data FO
+
+alb_global_diet = alb_global %&gt;%
+  left_join(alb_covars_geog) #looks good #, by = &quot;StudyID&quot;</code></pre>
+<pre><code>## Joining, by = &quot;StudyID&quot;</code></pre>
+<pre class="r"><code>#upload the cluster info:
+alb_adult_traits = read.csv(here(&quot;data/output_data/adult.prey.clusternum.habgreg.aggl.k9.csv&quot;)) %&gt;%
+  dplyr::select(prey_sp:adult.clust.num)
+
+#Extract %FO data --&gt; filter for only species that we have adult traits + cluster info for --&gt; transform to wide data for MV GLMs + trait GLMs
+alb_global_dietfo = alb_global_diet %&gt;%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pFOuse) %&gt;%
+  filter(pFOuse &gt;= 1) %&gt;% #set this value to include or exclude species
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
+  group_by(prey_sp) %&gt;%
+  dplyr::mutate(grouped_id = row_number()) %&gt;%
+  spread(prey_sp, pFOuse, fill = 0, convert = FALSE)
+
+#Before spreading data - range(alb_global_dietfo$pFOuse) 
+#0 to 100 need to exclude zeros as they are not true zeros --&gt; 0.1 to 100%
+
+#Check covariate representation
+summary(as.factor(alb_global_dietfo$lat_cat))</code></pre>
+<pre><code>## temperate  tropical 
+##       193        32</code></pre>
+<pre class="r"><code>summary(as.factor(alb_global_dietfo$code))</code></pre>
+<pre><code>## ARCH CCAL ISSG MEDI NADR NASW NECS NPPF NPTG SATL SPSG 
+##    9   50   22   16   92    4    5   14    2    3    8</code></pre>
+<pre class="r"><code>summary(as.factor(alb_global_dietfo$OceanBasin))</code></pre>
+<pre><code>##        Indian Mediterranean    N Atlantic     N Pacific    S Atlantic 
+##            15            29            88            66            10 
+##     S Pacific 
+##            17</code></pre>
+<pre class="r"><code>summary(as.factor(alb_global_dietfo$OceanBasinQ))</code></pre>
+<pre><code>## Mediterranean   NE Atlantic    NE Pacific   NW Atlantic     NW Indian 
+##            29            84            52             4             3 
+##    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific 
+##            14             7             3            12            17</code></pre>
+<pre class="r"><code>write.csv(alb_global_dietfo, here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;))</code></pre>
+<pre class="r"><code>#Extract for %N data
+alb_global_dietn = alb_global_diet %&gt;%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pN) %&gt;%
+  filter(pN &gt; 0) %&gt;%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
+  group_by(prey_sp) %&gt;%
+  dplyr::mutate(grouped_id = row_number()) %&gt;%
+  spread(prey_sp, pN, fill = 0, convert = FALSE)
+
+#Check covariate representation
+#summary(as.factor(alb_global_dietn$lat_cat))
+#summary(as.factor(alb_global_dietn$code))
+#summary(as.factor(alb_global_dietn$OceanBasin))
+#summary(as.factor(alb_global_dietn$OceanBasinQ))
+
+write.csv(alb_global_dietn, here(&quot;data/alb_global_wide_dietn.csv&quot;))</code></pre>
+<pre class="r"><code>#Extract for %M data
+#range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
+
+alb_global_dietm = alb_global_diet %&gt;%
+  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pM) %&gt;%
+  filter(pM &gt; 0) %&gt;%
+  filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
+  group_by(prey_sp) %&gt;%
+  dplyr::mutate(grouped_id = row_number()) %&gt;%
+  spread(prey_sp, pM, fill = 0, convert = FALSE)
+
+#Check covariate representation
+#summary(as.factor(alb_global_dietm$lat_cat))
+#summary(as.factor(alb_global_dietm$code))
+#summary(as.factor(alb_global_dietm$OceanBasin))
+#summary(as.factor(alb_global_dietm$OceanBasinQ))
+
+write.csv(alb_global_dietm, here(&quot;data/alb_global_wide_dietm.csv&quot;))</code></pre>
+</div>
 </div>
 
 
