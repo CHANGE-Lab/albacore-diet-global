@@ -737,19 +737,23 @@ names(alb_covars_geog)</code></pre>
 <pre><code>## [1] &quot;StudyID&quot;  &quot;lat_cat&quot;  &quot;province&quot; &quot;code&quot;</code></pre>
 <pre class="r"><code>#Need to merge this with diet data first overall data then probable prey consumed
 unique(alb_covars_geog$code)</code></pre>
-<pre><code>##  [1] &quot;NADR&quot; &quot;MEDI&quot; &quot;CCAL&quot; &quot;SATL&quot; &quot;NPTG&quot; &quot;NASW&quot; &quot;NECS&quot; &quot;ISSG&quot; &quot;NPPF&quot; &quot;SPSG&quot;
+<pre><code>##  [1] &quot;NADR&quot; &quot;MEDI&quot; &quot;CCAL&quot; &quot;SATL&quot; &quot;NPTG&quot; &quot;NASW&quot; &quot;NECS&quot; &quot;MONS&quot; &quot;NPPF&quot; &quot;SPSG&quot;
 ## [11] &quot;ARCH&quot;</code></pre>
 <pre class="r"><code>#check names match
 unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do</code></pre>
 <pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p><strong>NOTE</strong> Below we include the adult cluster number but need to use the cluster number from probable life stage if we stick to this for final analysis.</p>
+</div>
+<div id="diet-data---frequency-of-occurrence" class="section level4">
+<h4>Diet data - frequency of occurrence</h4>
 <pre class="r"><code>#Covars + Longhurst + Diet data FO
 
 alb_global_diet = alb_global %&gt;%
   left_join(alb_covars_geog) #looks good #, by = &quot;StudyID&quot;</code></pre>
 <pre><code>## Joining, by = &quot;StudyID&quot;</code></pre>
-<pre class="r"><code>#upload the cluster info:
+<pre class="r"><code>#Upload the cluster info: 
+##This is where we choose to either upload cluster data from adult-based or probable-consumed cluster analysis.
 alb_adult_traits = read.csv(here(&quot;data/output_data/adult.prey.clusternum.habgreg.aggl.k9.csv&quot;)) %&gt;%
   dplyr::select(prey_sp:adult.clust.num)
 
@@ -766,23 +770,15 @@ alb_global_dietfo = alb_global_diet %&gt;%
 #0 to 100 need to exclude zeros as they are not true zeros --&gt; 0.1 to 100%
 
 #Check covariate representation
-summary(as.factor(alb_global_dietfo$lat_cat))</code></pre>
-<pre><code>## temperate  tropical 
-##       193        32</code></pre>
-<pre class="r"><code>summary(as.factor(alb_global_dietfo$code))</code></pre>
-<pre><code>## ARCH CCAL ISSG MEDI NADR NASW NECS NPPF NPTG SATL SPSG 
-##    9   50   22   16   92    4    5   14    2    3    8</code></pre>
-<pre class="r"><code>summary(as.factor(alb_global_dietfo$OceanBasin))</code></pre>
-<pre><code>##        Indian Mediterranean    N Atlantic     N Pacific    S Atlantic 
-##            15            29            88            66            10 
-##     S Pacific 
-##            17</code></pre>
-<pre class="r"><code>summary(as.factor(alb_global_dietfo$OceanBasinQ))</code></pre>
-<pre><code>## Mediterranean   NE Atlantic    NE Pacific   NW Atlantic     NW Indian 
-##            29            84            52             4             3 
-##    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific 
-##            14             7             3            12            17</code></pre>
-<pre class="r"><code>write.csv(alb_global_dietfo, here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;))</code></pre>
+#summary(as.factor(alb_global_dietfo$lat_cat))
+#summary(as.factor(alb_global_dietfo$code))
+#summary(as.factor(alb_global_dietfo$OceanBasin))
+#summary(as.factor(alb_global_dietfo$OceanBasinQ))
+
+write.csv(alb_global_dietfo, here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;))</code></pre>
+</div>
+<div id="diet-data---abundance" class="section level4">
+<h4>Diet data - abundance</h4>
 <pre class="r"><code>#Extract for %N data
 alb_global_dietn = alb_global_diet %&gt;%
   dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pN) %&gt;%
@@ -798,7 +794,10 @@ alb_global_dietn = alb_global_diet %&gt;%
 #summary(as.factor(alb_global_dietn$OceanBasin))
 #summary(as.factor(alb_global_dietn$OceanBasinQ))
 
-write.csv(alb_global_dietn, here(&quot;data/alb_global_wide_dietn.csv&quot;))</code></pre>
+write.csv(alb_global_dietn, here(&quot;data/output_data/alb_global_wide_dietn.csv&quot;))</code></pre>
+</div>
+<div id="diet-data---biomass" class="section level4">
+<h4>Diet data - biomass</h4>
 <pre class="r"><code>#Extract for %M data
 #range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
 
@@ -816,7 +815,7 @@ alb_global_dietm = alb_global_diet %&gt;%
 #summary(as.factor(alb_global_dietm$OceanBasin))
 #summary(as.factor(alb_global_dietm$OceanBasinQ))
 
-write.csv(alb_global_dietm, here(&quot;data/alb_global_wide_dietm.csv&quot;))</code></pre>
+write.csv(alb_global_dietm, here(&quot;data/output_data/alb_global_wide_dietm.csv&quot;))</code></pre>
 </div>
 </div>
 

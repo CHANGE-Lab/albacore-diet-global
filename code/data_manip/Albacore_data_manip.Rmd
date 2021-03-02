@@ -508,8 +508,9 @@ unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they 
 
 **NOTE** Below we include the adult cluster number but need to use the cluster number from probable life stage if we stick to this for final analysis.
 
+#### Diet data - frequency of occurrence
 
-```{r Covars + Longhurst + Diet data F)}
+```{r Covars + Longhurst + cluster + Diet data F}
 
 #Covars + Longhurst + Diet data FO
 
@@ -543,6 +544,8 @@ write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv")
 
 ```
 
+#### Diet data - abundance
+
 ```{r Covars + Longhurst + Diet data N}
 #Extract for %N data
 alb_global_dietn = alb_global_diet %>%
@@ -559,8 +562,10 @@ alb_global_dietn = alb_global_diet %>%
 #summary(as.factor(alb_global_dietn$OceanBasin))
 #summary(as.factor(alb_global_dietn$OceanBasinQ))
 
-write.csv(alb_global_dietn, here("data/alb_global_wide_dietn.csv"))
+write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"))
 ```
+
+#### Diet data - biomass
 
 ```{r Covars + Longhurst + Diet data M}
 #Extract for %M data
@@ -580,7 +585,7 @@ alb_global_dietm = alb_global_diet %>%
 #summary(as.factor(alb_global_dietm$OceanBasin))
 #summary(as.factor(alb_global_dietm$OceanBasinQ))
 
-write.csv(alb_global_dietm, here("data/alb_global_wide_dietm.csv"))
+write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"))
 
 ```
 
