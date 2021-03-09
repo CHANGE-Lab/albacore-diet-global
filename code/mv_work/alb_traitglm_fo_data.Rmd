@@ -1,0 +1,274 @@
+---
+title: "Albacore Diet TraitGLM %FO"
+author: "Natasha Hardy"
+date: "02/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Workspace}
+
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(reshape2)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(pander)
+
+# graphics
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(RColorBrewer)
+library(gridExtra)
+library(captioner)
+library(viridis)
+
+#modelling
+library(Hmisc)
+library(mgcv)
+library(unmarked)
+library(lme4)
+library(mvabund)
+library(tweedie)
+library(vegan)
+
+## mvabund bug source code??
+
+```
+
+## About
+
+This document contains code for data manipulation, refinement for % frequency of occurrence data, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins.
+
+**Issues**
+
+- Maybe exclude species with < 1% occurrence?
+
+## Data Uploads
+
+Load frequency of occurrence data.
+
+### Frequency of Occurrence Data (L)
+
+```{r Species %FO 4 (L)}
+
+alb_adult_prey4 = read.csv(paste(here("data/output_data/alb_adult_prey4.csv"),
+                                   sep=""), check.names=FALSE, row.names = 1)
+
+#Change to proportion data
+
+alb_adult_prey4[,1:ncol(alb_adult_prey4)] = alb_adult_prey4[,1:ncol(alb_adult_prey4)]/100
+
+alb_adult_prey4_mv <- as.mvabund(alb_adult_prey4) #make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+
+#All species names have to match up for both dfs
+colnames(alb_adult_prey4_mv) == names(alb_adult_prey4) #hell yes
+
+```
+
+### Covars (R)
+
+```{r Covars manip #4 (R)}
+
+alb_adult_covars4 = read.csv(here("data/output_data/alb_adult_covars4.csv")) %>%
+  dplyr::select(-X)
+
+#Best covars for traitglm ==> pred_life, OceanBasin, OceanBasinQ code (Longhurst) - but need to exclude low numbered levels.
+```
+
+### Traits (Q)
+
+```{r Trait DF manip #4 (Q)}
+
+#Trait DF
+
+alb_adult_traits4 = read.csv(here("data/output_data/alb_adult_traits4.csv"),stringsAsFactors = TRUE) %>%
+  select(-X) 
+  #filter(prey_sp %in% names(alb_adult_prey4)) #need trait values for 107 spp.
+
+rownames(alb_adult_traits4) <- alb_adult_traits4$prey_sp
+
+alb_adult_traits4 <- alb_adult_traits4[ order(row.names(alb_adult_traits4)), ]
+
+#Ensure traits are treated as factors for now
+str(alb_adult_traits4)
+
+## Make sure species names match abund matrix
+rownames(alb_adult_traits4) == colnames(alb_adult_prey4) #awesome!
+# And the mvabund matrix
+rownames(alb_adult_traits4) == colnames(alb_adult_prey4_mv) #awesome!
+
+```
+
+
+### DF checks
+
+```{r Subsets + check covars & df dims for data #4}
+#Check df dims
+dim(alb_adult_prey4_mv) #169 observations for 107 species
+dim(alb_adult_traits4[,2:7]) #107 species and 6 traits
+dim(alb_adult_covars4) #169 observations and 13 co-variates
+#ALL DF'S LINE UP
+
+#Check df str
+str(alb_adult_traits4) #all factors?
+#str(alb_adult_prey_mv) #107 species, 169 obs
+str(alb_adult_covars4) #all factors
+
+#All traits to try
+traits_try4 = alb_adult_traits4[,c(2:4,6:7)]
+str(traits_try4) #107 species and subset of 2 traits
+
+#Select some covars & traits
+ocean4 = as.factor(alb_adult_covars4$OceanBasin)
+longhurst4 = as.factor(alb_adult_covars4$code)
+pred_life4 = as.factor(alb_adult_covars4$pred_life)
+lat4 = as.factor(alb_adult_covars4$lat_cat)
+
+levels(ocean4)
+#[1] "Indian"        "Mediterranean" "N Atlantic"    "N Pacific"     "S Atlantic"    "S Pacific"
+levels(pred_life4)
+#[1] "adult"    "juvenile" "mixed"
+
+#Maybe change factor levels
+#alb_adult_covars4$pred_life <- factor(alb_adult_covars4$pred_life, levels = c("mixed", "juvenile", "adult"))
+#[1] "mixed"    "juvenile" "adult"
+
+```
+
+
+## Trait GLM
+
+### Dataset4 ManyGLM & TraitGLM checks
+
+(i) First check manyglm routine
+(It works! Now we can play with traitglm)
+```{r ManyGLM #4}
+
+#Fit ManyGLM to ensure the matrix works
+#Determine appropriate distribution
+## Run trial manyglm() to check for problems
+adult_prey_m0 <- manyglm(alb_adult_prey4_mv ~ ocean4, family="binomial", theta.method = "ML")
+plot(adult_prey_m4) #check model residuals
+
+adult_prey_m1 <- manylm(alb_adult_prey4_mv ~ ocean4) #default  family="gaussian"
+plot(adult_prey_m1) #check model residuals
+summary(adult_prey_m1)
+
+#adult_prey_m2 <- manyglm(alb_adult_prey4_mv ~ ocean4, family="Gamma")
+#plot(adult_prey_m2) #check model residuals
+#summary(adult_prey_m2)
+
+#adult_prey_m4 <- manyglm(alb_adult_prey4_mv ~ ocean4, family="poisson")
+#plot(adult_prey_m4) #check model residuals
+
+#adult_prey_m4_anova <- anova.manyglm(adult_prey_m4)
+
+```
+
+(ii) Second fit a traitglm to just species + covars excluding the traits
+(This also worked)
+
+```{r TraitGLM - predator age test1}
+# load correction to traitglm:
+
+source("traitglm.R")
+source("get_polys.R")
+
+trait_life4 <- traitglm(L = alb_adult_prey4_mv,
+                      R =  pred_life4,
+                      method="manyglm",
+                      family="binomial"
+                      )
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life4)[which(residuals(trait_life4)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life4)[is.finite((residuals(trait_life4)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+(iii) Try adding traits
+
+```{r TraitGLM - predator age test2}
+
+trait_life4 <- traitglm(L = alb_adult_prey4_mv,
+                      R =  pred_life4,
+                      Q = traits_try4, 
+                      #method="glm1path",
+                      family="binomial") #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life4)[which(residuals(trait_life4)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life4)[is.finite((residuals(trait_life4)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+(iv) Adding method="glm1path"
+This is where it breaks...
+```{r TraitGLM - predator age test3}
+
+#alb_adult_prey4_mvRound=round(alb_adult_prey4_mv)
+
+trait_life4 <- traitglm(L = alb_adult_prey4_mv,
+                      R =  pred_life4,
+                      Q = traits_try4, 
+                      method="glm1path",
+                      family="poisson") #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life4)[which(residuals(trait_life4)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life4)[is.finite((residuals(trait_life4)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner}
+
+a        = max( abs(trait_life4$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life4$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "Solitary",
+#                   "Schooling",
+#                   "Pairs/groups",
+#                   "Known prey",
+#                   "Potential prey",
+#                   "Bathypelagic")
+plot.4th = levelplot(temp, 
+                     xlab=list("Environmental Variables", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+
+```
