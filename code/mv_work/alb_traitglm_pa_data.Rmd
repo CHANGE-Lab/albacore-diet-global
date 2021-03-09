@@ -462,7 +462,8 @@ colnames(temp) = c("Vert. habitat - benthic",
                    "Diel migrant (yes)",
                    "Seasonal migrant (yes)",
                    "Gregarious - schooling")
-plot.4th = levelplot(temp, 
+
+trait_life_4th = levelplot(temp, 
                      xlab=list("Predator Life Stage", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
@@ -470,13 +471,13 @@ plot.4th = levelplot(temp,
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
                      colorkey=list(labels=list(cex=1.3)))
 
-print(plot.4th)
+print(trait_life_4th)
 
-trait_life_4th = as.ggplot(plot.4th)
+trait_life_4th = as.ggplot(trait_life_4th)
 
-ggsave(here("outputs_figures/traiglms/trait_life_4th.pdf"), plot = trait_life_4th, width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/trait_life_4th.pdf"), plot = trait_life_4th, width=12, height=12, dpi=300)
 
-#dev.copy2pdf(file=here("./outputs_figures/traiglms/fourth_lifestage.png"), width=12, height=5)
+#dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
 
 ```
 
@@ -538,58 +539,6 @@ Using binomial (logit link) function.
 
 ```{r TraitGLM - predator age binom distribution}
 
-trait_ocean_b_binom <- traitglm(L = alb_adult_preyPA_mv,
-                      R =  ocean_b,                       
-                      Q = traits_try,
-                      family=binomial(link = "logit"),
-                      method="glm1path"
-                      ) #note default is "manyglm"
-
-#Check model output - residuals TEST
-qqnorm(residuals(trait_ocean_b_binom)[which(residuals(trait_ocean_b_binom)<10000)]); abline(c(0,1),col="red")
-
-#omit non-finite residuals FULL MODEL
-resids.full = residuals(trait_ocean_b_binom)[is.finite((residuals(trait_ocean_b_binom)))]
-plot(resids.full); abline(c(0,0),col="red")
-
-```
-
-```{r Plot 4th corner - binom}
-
-a        = max( abs(trait_ocean_b_binom $fourth.corner) )
-colort   = colorRampPalette(c("blue","white","red")) 
-temp = t(as.matrix(trait_ocean_b_binom $fourth.corner))
-
-#rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
-plot.4th = levelplot(temp, 
-                     xlab=list("Environmental Variables", cex=1.5),
-                     ylab=list("Species traits", cex=1.5), 
-                     col.regions=colort(100), 
-                     at=seq(-a, a,length=100),
-                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
-                     colorkey=list(labels=list(cex=1.3)))
-
-print(plot.4th)
-
-#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
-
-```
-### Ocean Basin Q
-
-Using binomial (logit link) function.
-
-```{r TraitGLM - predator age binom distribution}
-
 trait_ocean_binom <- traitglm(L = alb_adult_preyPA_mv,
                       R =  ocean,                       
                       Q = traits_try,
@@ -612,28 +561,110 @@ a        = max( abs(trait_ocean_binom$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
 temp = t(as.matrix(trait_ocean_binom$fourth.corner))
 
-#rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
-plot.4th = levelplot(temp, 
-                     xlab=list("Environmental Variables", cex=1.5),
+rownames(temp) = c("Indian",
+                   "Mediterranean",
+                   "N Atlantic",
+                   "N Pacific",
+                   "S Atlantic",
+                   "S Pacific")
+
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Vert. habitat - bathypelagic",
+                   "Horz. habitat - reef-associated",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - schooling")
+
+trait_ocean_4th = levelplot(temp, 
+                     xlab=list("Ocean Basins", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
                      colorkey=list(labels=list(cex=1.3)))
 
-print(plot.4th)
+print(trait_ocean_4th)
 
-#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+#trait_ocean_4th = as.ggplot(trait_ocean_4th)
+
+ggsave(here("outputs_figures/traitglms/trait_ocean_4th.pdf"), plot = as.ggplot(trait_ocean_4th), width=12, height=12, dpi=300)
+
+```
+
+
+### Ocean Basin Q 
+
+Using binomial (logit link) function.
+
+```{r TraitGLM - predator age binom distribution}
+
+trait_ocean_b_binom <- traitglm(L = alb_adult_preyPA_mv,
+                      R =  ocean_b,                       
+                      Q = traits_try,
+                      family=binomial(link = "logit"),
+                      method="glm1path"
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_ocean_b_binom)[which(residuals(trait_ocean_b_binom)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_ocean_b_binom)[is.finite((residuals(trait_ocean_b_binom)))]
+plot(resids.full); abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner - binom}
+
+a        = max( abs(trait_ocean_b_binom $fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_ocean_b_binom $fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "NE Atlantic",
+                   "NE Pacific",
+                   "NW Atlantic",
+                   "NW Indian",
+                   "NW Pacific",
+                   "SE Atlantic",
+                   "SW Atlantic",
+                   "SW Indian",
+                   "SW Pacific")
+
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Vert. habitat - bathypelagic",
+                   "Horz. habitat - reef-associated",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - schooling")
+
+trait_ocean_b_4th = levelplot(temp, 
+                     xlab=list("Ocean Basin (Quaters)", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_ocean_b_4th)
+
+#trait_ocean_b_4th = as.ggplot(trait_ocean_b_4th)
+
+ggsave(here("outputs_figures/traitglms/trait_ocean_b_4th.pdf"), plot = as.ggplot(trait_ocean_b_4th), width=12, height=12, dpi=300)
 
 ```
 
@@ -665,32 +696,39 @@ a        = max( abs(trait_lat_binom$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
 temp = t(as.matrix(trait_lat_binom$fourth.corner))
 
-#rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
-plot.4th = levelplot(temp, 
-                     xlab=list("Environmental Variables", cex=1.5),
+rownames(temp) = c("Tropical")
+
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Vert. habitat - bathypelagic",
+                   "Horz. habitat - reef-associated",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - schooling")
+
+trait_lat_4th = levelplot(temp, 
+                     xlab=list("Temperate vs. Tropical", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
                      colorkey=list(labels=list(cex=1.3)))
 
-print(plot.4th)
+print(trait_lat_4th)
 
-#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+#trait_lat_4th = as.ggplot(trait_lat_4th)
+
+ggsave(here("outputs_figures/traitglms/trait_lat_4th.pdf"), plot = as.ggplot(trait_lat_4th), width=12, height=12, dpi=300)
 
 ```
 
-### Longhurst Province
+### Longhurst Province - DONT USE
 
 **NOTE:** Traitglm for Longhurst provinces provides mostly non-significant relationships, likely too few data for each longhurst province sampled.
 
