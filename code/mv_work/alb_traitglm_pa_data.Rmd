@@ -31,6 +31,9 @@ library(RColorBrewer)
 library(gridExtra)
 library(captioner)
 library(viridis)
+library("grid")
+library("ggplotify")
+
 
 #modelling
 library(Hmisc)
@@ -445,19 +448,22 @@ a        = max( abs(trait_life_binom$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
 temp = t(as.matrix(trait_life_binom$fourth.corner))
 
-#rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
+rownames(temp) = c("Adult", "Juvenile", "Mixed")
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Vert. habitat - bathypelagic",
+                   "Horz. habitat - reef-associated",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - schooling")
 plot.4th = levelplot(temp, 
-                     xlab=list("Environmental Variables", cex=1.5),
+                     xlab=list("Predator Life Stage", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
@@ -466,7 +472,11 @@ plot.4th = levelplot(temp,
 
 print(plot.4th)
 
-#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+trait_life_4th = as.ggplot(plot.4th)
+
+ggsave(here("outputs_figures/traiglms/trait_life_4th.pdf"), plot = trait_life_4th, width=12, height=12, dpi=300)
+
+#dev.copy2pdf(file=here("./outputs_figures/traiglms/fourth_lifestage.png"), width=12, height=5)
 
 ```
 
