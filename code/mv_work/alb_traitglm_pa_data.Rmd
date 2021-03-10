@@ -422,6 +422,69 @@ print(plot.4th)
 
 ### Predator Life Stage
 
+ManyGLM traitglm
+
+
+```{r TraitGLM - predator age binom distribution}
+
+trait_life_many <- traitglm(L = alb_adult_preyPA_mv,
+                      R =  pred_life,                       
+                      Q = traits_try,
+                      family=binomial(link = "logit")#,
+                      #method="glm1path"
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life_many)[which(residuals(trait_life_many)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life_many)[is.finite((residuals(trait_life_many)))]
+plot(resids.full); abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner - binom}
+
+a        = max( abs(trait_life_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life_many$fourth.corner))
+
+#rownames(temp) = c("Adult", "Juvenile", "Mixed")
+#colnames(temp) = c("Vert. habitat - benthic",
+#                   "Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Vert. habitat - bathypelagic",
+#                   "Horz. habitat - reef-associated",
+#                   "Horz. habitat - coastal",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - continental slope",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+trait_life_many_4th = levelplot(temp, 
+                     xlab=list("Predator Life Stage", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_life_many_4th)
+
+#trait_life_4th = as.ggplot(trait_life_4th)
+
+ggsave(here("outputs_figures/traitglms/trait_life_4th.pdf"), plot = as.ggplot(trait_life_many_4th), width=12, height=12, dpi=300)
+
+#dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
+
+```
+
+glm1path traitglm
+
+
 Using binomial (logit link) function.
 
 ```{r TraitGLM - predator age binom distribution}
