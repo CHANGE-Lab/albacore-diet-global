@@ -7,7 +7,7 @@ output: html_document
 
 ## About
 
-This document contains code for manipulating trait and diet datasets for albacore prey species from our global meta-analysis of albacore diet composition.
+This document contains code for manipulating trait and diet data sets for albacore prey species from our global meta-analysis of albacore diet composition.
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
@@ -56,7 +56,7 @@ We first want to load in and clean the prey morphometric measurements for adult 
 
 - Note we have also added a conversion from standard length to total length (this can be used to convert lengths for SL/BL, ML/GL where we have them).
 
-- Summarise to give an average value for each species for which we obtained images. We are able to obtain values for 293 species.
+- Summarise to give an average value for each species for which we obtained images. We are able to obtain values for 292 species.
 
 ```{r Prey Morph Data Clean}
 
@@ -215,7 +215,7 @@ prey_length = prey_length %>% #Note can use case_when() or if_ele() BUT you need
 
 ### Calculate ratios
 
-Below, we obtain a dataset where we have rows for both lmin and lmax for adult, juvenile and larval life stages in columns, as well as the juvenile:adult and larva:adult size ratios where those data exist. We have a number of NAs still, and we will fill those in in the following chunk.
+Below, we obtain a data set where we have rows for both lmin and lmax for adult, juvenile and larval life stages in columns, as well as the juvenile:adult and larva:adult size ratios where those data exist. We have a number of NAs still, and we will fill those in in the following chunk.
 
 ```{r Merge length and morph data}
 #Next we need to merge our ratios data set and our lengths datasets.
@@ -274,6 +274,7 @@ prey_length_ratios = prey_length_fam %>%
 #And remove troublesome NA's in original dataset
 prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
 prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
+
 ```
 
 ### Length ratio data
@@ -374,7 +375,7 @@ alb_global_ad_metrics = alb_global %>%
 
 Here we want to estimate the probable life stage of the species consumed based on their size ratios and relationship to albacore tuna gape limits.
 
-```{r Albacore diet data + probably life stage estimation}
+```{r Albacore diet data + probable life stage estimation}
 
 alb_global_prob = alb_global %>%
   inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) %>%

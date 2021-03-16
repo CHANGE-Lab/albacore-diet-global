@@ -66,7 +66,7 @@ Load frequency of occurrence data.
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
-alb_adult_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"),
+alb_prob_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"),
                                    sep=""), check.names=FALSE, row.names = 1) %>%
   dplyr::select(StudyID:ncol(.), -grouped_id) #-c(, `Diplospinus multistriatus`, `Sardina pilchardus`)
 
@@ -75,9 +75,13 @@ alb_adult_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"
 
 #Main DF
 head(alb_adult_fo)
+
+names(alb_prob_fo)
+
 ```
 
 Manipulate and subset data.
+Here we obtain 137 species as columns and 225 obs.
 
 ```{r Species %FO (L) - manipulate}
 #Check for empty columns
@@ -215,90 +219,142 @@ dim(alb_adult_covars) #225 observations for 13 covars
 
 ```
 
-## Traits ADULTS (Q)
+## Traits PROBABLE (Q)
+
+Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
 
 ```{r Trait DF manip (Q)}
 
 #Trait DF
-alb_adult_traits = read.csv(paste(here("data/output_data/adult.prey.clusternum.habgreg.aggl.k9.csv"), sep=""), header=T, row.names = 1) %>%
-  dplyr::select(prey_sp:adult.clust.num) 
+alb_prob_traits = read.csv(paste(here("data/output_data/prey_probable_traits.csv"), sep=""), header=T, row.names = 1) %>%
+  dplyr::select(prey_sp:diel_migrant_cat, refuge_cat, season_cat, body_shape, gregarious_primary, -diel_migrant) 
 
-alb_adult_traits$prey_sp = str_replace_all(alb_adult_traits$prey_sp, " ", "_")
-
-alb_adult_traits = alb_adult_traits %>%
-  filter(prey_sp %in% names(alb_adult_prey)) #need trait values for 158 spp.
-
-rownames(alb_adult_traits) <- alb_adult_traits$prey_sp
-
-alb_adult_traits <- alb_adult_traits[ order(row.names(alb_adult_traits)), ]
+#Relabel to add underscore in names
+alb_prob_traits$prey_sp = str_replace_all(alb_prob_traits$prey_sp, " ", "_")
+#Assign speces as rownames
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
+#Order species list
+alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
 
 #Ensure traits are treated as factors for now
-alb_adult_traits[,1:8] <- lapply(alb_adult_traits[,1:8] , factor) #to convert to factors
-str(alb_adult_traits)
+alb_prob_traits[,2:9] <- lapply(alb_prob_traits[,2:9], factor) #to convert to factors
+str(alb_prob_traits)
+```
 
-## Make sure species names match abund matrix
-rownames(alb_adult_traits) == colnames(alb_adult_prey) #awesome!
-# And the mvabund matrix
-rownames(alb_adult_traits) == colnames(alb_adult_prey_mv) #awesome!
+```{r TRAIT SELECT & CLEAN}
+alb_prob_traits = alb_prob_traits %>%
+  filter(prey_sp %in% names(alb_adult_prey)) %>%
+  #need trait values for 137 spp. but we obtain 135, so that means there are 2 species in the diet df that we don't have traits for.
+  filter(diel_migrant_cat != "diel_UN",
+         season_cat != "season_NA",
+         vert_habitat != "bathypelagic",
+         horz_habitat != "reef-associated",
+         body_shape %notin% c("eel-like", "unique")) %>%
+  mutate(gregarious_primary = case_when(gregarious_primary == "pairing" ~ "solitary",
+                                        gregarious_primary == "schooling" ~ "schooling",
+                                        gregarious_primary == "shoaling" ~ "shoaling",
+                                        gregarious_primary == "solitary" ~ "solitary"
+                                        )
+         ) %>%
+  dplyr::select(-body_shape)
 
+alb_prob_traits[,2:8] <- lapply(alb_prob_traits[,2:8], factor) #to convert to factors
+
+summary(alb_prob_traits)
 
 ```
 
+
+## Species, Env and Trait manips
+
+```{r Ensuring dataframe coherence}
+str(alb_prob_traits)
+str(alb_adult_preyPA)
+
+#alb_adult_prey
+
+
+alb_species_use <- alb_adult_preyPA[colnames(alb_adult_preyPA) %in% rownames(alb_prob_traits)]
+
+which(colSums(alb_species_use) == 0)
+which(rowSums(alb_species_use) == 0) #Need to remove from both the species and environment dfs
+
+alb_species_use_final = alb_species_use[-c(31, 32, 58, 64, 69, 72, 79, 81, 86, 90, 102, 119, 140,
+                                     141, 151, 156),]
+#alb_adult_covars
+
+alb_covars_use = alb_adult_covars[-c(31, 32, 58, 64, 69, 72, 79, 81, 86, 90, 102, 119, 140,
+                                     141, 151, 156),]
+
+#alb_probs_traits
+
+```
+
+
+## CHECK VARIABLES
+
 ```{r Trait factor levels}
 
-str(alb_adult_traits)
+str(alb_prob_traits)
+
+#Q traits factors
+alb_prob_traits[,2:ncol(alb_prob_traits)] <- lapply(alb_prob_traits[,2:ncol(alb_prob_traits)], as.factor) 
 
 #Levels vertical habitat
-#levels(alb_adult_traits$vertical.habitat)
-alb_adult_traits$vertical.habitat <- factor(alb_adult_traits$vertical.habitat, 
-                                            levels = c("benthic", "demersal", "epipelagic",
-                                                       "mesopelagic", "bathypelagic"))
+levels(alb_prob_traits$vert_habitat)
 
+#alb_prob_traits$vert_habitat <- factor(alb_prob_traits$vert_habitat,
+#                                       levels = c("benthic", "demersal", "epipelagic",
+#                                                  "mesopelagic"))
 #Levels horizontal habitat
-#levels(alb_adult_traits$horizontal.habitat)
-alb_adult_traits$horizontal.habitat <- factor(alb_adult_traits$horizontal.habitat, 
-                                            levels = c("reef-associated", "coastal", 
-                                                       "continental shelf", "continental slope",
-                                                       "oceanic"))
+levels(alb_prob_traits$horz_habitat)
+#alb_prob_traits$horz_habitat<- factor(alb_prob_traits$horz_habitat,
+#                                      levels = c("coastal", "continental shelf",
+#                                                 "continental slope", "oceanic"))
 
 #Levels diel migrant
-#levels(alb_adult_traits$diel.migrant)
+levels(alb_prob_traits$diel_migrant_cat)
 #Great don't change this
 
 #Levels seasonal migrant
-#levels(alb_adult_traits$seasonal.migrant)
+levels(alb_prob_traits$season_cat)
 #Great don't change this
 
 #Levels gregarious
-#levels(alb_adult_traits$gregarious)
-alb_adult_traits$gregarious <- factor(alb_adult_traits$gregarious, 
-                                            levels = c("solitary", "schooling"))
+levels(alb_prob_traits$gregarious_primary)
+alb_prob_traits$gregarious_primary <- factor(alb_prob_traits$gregarious_primary,
+                                             levels = c("solitary", "shoaling", "schooling"))
 
 ```
 
 
 ## DF checks
 
-```{r Subsets + check covars & df dims for data #4}
-#Check df dims
-#dim(alb_adult_prey_mv) #225 observations for 137 species
-#dim(alb_adult_traits[,2:7]) #137 species and 6 traits
-#dim(alb_adult_covars) #225 observations and 13 co-variates
-#ALL DF'S LINE UP
+```{r Check names and df dimensions}
+## Make sure species names match abund matrix
+rownames(alb_prob_traits) == colnames(alb_species_use_final) #awesome!
+# And the mvabund matrix
+alb_species_use_final_MV = as.mvabund(alb_species_use_final)
+
+rownames(alb_prob_traits) == colnames(alb_species_use_final_MV) #awesome!
+
+dim(alb_prob_traits) #117 species and 8 traits
+dim(alb_species_use_final_MV) #209 obs, 117 species
+dim(alb_covars_use) #209 obs, 13 variables
 
 ```
 
 ```{r Select covars + traits}
 
 #Select some covars & traits
-ocean = alb_adult_covars$OceanBasin
-ocean_b = alb_adult_covars$OceanBasinQ
-longhurst = alb_adult_covars$code
-pred_life = alb_adult_covars$pred_life
-lat = alb_adult_covars$lat_cat
+ocean = alb_covars_use$OceanBasin
+ocean_b = alb_covars_use$OceanBasinQ
+longhurst = alb_covars_use$code
+pred_life = alb_covars_use$pred_life
+lat = alb_covars_use$lat_cat
 
 #All traits to try
-traits_try = alb_adult_traits[,c(2:4,6:7)]
+traits_try = alb_prob_traits[,c(3:5,7:8)]
 str(traits_try) #107 species and subset of 2 traits
 ```
 
@@ -315,7 +371,7 @@ str(traits_try) #107 species and subset of 2 traits
 
 #Fit ManyGLM to ensure the matrix works
 ## Run trial manyglm() to check for problems
-adult_prey_many <- manyglm(alb_adult_prey_mv ~ ocean, family="negative.binomial")
+adult_prob_many <- manyglm(alb_species_use_final_MV ~ ocean, family="negative.binomial")
 plot(adult_prey_many) #check model residuals
 
 #adult_prey_m4_anova <- anova.manyglm(adult_prey_m4)
@@ -331,10 +387,10 @@ plot(adult_prey_many) #check model residuals
 source("traitglm.R")
 source("get_polys.R")
 
-trait_life <- traitglm(L = alb_adult_prey_mv,
-                      R =  pred_life, #pred_life4,
-                      method="manyglm"
-                      )
+trait_life <- traitglm(L = alb_species_use_final_MV,
+                       R = ocean, #or pred_life
+                       method="manyglm"
+                       )
 
 #Check model output - residuals TEST
 qqnorm(residuals(trait_life)[which(residuals(trait_life)<10000)]); abline(c(0,1),col="red")
@@ -350,10 +406,10 @@ abline(c(0,0),col="red")
 
 ```{r TraitGLM - predator age test2}
 
-trait_life <- traitglm(L = alb_adult_preyPA_mv,
-                      R =  pred_life,                       
-                      Q = traits_try
-                      ) #note default is "manyglm"
+trait_life <- traitglm(L = alb_species_use_final_MV,
+                       R =  pred_life,
+                       Q = traits_try
+                       ) #note default is "manyglm"
 
 #Check model output - residuals TEST
 qqnorm(residuals(trait_life)[which(residuals(trait_life)<10000)]); abline(c(0,1),col="red")
@@ -427,12 +483,12 @@ ManyGLM traitglm
 
 ```{r TraitGLM - predator age binom distribution}
 
-trait_life_many <- traitglm(L = alb_adult_preyPA_mv,
-                      R =  pred_life,                       
-                      Q = traits_try,
-                      family=binomial(link = "logit")#,
-                      #method="glm1path"
-                      ) #note default is "manyglm"
+trait_life_many <- traitglm(L = alb_species_use_final_MV,
+                       R =  pred_life,
+                       Q = traits_try
+                       family=binomial(link = "logit")#,
+                       #method="glm1path"
+                       ) #note default is "manyglm"
 
 #Check model output - residuals TEST
 qqnorm(residuals(trait_life_many)[which(residuals(trait_life_many)<10000)]); abline(c(0,1),col="red")
@@ -489,9 +545,9 @@ Using binomial (logit link) function.
 
 ```{r TraitGLM - predator age binom distribution}
 
-trait_life_binom <- traitglm(L = alb_adult_preyPA_mv,
-                      R =  pred_life,                       
-                      Q = traits_try,
+trait_life_binom <- traitglm(L = alb_species_use_final_MV,
+                       R =  pred_life,
+                       Q = traits_try,
                       family=binomial(link = "logit"),
                       method="glm1path"
                       ) #note default is "manyglm"
@@ -516,14 +572,14 @@ colnames(temp) = c("Vert. habitat - benthic",
                    "Vert. habitat - demersal",
                    "Vert. habitat - epipelagic",
                    "Vert. habitat - mesopelagic",
-                   "Vert. habitat - bathypelagic",
-                   "Horz. habitat - reef-associated",
                    "Horz. habitat - coastal",
                    "Horz. habitat - continental shelf",
                    "Horz. habitat - continental slope",
                    "Horz. habitat - oceanic",
                    "Diel migrant (yes)",
                    "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
                    "Gregarious - schooling")
 
 trait_life_4th = levelplot(temp, 
@@ -535,10 +591,10 @@ trait_life_4th = levelplot(temp,
                      colorkey=list(labels=list(cex=1.3)))
 
 print(trait_life_4th)
+#trait_life_4th = as.ggplot(trait_life_4th)
 
-trait_life_4th = as.ggplot(trait_life_4th)
-
-ggsave(here("outputs_figures/traitglms/trait_life_4th.pdf"), plot = trait_life_4th, width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_trait_life_4th.pdf"), 
+       plot = as.ggplot(trait_life_4th), width=12, height=12, dpi=300)
 
 #dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
 
@@ -548,7 +604,7 @@ Using negative binomial function - data are overdispersed.
 
 ```{r TraitGLM - predator age neg bin distribution}
 
-trait_life_negbin <- traitglm(L = alb_adult_preyPA_mv,
+trait_life_negbin <- traitglm(L = alb_species_use_final_MV,
                       R =  pred_life,                       
                       Q = traits_try,
                       #family=binomial(link = "logit"),
@@ -571,17 +627,21 @@ a        = max( abs(trait_life_negbin$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
 temp = t(as.matrix(trait_life_negbin$fourth.corner))
 
-#rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
+rownames(temp) = c("Adult", "Juvenile", "Mixed")
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
+                   "Gregarious - schooling")
+
 plot.4th = levelplot(temp, 
                      xlab=list("Environmental Variables", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
@@ -600,9 +660,9 @@ print(plot.4th)
 
 Using binomial (logit link) function.
 
-```{r TraitGLM - predator age binom distribution}
+```{r TraitGLM - ocean basin binom distribution}
 
-trait_ocean_binom <- traitglm(L = alb_adult_preyPA_mv,
+trait_ocean_binom <- traitglm(L = alb_species_use_final_MV,
                       R =  ocean,                       
                       Q = traits_try,
                       family=binomial(link = "logit"),
@@ -635,14 +695,14 @@ colnames(temp) = c("Vert. habitat - benthic",
                    "Vert. habitat - demersal",
                    "Vert. habitat - epipelagic",
                    "Vert. habitat - mesopelagic",
-                   "Vert. habitat - bathypelagic",
-                   "Horz. habitat - reef-associated",
                    "Horz. habitat - coastal",
                    "Horz. habitat - continental shelf",
                    "Horz. habitat - continental slope",
                    "Horz. habitat - oceanic",
                    "Diel migrant (yes)",
                    "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
                    "Gregarious - schooling")
 
 trait_ocean_4th = levelplot(temp, 
@@ -657,7 +717,8 @@ print(trait_ocean_4th)
 
 #trait_ocean_4th = as.ggplot(trait_ocean_4th)
 
-ggsave(here("outputs_figures/traitglms/trait_ocean_4th.pdf"), plot = as.ggplot(trait_ocean_4th), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_trait_ocean_4th.pdf"), 
+       plot = as.ggplot(trait_ocean_4th), width=12, height=12, dpi=300)
 
 ```
 
@@ -666,9 +727,9 @@ ggsave(here("outputs_figures/traitglms/trait_ocean_4th.pdf"), plot = as.ggplot(t
 
 Using binomial (logit link) function.
 
-```{r TraitGLM - predator age binom distribution}
+```{r TraitGLM - ocean basin q binom distribution}
 
-trait_ocean_b_binom <- traitglm(L = alb_adult_preyPA_mv,
+trait_ocean_b_binom <- traitglm(L = alb_species_use_final_MV,
                       R =  ocean_b,                       
                       Q = traits_try,
                       family=binomial(link = "logit"),
@@ -705,14 +766,14 @@ colnames(temp) = c("Vert. habitat - benthic",
                    "Vert. habitat - demersal",
                    "Vert. habitat - epipelagic",
                    "Vert. habitat - mesopelagic",
-                   "Vert. habitat - bathypelagic",
-                   "Horz. habitat - reef-associated",
                    "Horz. habitat - coastal",
                    "Horz. habitat - continental shelf",
                    "Horz. habitat - continental slope",
                    "Horz. habitat - oceanic",
                    "Diel migrant (yes)",
                    "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
                    "Gregarious - schooling")
 
 trait_ocean_b_4th = levelplot(temp, 
@@ -727,7 +788,8 @@ print(trait_ocean_b_4th)
 
 #trait_ocean_b_4th = as.ggplot(trait_ocean_b_4th)
 
-ggsave(here("outputs_figures/traitglms/trait_ocean_b_4th.pdf"), plot = as.ggplot(trait_ocean_b_4th), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_trait_ocean_b_4th.pdf"), 
+       plot = as.ggplot(trait_ocean_b_4th), width=12, height=12, dpi=300)
 
 ```
 
@@ -735,9 +797,9 @@ ggsave(here("outputs_figures/traitglms/trait_ocean_b_4th.pdf"), plot = as.ggplot
 
 Using binomial (logit link) function.
 
-```{r TraitGLM - predator age binom distribution}
+```{r TraitGLM - latitude binom distribution}
 
-trait_lat_binom <- traitglm(L = alb_adult_preyPA_mv,
+trait_lat_binom <- traitglm(L = alb_species_use_final_MV,
                       R =  lat,                       
                       Q = traits_try,
                       family=binomial(link = "logit"),
@@ -765,14 +827,14 @@ colnames(temp) = c("Vert. habitat - benthic",
                    "Vert. habitat - demersal",
                    "Vert. habitat - epipelagic",
                    "Vert. habitat - mesopelagic",
-                   "Vert. habitat - bathypelagic",
-                   "Horz. habitat - reef-associated",
                    "Horz. habitat - coastal",
                    "Horz. habitat - continental shelf",
                    "Horz. habitat - continental slope",
                    "Horz. habitat - oceanic",
                    "Diel migrant (yes)",
                    "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
                    "Gregarious - schooling")
 
 trait_lat_4th = levelplot(temp, 
@@ -787,7 +849,8 @@ print(trait_lat_4th)
 
 #trait_lat_4th = as.ggplot(trait_lat_4th)
 
-ggsave(here("outputs_figures/traitglms/trait_lat_4th.pdf"), plot = as.ggplot(trait_lat_4th), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_trait_lat_4th.pdf"), 
+       plot = as.ggplot(trait_lat_4th), width=12, height=12, dpi=300)
 
 ```
 
@@ -799,7 +862,7 @@ Using binomial (logit link) function.
 
 ```{r TraitGLM - predator age binom distribution, eval = FALSE, include = FALSE}
 
-trait_longhurst_binom <- traitglm(L = alb_adult_preyPA_mv,
+trait_longhurst_binom <- traitglm(L = alb_species_use_final_MV,
                       R =  longhurst,                       
                       Q = traits_try,
                       family=binomial(link = "logit"),
@@ -822,17 +885,22 @@ colort   = colorRampPalette(c("blue","white","red"))
 temp = t(as.matrix(trait_longhurst_binom$fourth.corner))
 
 #rownames(temp) = c("Region: Ocean Basin")
-#colnames(temp) = c("Trophic group: Benthic Invertivore",
-#                   "Trophic group: Browsing Herbivore",
-#                   "Trophic group: Mesopredator",
-#                   "Trophic group: Planktivore",
-#                   "Solitary",
-#                   "Schooling",
-#                   "Pairs/groups",
-#                   "Known prey",
-#                   "Potential prey",
-#                   "Bathypelagic")
-plot.4th = levelplot(temp, 
+
+colnames(temp) = c("Vert. habitat - benthic",
+                   "Vert. habitat - demersal",
+                   "Vert. habitat - epipelagic",
+                   "Vert. habitat - mesopelagic",
+                   "Horz. habitat - coastal",
+                   "Horz. habitat - continental shelf",
+                   "Horz. habitat - continental slope",
+                   "Horz. habitat - oceanic",
+                   "Diel migrant (yes)",
+                   "Seasonal migrant (yes)",
+                   "Gregarious - solitary",
+                   "Gregarious - shoaling",
+                   "Gregarious - schooling")
+
+trait_code.4th = levelplot(temp, 
                      xlab=list("Environmental Variables", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
@@ -840,8 +908,10 @@ plot.4th = levelplot(temp,
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
                      colorkey=list(labels=list(cex=1.3)))
 
-print(plot.4th)
+print(trait_code.4th)
 
-#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_trait_longcode_4th.pdf"), 
+       plot = as.ggplot(trait_code.4th), width=12, height=12, dpi=300)
 
 ```
