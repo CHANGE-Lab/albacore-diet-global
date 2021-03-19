@@ -1,0 +1,494 @@
+---
+title: "correlation_analysis_code"
+author: "Zachary Roote"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "/Home/⁨zacharyroote/Documents/GREEN_LAB/correlation_analysis_code⁩")
+```
+
+
+
+The package cowplot and gridExtra are only used at the very end to stitch together
+all of the heatmaps, you only need one of the packages. I just have two methods
+of stitching the plots together, each requiring one of the packages but not both.
+
+```{r workspace}
+install.packages("viridis")
+install.packages("cowplot")
+install.packages("tidyverse")
+install.packages("gridExtra") 
+library(tidyverse)
+library(gridExtra)
+library(viridis)
+library(cowplot)
+```
+
+This data is from the "Albacore_tuna_diet_DB"
+From the sheet "prey_trait_db"
+From there I filtered the data to only have adults from the classes Actinopterygii and Cephalopoda. In addition, I removed the species
+"Tremoctopus violaceus" as its body shape was listed as "unqiue"
+and that would have resulted in an additional category for body
+shape, so I excluded it for now
+
+```{r load data}
+prey_trait_db <- read.csv("albacore_prey_trait_db.csv")
+head(prey_trait_db)
+```
+For the following spearman correlations we need the columns to be numeric
+```{r spearman correlations}
+prey_trait_db$horz_habitat_ordinal <- as.numeric(prey_trait_db$horz_habitat_ordinal)
+prey_trait_db$vert_habitat_ordinal <- as.numeric(prey_trait_db$vert_habitat_ordinal)
+prey_trait_db$body_shape_ordinal <- as.numeric(prey_trait_db$body_shape_ordinal)
+
+horz_vert_corr <- cor.test(x=prey_trait_db$horz_habitat_ordinal, y=prey_trait_db$vert_habitat_ordinal, method = 'spearman')
+body_vert_corr <- cor.test(x=prey_trait_db$body_shape_ordinal, y=prey_trait_db$vert_habitat_ordinal, method = 'spearman')
+body_horz_corr <- cor.test(x=prey_trait_db$body_shape_ordinal, y=prey_trait_db$horz_habitat_ordinal, method = 'spearman')
+horz_vert_corr
+body_vert_corr
+body_horz_corr
+```
+As we can see all of those traits have significant relationships, 
+though with varying levels of significance
+
+
+
+
+We must convert the columns to factors to undergo the following plots
+```{r columns to factors for plotting}
+prey_trait_db$horz_habitat_ordinal <- as.factor(prey_trait_db$horz_habitat_ordinal)
+prey_trait_db$vert_habitat_ordinal <- as.factor(prey_trait_db$vert_habitat_ordinal)
+prey_trait_db$body_shape_ordinal <- as.factor(prey_trait_db$body_shape_ordinal)
+```
+
+
+Now we will visualize the relationship between those variables
+to do this we will use percent stacked barplots. Since this data is ordinal
+it will show us how the proportion of traits changes as we move from
+one extreme to the next in a different trait. For example we will see
+an increased proportion in oceanic species when moving from
+epipelagic to mesopelagic to bathypelagic
+
+You can switch the traits on x and fill but as they are now better visualizes the relationship
+```{r vert_horz_habitat percent stacked barplot}
+vert_horz_stacked_barplot <- ggplot(data = prey_trait_db) +
+  geom_bar(aes(fill = horz_habitat_ordinal, x = vert_habitat_ordinal), position = "fill") +
+  scale_fill_viridis_d(label = c("Reef-associated", "Coastal", "Continental shelf",
+                             "Continental slope", "Oceanic")) +
+  scale_x_discrete(label = c("Benthic", "Demersal", "Benthopelagic", "Epipelagic", 
+                                "Mesopelagic", "Bathypelagic"))+
+  labs(fill = "Horizontal Habitat") + xlab("Vertical Habitat") + ylab("Percent")+
+  theme_classic()
+
+vert_horz_stacked_barplot
+```
+
+
+I would like to point out that in the dataset currently used 
+there are only three Depressiform species so that could skew 
+the data or make the visualization seem off due to that bar
+with little data pertaining to it
+
+You can switch the traits on x and fill but as they are now better visualizes the relationship
+```{r body_shape_vert_habitat percent stacked barplot}
+body_vert_stacked_barplot <- ggplot(data = prey_trait_db) +
+  geom_bar(aes(x = body_shape_ordinal, fill = vert_habitat_ordinal), position = "fill") +
+  scale_x_discrete(label = c("Eel-like", "Elongate", "Fusiform", "Globiform","Compressiform", "Depressiform")) +
+  scale_fill_viridis_d(label = c("Benthic", "Demersal", "Benthopelagic", "Epipelagic", 
+                                "Mesopelagic", "Bathypelagic"))+
+  labs(fill = "Vertical Habitat") + xlab("Body Shape") + ylab("Proportion")+
+  theme_classic()
+body_vert_stacked_barplot
+```
+
+
+I put the code for two graphs with the variables switched between
+the x_axis and fill because this is the relationship with the least 
+significant spearman correlation(p=0.03057), so the relationship
+I was trying to visualize is not as obvious. So, I couldn't decide 
+which plot visualized it better.
+```{r body_shape and horz_habitat percent stacked barplot}
+horz_body_stacked_barplot <- ggplot(data = prey_trait_db) +
+  geom_bar(aes(fill = body_shape_ordinal, x = horz_habitat_ordinal), position = "fill") + 
+  scale_fill_viridis_d(label = c("Eel-like", "Elongate", "Fusiform", "Globiform","Compressiform", "Depressiform")) +
+  scale_x_discrete(label = c("Reef-associated", "Coastal", "Continental shelf",
+                             "Continental slope", "Oceanic"))+
+  labs(fill = "Body Shape") + xlab("Horizontal Habitat") + ylab("Proportion")+
+  theme_classic()
+
+body_horz_stacked_barplot <- ggplot(data = prey_trait_db) +
+  geom_bar(aes(x = body_shape_ordinal, fill = horz_habitat_ordinal), position = "fill") + 
+  scale_x_discrete(label = c("Eel-like", "Elongate", "Fusiform", "Globiform","Compressiform", "Depressiform")) +
+  scale_fill_viridis_d(label = c("Reef-associated", "Coastal", "Continental shelf",
+                                "Continental slope", "Oceanic")) +
+  labs(fill = "Horizontal Habitat") + xlab("Body Shape") + ylab("Proportion")+
+  theme_classic()
+horz_body_stacked_barplot
+body_horz_stacked_barplot
+```
+The following plot is to visualize the variation in depth range
+found in all of the prey species in the dataset. Geom_segment
+was used to create a bar connecting the min and max depth of the species. 
+Each bar represents a separate species. The piece of code in the 'x' and
+'xend' values is to sort the species, first by the minimum depth, then
+by the maximum depth. If that wasn't done then the chart would look
+very messy. The blue geom_rect represents the usual depth range of 
+the Albacore Tuna so we can see where the Tuna and its prey
+overlap in depth range.
+```{r species_depth_barplot}
+ggplot(data = prey_trait_db) +
+  geom_segment(aes(x = factor(prey_trait_db$species, levels = prey_trait_db$species[order(prey_trait_db$depth_shallow,prey_trait_db$depth_deep)]),
+                   xend = factor(prey_trait_db$species, levels = prey_trait_db$species[order(prey_trait_db$depth_shallow,prey_trait_db$depth_deep)]), 
+                   y = -prey_trait_db$depth_shallow, yend = -prey_trait_db$depth_deep)) +
+  ylab("Depth(m)") + xlab("Prey Species") +  theme_classic() +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+  geom_rect(xmin=0, xmax= 193, ymin=-600, ymax = 0, fill = "lightblue", alpha = 0.01)
+
+```
+
+This is similar to the plot above, expect it is visualizing the temperature
+range of the albacore prey species. Like above the species are sorted by minimum temperature,
+then by maximum temperature. The geom_rect represents the usual range temperature range of
+albacore tuna(13.5-25.2)
+```{r species temperature barplot}
+ggplot(data = prey_trait_db) +
+  geom_segment(aes(x=prey_trait_db$temp_min, xend = prey_trait_db$temp_max, 
+                   y = factor(prey_trait_db$species, levels = prey_trait_db$species[order(prey_trait_db$temp_min,prey_trait_db$temp_max)]),
+                   yend =prey_trait_db$species, levels = prey_trait_db$species[order(prey_trait_db$temp_min,prey_trait_db$temp_max)])) + 
+  geom_rect(ymin=0, ymax= 193, xmin=13.5, xmax = 25.2, fill = "coral", alpha = 0.002)+ theme_classic() +
+  theme(axis.ticks.y = element_blank(), axis.text.y = element_blank()) + xlab("Temperature(°C)") + ylab("Species")
+  
+```
+
+
+
+
+All of the following code is to create heatmaps for horz_habitat, vert_habitat
+diel_migration, refuge, and physical_defense
+
+Before maps the heatmaps we need to create tables for each pair of variables.
+This is so we can plot each of the categories within the variables together and
+relate them by the count of prey species for each combination of traits.
+The first line of code for each combinations is to create the tables. The second
+line is to rename the columns which automatically change to "Var1", "Var2" and "Freq".
+So I changed them back so it makes more sense when creating the plots
+```{r table creation for heatmaps}
+horz_vert_df <- as.data.frame.table(table(prey_trait_db$horz_habitat_ordinal, prey_trait_db$vert_habitat_ordinal))
+horz_vert_df <- dplyr::rename(horz_vert_df, horz_habitat = Var1, vert_habitat = Var2, count = Freq)
+
+diel_vert_df <- as.data.frame.table(table(prey_trait_db$diel_migrant, prey_trait_db$vert_habitat_ordinal))
+diel_vert_df <- dplyr::rename(diel_vert_df, diel_migrant = Var1, vert_habitat = Var2, count = Freq)
+
+diel_horz_df <- as.data.frame.table(table(prey_trait_db$diel_migrant, prey_trait_db$horz_habitat_ordinal))
+diel_horz_df <- dplyr::rename(diel_horz_df, diel_migrant = Var1, horz_habitat = Var2, count = Freq)
+
+refuge_vert_df<-as.data.frame.table(table(prey_trait_db$refuge, prey_trait_db$vert_habitat_ordinal))
+refuge_vert_df <- dplyr::rename(refuge_vert_df, refuge = Var1, vert_habitat = Var2, count = Freq)
+
+refuge_horz_df<-as.data.frame.table(table(prey_trait_db$refuge, prey_trait_db$horz_habitat_ordinal))
+refuge_horz_df <- dplyr::rename(refuge_horz_df, refuge = Var1, horz_habitat = Var2, count = Freq)
+
+refuge_diel_df<-as.data.frame.table(table(prey_trait_db$refuge, prey_trait_db$diel_migrant))
+refuge_diel_df <- dplyr::rename(refuge_diel_df, refuge = Var1, diel_migrant = Var2, count = Freq)
+
+body_vert_df<-as.data.frame.table(table(prey_trait_db$body_shape_ordinal, prey_trait_db$vert_habitat_ordinal))
+body_vert_df <- dplyr::rename(body_vert_df, body_shape = Var1, vert_habitat = Var2, count = Freq)
+
+body_horz_df<-as.data.frame.table(table(prey_trait_db$body_shape_ordinal, prey_trait_db$horz_habitat_ordinal))
+body_horz_df <- dplyr::rename(body_horz_df, body_shape = Var1, horz_habitat = Var2, count = Freq)
+
+body_diel_df<-as.data.frame.table(table(prey_trait_db$body_shape_ordinal, prey_trait_db$diel_migrant))
+body_diel_df <- dplyr::rename(body_diel_df, body_shape = Var1, diel_migrant = Var2, count = Freq)
+
+body_refuge_df<-as.data.frame.table(table(prey_trait_db$body_shape_ordinal, prey_trait_db$refuge))
+body_refuge_df <- dplyr::rename(body_refuge_df, body_shape = Var1, refuge = Var2, count = Freq)
+
+def_vert_df<-as.data.frame.table(table(prey_trait_db$phys_defense, prey_trait_db$vert_habitat_ordinal))
+def_vert_df <- dplyr::rename(def_vert_df, phys_defense = Var1, vert_habitat = Var2, count = Freq)
+
+def_horz_df<-as.data.frame.table(table(prey_trait_db$phys_defense, prey_trait_db$horz_habitat_ordinal))
+def_horz_df <- dplyr::rename(def_horz_df, phys_defense = Var1, horz_habitat = Var2, count = Freq)
+
+def_diel_df<-as.data.frame.table(table(prey_trait_db$phys_defense, prey_trait_db$diel_migrant))
+def_diel_df <- dplyr::rename(def_diel_df, phys_defense = Var1, diel_migrant = Var2, count = Freq)
+
+def_refuge_df<-as.data.frame.table(table(prey_trait_db$phys_defense, prey_trait_db$refuge))
+def_refuge_df <- dplyr::rename(def_refuge_df, phys_defense = Var1, refuge = Var2, count = Freq)
+
+def_body_df<-as.data.frame.table(table(prey_trait_db$phys_defense, prey_trait_db$body_shape_ordinal))
+def_body_df <- dplyr::rename(def_body_df, phys_defense = Var1, body_shape = Var2, count = Freq)
+```
+
+
+
+The next chunks are creating the heatmaps themselves. Starting with each individual combination.
+The arguments in the theme() command is different for most heatmaps. This is because we don't need the axis
+titles and ticks for every heatmap, except those that will be on the final x and y axis after all
+the plots are stitched together, other than those few the rest of the axes can be removed. 
+I used scale_fill_viridis so I can use the viridis color palate, as well as use the 
+argument "limits =" so I can manually put in the gradient for each plot. This allows
+the thermal gradient to be consistent across all heatmaps, so we can have one legend in the end to 
+represent all of the plots. In the plots with the y_axis title present, I included the function
+"axis.title.y = element_text(margin = margin(t = , r = , b = , l = ))" This was necessary because in the diel_vert_hm the 
+tick label "UN" is longer than all the other tick labels, thus changing the distance between axis title 
+and axis line for that graph. Which misaligned that row of plots from the other 4 rows. So we manually changed that 
+distance to make it equal
+
+
+
+
+
+```{r horz_vert_heatmap}
+horz_vert_hm = ggplot(data=horz_vert_df) + 
+  geom_tile(aes(y=horz_habitat, x=vert_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100)) + 
+  theme_classic() + 
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        axis.title.x= element_blank(), axis.line = element_blank(), 
+        legend.position = "none", 
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0 , l = 0))) + 
+  ylab("Horizontal Habitat")  
+horz_vert_hm
+```
+
+
+```{r diel_vert_heatmap}
+diel_vert_hm = ggplot(data=diel_vert_df) + 
+  geom_tile(aes(y=diel_migrant, x=vert_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ 
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        axis.title.x= element_blank(), axis.line = element_blank(), 
+        legend.position = "none", 
+        axis.title.y = element_text(margin = margin(t = 0, r = 2, b = 0 , l = 0)))+ ylab("Diel Migrant") 
+diel_vert_hm
+```
+
+
+```{r diel_horz_heatmap}
+diel_horz_hm = ggplot(data=diel_horz_df) + 
+  geom_tile(aes(y=diel_migrant, x=horz_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                        axis.title.x= element_blank(), axis.text.y = element_blank(), 
+                        axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                        axis.line = element_blank(), legend.position = "none")
+diel_horz_hm
+```
+
+
+```{r refuge_vert_heatmap}
+refuge_vert_hm = ggplot(data=refuge_vert_df) + 
+  geom_tile(aes(y=refuge, x=vert_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+  
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        axis.title.x= element_blank(), axis.line = element_blank(), 
+        legend.position = "none", 
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0 , l = 0))) + 
+  ylab("Refuge")
+refuge_vert_hm
+```
+
+
+```{r refuge_horz_heatmap}
+refuge_horz_hm = ggplot(data=refuge_horz_df) + 
+  geom_tile(aes(y=refuge, x=horz_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                         axis.title.x= element_blank(),axis.text.y = element_blank(), 
+                         axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                         axis.line = element_blank(), legend.position = "none")
+refuge_horz_hm
+```
+
+
+```{r refuge_diel_heatmap}
+refuge_diel_hm = ggplot(data=refuge_diel_df) + 
+  geom_tile(aes(y=refuge, x=diel_migrant, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                         axis.title.x= element_blank(),axis.text.y = element_blank(), 
+                         axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                         axis.line = element_blank(), legend.position = "none")
+refuge_diel_hm
+```
+
+
+```{r body_vert_heatmap}
+body_vert_hm = ggplot(data=body_vert_df) + 
+  geom_tile(aes(y=body_shape, x=vert_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ 
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), axis.line = element_blank(), 
+        axis.title.x= element_blank(), legend.position = "none", 
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0 , l = 0))) + 
+  ylab("Body Shape")
+body_vert_hm
+```
+
+
+```{r body_horz_heatmap}
+body_horz_hm = ggplot(data=body_horz_df) + 
+  geom_tile(aes(y=body_shape, x=horz_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                         axis.title.x= element_blank(),axis.text.y = element_blank(), 
+                         axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                         axis.line = element_blank(), legend.position = "none")
+body_horz_hm
+```
+
+
+```{r body_diel_heatmap}
+body_diel_hm = ggplot(data=body_diel_df) + 
+  geom_tile(aes(y=body_shape, x=diel_migrant, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                         axis.title.x= element_blank(),axis.text.y = element_blank(),
+                         axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                         axis.line = element_blank(), legend.position = "none")
+body_diel_hm
+```
+
+
+```{r body_refuge_heatmap}
+body_refuge_hm = ggplot(data=body_refuge_df) + 
+  geom_tile(aes(y=body_shape, x=refuge, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+                         axis.title.x= element_blank(),axis.text.y = element_blank(), 
+                         axis.ticks.y = element_blank(), axis.title.y= element_blank(), 
+                         axis.line = element_blank(), legend.position = "none")
+body_refuge_hm
+```
+
+
+```{r def_vert_heatmap}
+def_vert_hm = ggplot(data=def_vert_df) + 
+  geom_tile(aes(y=phys_defense, x=vert_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic() +
+  theme(axis.line = element_blank(), legend.position = "none",
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0 , l = 0))) +
+  ylab("Physical Defense") + xlab("Vertical Habitat")
+def_vert_hm
+```
+
+
+```{r def_horz_heatmap}
+def_horz_hm = ggplot(data=def_horz_df) + 
+  geom_tile(aes(y=phys_defense, x=horz_habitat, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+                         axis.title.y= element_blank(), axis.line = element_blank(), 
+                         legend.position = "none") + xlab("Horizontal Habitat")
+def_horz_hm
+```
+
+
+```{r def_diel_heatmap}
+def_diel_hm = ggplot(data=def_diel_df) + 
+  geom_tile(aes(y=phys_defense, x=diel_migrant, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+                         axis.title.y= element_blank(), axis.line = element_blank(), 
+                         legend.position = "none") + xlab("Diel Migrant")
+def_diel_hm
+```
+
+
+```{r def_refuge_heatmap}
+def_refuge_hm = ggplot(data=def_refuge_df) + 
+  geom_tile(aes(y=phys_defense, x=refuge, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+                        axis.title.y= element_blank(), axis.line = element_blank(), 
+                        legend.position = "none") + xlab("Refuge")
+def_refuge_hm
+```
+
+
+```{r def_body_heatmap}
+def_body_hm = ggplot(data=def_body_df) + 
+  geom_tile(aes(y=phys_defense, x=body_shape, fill = count))+
+  scale_fill_viridis(limits = c(0,100))+ 
+  theme_classic()+ theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), 
+                         axis.title.y= element_blank(), axis.line = element_blank(), 
+                         legend.position = "none") + xlab("Body Shape")
+def_body_hm
+```
+
+We will need a legend for the final plot after everything is stitched together.
+But since I removed all of the legends before stitching them together I need to 
+make another plot just for the legend. The plot itself is not meant to be used 
+for anything other than extracting the legend from it.
+```{r legend extraction}
+legend_source <- ggplot(data=def_body_df) + 
+  geom_tile(aes(y=phys_defense, x=body_shape, fill = count))+
+  scale_fill_viridis(name = "Count", limits = c(0,100)) 
+
+legend <- get_legend(legend_source)
+```
+
+
+
+Now that we have all of the heatmaps and the legend we can now stitch them all 
+into one plot. 
+
+The first method needs the package "gridExtra" using the function "grid.arrange"
+They need to be in the order they are placed as grid.arrange relies on the order
+they are placed in the function. 16 is the legend and if you want the position 
+for it changed you can substitute it for a different NA or have it span
+over two+ NAs adjacen to each other. But that doesn't seem to increase the size
+of the legend.
+
+```{r}
+prey_trait_hm1 <- grid.arrange(horz_vert_hm,diel_vert_hm, diel_horz_hm,refuge_vert_hm, refuge_horz_hm, refuge_diel_hm, body_vert_hm, body_horz_hm, body_diel_hm, body_refuge_hm,def_vert_hm, def_horz_hm, def_diel_hm, def_refuge_hm, def_body_hm,legend,
+             widths = c(1,1,1,1,1),
+             layout_matrix = rbind(c(1,NA,NA,NA,NA),
+                                   c(2,3, NA, NA, 16),
+                                   c(4, 5, 6, NA, NA),
+                                   c(7, 8, 9, 10, NA),
+                                   c(11, 12, 13, 14, 15))
+)
+
+```
+
+
+The second method to stitch the plots together uses the package "cowplot"
+and the function "plot_grid" This method involves stitching each row 
+together separately, then stitching all of the rows together.
+
+First to put the legend in we need to make a blank plot
+so that it can be moved positions in the final plot
+```{r blank_plot}
+blank_plot <- ggplot() + theme_classic() + theme(axis.line = element_blank())
+```
+
+Now we will stitch each row together, I am going to put the legend in the second row (diel)
+rel_width = 0.2 means that the width of each graph will take up 20% of the screen width
+```{r}
+horz_row = plot_grid(horz_vert_hm, nrow = 1, ncol = 5, rel_widths = 0.2)
+diel_row = plot_grid(diel_vert_hm, diel_horz_hm,blank_plot,blank_plot,legend, nrow = 1, ncol = 5, rel_widths = 0.2)
+refuge_row = plot_grid(refuge_vert_hm, refuge_horz_hm, refuge_diel_hm, nrow = 1, ncol = 5, rel_widths = 0.2)
+body_row = plot_grid(body_vert_hm, body_horz_hm, body_diel_hm, body_refuge_hm, nrow = 1, ncol = 5, rel_widths = 0.2)
+def_row = plot_grid(def_vert_hm, def_horz_hm, def_diel_hm, def_refuge_hm, def_body_hm, nrow = 1, ncol = 5, rel_widths = 0.2)
+```
+
+Now that we have all of the rows we can now stitch them together into the final plot!
+```{r}
+prey_trait_hm2 = plot_grid(horz_row, diel_row, refuge_row, body_row, def_row, nrow = 5, ncol = 1, rel_heights = 0.2, align = 'v') 
+prey_trait_hm2
+```
+
+
+
+
+
+
+
+
