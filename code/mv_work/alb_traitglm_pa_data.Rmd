@@ -156,7 +156,6 @@ text(pl, "species", col="blue", cex=0.9)
 
 ```
 
-
 ## Covars (R)
 
 ```{r Covars (R) - summary}
@@ -348,7 +347,6 @@ trait_clust = as.data.frame(alb_adult_traits[,8])
 
 
 ## TRAIT GLM
-
 ### Presence/Absence Data
 
 (i) First check manyglm routine
@@ -760,6 +758,10 @@ print(trait_ocean_4th_LASSO)
 #trait_ocean_4th = as.ggplot(trait_ocean_4th)
 
 ggsave(here("outputs_figures/traitglms/trait_ocean_4th_LASSO.pdf"), plot = as.ggplot(trait_ocean_4th_LASSO), width=12, height=12, dpi=300)
+
+```
+
+```{r Plot 2nd corner - ocean LASSO}
 
 ```
 
