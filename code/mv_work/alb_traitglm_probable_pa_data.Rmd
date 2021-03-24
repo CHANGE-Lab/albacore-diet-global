@@ -472,6 +472,7 @@ print(plot.4th)
 
 ### Trait clusters
 
+#### Traitglm - clusters 
 Manyglm - Life Stage
 
 ```{r TraitGLM - life + clusters manyglm binom}
@@ -720,6 +721,149 @@ ggsave(here("outputs_figures/traitglms/prob_ocean_cluster_LASSO_graph.jpeg"),
 ```
 
 
+
+
+#### nMDS - clusters
+
+Ordination
+
+```{r NMDS & Clusters ~ Species}
+#### nMDS for dissimilarity
+ORD_prob_cluster = metaMDS(alb_prob_preyPA, 
+                         distance="bray", 
+                         trymax = 100, #1000
+                         k=3) #could increase to k = 4
+
+ORD_prob_cluster[["stress"]] #stress = 0.1188079 #reasonable
+
+```
+
+Extract NMDS coordinates and associate with co-variates/grouping factors
+
+```{r Data scores for plotting - USE}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(ORD_prob_cluster ))  #, "species"
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+#bind treatment labels and score values
+treatment.scores <- cbind(alb_prob_covars, data.scores)
+#Check
+str(treatment.scores)  
+#Awesome
+
+```
+
+Convex hull calculations
+For each ordination and set of grouping variables input to data scores chunk
+
+```{r Convex hulls - Predator Life Stage}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$pred_life)
+#Taxonomic group - hull loop
+pred = as.character(unique(treatment.scores$pred_life))
+for(i in 1:length(pred)) {
+  temp = pred[i]
+  df = treatment.scores[treatment.scores$pred_life == temp, ][chull(treatment.scores[treatment.scores$pred_life == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data.pred <- rbind(grp.mixed, grp.juvenile, grp.adult)  
+
+str(hull.data.pred)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+
+##### NMDS plot
+
+```{r nMDS Cluster #, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#as.integer(unique(treatment.scores$adult.clust.num))
+
+trait_nMDS_adult_fig <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= adult.clust.num, 
+                   group=adult.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= adult.clust.num), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  #geom_text_repel(data = species.scores,
+  #                aes(x = NMDS1, y = NMDS2, label = species#, alpha = 0.8, size = 5
+  #                    ))
+
+trait_nMDS_adult_fig
+##Not perfect, some issues to troubleshoot
+
+ggsave(here("output_figures/diet_clusters/trait_nMDS_cluasters.jpeg"), plot = trait_nMDS_adult_fig, width = 8, height = 8, dpi = 300)
+
+```
+```{r nMDS Vertical Habitat, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+unique(treatment.scores$`vertical habitat`)
+
+trait_nMDS_adult_fig <- ggplot() + 
+  #geom_polygon(data=treatment.scores, 
+  #             aes(x=NMDS1, y=NMDS2, 
+  #                 fill= adult.clust.num, 
+  #                 group=adult.clust.num), 
+  #             alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, 
+                 colour = fct_relevel(`vertical habitat`, "benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic")
+                 ), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Vertical Habitat") #+ #name = "Global Change Assessed"
+  #scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Driver of change") #+ #name = "Global Change Assessed"
+  #geom_text_repel(data = species.scores,
+  #                aes(x = NMDS1, y = NMDS2, label = species#, alpha = 0.8, size = 5
+  #                    ))
+
+trait_nMDS_adult_fig
+
+ggsave("trait_nMDS_clim.jpeg", plot = trait_nMDS_clim, width = 8, height = 8, dpi = 300)
+
+```
 ### Predator Life Stage
 
 ManyGLM traitglm
