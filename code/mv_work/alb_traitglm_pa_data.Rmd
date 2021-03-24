@@ -461,6 +461,247 @@ print(plot.4th)
 ```
 (v) Adding method="glm1path"
 
+
+### Trait clusters
+
+Manyglm - Life Stage
+
+```{r TraitGLM - life + clusters manyglm binom}
+#levels(ocean)
+
+#ocean <- factor(ocean, levels = c("Mediterranean", "N Atlantic", "S Atlantic", "N Pacific", "S Pacific", "Indian"))
+
+trait_life_clusters_many <- traitglm(L = alb_adult_preyPA_mv,
+                      R =  pred_life,                       
+                      Q = trait_clust,
+                      family=binomial(link = "logit")
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life_clusters_many)[which(residuals(trait_life_clusters_many)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life_clusters_many)[is.finite((residuals(trait_life_clusters_many)))]
+plot(resids.full); abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner - life many}
+
+a        = max( abs(trait_life_clusters_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life_clusters_many$fourth.corner))
+
+rownames(temp) = c("Adult", "Juvenile")
+
+#colnames(temp) = c("Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+trait_life_clusters_many = levelplot(temp, 
+                     xlab=list("Ocean Basins", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_life_clusters_many)
+
+ggsave(here("outputs_figures/traitglms/trait_life_clusters_many.pdf"), plot = as.ggplot(trait_life_clusters_many), width=12, height=12, dpi=300)
+
+```
+
+
+Manyglm - Ocean
+
+```{r TraitGLM - ocean + clusters manyglm binom}
+#levels(ocean)
+
+#ocean <- factor(ocean, levels = c("Mediterranean", "N Atlantic", "S Atlantic", "N Pacific", "S Pacific", "Indian"))
+
+trait_ocean_clusters_many <- traitglm(L = alb_adult_preyPA_mv,
+                      R = ocean,                       
+                      Q = trait_clust,
+                      family=binomial(link = "logit")
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_ocean_clusters_many)[which(residuals(trait_ocean_clusters_many)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_ocean_clusters_many)[is.finite((residuals(trait_ocean_clusters_many)))]
+plot(resids.full); abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner - ocean many}
+
+a        = max( abs(trait_ocean_clusters_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_ocean_clusters_many$fourth.corner))
+
+rownames(temp) = c(#"Mediterranean",
+                   "N Atlantic",
+                   "S Atlantic",
+                   "N Pacific",
+                   "S Pacific",
+                   "Indian")
+
+
+#colnames(temp) = c("Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+trait_ocean_clusters_4th_many = levelplot(temp, 
+                     xlab=list("Ocean Basins", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_ocean_clusters_4th_many)
+
+ggsave(here("outputs_figures/traitglms/trait_ocean_clusters_4th_many.pdf"), plot = as.ggplot(trait_ocean_clusters_4th_many), width=12, height=12, dpi=300)
+
+```
+
+
+Predator Life Stage - Using binomial (logit link) function + glm1path LASSO model
+
+```{r TraitGLM - life + clusters LASSO}
+
+trait_life_cluster_LASSO <- traitglm(L = alb_adult_preyPA_mv,
+                      R = pred_life,                       
+                      Q = trait_clust,
+                      family=binomial(link = "logit"),
+                      method="glm1path"
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+x11()
+qqnorm(residuals(trait_ocean_binom)[which(residuals(trait_ocean_binom)<10000)]); abline(c(0,1),col="red")
+dev.copy(device = x11)
+dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_QQ.pdf", width=5, height=5)
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_ocean_binom)[is.finite((residuals(trait_ocean_binom)))]
+plot(resids.full); abline(c(0,0),col="red")
+dev.copy(device = x11)
+dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_resids.pdf", width=5, height=5)
+```
+
+```{r Plot 4th corner - life + cluster LASSO}
+
+a        = max( abs(trait_life_cluster_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life_cluster_LASSO$fourth.corner))
+
+rownames(temp) = c("Mixed", "Adult", "Juvenile")
+
+#colnames(temp) = c("Vert. habitat - benthic",
+#                   "Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Horz. habitat - coastal",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+trait_life_cluster_4th_LASSO = levelplot(temp, 
+                     xlab=list("Life Stage", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_life_cluster_4th_LASSO)
+
+#trait_ocean_4th = as.ggplot(trait_ocean_4th)
+
+ggsave(here("outputs_figures/traitglms/trait_life_cluster_4th_LASSO.pdf"), 
+       plot = as.ggplot(trait_life_cluster_4th_LASSO), width=12, height=12, dpi=300)
+
+```
+
+Ocean Basin - Using binomial (logit link) function + glm1path LASSO model
+
+```{r TraitGLM - life + clusters LASSO}
+
+trait_ocean_cluster_LASSO <- traitglm(L = alb_adult_preyPA_mv,
+                      R = ocean,                       
+                      Q = trait_clust,
+                      family=binomial(link = "logit"),
+                      method="glm1path"
+                      ) #note default is "manyglm"
+
+#Check model output - residuals TEST
+x#11()
+#qqnorm(residuals(trait_ocean_binom)[which(residuals(trait_ocean_binom)<10000)]); abline(c(0,1),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_QQ.pdf", width=5, height=5)
+
+#omit non-finite residuals FULL MODEL
+#resids.full = residuals(trait_ocean_binom)[is.finite((residuals(trait_ocean_binom)))]
+#plot(resids.full); abline(c(0,0),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_resids.pdf", width=5, height=5)
+```
+
+
+```{r Plot 4th corner - life + cluster LASSO}
+
+a        = max( abs(trait_ocean_cluster_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_ocean_cluster_LASSO$fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "S Atlantic",
+                   "N Pacific",
+                   "S Pacific",
+                   "Indian")
+
+#colnames(temp) = c("Vert. habitat - benthic",
+#                   "Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Horz. habitat - coastal",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+trait_ocean_cluster_LASSO = levelplot(temp, 
+                     xlab=list("Ocean Basin", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(trait_ocean_cluster_LASSO)
+
+ggsave(here("outputs_figures/traitglms/trait_ocean_cluster_LASSO.pdf"), 
+       plot = as.ggplot(trait_ocean_cluster_LASSO), width=12, height=12, dpi=300)
+
+```
+
 ### Predator Life Stage
 
 ManyGLM traitglm
@@ -658,6 +899,12 @@ plot(resids.full); abline(c(0,0),col="red")
 
 ```
 
+```{r TraitGLM - ocean many anova}
+
+anova.traitglm(trait_ocean_binom_many)
+
+```
+
 ```{r Plot 4th corner - ocean many}
 
 a        = max( abs(trait_ocean_binom_many$fourth.corner) )
@@ -760,6 +1007,15 @@ print(trait_ocean_4th_LASSO)
 ggsave(here("outputs_figures/traitglms/trait_ocean_4th_LASSO.pdf"), plot = as.ggplot(trait_ocean_4th_LASSO), width=12, height=12, dpi=300)
 
 ```
+
+```{r Predict traiglm - ocean}
+
+predict_trait_ocean = predict.traitglm(trait_ocean_binom)
+
+trait_ocean_binom$fourth.corner
+
+```
+
 
 ```{r Plot 2nd corner - ocean LASSO}
 

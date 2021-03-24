@@ -1,0 +1,149 @@
+dendlabs,prey_class,prey_order,prey_family,prey_sp,life_stage,vertical habitat,horizontal habitat,diel migrant,refuge use,seasonal migrant,gregarious,prob.clust.num
+1,Malacostraca,Decapoda,Acanthephyridae,Acanthephyra pelagica,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+7,Actinopterygii,Aulopiformes,Paralepididae,Arctozenus risso,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),solitary,1
+10,Actinopterygii,Stomiiformes,Sternoptychidae,Argyropelecus aculeatus,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),solitary,1
+14,Actinopterygii,Myctophiformes,Myctophidae,Benthosema glaciale,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+15,Cephalopoda,Oegopsida,Gonatidae,Berryteuthis anonychus,juvenile,mesopelagic,oceanic,diel (yes),refuge (yes),season (yes),schooling,1
+23,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus maderensis,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+24,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus townsendi,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+25,Actinopterygii,Myctophiformes,Myctophidae,Ceratoscopelus warmingii,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+33,Actinopterygii,Perciformes,Nomeidae,Cubiceps pauciradiatus ,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+35,Actinopterygii,Myctophiformes,Myctophidae,Diaphus effulgens,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+36,Actinopterygii,Myctophiformes,Myctophidae,Diaphus lucidus,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+37,Actinopterygii,Myctophiformes,Myctophidae,Diaphus perspicillatus,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+38,Actinopterygii,Myctophiformes,Myctophidae,Diaphus theta,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+42,Cephalopoda,Oegopsida,Ommastrephidae,Dosidicus gigas,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+43,Actinopterygii,Myctophiformes,Myctophidae,Electrona rissoi,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+59,Cephalopoda,Oegopsida,Gonatidae,Gonatopsis borealis,juvenile,mesopelagic,oceanic,diel (yes),refuge (yes),season (no),schooling,1
+60,Cephalopoda,Oegopsida,Gonatidae,Gonatus onyx,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+63,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis bonnellii,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+64,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis heteropsis,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+65,Cephalopoda,Oegopsida,Histioteuthidae,Histioteuthis reversa,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+66,Cephalopoda,Oegopsida,Ommastrephidae,Hyaloteuthis pelagica,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+67,Actinopterygii,Myctophiformes,Myctophidae,Hygophum hygomii,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+72,Actinopterygii,Myctophiformes,Myctophidae,Lampadena luminosa,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (no),schooling,1
+73,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes hectoris,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+74,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus alatus,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+75,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus crocodilus,adult,bathypelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+76,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus intricarius,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+80,Actinopterygii,Argentiniformes,Bathylagidae,Leuroglossus stilbius,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+81,Actinopterygii,Myctophiformes,Myctophidae,Lobianchia gemellarii,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+82,Cephalopoda,Oegopsida,Lycoteuthidae,Lycoteuthis lorigera,juvenile,mesopelagic,oceanic,diel (yes),refuge (yes),season (no),schooling,1
+87,Actinopterygii,Stomiiformes,Sternoptychidae,Maurolicus imperatorius,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+93,Actinopterygii,Gadiformes,Gadidae,Micromesistius poutassou,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+97,Actinopterygii,Myctophiformes,Myctophidae,Myctophum asperum,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+98,Actinopterygii,Myctophiformes,Myctophidae,Myctophum punctatum,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+100,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium ritteri,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+110,Cephalopoda,Oegopsida,Ommastrephidae,Ornithoteuthis volatilis,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+137,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx obscura,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (no),solitary,1
+138,Cephalopoda,Oegopsida,Ommastrephidae,Sthenoteuthis oualaniensis,juvenile,mesopelagic,oceanic,diel (no),refuge (no),season (yes),schooling,1
+141,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus barnardi,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+142,Actinopterygii,Myctophiformes,Myctophidae,Symbolophorus evermanni,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+143,Malacostraca,Decapoda,Oplophpridae,Systellaspis debilis,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+155,Actinopterygii,Myctophiformes,Myctophidae,Triphoturus mexicanus,adult,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+157,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria lucetia,juvenile,mesopelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,1
+2,Malacostraca,Decapoda,Alpheidae,Alpheus glaber,adult,benthic,coastal,diel (yes),refuge (yes),season (no),schooling,2
+11,Actinopterygii,Pleuronectiformes,Bothidae,Arnoglossus imperialis,adult,benthic,continental shelf,diel (yes),refuge (yes),season (yes),solitary,2
+44,Cephalopoda,Octopoda,Eledonidae,Eledone cirrhosa,juvenile,benthic,continental shelf,diel (yes),refuge (yes),season (no),solitary,2
+62,Malacostraca,Decapoda,Pandalidae,Heterocarpus laevigatus,adult,benthic,continental slope,diel (yes),refuge (yes),season (yes),schooling,2
+117,Cephalopoda,Octopoda,Octopodidae,Pteroctopus tetracirrhus,juvenile,benthic,continental shelf,diel (yes),refuge (yes),season (yes),solitary,2
+129,Malacostraca,Decapoda,Scyllaridae,Scyllarus arctus,adult,benthic,reef-associated,diel (yes),refuge (yes),season (yes),solitary,2
+133,Cephalopoda,Sepiida,Sepiolidae,Sepietta oweniana,adult,benthic,continental shelf,diel (yes),refuge (yes),season (yes),schooling,2
+3,Malacostraca,Amphipoda,Phrosinidae,Anchylomera blossevillei,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+5,Cephalopoda,Oegopsida,Onychoteuthidae,Ancistroteuthis lichtensteinii,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+16,Actinopterygii,Beryciformes,Berycidae,Beryx splendens,juvenile,mesopelagic,continental slope,diel (yes),refuge (no),season (yes),schooling,3
+17,Actinopterygii,Perciformes,Sparidae,Boops boops,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+19,Malacostraca,Amphipoda,Brachyscelidae,Brachyscelus crusculum,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+41,Cephalopoda,Myopsida,Loliginidae,Doryteuthis opalescens,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+54,Malacostraca,Decapoda,Penaeidae,Funchalia taaningi,adult,mesopelagic,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+55,Malacostraca,Decapoda,Penaeidae,Funchalia woodwardi,adult,mesopelagic,continental slope,diel (yes),refuge (no),season (no),schooling,3
+57,Malacostraca,Decapoda,Benthesicymidae,Gennadas elegans,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+69,Cephalopoda,Oegopsida,Ommastrephidae,Illex coindetii,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+70,Malacostraca,Decapoda,Oplophoroidae,Janicella spinicauda,adult,bathypelagic,continental slope,diel (yes),refuge (no),season (no),schooling,3
+77,Actinopterygii,Perciformes,Gempylidae,Lepidocybium flavobrunneum,juvenile,mesopelagic,continental slope,diel (yes),refuge (no),season (yes),schooling,3
+88,Actinopterygii,Stomiiformes,Sternoptychidae,Maurolicus muelleri,adult,mesopelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+90,Malacostraca,Euphausiacea,Euphausiidae,Meganyctiphanes norvegica,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+91,Actinopterygii,Gadiformes,Merlucciidae,Merluccius productus,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+101,Malacostraca,Euphausiacea,Euphausiidae,Nematoscelis megalops,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+108,Cephalopoda,Octopoda,Opisthoteuthidae,Opisthoteuthis californiana,larva,mesopelagic,continental slope,diel (yes),refuge (no),season (no),schooling,3
+109,Malacostraca,Decapoda,Oplophoroidae,Oplophorus typus,adult,mesopelagic,continental slope,diel (yes),refuge (no),season (no),schooling,3
+112,Malacostraca,Amphipoda,Eupronoidae,Parapronoe crustulum,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+114,Malacostraca,Amphipoda,Phrosinidae,Phrosina semilunata,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+115,Malacostraca,Amphipoda,Platyscelidae,Platyscelus serratulus,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+121,Actinopterygii,Clupeiformes,Clupeidae,Sardinella aurita,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (no),schooling,3
+124,Actinopterygii,Perciformes,Scombridae,Scomber scombrus,juvenile,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+139,Malacostraca,Amphipoda,Oxyccephalidae,Streetsia challengeri,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+148,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes pacificus,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+149,Cephalopoda,Oegopsida,Ommastrephidae,Todarodes sagittatus,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+150,Cephalopoda,Oegopsida,Ommastrephidae,Todaropsis eblanae,juvenile,demersal,continental shelf,diel (yes),refuge (no),season (yes),schooling,3
+156,Malacostraca,Amphipoda,Vibiliidae,Vibilia gibbosa,adult,epipelagic,continental shelf,diel (yes),refuge (no),season (no),schooling,3
+6,Actinopterygii,Scorpaeniformes,Anoplopomatidae,Anoplopoma fimbria,juvenile,epipelagic,continental shelf,diel (no),refuge (no),season (yes),schooling,4
+8,Cephalopoda,Octopoda,Argonautidae,Argonauta argo,adult,epipelagic,oceanic,diel (no),refuge (no),season (yes),schooling,4
+9,Cephalopoda,Octopoda,Argonautidae,Argonauta nodosus,adult,epipelagic,oceanic,diel (no),refuge (no),season (yes),schooling,4
+12,Actinopterygii,Atheriniformes,Atherinidae,Atherinopsis californiensis,juvenile,epipelagic,coastal,diel (no),refuge (no),season (yes),schooling,4
+13,Actinopterygii,Beloniformes,Belonidae,Belone belone,juvenile,epipelagic,coastal,diel (no),refuge (no),season (yes),schooling,4
+20,Actinopterygii,Perciformes,Bramidae,Brama brama,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+27,Actinopterygii,Perciformes,Pomacentridae,Chromis punctipinnis,juvenile,epipelagic,coastal,diel (yes),refuge (yes),season (yes),schooling,4
+30,Actinopterygii,Clupeiformes,Clupeidae,Clupea pallasii pallasii,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+32,Actinopterygii,Perciformes,Coryphaenidae,Coryphaena hippurus,larva,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+45,Actinopterygii,Clupeiformes,Engraulidae,Engraulis capensis,adult,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+46,Actinopterygii,Clupeiformes,Engraulidae,Engraulis encrasicolus,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+48,Actinopterygii,Clupeiformes,Engraulidae,Engraulis mordax,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+52,Malacostraca,Decapoda,Sergestidae,Eusergestes similis,adult,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+68,Malacostraca,Amphipoda,Hyperiidae,Hyperia galba,adult,epipelagic,oceanic,diel (yes),refuge (yes),season (yes),schooling,4
+71,Actinopterygii,Perciformes,Scombridae,Katsuwonus pelamis,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+78,Malacostraca,Amphipoda,Oxyccephalidae,Leptocotis tenuirostris,adult,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+79,Actinopterygii,Aulopiformes,Paralepididae,Lestidiops sphyrenoides,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+95,Actinopterygii,Perciformes,Mugilidae,Mugil cephalus,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+99,Actinopterygii,Myctophiformes,Myctophidae,Nannobrachium regale,larva,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+102,Malacostraca,Euphausiacea,Euphausiidae,Nyctiphanes australis,adult,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+105,Cephalopoda,Oegopsida,Ommastrephidae,Ommastrephes bartramii,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+106,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis banksii,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+107,Cephalopoda,Oegopsida,Onychoteuthidae,Onychoteuthis borealijaponica,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+120,Actinopterygii,Clupeiformes,Clupeidae,Sardina pilchardus,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+122,Actinopterygii,Clupeiformes,Clupeidae,Sardinops sagax,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+123,Actinopterygii,Perciformes,Scombridae,Scomber japonicus,larva,epipelagic,continental shelf,diel (no),refuge (no),season (yes),schooling,4
+125,Actinopterygii,Beloniformes,Scomberesocidae,Scomberesox saurus,larva,epipelagic,oceanic,diel (no),refuge (no),season (yes),schooling,4
+140,Malacostraca,Euphausiacea,Euphausiidae,Stylocheiron abbreviatum,adult,epipelagic,coastal,diel (no),refuge (no),season (yes),schooling,4
+146,Actinopterygii,Osmeriformes,Osmeridae,Thaleichthys pacificus,juvenile,epipelagic,coastal,diel (yes),refuge (no),season (yes),schooling,4
+147,Malacostraca,Amphipoda,Hyperiidae,Themisto gaudichaudii,adult,epipelagic,oceanic,diel (yes),refuge (no),season (yes),schooling,4
+151,Actinopterygii,Perciformes,Carangidae,Trachinotus ovatus,juvenile,epipelagic,coastal,diel (no),refuge (no),season (yes),schooling,4
+152,Actinopterygii,Perciformes,Carangidae,Trachurus japonicus,juvenile,epipelagic,coastal,diel (yes),refuge (yes),season (yes),schooling,4
+153,Actinopterygii,Perciformes,Carangidae,Trachurus symmetricus,juvenile,epipelagic,oceanic,diel (yes),refuge (yes),season (yes),schooling,4
+154,Actinopterygii,Perciformes,Carangidae,Trachurus trachurus,juvenile,epipelagic,coastal,diel (yes),refuge (yes),season (yes),schooling,4
+22,Actinopterygii,Tetraodontiformes,Balistidae,Canthidermis maculata,juvenile,epipelagic,coastal,diel (no),refuge (yes),season (no),schooling,5
+31,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis saira,juvenile,epipelagic,oceanic,diel (no),refuge (yes),season (yes),schooling,5
+47,Actinopterygii,Clupeiformes,Engraulidae,Engraulis japonicus,juvenile,epipelagic,continental shelf,diel (no),refuge (yes),season (yes),schooling,5
+89,Actinopterygii,Perciformes,Kyphosidae,Medialuna californiensis,juvenile,epipelagic,reef-associated,diel (no),refuge (yes),season (yes),schooling,5
+111,Actinopterygii,Tetraodontiformes,Ostraciidae,Ostracion cubicus,juvenile,epipelagic,oceanic,diel (no),refuge (yes),season (yes),solitary,5
+131,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes proriger,juvenile,epipelagic,continental shelf,diel (no),refuge (yes),season (no),schooling,5
+135,Actinopterygii,Perciformes,Sparidae,Spondyliosoma cantharus,juvenile,epipelagic,coastal,diel (no),refuge (yes),season (no),schooling,5
+144,Actinopterygii,Perciformes,Tetragonuridae,Tetragonurus atlanticus,juvenile,epipelagic,oceanic,diel (no),refuge (yes),season (no),schooling,5
+145,Actinopterygii,Perciformes,Tetragonuridae,Tetragonurus cuvieri,juvenile,epipelagic,oceanic,diel (no),refuge (yes),season (no),schooling,5
+26,Actinopterygii,Aulopiformes,Chlorothalmidae,Chlorophthalmus agassizi,juvenile,demersal,continental shelf,diel (no),refuge (no),season (yes),schooling,6
+29,Actinopterygii,Pleuronectiformes,Paralichthyidae,Citharichthys sordidus,juvenile,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+34,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster aggregata,adult,demersal,coastal,diel (no),refuge (yes),season (yes),schooling,6
+39,Actinopterygii,Perciformes,Sparidae,Diplodus sargus,juvenile,demersal,reef-associated,diel (no),refuge (yes),season (yes),schooling,6
+51,Malacostraca,Decapoda,Sergestidae,Eusergestes arcticus,juvenile,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+53,Actinopterygii,Scorpaeniformes,Triglidae,Eutrigla gurnardus,juvenile,demersal,continental shelf,diel (no),refuge (yes),season (yes),schooling,6
+56,Actinopterygii,Gadiformes,Lotidae,Gaidropsarus vulgaris,juvenile,demersal,continental shelf,diel (no),refuge (yes),season (no),solitary,6
+58,Actinopterygii,Pleutonectiformes,Pleuronectidae,Glyptocephalus zachirus,juvenile,demersal,continental shelf,diel (no),refuge (yes),season (no),solitary,6
+61,Actinopterygii,Perciformes,Labridae,Halichoeres nicholsi,juvenile,demersal,reef-associated,diel (no),refuge (yes),season (no),schooling,6
+84,Actinopterygii,Sygnathiformes,Centriscidae,Macroramphosus scolopax,adult,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+92,Actinopterygii,Gadiformes,Gadidae,Microgadus proximus,adult,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+94,Actinopterygii,Pleuronectiformes,Pleutonectidae,Microstomus pacificus,juvenile,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+96,Actinopterygii,Perciformes,Mullidae,Mullus barbatus barbatus,juvenile,demersal,continental shelf,diel (no),refuge (yes),season (yes),schooling,6
+116,Malacostraca,Decapoda,Munididae,Pleuroncodes planipes,adult,demersal,continental shelf,diel (yes),refuge (yes),season (yes),schooling,6
+119,Actinopterygii,Perciformes,Gobiidae,Rhinogobiops nicholsii,adult,benthic,continental shelf,diel (no),refuge (yes),season (yes),schooling,6
+130,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes diploproa,juvenile,demersal,continental shelf,diel (no),refuge (yes),season (yes),schooling,6
+132,Actinopterygii,Scorpaeniformes,Sebastidae,Sebastes zacentrus,juvenile,demersal,continental shelf,diel (yes),refuge (yes),season (no),schooling,6
+40,Actinopterygii,Perciformes,Gempylidae,Diplospinus multistriatus,juvenile,mesopelagic,continental shelf,diel (yes),refuge (no),season (no),solitary,7
+49,Cephalopoda,Oegopsida,Ommastrephidae,Eucleoteuthis luminosa,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (no),schooling,7
+50,Malacostraca,Euphausiacea,Euphausiidae,Euphausia pacifica,adult,epipelagic,oceanic,diel (yes),refuge (no),season (no),schooling,7
+85,Actinopterygii,Perciformes,Istiophoridae,Makaira mazara,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),solitary,7
+86,Actinopterygii,Tetraodontiformes,Molidae,Masturus lanceolatus,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (no),solitary,7
+118,Actinopterygii,Tetraodontiformes,Molidae,Ranzania laevis,juvenile,epipelagic,oceanic,diel (yes),refuge (no),season (yes),solitary,7
+136,Actinopterygii,Stomiiformes,Sternoptychidae,Sternoptyx diaphana,adult,mesopelagic,oceanic,diel (no),refuge (no),season (no),solitary,7
+83,Malacostraca,Stomatopoda,Lysiosquillidae,Lysiosquilla tredecimdentata,adult,benthic,coastal,diel (no),refuge (yes),season (no),solitary,8
+104,Malacostraca,Stomatopoda,Odontodacylidae,Odontodactylus scyllarus,adult,benthic,reef-associated,diel (no),refuge (yes),season (no),solitary,8
+113,Malacostraca,Decapoda,Scyllaridae,Parribacus antarcticus,adult,benthic,reef-associated,diel (no),refuge (yes),season (no),solitary,8

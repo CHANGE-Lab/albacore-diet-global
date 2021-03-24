@@ -74,9 +74,8 @@ alb_prob_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv")
 #This will have been done in Albacore_data_manip.Rmd at point of dataframe creation
 
 #Main DF
-head(alb_adult_fo)
-
-names(alb_prob_fo)
+#head(alb_adult_fo)
+#names(alb_prob_fo)
 
 ```
 
@@ -139,8 +138,6 @@ alb_adult_spp_PA <- alb_adult_preyPA_df2.0[,14:ncol(alb_adult_preyPA_df2.0)] #14
 #write.csv(review_traits_mv, "review_traits_mv.csv")
 #review_traits_mv <- read_csv("review_traits4.0V.scsv")
 
-
-
 ```
 
 ## Visualise data - nMDS
@@ -159,6 +156,70 @@ alb_adult_nMDS_pa = metaMDS(alb_adult_spp_PA,
 pl <- ordiplot(alb_adult_nMDS_pa, type = "none")
 points(pl, "sites", pch=21, col="red", bg="yellow")
 text(pl, "species", col="blue", cex=0.9)
+
+```
+
+
+## Traits PROBABLE (Q)
+
+Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
+
+```{r Trait DF manip (Q)}
+
+#Trait DF
+alb_prob_traits = read.csv(paste(here("data/output_data/prey_probable_traits.csv"), sep=""), header=T, row.names = 1) %>%
+  dplyr::select(prey_sp:diel_migrant_cat, refuge_cat, season_cat, body_shape, gregarious_primary, -diel_migrant) 
+
+#Relabel to add underscore in names
+alb_prob_traits$prey_sp = str_replace_all(alb_prob_traits$prey_sp, " ", "_")
+#Assign speces as rownames
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
+#Order species list
+alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
+
+#Ensure traits are treated as factors for now
+alb_prob_traits[,2:9] <- lapply(alb_prob_traits[,2:9], factor) #to convert to factors
+str(alb_prob_traits)
+
+```
+
+```{r ALB PROB PREY FILTER}
+
+alb_prob_prey = alb_adult_prey %>%
+  dplyr::filter(names(alb_adult_prey) %in% alb_prob_traits$prey_sp)
+
+```
+
+
+```{r TRAIT SELECT & CLEAN}
+alb_prob_traits = alb_prob_traits %>%
+  filter(prey_sp %in% names(alb_adult_prey)) %>%
+  #need trait values for 137 spp. but we obtain 135, so that means there are 2 species in the diet df that we don't have traits for.
+  filter(diel_migrant_cat != "diel_UN",
+         season_cat != "season_NA",
+         vert_habitat != "bathypelagic",
+         horz_habitat != "reef-associated",
+         body_shape %notin% c("eel-like", "unique")) %>%
+  mutate(gregarious_primary = case_when(gregarious_primary == "pairing" ~ "solitary",
+                                        gregarious_primary == "schooling" ~ "schooling",
+                                        gregarious_primary == "shoaling" ~ "shoaling",
+                                        gregarious_primary == "solitary" ~ "solitary"
+                                        )
+         ) %>%
+  dplyr::select(-body_shape)
+
+alb_prob_traits[,2:8] <- lapply(alb_prob_traits[,2:8], factor) #to convert to factors
+
+summary(alb_prob_traits)
+
+```
+
+```{r Trait - prob clust num}
+
+alb_prob_clust = read.csv(paste(here("data/output_data/prob.prey.clusternum_habgreg.aggl.k8.csv"), 
+                                sep=""), header=T, row.names = 1) #%>%
+  #dplyr::filter(prey_sp %in% names(alb_adult_prey)) #note need to probably filter the prey list first, then this one to make sure there are not species in the prey list that are not in the trait list...
+  #dplyr::select(prey_sp:pro.clust.num) 
 
 ```
 
@@ -184,6 +245,7 @@ alb_adult_covars = alb_adult_fo[,1:13] %>%
                              pred_life == "adult" ~ "adult",
                              pred_life == "none" ~ "mixed")) #"none" ~ "none"
 alb_adult_covars[,1:ncol(alb_adult_covars)] =  lapply(alb_adult_covars[,1:ncol(alb_adult_covars)], as.factor)
+
 ```
 
 ```{r Covars (R) checking, eval=FALSE}
@@ -218,52 +280,6 @@ dim(alb_adult_covars) #225 observations for 13 covars
 #Best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but need to exclude low numbered levels.
 
 ```
-
-## Traits PROBABLE (Q)
-
-Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
-
-```{r Trait DF manip (Q)}
-
-#Trait DF
-alb_prob_traits = read.csv(paste(here("data/output_data/prey_probable_traits.csv"), sep=""), header=T, row.names = 1) %>%
-  dplyr::select(prey_sp:diel_migrant_cat, refuge_cat, season_cat, body_shape, gregarious_primary, -diel_migrant) 
-
-#Relabel to add underscore in names
-alb_prob_traits$prey_sp = str_replace_all(alb_prob_traits$prey_sp, " ", "_")
-#Assign speces as rownames
-rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
-#Order species list
-alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
-
-#Ensure traits are treated as factors for now
-alb_prob_traits[,2:9] <- lapply(alb_prob_traits[,2:9], factor) #to convert to factors
-str(alb_prob_traits)
-```
-
-```{r TRAIT SELECT & CLEAN}
-alb_prob_traits = alb_prob_traits %>%
-  filter(prey_sp %in% names(alb_adult_prey)) %>%
-  #need trait values for 137 spp. but we obtain 135, so that means there are 2 species in the diet df that we don't have traits for.
-  filter(diel_migrant_cat != "diel_UN",
-         season_cat != "season_NA",
-         vert_habitat != "bathypelagic",
-         horz_habitat != "reef-associated",
-         body_shape %notin% c("eel-like", "unique")) %>%
-  mutate(gregarious_primary = case_when(gregarious_primary == "pairing" ~ "solitary",
-                                        gregarious_primary == "schooling" ~ "schooling",
-                                        gregarious_primary == "shoaling" ~ "shoaling",
-                                        gregarious_primary == "solitary" ~ "solitary"
-                                        )
-         ) %>%
-  dplyr::select(-body_shape)
-
-alb_prob_traits[,2:8] <- lapply(alb_prob_traits[,2:8], factor) #to convert to factors
-
-summary(alb_prob_traits)
-
-```
-
 
 ## Species, Env and Trait manips
 
@@ -302,26 +318,32 @@ alb_prob_traits[,2:ncol(alb_prob_traits)] <- lapply(alb_prob_traits[,2:ncol(alb_
 
 #Levels vertical habitat
 levels(alb_prob_traits$vert_habitat)
-
+summary(alb_prob_traits$vert_habitat)
 #alb_prob_traits$vert_habitat <- factor(alb_prob_traits$vert_habitat,
 #                                       levels = c("benthic", "demersal", "epipelagic",
 #                                                  "mesopelagic"))
 #Levels horizontal habitat
 levels(alb_prob_traits$horz_habitat)
-#alb_prob_traits$horz_habitat<- factor(alb_prob_traits$horz_habitat,
-#                                      levels = c("coastal", "continental shelf",
-#                                                 "continental slope", "oceanic"))
+summary(alb_prob_traits$horz_habitat)
+alb_prob_traits$horz_habitat<- factor(alb_prob_traits$horz_habitat,
+                                      levels = c("coastal", "continental shelf",
+                                                 "continental slope", "oceanic"),
+                                      labels = c("coastal", "continental shelf",
+                                                 "continental shelf", "oceanic"))
 
 #Levels diel migrant
 levels(alb_prob_traits$diel_migrant_cat)
+summary(alb_prob_traits$diel_migrant_cat)
 #Great don't change this
 
 #Levels seasonal migrant
 levels(alb_prob_traits$season_cat)
+summary(alb_prob_traits$season_cat)
 #Great don't change this
 
 #Levels gregarious
 levels(alb_prob_traits$gregarious_primary)
+summary(alb_prob_traits$gregarious_primary)
 alb_prob_traits$gregarious_primary <- factor(alb_prob_traits$gregarious_primary,
                                              levels = c("solitary", "shoaling", "schooling"))
 
