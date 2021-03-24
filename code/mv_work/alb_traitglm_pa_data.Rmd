@@ -225,8 +225,8 @@ alb_adult_covars$pred_life <- factor(alb_adult_covars$pred_life,
 
 #Levels OceanBasin
 levels(alb_adult_covars$OceanBasin)
-alb_adult_covars$pred_life <- factor(alb_adult_covars$pred_life, 
-                                            levels = c("mixed", "adult", "juvenile"))
+#alb_adult_covars$pred_life <- factor(alb_adult_covars$pred_life, 
+#                                            levels = c("mixed", "adult", "juvenile"))
 
 ```
 
@@ -238,6 +238,8 @@ alb_adult_covars$pred_life <- factor(alb_adult_covars$pred_life,
 #Trait DF
 alb_adult_traits = read.csv(paste(here("data/output_data/adult.prey.clusternum.habgreg.aggl.k9.csv"), sep=""), header=T, row.names = 1) %>%
   dplyr::select(prey_sp:adult.clust.num) 
+
+unique(alb_adult_traits$prey_sp)
 
 alb_adult_traits$prey_sp = str_replace_all(alb_adult_traits$prey_sp, " ", "_")
 

@@ -44,6 +44,11 @@ library(tweedie)
 
 ```
 
+## Outputs inventory
+
+List of outputs created for analyses:
+
+
 ## Trait Dataframes
 
 ### Prey morphometric measurements
