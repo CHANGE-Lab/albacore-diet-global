@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/Helder/Documents/GitHub/Tuna_postdoc")
+knitr::opts_knit$set(root.dir = "/Users/tashhardy/Documents/GitHub/albacore-diet-global")
 ```
 
 ## Set-up your working environment
@@ -45,9 +45,17 @@ library(PNWColors)
 library(RColorBrewer)
 
 # phylogenetic tools
+
+#Install packages if needed
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biostrings")
+
+BiocManager::install("ggtree")
+
 library(ape)
 library(Biostrings)
-#library(dismo)
 library(ggtree)
 library(ggstance)
 library(geiger)
@@ -59,37 +67,27 @@ library(stringr)
 library(taxize)
 library(treeio)
 
-#Issue with legend rendering
-
-#library(raster)
-
-#Install packages if needed
-#if (!requireNamespace("BiocManager", quietly = TRUE))
-#    install.packages("BiocManager")
-
-#BiocManager::install("Biostrings")
-#BiocManager::install("ggtree")
-
-#sessionInfo()
-
 ```
 
 
 ## Load Data
 
-Using combination of my trial code and Matt Savoca and company's code to build a phylo tree with associated trait and %FO data
+Using combination of my trial code and Matt Savoca and co's code to build a phylo tree with associated trait and %FO data. Using adult life stage data.
 
 ```{r load prey data}
 
 #data contains sp list, class, order & family although not necessary to have those at the moment.
 
 #Adult life stage data
-my_prey_adult = read.csv(here("data/prey_adults_traits.csv"), header=TRUE) %>%
+my_prey_adult = read.csv(here("data/output_data/prey_adults_traits.csv"), header=TRUE) %>%
   dplyr::select(prey_sp, prey_class:prey_family, vert_habitat:maxM, -X) %>%
   filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
 #306 species parsing to the tree
 str(my_prey_adult[,2:ncol(my_prey_adult)])
 
+```
+
+```{r data manip}
 sapply(my_prey_adult, class)
 ## these need to be factors to work on the trees properly
 my_prey_adult[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade")] <- lapply(my_prey_adult[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade")], factor)
@@ -97,11 +95,6 @@ my_prey_adult[,c("diel_migrant","refuge","season_migrant", "phys_defense", "tran
 my_prey_adult$maxFO[my_prey_adult$maxFO == 0.00] <- NA
 my_prey_adult$maxN[my_prey_adult$maxN == 0.00] <- NA
 my_prey_adult$maxM[my_prey_adult$maxM == 0.00] <- NA
-
-#adult_traits = my_prey_adult[,2:ncol(my_prey_adult)]
-## NOTES ----
-# A lot of troubleshooting later and I found that the species list needs to go on the far left side of the data,
-# all other data/factors need to be added to the RHS of the species list
 
 ```
 
@@ -144,7 +137,7 @@ my_tree_adult <- ladderize(my_tree_adult, right = TRUE)
 View(my_tree_adult)
 
 #SAVE TREE
-write.tree(my_tree_adult, here("data/albacore_diet_tree_adult"))
+write.tree(my_tree_adult, here("data/output_data/albacore_diet_tree_adult"))
 ```
 
 ``` {r Load tree}
