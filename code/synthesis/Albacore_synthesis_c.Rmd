@@ -1,0 +1,15 @@
+---
+title: "Albacore Diet Synthesis C"
+author: "Natasha Hardy"
+date: "15/04/2021"
+output: html_document
+---
+# Trait variation in albacore diet across geographies
+
+## Blueprint for paragraphs:
+
+1. (Results) Describe the dominant significant traits and non-sig traits in relation to albacore age and geography sampled (Fig. R3).
+
+2. Relate to clusters (potential additional analysis/figure).
+
+3. Discussion - Investigate how species traits may be used to explain variation in prey use by albacore tuna using a multi-matrix approach.
