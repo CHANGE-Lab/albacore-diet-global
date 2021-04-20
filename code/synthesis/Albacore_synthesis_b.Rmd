@@ -102,12 +102,21 @@ prey_probable = prey_probable_load %>%
          ) %>%
   drop_na() 
 #reduced from ~298 taxa to ~156
+#levels(as.factor(prey_probable$gregarious))
 
-levels(as.factor(prey_probable$gregarious))
+summary(prey_probable)
 
-str(prey_probable)
-#148 taxa and 11 variables
+```
 
+```{r Optional factor simplification, eval=FALSE}
+##OPTIONAL DATA MANIPS
+#Change bathypelagic to mesopelagic
+#evels(prey_probable$vert_habitat)
+#prey_probable$vert_habitat <- factor(prey_probable$vert_habitat, levels = c("bathypelagic", "benthic",      "demersal", "epipelagic", "mesopelagic"), labels = c("mesopelagic", "benthic",      "demersal", "epipelagic", "mesopelagic"))
+
+#Change reef-associated to 
+#levels(prey_probable$horz_habitat)
+#prey_probable$horz_habitat <- factor(prey_probable$horz_habitat, levels = c("coastal", "continental shelf", "continental slope", "oceanic", "reef-associated"), labels = c("coastal", "continental shelf", "continental slope", "oceanic", "coastal"))
 ```
 
 ```{r Data manip for cluster analyses & dendrogram}
@@ -281,7 +290,7 @@ Going to use k = 8 for the probable life stage traits
 ```{r Horizontal dendrogram}
 
 #Using agglomerative hierarchical clustering, k = 8
-prob.dendro <- as.dendrogram(prob.aggl.clustc) #148 species
+prob.dendro <- as.dendrogram(prob.aggl.clustc) #156 species
 PNW.pal8 <- pnw_palette(8, name = "Bay", type = "continuous")
 ###Horizontal dendrogram - Probable traits
 
@@ -429,7 +438,7 @@ detach("package:plyr", unload=TRUE)
 
 #Create dfs for graphs
 prob.clust.long = prob.prey.cl %>%
-  dplyr::select(prey_sp, vert_habitat:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
+  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
   reshape2::melt(id.vars = c("prey_sp", "prob.clust.num"), variable.name = "trait", value.name = "level") %>%
   group_by(prob.clust.num, trait, level) %>%
   mutate(count = n_distinct(prey_sp)) %>%
@@ -453,7 +462,7 @@ heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level))
   facet_grid(trait~. , scales="free_y")
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/prob.dendro.heatcounts.k8.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.heatcounts.k8.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
@@ -464,7 +473,7 @@ heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(
   facet_grid(trait~., scales="free_y")
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/prob.dendro.heatpercent.aggl.k8.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.heatpercent.aggl.k8.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
 
 ```
 
