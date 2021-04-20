@@ -517,7 +517,185 @@ ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.heatpercent.agg
 ```
 
 
-## NMDS for checking on our ordination
+
+## NMDS for checking on our ordination - agglomerative
+
+### Ordination
+
+```{r NMDS & Clusters ~ Species, echo=FALSE}
+#### nMDS for dissimilarity
+trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 541 iterations
+trait_NMDS_prob[["stress"]] #stress = 0.1544764 #reasonable
+
+```
+
+### Extract NMDS coordinates and associate with co-variates/grouping factors
+
+```{r Data scores for plotting - USE}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(trait_NMDS_prob))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+
+#bind treatment labels and score values
+treatment.scores <- cbind(prob.prey.cl, data.scores)
+
+#Check
+str(treatment.scores)  
+#Awesome
+
+```
+
+### Convex hull calculations
+For each ordination and set of grouping variables input to data scores chunk
+
+
+```{r Convex hulls - Taxonomic specific}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$prob.clust.num)
+length(treatment.scores$prob.clust.num) #174
+
+#Taxonomic group - hull loop
+clust = as.character(unique(treatment.scores$prob.clust.num))
+for(i in 1:length(clust)) {
+  temp = clust[i]
+  df = treatment.scores[treatment.scores$prob.clust.num == temp, ][chull(treatment.scores[treatment.scores$prob.clust.num == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6, grp.7, grp.8)  
+
+str(hull.data)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+
+### NMDS plot
+
+```{r nMDS Cluster #, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#as.integer(unique(treatment.scores$adult.clust.num))
+
+trait_nMDS_prob_fig <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= prob.clust.num), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fig
+##Not perfect, some issues to troubleshoot
+
+ggsave(here("outputs_figures/clusters/probable_agglo/trait_nMDS_prob_clusters.png"), 
+       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + FO}
+
+trait_nMDS_prob_fo <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxFO), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="A", begin = 0.2, end = 0.8, name = "Frequency of Occurrence (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fo
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + %N}
+
+trait_nMDS_prob_no <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxN), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="A", begin = 0.2, end = 0.8, name = "Numerical Abundance (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_no
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
+
 ## PROBABLE Divisive k = 8
 ### Cluster Dendrograms ---
 Going to use k = 8 for the probable life stage traits
@@ -685,3 +863,181 @@ heatmap.p
 ggsave(here('outputs_figures/clusters/probable_divis/prob.dendro.heatpercent.divis.k8.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
 
 ```
+
+## NMDS for checking on our ordination - divisive
+
+### Ordination
+
+```{r NMDS & Clusters ~ Species, echo=FALSE}
+#### nMDS for dissimilarity
+trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 541 iterations
+trait_NMDS_prob[["stress"]] #stress = 0.1544764 #reasonable
+
+```
+
+### Extract NMDS coordinates and associate with co-variates/grouping factors
+
+```{r Data scores for plotting - USE}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(trait_NMDS_prob))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+
+#bind treatment labels and score values
+treatment.scores <- cbind(prob.prey.cl, data.scores)
+
+#Check
+str(treatment.scores)  
+#Awesome
+
+```
+
+### Convex hull calculations
+For each ordination and set of grouping variables input to data scores chunk
+
+
+```{r Convex hulls - Taxonomic specific}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$prob.clust.num)
+length(treatment.scores$prob.clust.num) #174
+
+#Taxonomic group - hull loop
+clust = as.character(unique(treatment.scores$prob.clust.num))
+for(i in 1:length(clust)) {
+  temp = clust[i]
+  df = treatment.scores[treatment.scores$prob.clust.num == temp, ][chull(treatment.scores[treatment.scores$prob.clust.num == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6, grp.7, grp.8)  
+
+str(hull.data)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+
+### NMDS plot
+
+```{r nMDS Cluster #, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#as.integer(unique(treatment.scores$adult.clust.num))
+
+trait_nMDS_prob_fig <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= prob.clust.num), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fig
+##Not perfect, some issues to troubleshoot
+
+ggsave(here("outputs_figures/clusters/probable_divis/trait_nMDS_prob_clusters.png"), 
+       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + FO}
+
+trait_nMDS_prob_fo <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxFO), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="B", begin = 0.2, end = 0.8, name = "Frequency of Occurrence (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fo
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + %N}
+
+trait_nMDS_prob_no <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxN), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="A", begin = 0.2, end = 0.8, name = "Numerical Abundance (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_no
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
