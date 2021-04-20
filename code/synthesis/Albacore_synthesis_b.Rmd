@@ -233,17 +233,20 @@ cstats.table <- function(dist, tree, k) {
 #Stats table for divisive method
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
+View(prob.stats.df.divisive)
+write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob.stats.df.divisive.csv"))
 
 #Stats table for agglomerative method
 prob.stats.df.aggl <- cstats.table(prob.gower.dist, prob.aggl.clustc, 15) 
 #complete linkages looks like the most balanced approach
 prob.stats.df.aggl
+View(prob.stats.df.aggl)
 write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob.stats.df.aggl.csv"))
 #As per text for adult, average within cluster metric is minimised for ~7-10 clusters, and the average between for about the same. The agglomerative clustering appears more balanced.
 
 ```
 
-**Note** For visualising cluster number selection.
+**Note** Agglomerative -- for visualising cluster number selection.
 
 * Elbow method (24/07/2020) using habitat use + gregarious (binary) inflection at 8
 
@@ -274,6 +277,42 @@ ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.aggl.clustc, 20)))
   geom_point()+
   geom_line()+
   ggtitle("Agglomerative clustering") +
+  labs(x = "Num.of clusters", y = "Average silhouette width") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+**Note** Divisive -- for visualising cluster number selection.
+
+* Elbow method (20/03/2021) using habitat use + gregarious (binary) inflection at 8
+
+* Silhouette (20/03/2021) using habitat use + gregarious (binary) inflection at 8
+
+```{r Cluster Selection - Divisive}
+
+### Using "Elbow" and "Silhouette" methods to identify the best number of clusters
+
+# Elbow method
+
+# Agglomerative clustering,provides a more ambiguous picture
+ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20))), 
+       aes(x=cluster.number, y=within.cluster.ss)) + 
+  geom_point()+
+  geom_line()+
+  ggtitle("Divisive clustering") +
+  labs(x = "Num.of clusters", y = "Within clusters sum of squares (SS)") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+## Silhouette
+#When it comes to silhouette assessment, the rule is you should choose the number that maximizes the 
+#silhouette coefficient because you want clusters that are distinctive (far) enough to be considered separate.
+
+# Agglomerative
+ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20))), 
+       aes(x=cluster.number, y=avg.silwidth)) + 
+  geom_point()+
+  geom_line()+
+  ggtitle("Divisive clustering") +
   labs(x = "Num.of clusters", y = "Average silhouette width") +
   theme(plot.title = element_text(hjust = 0.5))
 
