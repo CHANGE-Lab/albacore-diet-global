@@ -16,39 +16,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 ```{r Worspace}
 
-#Workspace setup
-getwd()
-
-#The code used Friday 8th Nov mainly involved the vegan and klaR packages. So you should only need
-#to load those out of the list below.
-
-#install what needs to be installed
-#install.packages("fpc")
-#install.packages("labdsv")
-#install.packages("MVPARTwrap") #notice that this didn't work
-#library(devtools)
-#install_github('kassambara/factoextra')
-#install.packages("ggdendro")
-#install.packages("circlize")
-
-#some packages are on GitHub and not on the CRAN project yet
-#install.packages("devtools") 
-#library(devtools)
-#install_github("cran/mvpart")
-#install_github("cran/MVPARTwrap")
-#devtools::install_github("jakelawlor/PNWColors") 
-
-#load all packages required
-#library(klaR)
-#library(fpc)
-#library(ggrepel)
-#library(purrr)
-#library(viridis)
-
-#library(factoextra)
-#library(ggdendro)
-#library(circlize)
-
 #Need packages
 library(plyr)
 library(dplyr)
@@ -141,7 +108,7 @@ str(probable_traits)
 
 #### Distance measure ----
 #select just the traits you want to contribute to ordination
-prob.gower.dist <- daisy(probable_traits, metric = c("gower"))
+prob.gower.dist <- daisy(probable_traits[,1:6], metric = c("gower"))
 
 #### Divisive cluster ----
 prob.divisive.clust <- diana(as.matrix(prob.gower.dist), 
@@ -156,7 +123,7 @@ plot(prob.aggl.clustc, main = "Agglomerative, complete linkages")
 
 #### nMDS for dissimilarity
 trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 100)
-trait_NMDS_prob[["stress"]] #stress = 0.1411261
+trait_NMDS_prob[["stress"]] #stress = 0.1177472
 
 #Plot --> 
 plot(trait_NMDS_prob) #plots species as black dots, traits as red crosses 
@@ -346,7 +313,7 @@ prob.dendro.graph <- ggplot(prob.ggd1, theme = theme_minimal()) +
   labs(x = "Num. observations", y = "Height", title = "Dendrogram, k = 8")
 prob.dendro.graph
 
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.horz.k8.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.horz.k8.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
 
 ```
 
@@ -362,8 +329,8 @@ prob.dendro.rad
 #No labels on this one, labels were too cluttered/problems
 #Save radial dendrogram for chat
 
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.rad.k8.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
-
+ggsave(here('outputs_figures/clusters/prob.dendro.rad.k8.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+#probable_agglo/
 ```
 
 **Vertical dendrogram**
@@ -404,7 +371,7 @@ ggd1 <- ggd1 + theme(panel.grid.major = element_blank(),
 ggd1 <- ggd1 + ylim(max(get_branches_heights(prob.dendro)), -1)
 ggd1
 
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.vertlabs.k8.pdf'), plot=ggd1, width=5, height=20, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.vertlabs.k8.pdf'), plot=ggd1, width=5, height=20, dpi=300) #probable_agglo/
 
 #With labels removed!!!
 
@@ -413,7 +380,7 @@ prob.dendro.vert <- ggplot(prob.ggd1, horiz = TRUE, labels = FALSE) +
 #coord_polar(theta="x")
 prob.dendro.vert 
 #Export as .png
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.vert2.k8.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.vert2.k8.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300) #probable_agglo/
 
 
 ```
@@ -463,7 +430,7 @@ prob.prey.cl <- cbind(prey_probable, prob.clust.num)
 #View(prob.prey.cl)
 
 write.csv(prob.prey.cl, here("data/output_data/prob.prey.clusternum_habgreg.aggl.k8.csv"))
-write.csv(prob.prey.cl, here("outputs_figures/clusters/probable_agglo/prob.prey.clusternum_habgreg.aggl.k8.csv"))
+write.csv(prob.prey.cl, here("outputs_figures/clusters/prob.prey.clusternum_habgreg.aggl.k8.csv")) #probable_agglo/
 
 ```
 
@@ -501,7 +468,7 @@ heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level))
   facet_grid(trait~. , scales="free_y")
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.heatcounts.k8.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.heatcounts.k8.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300) #probable_agglo/
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
@@ -512,7 +479,7 @@ heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(
   facet_grid(trait~., scales="free_y")
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/probable_agglo/prob.dendro.heatpercent.aggl.k8.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob.dendro.heatpercent.aggl.k8.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300) #probable_agglo/
 
 ```
 
