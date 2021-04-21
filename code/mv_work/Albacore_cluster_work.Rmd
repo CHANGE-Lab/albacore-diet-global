@@ -2550,6 +2550,384 @@ ggsave("trait_nMDS_clim.jpeg", plot = trait_nMDS_clim, width = 8, height = 8, dp
 
 ```
 
+## PROBABLE Agglomerative (complete) k = 8 -- April 2021
+
+### Cluster Dendrograms ---
+
+Going to use k = 8 for the probable life stage traits
+
+**Horizontal dendrogram**
+
+```{r Horizontal dendrogram}
+
+#Using agglomerative hierarchical clustering, k = 8
+prob.dendro <- as.dendrogram(prob.aggl.clustc) #156 species
+PNW.pal8 <- pnw_palette(8, name = "Bay", type = "continuous")
+###Horizontal dendrogram - Probable traits
+
+#Horizontal cluster illustration version
+prob.dendro.col <- prob.dendro %>%
+  set("branches_k_color", k = 8, value = PNW.pal8) %>%
+  set("branches_lwd", 0.8) %>%
+  set("labels", probable_species) %>% #NOT VERY LEGIBLE...
+  set("labels_colors", 
+      value = c("darkslategray")) %>% 
+  set("labels_cex", 0.5)
+prob.ggd1 <- as.ggdend(prob.dendro.col)
+prob.dendro.graph <- ggplot(prob.ggd1, theme = theme_minimal()) +
+  labs(x = "Num. observations", y = "Height", title = "Dendrogram, k = 8")
+prob.dendro.graph
+
+ggsave(here('outputs_figures/clusters/prob.dendro.horz.k8.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
+
+```
+
+**Radial dendrogram**
+
+```{r Radial dendrogram}
+
+# Radial plot looks less cluttered (and cooler)
+prob.dendro.rad <- ggplot(prob.ggd1, labels = FALSE) + 
+  scale_y_reverse(expand = c(0.2, 0)) +
+  coord_polar(theta="x")
+prob.dendro.rad 
+#No labels on this one, labels were too cluttered/problems
+#Save radial dendrogram for chat
+
+ggsave(here('outputs_figures/clusters/prob.dendro.rad.k8.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+#probable_agglo/
+```
+
+**Vertical dendrogram**
+
+Similar to https://stackoverflow.com/questions/38034663/rotate-labels-for-ggplot-dendrogram 
+
+```{r Vertical dendrogram}
+
+# This is a different way to compute hierarchical clustering and cut the tree
+#clus <- hcut(mydist, k = 6, hc_func = 'hclust', hc_method = 'ward.D2', graph = FALSE, isdiss = TRUE)
+
+#Below is problematic0
+#labels(dend) <- paste0(paste0(rep('', 3), collapse = ''), speciesO)
+#dend <- sort(dend, decreasing = FALSE)
+#View(labels(dend))
+
+#Creating df for the dend labels so that we can accurately line them up with the species
+dendlabs <- labels(prob.dendro) #Need to create strings of labels to manipulate
+dendlabs2 <- as.data.frame(dendlabs) #turn in df
+
+#Join these data so we can relabel the dendrogram
+#Use plyr function because it conserves the row order of the left df, which matters for assigning labels here
+dfdend <- join(dendlabs2, prey_probable)
+
+ggd1 <- ggplot(prob.dendro %>%
+                 set("branches_k_color", k = 8, value = PNW.pal8) %>%
+                 set("branches_lwd", 0.8) %>%
+                 set("labels", dfdend$prey_sp) %>% #NOT VERY LEGIBLE...
+                 set("labels_colors", 
+                     value = c("darkslategray")) %>% 
+                 set("labels_cex", 0.5), 
+               theme = theme_minimal(),
+               horiz = TRUE)
+
+ggd1 <- ggd1 + theme(panel.grid.major = element_blank(),
+                     axis.text = element_blank(),
+                     axis.title = element_blank())
+ggd1 <- ggd1 + ylim(max(get_branches_heights(prob.dendro)), -1)
+ggd1
+
+ggsave(here('outputs_figures/clusters/prob.dendro.vertlabs.k8.pdf'), plot=ggd1, width=5, height=20, dpi=300) #probable_agglo/
+
+#With labels removed!!!
+
+prob.dendro.vert <- ggplot(prob.ggd1, horiz = TRUE, labels = FALSE) + 
+  scale_y_reverse(expand = c(0.2, 0)) #+
+#coord_polar(theta="x")
+prob.dendro.vert 
+#Export as .png
+ggsave(here('outputs_figures/clusters/prob.dendro.vert2.k8.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300) #probable_agglo/
+
+
+```
+
+
+**Vertical dendro with traits**
+
+The rows are ordered based on the order of the hierarchical clustering (using the “complete” method). The colored bar indicates the species category each row belongs to. The color in the heatmap indicates the length of each measurement (from light yellow to dark red).
+
+In the heatmap we also see how the Setosa species has low petal values (in light yellow), but it is very difficult to see any clear distinction between the other two species.
+         
+```{r Vertical dendro with traits, eval=FALSE}
+some_col_func <- function(n) rev(colorspace::heat_hcl(n, c = c(80, 30), l = c(30, 90), power = c(1/5, 1.5)))
+
+# scaled_iris2 <- iris2 %>% as.matrix %>% scale
+# library(gplots)
+gplots::heatmap.2(as.matrix(prob.aggl.clustc), 
+          main = "Heatmap for the Iris data set",
+          srtCol = 20,
+          dendrogram = "row",
+          Rowv = prob.dendro,
+          Colv = "NA", # this to make sure the columns are not ordered
+          trace="none",          
+          margins =c(5,0.1),      
+          key.xlab = "Cm",
+          denscol = "grey",
+          density.info = "density",
+          RowSideColors = rev(labels_colors(prob.dendro)), # to add nice colored strips        
+          col = some_col_func
+         )
+```
+
+
+### Albacore Cluster Heatmap ----
+
+```{r Extract cluster number to trait matrix}
+
+#Extract cluster number to trait matrix
+prob.clust.num <- cutree(prob.aggl.clustc, k = 8)
+
+#we want to bind the original dataset with the cluster numbers such that each species is assigned a cluster
+#can use whole data or just traits use to just look at unique species clusters in relation to traits
+#alb.cl <- cbind(ctraitsO, alb.clust.num)
+#OR
+prob.prey.cl <- cbind(prey_probable, prob.clust.num)
+
+#View(prob.prey.cl)
+
+write.csv(prob.prey.cl, here("data/output_data/prob.prey.clusternum_habgreg.aggl.k8.csv"))
+write.csv(prob.prey.cl, here("outputs_figures/clusters/prob.prey.clusternum_habgreg.aggl.k8.csv")) #probable_agglo/
+
+```
+
+```{r Cluster heatmap}
+# Time for the heatmap
+# the 1st step here is to have 1 variable per row
+# factors have to be converted to characters in order not to be dropped
+
+#Note plyr can mess with this!!
+detach("package:plyr", unload=TRUE)
+
+#Create dfs for graphs
+prob.clust.long = prob.prey.cl %>%
+  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
+  reshape2::melt(id.vars = c("prey_sp", "prob.clust.num"), variable.name = "trait", value.name = "level") %>%
+  group_by(prob.clust.num, trait, level) %>%
+  mutate(count = n_distinct(prey_sp)) %>%
+  distinct(prob.clust.num, trait, level, count) %>% #, percent
+  group_by(prob.clust.num, trait) %>%
+  mutate(percent = count / sum(count)*100) %>%
+  arrange(prob.clust.num)
+
+str(prob.clust.long)
+
+#heatmap.c will be suitable in case you want to go for absolute counts - but it doesn't tell much to my taste
+#problem below involves the values of our data being ordinal, therefore they are not unique
+levels(prob.clust.long$trait)
+
+#Our data above comes truncated, you would need to truncate the data and re-label clusters depending on which dfs you melt/merge/reshape.
+#Example: View(alb.cust.long.q[96:nrow(alb.cust.long.q),])
+heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level)) +
+  geom_tile(aes(fill = count))+
+  labs(title = "Distribution of characteristics across clusters", x = "Cluster number", y = NULL) +
+  scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
+  facet_grid(trait~. , scales="free_y")
+heatmap.c
+
+ggsave(here('outputs_figures/clusters/prob.dendro.heatcounts.k8.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300) #probable_agglo/
+
+
+heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
+  geom_tile(aes(fill = percent), alpha = 0.85)+
+  labs(title = "Distribution of characteristics across clusters", x = "Cluster number", y = NULL) +
+  #scale_fill_gradient2(low = "darkslategray1", mid = "yellow", high = "turquoise4") +
+  scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
+  facet_grid(trait~., scales="free_y")
+heatmap.p
+
+ggsave(here('outputs_figures/clusters/prob.dendro.heatpercent.aggl.k8.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300) #probable_agglo/
+
+```
+
+
+
+## NMDS for checking on our ordination - agglomerative -- April 2021
+
+### Ordination
+
+```{r NMDS & Clusters ~ Species, echo=FALSE}
+#### nMDS for dissimilarity
+trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 541 iterations
+trait_NMDS_prob[["stress"]] #stress = 0.1544764 #reasonable
+
+```
+
+### Extract NMDS coordinates and associate with co-variates/grouping factors
+
+```{r Data scores for plotting - USE}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(trait_NMDS_prob))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+
+#bind treatment labels and score values
+treatment.scores <- cbind(prob.prey.cl, data.scores)
+
+#Check
+str(treatment.scores)  
+#Awesome
+
+```
+
+### Convex hull calculations
+For each ordination and set of grouping variables input to data scores chunk
+
+
+```{r Convex hulls - Taxonomic specific}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$prob.clust.num)
+length(treatment.scores$prob.clust.num) #174
+
+#Taxonomic group - hull loop
+clust = as.character(unique(treatment.scores$prob.clust.num))
+for(i in 1:length(clust)) {
+  temp = clust[i]
+  df = treatment.scores[treatment.scores$prob.clust.num == temp, ][chull(treatment.scores[treatment.scores$prob.clust.num == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6, grp.7, grp.8)  
+
+str(hull.data)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+
+### NMDS plot
+
+```{r nMDS Cluster #, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#as.integer(unique(treatment.scores$adult.clust.num))
+
+trait_nMDS_prob_fig <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= prob.clust.num), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fig
+##Not perfect, some issues to troubleshoot
+
+ggsave(here("outputs_figures/clusters/probable_agglo/trait_nMDS_prob_clusters.png"), 
+       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + FO}
+
+trait_nMDS_prob_fo <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxFO), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="A", begin = 0.2, end = 0.8, name = "Frequency of Occurrence (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_fo
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Cluster + %N}
+
+trait_nMDS_prob_no <- ggplot() + 
+  geom_polygon(data=hull.data, 
+               aes(x=NMDS1, y=NMDS2, 
+                   fill= prob.clust.num, 
+                   group= prob.clust.num), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores, 
+             aes(x=NMDS1, y=NMDS2, colour= maxN), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
+  scale_colour_viridis(option="A", begin = 0.2, end = 0.8, name = "Numerical Abundance (%)") + 
+  scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
+  
+trait_nMDS_prob_no
+
+
+#ggsave(here("outputs_figures/clusters/trait_nMDS_prob_fo.png"), 
+#       plot = trait_nMDS_prob_fo, width = 8, height = 8, dpi = 300)
+
+```
+
+ 
 ## ALL TRAITS COMPARE
 ```{r Compare traits heatmap}
 #Note plyr can mess with this!!
