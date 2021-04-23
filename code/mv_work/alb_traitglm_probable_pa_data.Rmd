@@ -142,7 +142,7 @@ alb_adult_spp_PA <- alb_adult_preyPA_df2.0[,14:ncol(alb_adult_preyPA_df2.0)] #14
 
 ## Visualise data - nMDS
 
-```{r Visualise - nMDS ordinations PA}
+```{r Visualise - nMDS ordinations PA, eval=FALSE}
 
 
 #PA
@@ -164,10 +164,10 @@ text(pl, "species", col="blue", cex=0.9)
 Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
 
 ```{r Trait DF (Q) - prob clust num}
-
+str(alb_prob_clust)
 alb_prob_clust = read.csv(paste(here("data/output_data/prob.prey.clusternum_habgreg.aggl.k8.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
-   dplyr::select(prey_sp:prob.clust.num, -refuge.use)
+   dplyr::select(prey_sp:prob.clust.num)
   
 #Relabel to add underscore in names
 alb_prob_clust$prey_sp = str_replace_all(alb_prob_clust$prey_sp, " ", "_")
@@ -185,7 +185,7 @@ alb_prob_traits = alb_prob_clust %>%
 
 ```
 
-```{r Trait values check}
+```{r Trait values check, eval=FALSE}
 
 summary(alb_prob_traits$vertical.habitat) #merge bathypelagic and mesopelagic
 
@@ -353,8 +353,10 @@ prob_lat = alb_prob_covars$lat_cat
 
 #All traits to try
 traits_prob = alb_prob_traits[,2:7]
+str(traits_prob)
 traits_prob_clust = as.data.frame(alb_prob_traits[,8]) %>%
   dplyr::rename(cluster = `alb_prob_traits[, 8]`)
+str(traits_prob_clust)
 ```
 
 
