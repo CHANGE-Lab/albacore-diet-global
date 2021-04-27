@@ -17,11 +17,16 @@ output: html_document
 
 ## Workspace
 
-#```{r setup, include=FALSE}
-#knitr::opts_chunk$set(echo = TRUE)
-#```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r Workspace, include=FALSE, echo=FALSE}
+#If need to clear 'Environment'
+#First view environment if you like
+#ls()
+#To clear your environment
+#remove(list = ls())
 
 # general
 library(tidyverse)
@@ -56,10 +61,9 @@ library(mvabund)
 library(tweedie)
 library(vegan)
 
+## mvabund bug source code
 source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/traitglm.R")
 source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/get_polys.R")
-
-## mvabund bug source code??
 
 ```
 
@@ -1082,20 +1086,20 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_LASSO_graph.jpeg
 
 ```
 
-## Visualise data - nMDS
+## Ordination
 
 ```{r Visualise - nMDS ordinations PA}
 
 
 #PA
-alb_adult_nMDS_pa = metaMDS(alb_adult_spp_PA, 
+alb_prob_nMDS_pa = metaMDS(alb_prob_preyPA, 
                          distance="bray", 
                          trymax = 100, #1000
                          k=3) #could increase to k = 4
 
 #Note pb with this!! insufficient data?
 
-pl <- ordiplot(alb_adult_nMDS_pa, type = "none")
+pl <- ordiplot(alb_prob_nMDS_pa, type = "none")
 points(pl, "sites", pch=21, col="red", bg="yellow")
 text(pl, "species", col="blue", cex=0.9)
 
