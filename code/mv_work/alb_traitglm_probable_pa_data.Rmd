@@ -44,6 +44,9 @@ library(mvabund)
 library(tweedie)
 library(vegan)
 
+source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/traitglm.R")
+source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/get_polys.R")
+
 ## mvabund bug source code??
 
 ```

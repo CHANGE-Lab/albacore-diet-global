@@ -167,11 +167,22 @@ alb_prob_clust[,2:8] <- lapply(alb_prob_clust[,2:8], factor) #to convert to fact
 
 #Need to filter by prey species we want to use.
 alb_prob_traits = alb_prob_clust %>%
-  filter(prey_sp %in% names(alb_adult_preyPA)) #we get 118 species and trait values
+  filter(prey_sp %in% names(alb_adult_preyPA)) %>%
+  filter(life_stage != 'larva')
+#we get 118 species and trait values
   #previously filtered from this df: alb_adult_preyPA - this includes single occurrences
   #filtered out low occurrences df here: alb_adult_preyPA_clean
 
 dim(alb_prob_traits) #123  17
+str(alb_prob_traits)
+
+write.csv(alb_prob_traits, here("data/output_data/alb_prob_traits_k7.csv"))
+
+alb_prob_traits = read.csv(here("data/output_data/alb_prob_traits_k7.csv")) %>%
+  select(-X)
+
+alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
 
 ```
 
@@ -197,16 +208,16 @@ summary(alb_prob_traits$prob.clust.num) #low numbers in cluster #8 = 2
 #str(alb_prob_traits)
 
 #levels(alb_prob_traits$life_stage) #check
-alb_prob_traits$life_stage <- factor(alb_prob_traits$life_stage, 
-                                            levels = c("adult", "juvenile", "larva"),
-                                            labels = c("adult", "juvenile", "juvenile"))
+#alb_prob_traits$life_stage <- factor(alb_prob_traits$life_stage, 
+#                                            levels = c("adult", "juvenile", "larva"),
+#                                            labels = c("adult", "juvenile", "juvenile"))
 
 #Levels vertical habitat
 #levels(alb_prob_traits$vert_habitat) #check
 alb_prob_traits$vert_habitat <- factor(alb_prob_traits$vert_habitat, 
                                             levels = c("benthic", "demersal", "epipelagic",
                                                        "mesopelagic", "bathypelagic"),
-                                            labels = c("demersal", "demersal", "epipelagic",
+                                            labels = c("benthic", "demersal", "epipelagic",
                                                        "mesopelagic", "mesopelagic"))
 #Too low sample size for bathypelagic, merged with mesopelagic here
 
@@ -233,7 +244,7 @@ Here we filter our prey species (presence/absence data) by the species that were
 
 ```{r FILTER PREY BY PROB TRAITS}
 
-alb_prob_preyPA <- alb_adult_preyPA[colnames(alb_adult_preyPA) %in% rownames(alb_prob_clust)]
+alb_prob_preyPA <- alb_adult_preyPA[colnames(alb_adult_preyPA) %in% rownames(alb_prob_traits)]
 
 dim(alb_prob_preyPA) #225 123
 
@@ -949,7 +960,7 @@ Using binomial (logit link) function.
 
 ```{r TraitGLM - ocean basin binom distribution}
 
-prob_ocean_LASSO <- traitglm(L = alb_prob_preyPA_mv,
+prob_ocean_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                               R = prob_ocean,
                               Q = traits_prob_try,
                               family=binomial(link = "logit"),
@@ -960,9 +971,9 @@ prob_ocean_LASSO <- traitglm(L = alb_prob_preyPA_mv,
 
 ```{r Plot 4th corner - binom}
 
-a        = max( abs(prob_ocean_LASSO$fourth.corner) )
+a        = max( abs(prob_ocean_trait_LASSO$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
-temp = t(as.matrix(prob_ocean_LASSO$fourth.corner))
+temp = t(as.matrix(prob_ocean_trait_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
@@ -1011,7 +1022,7 @@ Using binomial (logit link) function.
 
 prob_lat_LASSO <-  traitglm(L = alb_prob_preyPA_mv,
                             R = prob_lat,
-                            Q = traits_prob,
+                            Q = traits_prob_try,
                             family=binomial(link = "logit"),
                             method="glm1path"
                             ) #note default is "manyglm"
