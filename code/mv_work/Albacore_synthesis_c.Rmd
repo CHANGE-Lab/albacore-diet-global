@@ -1105,20 +1105,7 @@ text(pl, "species", col="blue", cex=0.9)
 
 ```
 
-#### nMDS - clusters
-
-Ordination
-
-```{r NMDS & Clusters ~ Species}
-#### nMDS for dissimilarity
-ORD_prob_cluster = metaMDS(alb_prob_preyPA, 
-                         distance="bray", 
-                         trymax = 100, #1000
-                         k=3) #could increase to k = 4
-
-ORD_prob_cluster[["stress"]] #stress = 0.1188079 #reasonable
-
-```
+#### nMDS - composition
 
 Extract NMDS coordinates and associate with co-variates/grouping factors
 
@@ -1126,7 +1113,7 @@ Extract NMDS coordinates and associate with co-variates/grouping factors
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 #Using the scores function from vegan to extract the site scores and convert to a data.frame
-data.scores <- as.data.frame(scores(ORD_prob_cluster ))  #, "species"
+data.scores <- as.data.frame(scores(alb_prob_nMDS_pa))  #, "species"
 #create a column of site names, from the rownames of data.scores
 data.scores$points <- rownames(data.scores)
 #bind treatment labels and score values
@@ -1136,6 +1123,8 @@ str(treatment.scores)
 #Awesome
 
 ```
+
+### Predator Life Stage
 
 Convex hull calculations
 For each ordination and set of grouping variables input to data scores chunk
@@ -1196,21 +1185,46 @@ ggsave(here("outputs_figures/traitglms/prob_life_stage/nMDS_prob_life.jpeg"), pl
 
 ```
 
-```{r nMDS Vertical Habitat, echo=TRUE}
-#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
-unique(treatment.scores$`vertical habitat`)
+### Ocean Basin
 
-trait_nMDS_adult_fig <- ggplot() + 
-  #geom_polygon(data=treatment.scores, 
-  #             aes(x=NMDS1, y=NMDS2, 
-  #                 fill= adult.clust.num, 
-  #                 group=adult.clust.num), 
-  #             alpha=0.30) + # add the convex hulls
-  geom_point(data=treatment.scores, 
-             aes(x=NMDS1, y=NMDS2, 
-                 colour = fct_relevel(`vertical habitat`, "benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic")
-                 ), 
-             size=2) + # add the point markers
+Convex Hull calculations
+
+
+```{r Convex hulls - Predator Life Stage}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$OceanBasin)
+#Taxonomic group - hull loop
+oc = as.character(unique(treatment.scores$OceanBasin))
+for(i in 1:length(oc)) {
+  temp = oc[i]
+  df = treatment.scores[treatment.scores$OceanBasin == temp, ][chull(treatment.scores[treatment.scores$OceanBasin == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data.ocean <- rbind(`grp.N Atlantic`, `grp.Mediterranean`, `grp.N Pacific`, `grp.S Atlantic`, `grp.Indian`, `grp.S Pacific`)  
+
+str(hull.data.ocean)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+nMDS for Ocean Basin
+
+```{r nMDS Ocean Basin, echo=TRUE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#unique(treatment.scores$OceanBasin)
+
+nMDS_prob_ocean <- ggplot() + 
+  geom_polygon(data = hull.data.ocean, 
+               aes(x = NMDS1, y = NMDS2, 
+                   fill = OceanBasin, 
+                   group = OceanBasin), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data = treatment.scores, 
+             aes(x = NMDS1, y = NMDS2, colour = OceanBasin), 
+             size = 2) + # add the point markers
   coord_equal() +
   theme_bw()  +
   theme(axis.text.x = element_blank(),  # remove x-axis text
@@ -1225,16 +1239,14 @@ trait_nMDS_adult_fig <- ggplot() +
         panel.grid.major = element_blank(),  #remove major-grid labels
         panel.grid.minor = element_blank(),  #remove minor-grid labels
         plot.background = element_blank()) +
-  #guides(fill = FALSE, colour = FALSE) +
-  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
-  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Vertical Habitat") #+ #name = "Global Change Assessed"
-  #scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Driver of change") #+ #name = "Global Change Assessed"
-  #geom_text_repel(data = species.scores,
-  #                aes(x = NMDS1, y = NMDS2, label = species#, alpha = 0.8, size = 5
-  #                    ))
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin") + 
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin")
 
-trait_nMDS_adult_fig
+nMDS_prob_ocean
 
-ggsave("trait_nMDS_clim.jpeg", plot = trait_nMDS_clim, width = 8, height = 8, dpi = 300)
+ggsave(here("outputs_figures/traitglms/prob_life_stage/nMDS_prob_ocean.jpeg"), plot = nMDS_prob_ocean, width = 8, height = 8, dpi = 300)
 
 ```
+
+## Ordination - sub outliers
+
