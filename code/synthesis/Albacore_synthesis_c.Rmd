@@ -1056,9 +1056,13 @@ AIC:                 4092
 
 #anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
-anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many)
+anova.ocean1 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many)
 
-anova.traitglm(prob_ocean_clusters_many, prob_ocean_spp)
+anova.ocean2 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_spp)
+
+anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
+
+#greatest residual deviance with cluster analyses
 
 ```
 
