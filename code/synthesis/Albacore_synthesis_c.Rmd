@@ -517,8 +517,8 @@ Trait (cluster) *Env - Manyglm
 
 prob_life_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
                                     R = prob_pred_life,
-                                    Q = traits_prob_clust, 
-                                      #traits_prob$cluster,
+                                    Q = traits_prob$cluster,
+                                    #traits_prob_clust,
                                     family=binomial(link = "logit")
                                     ) #note default is "manyglm"
 
@@ -558,7 +558,7 @@ prob_life_clusters_many_graph = levelplot(temp,
 
 print(prob_life_clusters_many_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.pdf"), 
+ggsave(here("./outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.pdf"), 
        plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
