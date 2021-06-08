@@ -19,6 +19,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library("rstudioapi")
+setwd(dirname(getActiveDocumentContext()$path))
 ```
 
 ```{r Workspace, include=FALSE, echo=FALSE}
@@ -27,6 +30,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #ls()
 #To clear your environment
 #remove(list = ls())
+
+getwd()
 
 # general
 library(tidyverse)
@@ -62,8 +67,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/traitglm.R")
-source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/get_polys.R")
+source("traitglm.R")
+source("get_polys.R")
 
 ```
 
@@ -71,9 +76,12 @@ source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/ge
 
 This document contains code for data manipulation, refinement and conversion to presence absence, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
 
-**Issues**
+## Current Issues
 
-- 
+- SHOULD WE EXCULDE ANYTHING WITH %fo < 1%
+
+- This will have been done in Albacore_data_manip.Rmd at point of dataframe creation?
+
 
 ## Data (L)
 
@@ -83,12 +91,9 @@ Load frequency of occurrence data.
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
-alb_adult_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"),
+alb_adult_fo = read.csv(paste(here("./data/output_data/alb_global_wide_dietfo.csv"),
                                    sep=""), check.names=FALSE, row.names = 1) %>%
   dplyr::select(StudyID:ncol(.), -grouped_id) #-c(, `Diplospinus multistriatus`, `Sardina pilchardus`)
-
-#SHOULD WE EXCULDE ANYTHING WITH %fo < 1%
-#This will have been done in Albacore_data_manip.Rmd at point of dataframe creation
 
 print(dim(alb_adult_fo)) #225 150
 ```
@@ -133,7 +138,7 @@ alb_adult_preyPA_df = cbind(alb_adult_fo[,1:13], alb_adult_preyPA)
 dim(alb_adult_preyPA) #225 obs, 137 species
 ```
 
-```{r Species PA (L) - >1 occurrence}
+```{r Species PA (L) - >1 occurrence -- currently not using}
 #Remove low occurrence species?
 #Remove columns that contain < 2 occurrences #can vary this number
 alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
@@ -149,11 +154,15 @@ dim(alb_adult_preyPA_clean) #179 103
 
 ## Traits PROBABLE (Q)
 
-Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
+- Using all the occurence data in 'alb_adult_preyPA' df.
+
+- Could filter out low occurrences using 'alb_adult_preyPA_clean' df.
+
+- Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
 
 ```{r Trait DF (Q) - prob clust num}
 
-alb_prob_clust = read.csv(paste(here("data/output_data/prob.prey.clusternum_habgreg.divis.k7.csv"), 
+alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum_habgreg.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
    dplyr::select(prey_sp:prob.clust.num, -refuge_cat)
 
@@ -173,16 +182,16 @@ alb_prob_clust[,2:8] <- lapply(alb_prob_clust[,2:8], factor) #to convert to fact
 alb_prob_traits = alb_prob_clust %>%
   filter(prey_sp %in% names(alb_adult_preyPA)) %>%
   filter(life_stage != 'larva')
-#we get 118 species and trait values
+#we get 123 species and 17 trait values
   #previously filtered from this df: alb_adult_preyPA - this includes single occurrences
   #filtered out low occurrences df here: alb_adult_preyPA_clean
 
 dim(alb_prob_traits) #123  17
 str(alb_prob_traits)
 
-write.csv(alb_prob_traits, here("data/output_data/alb_prob_traits_k7.csv"))
+write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_k7.csv"))
 
-alb_prob_traits = read.csv(here("data/output_data/alb_prob_traits_k7.csv")) %>%
+alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_k7.csv")) %>%
   select(-X)
 
 alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
@@ -275,7 +284,7 @@ alb_prob_covars = alb_adult_fo[-c(31, 32, 58, 64, 69, 72, 79, 81, 86, 90, 102, 1
 dim(alb_prob_covars) #209  13
 ```
 
-```{r Diet data manip for >1 FO, eval=FALSE, include=FALSE}
+```{r Not Using -- Diet data manip for >1 FO, eval=FALSE, include=FALSE}
 
 #If filtering
 #alb_prob_preyPA = alb_prob_preyPA[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
@@ -302,7 +311,7 @@ unique(alb_prob_covars$pred_life) #
 
 ```
 
-```{r Covars (R) - select}
+```{r Covars (R) - clean}
 
 #Clean covars
 alb_prob_covars = alb_prob_covars %>%
@@ -379,7 +388,7 @@ levels(prob_pred_life)
 #Latitude
 prob_lat = alb_prob_covars$lat_cat
 
-#All traits to try
+#All traits to try -- ideally we want to use the same df here
 traits_prob = alb_prob_traits[,c(2:6,13,17)] %>%
   dplyr::rename(cluster = prob.clust.num)
 
