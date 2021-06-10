@@ -1,124 +1,124 @@
 "","prey_sp","life_stage","vert_habitat","horz_habitat","diel_migrant_cat","season_cat","body_shape","phys_defense","transparent","col_disrupt","silver","countershade","gregarious","maxFO","maxN","maxM","prob.clust.num"
-"Acanthephyra_pelagica","Acanthephyra_pelagica","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","1","0","0","0","0","schooling","38.88888889","0","0","1"
-"Alpheus_glaber","Alpheus_glaber","adult","benthic","coastal","diel (yes)","season (no)","elongated","1","0","0","0","0","schooling","11.11111111","0","0","2"
-"Anchylomera_blossevillei","Anchylomera_blossevillei","adult","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1","0","0","0","0","schooling","4.2","1.65","3.3","3"
-"Ancistroteuthis_lichtensteinii","Ancistroteuthis_lichtensteinii","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","33","4.9","0.71","3"
-"Anoplopoma_fimbria","Anoplopoma_fimbria","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","fusiform","1","0","1","0","1","schooling","33.33333333","0","0","4"
-"Arctozenus_risso","Arctozenus_risso","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0","0","0","1","0","solitary","52","4","0","1"
-"Argonauta_argo","Argonauta_argo","adult","epipelagic","oceanic","diel (no)","season (yes)","compressiform","1","0","1","0","0","schooling","13.11","2.37","1.6","4"
-"Argonauta_nodosus","Argonauta_nodosus","adult","epipelagic","oceanic","diel (no)","season (yes)","compressiform","1","0","1","0","0","schooling","5","0","0.1","4"
-"Arnoglossus_imperialis","Arnoglossus_imperialis","adult","benthic","continental shelf","diel (yes)","season (yes)","depressiform","0","0","1","0","0","solitary","24.07407407","0","0","3"
-"Atlanta_peronii","Atlanta_peronii","adult","epipelagic","oceanic","diel (yes)","season (no)","compressiform","1","1","0","0","0","solitary","1.851851852","0","0","2"
-"Belone_belone","Belone_belone","juvenile","epipelagic","coastal","diel (no)","season (yes)","elongated","0","0","0","1","1","schooling","8.7","0","7.1","4"
-"Benthosema_glaciale","Benthosema_glaciale","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","0","schooling","10.3","0","0.7","1"
-"Berryteuthis_anonychus","Berryteuthis_anonychus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","38.5","9","0","5"
-"Beryx_splendens","Beryx_splendens","juvenile","mesopelagic","continental slope","diel (yes)","season (yes)","fusiform","1","0","0","1","1","schooling","1.6","0.2","0.4","5"
-"Boops_boops","Boops_boops","juvenile","demersal","continental shelf","diel (yes)","season (no)","fusiform","1","0","1","1","1","schooling","11.11111111","0","0","2"
-"Brachyscelus_crusculum","Brachyscelus_crusculum","adult","epipelagic","continental shelf","diel (yes)","season (no)","fusiform","1","0","0","0","0","schooling","92.59259259","6.2","2.2","2"
-"Calanus_finmarchicus","Calanus_finmarchicus","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1","1","0","0","0","schooling","3.703703704","0","0","1"
-"Canthidermis_maculata","Canthidermis_maculata","juvenile","epipelagic","coastal","diel (no)","season (no)","compressiform","1","0","1","0","1","schooling","1.6","0.1","0","7"
-"Ceratoscopelus_maderensis","Ceratoscopelus_maderensis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","29.62962963","0","0","1"
-"Ceratoscopelus_townsendi","Ceratoscopelus_townsendi","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","1","1","1","schooling","7.7","0.6","0","2"
-"Ceratoscopelus_warmingii","Ceratoscopelus_warmingii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","5.6","0.8","0.2","1"
-"Chelophyes_appendiculata","Chelophyes_appendiculata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1","1","0","0","0","schooling","16","0","0","3"
-"Chlorophthalmus_agassizi","Chlorophthalmus_agassizi","juvenile","demersal","continental shelf","diel (no)","season (yes)","elongated","0","0","1","1","0","schooling","2.857142857","0","0","4"
-"Cololabis_saira","Cololabis_saira","adult","epipelagic","oceanic","diel (no)","season (yes)","elongated","0","0","0","1","1","schooling","54.35","0","23.3","4"
-"Diaphus_effulgens","Diaphus_effulgens","adult","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","0","0","0","schooling","2.1","0.2","0.2","2"
-"Diaphus_lucidus","Diaphus_lucidus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","0","0","0","schooling","7.9","5.8","4.4","1"
-"Diaphus_perspicillatus","Diaphus_perspicillatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","0","0","0","schooling","7.9","5.8","5","1"
-"Diaphus_theta","Diaphus_theta","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","5.6","9.8","0.2","1"
-"Diplodus_sargus","Diplodus_sargus","juvenile","demersal","reef-associated","diel (no)","season (yes)","fusiform","1","0","1","1","0","schooling","2.857142857","0","0","4"
-"Diplospinus_multistriatus","Diplospinus_multistriatus","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","elongated","1","0","0","0","0","solitary","8","0","0","2"
-"Doryteuthis_opalescens","Doryteuthis_opalescens","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","13.4","6.044376435","22.66385602","3"
-"Dosidicus_gigas","Dosidicus_gigas","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","1","1","0","0","schooling","1.162790698","0.1","3.350838928","5"
-"Eledone_cirrhosa","Eledone_cirrhosa","juvenile","benthic","continental shelf","diel (yes)","season (no)","fusiform","0","0","1","0","0","solitary","8","0.16","0","2"
-"Engraulis_capensis","Engraulis_capensis","adult","epipelagic","coastal","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","10","3.8","4.4","1"
-"Engraulis_encrasicolus","Engraulis_encrasicolus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","29.2","0","20","6"
-"Engraulis_japonicus","Engraulis_japonicus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","elongated","0","0","1","1","1","schooling","85.4","52.8","95.2","4"
-"Engraulis_mordax","Engraulis_mordax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","69.7","40.4","23","6"
-"Eucleoteuthis_luminosa","Eucleoteuthis_luminosa","juvenile","epipelagic","oceanic","diel (yes)","season (no)","elongated","0","0","1","0","0","schooling","4.9","1.3","1.9","2"
-"Euphausia_pacifica","Euphausia_pacifica","adult","epipelagic","oceanic","diel (yes)","season (no)","elongated","1","0","0","0","0","schooling","38.9","43.1","0","2"
-"Eusergestes_arcticus","Eusergestes_arcticus","adult","demersal","continental shelf","diel (yes)","season (yes)","elongated","1","1","0","0","0","schooling","52","0","0","3"
-"Eusergestes_similis","Eusergestes_similis","adult","epipelagic","oceanic","diel (yes)","season (yes)","elongated","1","1","0","0","0","schooling","45","76.5","0","1"
-"Eutrigla_gurnardus","Eutrigla_gurnardus","juvenile","demersal","continental shelf","diel (no)","season (yes)","elongated","1","0","1","1","1","schooling","4","0","0","4"
-"Funchalia_taaningi","Funchalia_taaningi","adult","mesopelagic","continental shelf","diel (yes)","season (no)","elongated","1","0","0","0","0","schooling","1.6","0.2","0.3","2"
-"Gaidropsarus_vulgaris","Gaidropsarus_vulgaris","juvenile","demersal","continental shelf","diel (no)","season (no)","elongated","0","0","1","0","0","solitary","8","0","0","7"
-"Gennadas_elegans","Gennadas_elegans","juvenile","demersal","continental shelf","diel (yes)","season (no)","elongated","1","0","0","0","0","schooling","4","0","0","2"
-"Gonatopsis_borealis","Gonatopsis_borealis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","0","0","0","schooling","28.8","15.8","10.8","2"
-"Gonatus_onyx","Gonatus_onyx","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","1","0","0","5"
-"Heterocarpus_laevigatus","Heterocarpus_laevigatus","adult","benthic","continental slope","diel (yes)","season (yes)","elongated","1","0","1","0","0","schooling","3.2","0.3","0.1","3"
-"Histioteuthis_bonnellii","Histioteuthis_bonnellii","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","1","0","0","schooling","63.2","38.4","0","2"
-"Histioteuthis_heteropsis","Histioteuthis_heteropsis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","1","0","0","schooling","1.5","0.1","0","2"
-"Histioteuthis_reversa","Histioteuthis_reversa","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","1","0","0","schooling","28","2.05","0.86","2"
-"Hyaloteuthis_pelagica","Hyaloteuthis_pelagica","adult","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","1","0","0","schooling","2.9","0","0.5","2"
-"Hyperia_galba","Hyperia_galba","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1","0","1","0","0","schooling","5.714285714","0","0","1"
-"Idotea_metallica","Idotea_metallica","adult","epipelagic","continental shelf","diel (no)","season (yes)","fusiform","1","0","0","0","0","schooling","3.703703704","0","0","4"
-"Illex_argentinus","Illex_argentinus","adult","epipelagic","continental slope","diel (yes)","season (yes)","fusiform","0","0","0","0","0","schooling","12","0","0","1"
-"Illex_coindetii","Illex_coindetii","juvenile","demersal","continental shelf","diel (yes)","season (no)","fusiform","0","0","1","0","0","schooling","10.3","2.13","3.3","2"
-"Janicella_spinicauda","Janicella_spinicauda","adult","bathypelagic","continental slope","diel (yes)","season (no)","elongated","1","1","1","0","0","schooling","2.2","0.5","0.1","2"
-"Janthina_exigua","Janthina_exigua","adult","epipelagic","oceanic","diel (no)","season (no)","globiform","1","0","0","0","0","solitary","5.714285714","0","0","7"
-"Lampanyctodes_hectoris","Lampanyctodes_hectoris","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0","0","0","1","0","schooling","23.4","11.7","10.8","1"
-"Lampanyctus_alatus","Lampanyctus_alatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","5.555555556","0","0","1"
-"Lampanyctus_crocodilus","Lampanyctus_crocodilus","adult","bathypelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","48.57142857","0","0","1"
-"Lampanyctus_intricarius","Lampanyctus_intricarius","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","37.03703704","0","0","1"
-"Lepidocybium_flavobrunneum","Lepidocybium_flavobrunneum","juvenile","mesopelagic","continental slope","diel (yes)","season (yes)","fusiform","1","0","0","1","0","schooling","1.6","0","0","5"
-"Leptocotis_tenuirostris","Leptocotis_tenuirostris","adult","epipelagic","oceanic","diel (yes)","season (yes)","elongated","1","0","0","0","0","schooling","2.1","0.1","0.1","1"
-"Lestidiops_sphyrenoides","Lestidiops_sphyrenoides","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","elongated","0","1","0","1","0","schooling","31.48148148","0","0","6"
-"Lobianchia_gemellarii","Lobianchia_gemellarii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","4","0.1","0","1"
-"Lycoteuthis_lorigera","Lycoteuthis_lorigera","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","0","0","0","schooling","32.8","17.3","25.8","2"
-"Lysiosquilla_tredecimdentata","Lysiosquilla_tredecimdentata","adult","benthic","coastal","diel (no)","season (no)","elongated","1","0","1","0","0","solitary","7.9","0.9","0.7","7"
-"Maurolicus_imperatorius","Maurolicus_imperatorius","adult","mesopelagic","oceanic","diel (yes)","season (yes)","compressiform","0","0","0","1","0","schooling","4.2","0.2","0.1","1"
-"Maurolicus_muelleri","Maurolicus_muelleri","adult","mesopelagic","continental shelf","diel (yes)","season (yes)","elongated","0","0","0","1","0","schooling","85.71428571","78.5","24.6","3"
-"Medialuna_californiensis","Medialuna_californiensis","juvenile","epipelagic","reef-associated","diel (no)","season (yes)","fusiform","1","0","1","1","1","schooling","1.162790698","0.076511094","0.000609243","4"
-"Meganyctiphanes_norvegica","Meganyctiphanes_norvegica","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1","1","0","0","0","schooling","89.7","7.3","84.3","3"
-"Merluccius_productus","Merluccius_productus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","100","19","30","3"
-"Microgadus_proximus","Microgadus_proximus","adult","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0","0","0","1","1","schooling","33.33333333","0.5","0","3"
-"Micromesistius_poutassou","Micromesistius_poutassou","juvenile","epipelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","0","1","1","schooling","72.4","0","68.5","2"
-"Mullus_barbatus_barbatus","Mullus_barbatus_barbatus","juvenile","demersal","continental shelf","diel (no)","season (yes)","fusiform","1","0","1","1","1","schooling","1.851851852","0","0","4"
-"Myctophum_asperum","Myctophum_asperum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","2.2","0.9","0.6","1"
-"Myctophum_punctatum","Myctophum_punctatum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","68.51851852","0","0","1"
-"Nannobrachium_ritteri","Nannobrachium_ritteri","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","1.8","0.1","0","5"
-"Nematoscelis_megalops","Nematoscelis_megalops","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1","1","0","0","0","schooling","80","0.61","4.2","3"
-"Nyctiphanes_australis","Nyctiphanes_australis","adult","epipelagic","coastal","diel (yes)","season (yes)","elongated","1","0","0","0","0","schooling","27.9","0","20.4","1"
-"Odontodactylus_scyllarus","Odontodactylus_scyllarus","adult","benthic","reef-associated","diel (no)","season (no)","elongated","0","0","1","0","0","solitary","27","5.1","2.4","7"
-"Ommastrephes_bartramii","Ommastrephes_bartramii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","5","1.6","6.2","6"
-"Onychoteuthis_banksii","Onychoteuthis_banksii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","83.33333333","12.32","5.5","6"
-"Onychoteuthis_borealijaponica","Onychoteuthis_borealijaponica","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","58.5","13.4","3.3","6"
-"Oplophorus_typus","Oplophorus_typus","adult","mesopelagic","continental slope","diel (yes)","season (no)","elongated","1","0","0","0","0","schooling","3.2","0.5","0.3","2"
-"Ornithoteuthis_antillarum","Ornithoteuthis_antillarum","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0","0","0","0","0","schooling","12","0","0","2"
-"Ornithoteuthis_volatilis","Ornithoteuthis_volatilis","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","20.7","3.3","2.8","5"
-"Ostracion_cubicus","Ostracion_cubicus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","globiform","0","0","1","0","0","solitary","1.6","0.2","0","4"
-"Palinurus_mauritanicus","Palinurus_mauritanicus","juvenile","benthic","continental shelf","diel (no)","season (yes)","globiform","1","0","1","0","0","solitary","8","0","0","4"
-"Parapronoe_crustulum","Parapronoe_crustulum","adult","epipelagic","continental shelf","diel (yes)","season (no)","fusiform","1","0","0","0","0","schooling","1.5","0.2","0.1","2"
-"Phrosina_semilunata","Phrosina_semilunata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","globiform","1","1","1","0","0","schooling","65","4.2","6.5","3"
-"Platyscelus_serratulus","Platyscelus_serratulus","adult","epipelagic","continental shelf","diel (yes)","season (yes)","globiform","1","0","0","0","0","schooling","1.851851852","0.06","0.08","3"
-"Pleuroncodes_planipes","Pleuroncodes_planipes","adult","demersal","continental shelf","diel (yes)","season (yes)","unique","1","0","0","0","0","schooling","27.75","1.3","23.3","3"
-"Pteroctopus_tetracirrhus","Pteroctopus_tetracirrhus","juvenile","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","solitary","24","3.4","0","3"
-"Ranzania_laevis","Ranzania_laevis","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","compressiform","0","0","0","1","1","solitary","2.2","1.3","1.6","6"
-"Sardina_pilchardus","Sardina_pilchardus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","0","0","0","1","1","schooling","3.4","5.8","7.68","6"
-"Sardinops_sagax","Sardinops_sagax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","29.06976744","3.9020658","7.432769986","6"
-"Scaeurgus_unicirrhus","Scaeurgus_unicirrhus","juvenile","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","5","1.6","0","3"
-"Scomber_japonicus","Scomber_japonicus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1","0","1","1","1","schooling","3","0.306044376","0.006092434","3"
-"Scomber_scombrus","Scomber_scombrus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1","0","0","1","1","schooling","1.1","0.4","0.2","3"
-"Sebastes_diploproa","Sebastes_diploproa","juvenile","demersal","continental shelf","diel (no)","season (yes)","fusiform","1","0","1","1","1","schooling","1","0","0","4"
-"Sebastes_proriger","Sebastes_proriger","juvenile","epipelagic","continental shelf","diel (no)","season (no)","fusiform","1","0","1","1","1","schooling","1","0","0","7"
-"Sepietta_oweniana","Sepietta_oweniana","adult","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","2.857142857","0","0","3"
-"Spondyliosoma_cantharus","Spondyliosoma_cantharus","juvenile","epipelagic","coastal","diel (no)","season (no)","fusiform","1","0","1","1","0","schooling","1.851851852","0","0","7"
-"Sternoptyx_diaphana","Sternoptyx_diaphana","adult","mesopelagic","oceanic","diel (no)","season (no)","compressiform","0","0","0","1","0","solitary","44.44444444","0.1","0","7"
-"Sthenoteuthis_oualaniensis","Sthenoteuthis_oualaniensis","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","fusiform","0","0","1","0","0","schooling","17.9","7","8.5","4"
-"Streetsia_challengeri","Streetsia_challengeri","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1","0","0","0","0","schooling","40","0.19","0.05","3"
-"Stylocheiron_abbreviatum","Stylocheiron_abbreviatum","adult","epipelagic","coastal","diel (no)","season (yes)","elongated","1","1","0","0","0","schooling","16.66666667","0","0","4"
-"Symbolophorus_barnardi","Symbolophorus_barnardi","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0","0","0","1","0","schooling","9","3.7","4.7","1"
-"Systellaspis_debilis","Systellaspis_debilis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","1","0","0","0","0","schooling","8","0","0","1"
-"Tetragonurus_atlanticus","Tetragonurus_atlanticus","juvenile","epipelagic","oceanic","diel (no)","season (no)","elongated","1","0","1","0","0","schooling","14.28571429","0","0","7"
-"Thaleichthys_pacificus","Thaleichthys_pacificus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","33.33333333","0","0","6"
-"Themisto_gaudichaudii","Themisto_gaudichaudii","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1","0","0","0","0","schooling","54.3","5.1","27.3","1"
-"Todarodes_pacificus","Todarodes_pacificus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","1.5","0.2","0.4","3"
-"Todarodes_sagittatus","Todarodes_sagittatus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0","1","1","0","0","schooling","73.7","39.5","0.3","3"
-"Todaropsis_eblanae","Todaropsis_eblanae","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0","0","1","0","0","schooling","2.777777778","0","13.64","3"
-"Trachinotus_ovatus","Trachinotus_ovatus","juvenile","epipelagic","coastal","diel (no)","season (yes)","fusiform","1","0","0","1","1","schooling","1.851851852","0","0","4"
-"Trachurus_japonicus","Trachurus_japonicus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","1","0","0","1","1","schooling","5.6","0.8","13.9","6"
-"Trachurus_symmetricus","Trachurus_symmetricus","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1","0","0","1","1","schooling","40.69767442","13.69548585","27.53780356","6"
-"Trachurus_trachurus","Trachurus_trachurus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","1","0","0","1","1","schooling","43","28.1","42.4","6"
-"Triphoturus_mexicanus","Triphoturus_mexicanus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0","0","1","1","1","schooling","6.976744186","0.459066565","0.000609243","1"
-"Vinciguerria_lucetia","Vinciguerria_lucetia","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0","0","0","1","1","schooling","20.1","0","4.95","5"
+"Acanthephyra_pelagica","Acanthephyra_pelagica","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","1",0,0,0,0,"schooling",38.88888889,0,0,1
+"Alpheus_glaber","Alpheus_glaber","adult","benthic","coastal","diel (yes)","season (no)","elongated","1",0,0,0,0,"schooling",11.11111111,0,0,2
+"Anchylomera_blossevillei","Anchylomera_blossevillei","adult","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1",0,0,0,0,"schooling",4.2,1.65,3.3,3
+"Ancistroteuthis_lichtensteinii","Ancistroteuthis_lichtensteinii","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",33,4.9,0.71,3
+"Anoplopoma_fimbria","Anoplopoma_fimbria","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","fusiform","1",0,1,0,1,"schooling",33.33333333,0,0,4
+"Arctozenus_risso","Arctozenus_risso","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0",0,0,1,0,"solitary",52,4,0,1
+"Argonauta_argo","Argonauta_argo","adult","epipelagic","oceanic","diel (no)","season (yes)","compressiform","1",0,1,0,0,"schooling",13.11,2.37,1.6,4
+"Argonauta_nodosus","Argonauta_nodosus","adult","epipelagic","oceanic","diel (no)","season (yes)","compressiform","1",0,1,0,0,"schooling",5,0,0.1,4
+"Arnoglossus_imperialis","Arnoglossus_imperialis","adult","benthic","continental shelf","diel (yes)","season (yes)","depressiform","0",0,1,0,0,"solitary",24.07407407,0,0,3
+"Atlanta_peronii","Atlanta_peronii","adult","epipelagic","oceanic","diel (yes)","season (no)","compressiform","1",1,0,0,0,"solitary",1.851851852,0,0,2
+"Belone_belone","Belone_belone","juvenile","epipelagic","coastal","diel (no)","season (yes)","elongated","0",0,0,1,1,"schooling",8.7,0,7.1,4
+"Benthosema_glaciale","Benthosema_glaciale","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,0,"schooling",10.3,0,0.7,1
+"Berryteuthis_anonychus","Berryteuthis_anonychus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",38.5,9,0,5
+"Beryx_splendens","Beryx_splendens","juvenile","mesopelagic","continental slope","diel (yes)","season (yes)","fusiform","1",0,0,1,1,"schooling",1.6,0.2,0.4,5
+"Boops_boops","Boops_boops","juvenile","demersal","continental shelf","diel (yes)","season (no)","fusiform","1",0,1,1,1,"schooling",11.11111111,0,0,2
+"Brachyscelus_crusculum","Brachyscelus_crusculum","adult","epipelagic","continental shelf","diel (yes)","season (no)","fusiform","1",0,0,0,0,"schooling",92.59259259,6.2,2.2,2
+"Calanus_finmarchicus","Calanus_finmarchicus","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1",1,0,0,0,"schooling",3.703703704,0,0,1
+"Canthidermis_maculata","Canthidermis_maculata","juvenile","epipelagic","coastal","diel (no)","season (no)","compressiform","1",0,1,0,1,"schooling",1.6,0.1,0,7
+"Ceratoscopelus_maderensis","Ceratoscopelus_maderensis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",29.62962963,0,0,1
+"Ceratoscopelus_townsendi","Ceratoscopelus_townsendi","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,1,1,1,"schooling",7.7,0.6,0,2
+"Ceratoscopelus_warmingii","Ceratoscopelus_warmingii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",5.6,0.8,0.2,1
+"Chelophyes_appendiculata","Chelophyes_appendiculata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1",1,0,0,0,"schooling",16,0,0,3
+"Chlorophthalmus_agassizi","Chlorophthalmus_agassizi","juvenile","demersal","continental shelf","diel (no)","season (yes)","elongated","0",0,1,1,0,"schooling",2.857142857,0,0,4
+"Cololabis_saira","Cololabis_saira","adult","epipelagic","oceanic","diel (no)","season (yes)","elongated","0",0,0,1,1,"schooling",54.35,0,23.3,4
+"Diaphus_effulgens","Diaphus_effulgens","adult","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,0,0,0,"schooling",2.1,0.2,0.2,2
+"Diaphus_lucidus","Diaphus_lucidus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,0,0,0,"schooling",7.9,5.8,4.4,1
+"Diaphus_perspicillatus","Diaphus_perspicillatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,0,0,0,"schooling",7.9,5.8,5,1
+"Diaphus_theta","Diaphus_theta","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",5.6,9.8,0.2,1
+"Diplodus_sargus","Diplodus_sargus","juvenile","demersal","reef-associated","diel (no)","season (yes)","fusiform","1",0,1,1,0,"schooling",2.857142857,0,0,4
+"Diplospinus_multistriatus","Diplospinus_multistriatus","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","elongated","1",0,0,0,0,"solitary",8,0,0,2
+"Doryteuthis_opalescens","Doryteuthis_opalescens","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",13.4,6.044376435,22.66385602,3
+"Dosidicus_gigas","Dosidicus_gigas","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",1,1,0,0,"schooling",1.162790698,0.1,3.350838928,5
+"Eledone_cirrhosa","Eledone_cirrhosa","juvenile","benthic","continental shelf","diel (yes)","season (no)","fusiform","0",0,1,0,0,"solitary",8,0.16,0,2
+"Engraulis_capensis","Engraulis_capensis","adult","epipelagic","coastal","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",10,3.8,4.4,1
+"Engraulis_encrasicolus","Engraulis_encrasicolus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",29.2,0,20,6
+"Engraulis_japonicus","Engraulis_japonicus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","elongated","0",0,1,1,1,"schooling",85.4,52.8,95.2,4
+"Engraulis_mordax","Engraulis_mordax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",69.7,40.4,23,6
+"Eucleoteuthis_luminosa","Eucleoteuthis_luminosa","juvenile","epipelagic","oceanic","diel (yes)","season (no)","elongated","0",0,1,0,0,"schooling",4.9,1.3,1.9,2
+"Euphausia_pacifica","Euphausia_pacifica","adult","epipelagic","oceanic","diel (yes)","season (no)","elongated","1",0,0,0,0,"schooling",38.9,43.1,0,2
+"Eusergestes_arcticus","Eusergestes_arcticus","adult","demersal","continental shelf","diel (yes)","season (yes)","elongated","1",1,0,0,0,"schooling",52,0,0,3
+"Eusergestes_similis","Eusergestes_similis","adult","epipelagic","oceanic","diel (yes)","season (yes)","elongated","1",1,0,0,0,"schooling",45,76.5,0,1
+"Eutrigla_gurnardus","Eutrigla_gurnardus","juvenile","demersal","continental shelf","diel (no)","season (yes)","elongated","1",0,1,1,1,"schooling",4,0,0,4
+"Funchalia_taaningi","Funchalia_taaningi","adult","mesopelagic","continental shelf","diel (yes)","season (no)","elongated","1",0,0,0,0,"schooling",1.6,0.2,0.3,2
+"Gaidropsarus_vulgaris","Gaidropsarus_vulgaris","juvenile","demersal","continental shelf","diel (no)","season (no)","elongated","0",0,1,0,0,"solitary",8,0,0,7
+"Gennadas_elegans","Gennadas_elegans","juvenile","demersal","continental shelf","diel (yes)","season (no)","elongated","1",0,0,0,0,"schooling",4,0,0,2
+"Gonatopsis_borealis","Gonatopsis_borealis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,0,0,0,"schooling",28.8,15.8,10.8,2
+"Gonatus_onyx","Gonatus_onyx","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",1,0,0,5
+"Heterocarpus_laevigatus","Heterocarpus_laevigatus","adult","benthic","continental slope","diel (yes)","season (yes)","elongated","1",0,1,0,0,"schooling",3.2,0.3,0.1,3
+"Histioteuthis_bonnellii","Histioteuthis_bonnellii","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,1,0,0,"schooling",63.2,38.4,0,2
+"Histioteuthis_heteropsis","Histioteuthis_heteropsis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,1,0,0,"schooling",1.5,0.1,0,2
+"Histioteuthis_reversa","Histioteuthis_reversa","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,1,0,0,"schooling",28,2.05,0.86,2
+"Hyaloteuthis_pelagica","Hyaloteuthis_pelagica","adult","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,1,0,0,"schooling",2.9,0,0.5,2
+"Hyperia_galba","Hyperia_galba","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1",0,1,0,0,"schooling",5.714285714,0,0,1
+"Idotea_metallica","Idotea_metallica","adult","epipelagic","continental shelf","diel (no)","season (yes)","fusiform","1",0,0,0,0,"schooling",3.703703704,0,0,4
+"Illex_argentinus","Illex_argentinus","adult","epipelagic","continental slope","diel (yes)","season (yes)","fusiform","0",0,0,0,0,"schooling",12,0,0,1
+"Illex_coindetii","Illex_coindetii","juvenile","demersal","continental shelf","diel (yes)","season (no)","fusiform","0",0,1,0,0,"schooling",10.3,2.13,3.3,2
+"Janicella_spinicauda","Janicella_spinicauda","adult","bathypelagic","continental slope","diel (yes)","season (no)","elongated","1",1,1,0,0,"schooling",2.2,0.5,0.1,2
+"Janthina_exigua","Janthina_exigua","adult","epipelagic","oceanic","diel (no)","season (no)","globiform","1",0,0,0,0,"solitary",5.714285714,0,0,7
+"Lampanyctodes_hectoris","Lampanyctodes_hectoris","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0",0,0,1,0,"schooling",23.4,11.7,10.8,1
+"Lampanyctus_alatus","Lampanyctus_alatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",5.555555556,0,0,1
+"Lampanyctus_crocodilus","Lampanyctus_crocodilus","adult","bathypelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",48.57142857,0,0,1
+"Lampanyctus_intricarius","Lampanyctus_intricarius","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",37.03703704,0,0,1
+"Lepidocybium_flavobrunneum","Lepidocybium_flavobrunneum","juvenile","mesopelagic","continental slope","diel (yes)","season (yes)","fusiform","1",0,0,1,0,"schooling",1.6,0,0,5
+"Leptocotis_tenuirostris","Leptocotis_tenuirostris","adult","epipelagic","oceanic","diel (yes)","season (yes)","elongated","1",0,0,0,0,"schooling",2.1,0.1,0.1,1
+"Lestidiops_sphyrenoides","Lestidiops_sphyrenoides","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","elongated","0",1,0,1,0,"schooling",31.48148148,0,0,6
+"Lobianchia_gemellarii","Lobianchia_gemellarii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",4,0.1,0,1
+"Lycoteuthis_lorigera","Lycoteuthis_lorigera","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,0,0,0,"schooling",32.8,17.3,25.8,2
+"Lysiosquilla_tredecimdentata","Lysiosquilla_tredecimdentata","adult","benthic","coastal","diel (no)","season (no)","elongated","1",0,1,0,0,"solitary",7.9,0.9,0.7,7
+"Maurolicus_imperatorius","Maurolicus_imperatorius","adult","mesopelagic","oceanic","diel (yes)","season (yes)","compressiform","0",0,0,1,0,"schooling",4.2,0.2,0.1,1
+"Maurolicus_muelleri","Maurolicus_muelleri","adult","mesopelagic","continental shelf","diel (yes)","season (yes)","elongated","0",0,0,1,0,"schooling",85.71428571,78.5,24.6,3
+"Medialuna_californiensis","Medialuna_californiensis","juvenile","epipelagic","reef-associated","diel (no)","season (yes)","fusiform","1",0,1,1,1,"schooling",1.162790698,0.076511094,0.000609243,4
+"Meganyctiphanes_norvegica","Meganyctiphanes_norvegica","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1",1,0,0,0,"schooling",89.7,7.3,84.3,3
+"Merluccius_productus","Merluccius_productus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",100,19,30,3
+"Microgadus_proximus","Microgadus_proximus","adult","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0",0,0,1,1,"schooling",33.33333333,0.5,0,3
+"Micromesistius_poutassou","Micromesistius_poutassou","juvenile","epipelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,0,1,1,"schooling",72.4,0,68.5,2
+"Mullus_barbatus_barbatus","Mullus_barbatus_barbatus","juvenile","demersal","continental shelf","diel (no)","season (yes)","fusiform","1",0,1,1,1,"schooling",1.851851852,0,0,4
+"Myctophum_asperum","Myctophum_asperum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",2.2,0.9,0.6,1
+"Myctophum_punctatum","Myctophum_punctatum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",68.51851852,0,0,1
+"Nannobrachium_ritteri","Nannobrachium_ritteri","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",1.8,0.1,0,5
+"Nematoscelis_megalops","Nematoscelis_megalops","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1",1,0,0,0,"schooling",80,0.61,4.2,3
+"Nyctiphanes_australis","Nyctiphanes_australis","adult","epipelagic","coastal","diel (yes)","season (yes)","elongated","1",0,0,0,0,"schooling",27.9,0,20.4,1
+"Odontodactylus_scyllarus","Odontodactylus_scyllarus","adult","benthic","reef-associated","diel (no)","season (no)","elongated","0",0,1,0,0,"solitary",27,5.1,2.4,7
+"Ommastrephes_bartramii","Ommastrephes_bartramii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",5,1.6,6.2,6
+"Onychoteuthis_banksii","Onychoteuthis_banksii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",83.33333333,12.32,5.5,6
+"Onychoteuthis_borealijaponica","Onychoteuthis_borealijaponica","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",58.5,13.4,3.3,6
+"Oplophorus_typus","Oplophorus_typus","adult","mesopelagic","continental slope","diel (yes)","season (no)","elongated","1",0,0,0,0,"schooling",3.2,0.5,0.3,2
+"Ornithoteuthis_antillarum","Ornithoteuthis_antillarum","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","fusiform","0",0,0,0,0,"schooling",12,0,0,2
+"Ornithoteuthis_volatilis","Ornithoteuthis_volatilis","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",20.7,3.3,2.8,5
+"Ostracion_cubicus","Ostracion_cubicus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","globiform","0",0,1,0,0,"solitary",1.6,0.2,0,4
+"Palinurus_mauritanicus","Palinurus_mauritanicus","juvenile","benthic","continental shelf","diel (no)","season (yes)","globiform","1",0,1,0,0,"solitary",8,0,0,4
+"Parapronoe_crustulum","Parapronoe_crustulum","adult","epipelagic","continental shelf","diel (yes)","season (no)","fusiform","1",0,0,0,0,"schooling",1.5,0.2,0.1,2
+"Phrosina_semilunata","Phrosina_semilunata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","globiform","1",1,1,0,0,"schooling",65,4.2,6.5,3
+"Platyscelus_serratulus","Platyscelus_serratulus","adult","epipelagic","continental shelf","diel (yes)","season (yes)","globiform","1",0,0,0,0,"schooling",1.851851852,0.06,0.08,3
+"Pleuroncodes_planipes","Pleuroncodes_planipes","adult","demersal","continental shelf","diel (yes)","season (yes)","unique","1",0,0,0,0,"schooling",27.75,1.3,23.3,3
+"Pteroctopus_tetracirrhus","Pteroctopus_tetracirrhus","juvenile","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"solitary",24,3.4,0,3
+"Ranzania_laevis","Ranzania_laevis","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","compressiform","0",0,0,1,1,"solitary",2.2,1.3,1.6,6
+"Sardina_pilchardus","Sardina_pilchardus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","0",0,0,1,1,"schooling",3.4,5.8,7.68,6
+"Sardinops_sagax","Sardinops_sagax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",29.06976744,3.9020658,7.432769986,6
+"Scaeurgus_unicirrhus","Scaeurgus_unicirrhus","juvenile","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",5,1.6,0,3
+"Scomber_japonicus","Scomber_japonicus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1",0,1,1,1,"schooling",3,0.306044376,0.006092434,3
+"Scomber_scombrus","Scomber_scombrus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","fusiform","1",0,0,1,1,"schooling",1.1,0.4,0.2,3
+"Sebastes_diploproa","Sebastes_diploproa","juvenile","demersal","continental shelf","diel (no)","season (yes)","fusiform","1",0,1,1,1,"schooling",1,0,0,4
+"Sebastes_proriger","Sebastes_proriger","juvenile","epipelagic","continental shelf","diel (no)","season (no)","fusiform","1",0,1,1,1,"schooling",1,0,0,7
+"Sepietta_oweniana","Sepietta_oweniana","adult","benthic","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",2.857142857,0,0,3
+"Spondyliosoma_cantharus","Spondyliosoma_cantharus","juvenile","epipelagic","coastal","diel (no)","season (no)","fusiform","1",0,1,1,0,"schooling",1.851851852,0,0,7
+"Sternoptyx_diaphana","Sternoptyx_diaphana","adult","mesopelagic","oceanic","diel (no)","season (no)","compressiform","0",0,0,1,0,"solitary",44.44444444,0.1,0,7
+"Sthenoteuthis_oualaniensis","Sthenoteuthis_oualaniensis","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","fusiform","0",0,1,0,0,"schooling",17.9,7,8.5,4
+"Streetsia_challengeri","Streetsia_challengeri","adult","epipelagic","continental shelf","diel (yes)","season (yes)","elongated","1",0,0,0,0,"schooling",40,0.19,0.05,3
+"Stylocheiron_abbreviatum","Stylocheiron_abbreviatum","adult","epipelagic","coastal","diel (no)","season (yes)","elongated","1",1,0,0,0,"schooling",16.66666667,0,0,4
+"Symbolophorus_barnardi","Symbolophorus_barnardi","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0",0,0,1,0,"schooling",9,3.7,4.7,1
+"Systellaspis_debilis","Systellaspis_debilis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","1",0,0,0,0,"schooling",8,0,0,1
+"Tetragonurus_atlanticus","Tetragonurus_atlanticus","juvenile","epipelagic","oceanic","diel (no)","season (no)","elongated","1",0,1,0,0,"schooling",14.28571429,0,0,7
+"Thaleichthys_pacificus","Thaleichthys_pacificus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",33.33333333,0,0,6
+"Themisto_gaudichaudii","Themisto_gaudichaudii","adult","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1",0,0,0,0,"schooling",54.3,5.1,27.3,1
+"Todarodes_pacificus","Todarodes_pacificus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",1.5,0.2,0.4,3
+"Todarodes_sagittatus","Todarodes_sagittatus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0",1,1,0,0,"schooling",73.7,39.5,0.3,3
+"Todaropsis_eblanae","Todaropsis_eblanae","juvenile","demersal","continental shelf","diel (yes)","season (yes)","fusiform","0",0,1,0,0,"schooling",2.777777778,0,13.64,3
+"Trachinotus_ovatus","Trachinotus_ovatus","juvenile","epipelagic","coastal","diel (no)","season (yes)","fusiform","1",0,0,1,1,"schooling",1.851851852,0,0,4
+"Trachurus_japonicus","Trachurus_japonicus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","1",0,0,1,1,"schooling",5.6,0.8,13.9,6
+"Trachurus_symmetricus","Trachurus_symmetricus","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","fusiform","1",0,0,1,1,"schooling",40.69767442,13.69548585,27.53780356,6
+"Trachurus_trachurus","Trachurus_trachurus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","fusiform","1",0,0,1,1,"schooling",43,28.1,42.4,6
+"Triphoturus_mexicanus","Triphoturus_mexicanus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","fusiform","0",0,1,1,1,"schooling",6.976744186,0.459066565,0.000609243,1
+"Vinciguerria_lucetia","Vinciguerria_lucetia","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","elongated","0",0,0,1,1,"schooling",20.1,0,4.95,5

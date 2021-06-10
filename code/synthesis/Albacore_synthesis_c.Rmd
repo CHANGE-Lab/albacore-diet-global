@@ -768,7 +768,8 @@ ManyGLM traitglm
 
 prob_life_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                  R = prob_pred_life,
-                                 Q = traits_prob_try,
+                                 Q = traits_prob[,1:6],
+                                    #traits_prob_try,
                                  family=binomial(link = "logit")
                                     ) #note default is "manyglm"
 
@@ -827,7 +828,8 @@ Using binomial (logit link) function - glm1path traitglm
 
 prob_life_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                             R = prob_pred_life,
-                            Q = traits_prob_try,
+                            Q = traits_prob[,1:6],
+                              #traits_prob_try,
                             family=binomial(link = "logit"),
                             method="glm1path"
                             ) #note default is "manyglm"
@@ -879,7 +881,8 @@ Manyglm
 
 prob_ocean_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                  R = prob_ocean,
-                                 Q = traits_prob_try,
+                                 Q = traits_prob[,1:6],
+                                   #traits_prob_try,
                                  family=binomial(link = "logit")
                                     ) #note default is "manyglm"
 
@@ -1061,6 +1064,13 @@ Degrees of Freedom: 25706 Total (i.e. Null); 25534 Residual
 Residual Deviance:   3746
 AIC:                 4092
 
+
+```{r Model Outputs}
+
+summary(prob_ocean_spp)
+
+```
+
 ```{r Compare outputs - ocean basin}
 
 #anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
@@ -1077,7 +1087,7 @@ anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, p
 
 ```{r Compare outputs - ocean basin}
 
-anova.traitglm(prob_life_clusters_many, prob_life_trait_many, prob_life_spp)
+anova.ocean3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many, prob_life_spp)
 
 ```
 
