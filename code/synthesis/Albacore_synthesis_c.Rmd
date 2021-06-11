@@ -777,7 +777,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_
 
 SAVE OUTPUTS SO FAR
 
-```{r SAVE SPP MODELS}
+```{r SAVE CLUSTER MODELS}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
 
 saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
@@ -967,11 +967,19 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_LASSO_graph.jp
 
 ```
 
+SAVE OUTPUTS SO FAR
+
+```{r SAVE TRAIT MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+saveRDS(prob_life_trait_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_trait_many.rds")) 
+saveRDS(prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_trait_many.rds"))
+
+```
 
 #### Temperate / Tropical
 
 Manyglm (can do if needed)
-
 
 
 Using binomial (logit link) function.
@@ -1127,11 +1135,17 @@ prob_ocean_trait_many
 Comparing SPP -- Cluster --- Trait models for predator life stage
 
 ```{r Compare outputs - predator life, eval = FALSE, include = FALSE}
+
 anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
+saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
 
 anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
+saveRDS(anova.life2, file = here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
 
-anova.life3 = anova.traitglm(prob_life_spp, prob_life_clusters_many, prob_life_trait_many)
+#Does not want to run > 2 model comparisons, even though both previous worked
+#anova.life3 = anova.traitglm(prob_life_spp, prob_life_clusters_many, prob_life_trait_many)
+
+anova.life3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many) #prob_life_spp, 
 
 #greatest residual deviance with cluster analyses
 
@@ -1157,7 +1171,11 @@ Comparing SPP -- Cluster --- Trait models for ocean basin
 
 anova.ocean1 = anova.traitglm(prob_ocean_spp, prob_ocean_clusters_many)
 
+saveRDS(anova.ocean1, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean1.rds"))
+
 anova.ocean2 = anova.traitglm(prob_ocean_spp, prob_ocean_trait_many)
+
+saveRDS(anova.ocean2, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean2.rds"))
 
 anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
