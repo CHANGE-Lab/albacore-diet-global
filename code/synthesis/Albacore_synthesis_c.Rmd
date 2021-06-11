@@ -775,6 +775,16 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_
 
 ```
 
+SAVE OUTPUTS SO FAR
+
+```{r SAVE SPP MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
+saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
+
+```
+
 
 ### Trait models
 
@@ -891,19 +901,11 @@ Manyglm
 ```{r TraitGLM - predator age binom distribution}
 
 prob_ocean_trait_many <- traitglm(L = alb_prob_preyPA_mv,
-                                 R = prob_ocean,
+                                 R = alb_prob_covars$OceanBasin,
                                  Q = traits_prob[,1:6],
                                    #traits_prob_try,
                                  family=binomial(link = "logit")
                                     ) #note default is "manyglm"
-
-#Check model output - residuals TEST
-#qqnorm(residuals(prob_life_trait_many)[which(residuals(prob_life_trait_many)<10000)]); abline(c(0,1),col="red")
-
-#omit non-finite residuals FULL MODEL
-#resids.full = residuals(prob_life_trait_many)[is.finite((residuals(prob_life_trait_many)))]
-
-#plot(resids.full); abline(c(0,0),col="red")
 
 ```
 
@@ -1033,7 +1035,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_LASSO_graph.jpeg
 
 Cluster, trait, spp models each for (i) predator life stage and (ii) ocean basins
 
-**prob_life_spp**
+###### prob_life_spp
 
 ```{r Model Output == prob_life_spp}
 prob_life_spp
@@ -1049,7 +1051,7 @@ Degrees of Freedom: 25706 Total (i.e. Null); 25338 Residual
 Residual Deviance:   3329
 AIC:                 4067
 
-**prob_ocean_spp** 
+###### prob_ocean_spp
 
 ```{r Model Output == prob_ocean_spp}
 prob_ocean_spp
@@ -1065,7 +1067,7 @@ Degrees of Freedom: 25706 Total (i.e. Null); 24969 Residual
 Residual Deviance:   2978
 AIC:                 4454
 
-**prob_lat_spp**
+###### prob_lat_spp
 
 ```{r Model Output == prob_lat_spp}
 print(prob_lat_spp)
@@ -1080,13 +1082,13 @@ Degrees of Freedom: 25706 Total (i.e. Null); 25461 Residual
 Residual Deviance:   3656
 AIC:                 4148
 
-**prob_life_clusters_many**
+###### prob_life_clusters_many
 
 ```{r Model Output == prob_life_clusters_many}
 print(prob_life_clusters_many)
 ```
 
-**prob_ocean_clusters_many**
+###### prob_ocean_clusters_many
 
 ```{r Model Output == prob_ocean_clusters_many}
 prob_ocean_clusters_many
@@ -1105,42 +1107,57 @@ AIC:                 4092
 
 
 
-- prob_life_trait_many
+######  prob_life_trait_many
+
+```{r Model Output == prob_life_trait_many}
+prob_life_trait_many
+```
+
+######  prob_ocean_trait_many
+
+```{r Model Output == prob_ocean_trait_many}
+
+prob_ocean_trait_many
+
+```
 
 
-- prob_ocean_trait_many
+###### Compare outputs - life stage
 
-Call:  traitglm(L = alb_prob_preyPA_mv, R = prob_ocean, Q = traits_prob_try,      family = binomial(link = "logit")) 
-[1] "binomial(link=logit)"
+Comparing SPP -- Cluster --- Trait models for predator life stage
 
-Degrees of Freedom: 25706 Total (i.e. Null); 25534 Residual
+```{r Compare outputs - predator life, eval = FALSE, include = FALSE}
+anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
 
-                    l    
-2*log-likelihood:   -3746
-Residual Deviance:   3746
-AIC:                 4092
+anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
 
-```{r Compare outputs - predator life}
-
-#anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
-
-#anova.ocean1 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many)
-
-#anova.ocean2 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_spp)
-
-#anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
+anova.life3 = anova.traitglm(prob_life_spp, prob_life_clusters_many, prob_life_trait_many)
 
 #greatest residual deviance with cluster analyses
 
 ```
 
-```{r Compare outputs - ocean basin}
+Significant Difference between spp model and cluster model --> latter explained more deviance:
+
+Multivariate test:
+        Res.Df Df.diff   Dev Pr(>Dev)   
+Model 2  25570                          
+Model 1  25338     232 476.9     0.01 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Arguments: P-value calculated using 99 iterations via PIT-trap block resampling.
+
+###### Compare outputs - ocean
+
+Comparing SPP -- Cluster --- Trait models for ocean basin
+
+```{r Compare outputs - ocean basin, eval = FALSE, include = FALSE}
 
 #anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
-anova.ocean1 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many)
+anova.ocean1 = anova.traitglm(prob_ocean_spp, prob_ocean_clusters_many)
 
-anova.ocean2 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_spp)
+anova.ocean2 = anova.traitglm(prob_ocean_spp, prob_ocean_trait_many)
 
 anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
@@ -1148,16 +1165,16 @@ anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, p
 
 ```
 
-```{r Compare outputs - ocean basin}
+```{r Compare outputs - ocean basin, eval = FALSE, include = FALSE}
 
-anova.ocean3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many, prob_life_spp)
+#anova.ocean3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many, prob_life_spp)
 
 ```
 
 
 ## Ordination
 
-```{r Visualise - nMDS ordinations PA}
+```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
 
 
 #PA
@@ -1180,7 +1197,7 @@ text(pl, "species", col="blue", cex=0.9)
 
 Extract NMDS coordinates and associate with co-variates/grouping factors
 
-```{r Data scores for plotting - USE}
+```{r Data scores for plotting - USE, eval = FALSE, include = FALSE}
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 #Using the scores function from vegan to extract the site scores and convert to a data.frame
@@ -1200,7 +1217,7 @@ str(treatment.scores)
 Convex hull calculations
 For each ordination and set of grouping variables input to data scores chunk
 
-```{r Convex hulls - Predator Life Stage}
+```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
 # Taxonomic groups (specific)
 #Create convex hulls for the space occupied by each Taxonomic values
 unique(treatment.scores$pred_life)
@@ -1222,7 +1239,7 @@ str(hull.data.pred)
 
 NMDS plot
 
-```{r nMDS Pred Life, echo=TRUE}
+```{r nMDS Pred Life, eval = FALSE, include = FALSE}
 
 nMDS_prob_life <- ggplot() + 
   geom_polygon(data = hull.data.pred, 
@@ -1261,7 +1278,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/nMDS_prob_life.jpeg"), pl
 Convex Hull calculations
 
 
-```{r Convex hulls - Predator Life Stage}
+```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
 # Taxonomic groups (specific)
 #Create convex hulls for the space occupied by each Taxonomic values
 unique(treatment.scores$OceanBasin)
@@ -1283,7 +1300,7 @@ str(hull.data.ocean)
 
 nMDS for Ocean Basin
 
-```{r nMDS Ocean Basin, echo=TRUE}
+```{r nMDS Ocean Basin, eval = FALSE, include = FALSE}
 #nMDS plot for the assessmenet of global change (yes/no) and the drivers.
 #unique(treatment.scores$OceanBasin)
 
