@@ -676,15 +676,15 @@ morphology_comparison_prob_final
 #Save graph 1
 ggsave("prob_morph1.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), 
-       plot=morphology_comparison_prob1, width=13, height=10, dpi=300)
+       plot=morphology_comparison_prob1, width=14, height=10, dpi=300)
 #Save graph 2
 ggsave("prob_morph2.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph2.png'), 
-       plot=morphology_comparison_prob2, width=13, height=10, dpi=300)
+       plot=morphology_comparison_prob2, width=14, height=10, dpi=300)
 #Save graph 3
 ggsave("prob_morph3.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph3.png'), 
-       plot=morphology_comparison_prob_final, width=13, height=10, dpi=300)
+       plot=morphology_comparison_prob_final, width=14, height=10, dpi=300)
 
 
 ```
