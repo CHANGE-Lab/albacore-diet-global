@@ -394,6 +394,9 @@ ggsave("prob_fam_lab.png",
 
 prob_maxfo <- gheatmap(prob_class, my_prey_prob[,"maxFO", drop = FALSE], 
                        offset = 0, width = 0.05, colnames = FALSE) +
+  theme(#legend.position = c(0.5,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Percent frequency consumed (%)", na.value = 'grey')
 
 ggsave("prob_maxfo.png",
@@ -408,6 +411,9 @@ ggsave("prob_maxfo.png",
 
 prob_maxn <- gheatmap(prob_class, my_prey_prob[,"maxN", drop = FALSE], 
                       offset = 0, width = 0.05, colnames = FALSE) +
+  theme(#legend.position = c(0.5,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Percent abundance consumed (% n)", na.value = 'grey')
 
 ggsave("prob_maxn.png",
@@ -422,6 +428,9 @@ ggsave("prob_maxn.png",
 
 prob_maxm <- gheatmap(prob_class, my_prey_prob[,"maxM", drop = FALSE], 
                       offset = 0, width = 0.05, colnames = FALSE) +
+  theme(#legend.position = c(0.5,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Percent biomass consumed (% kg)", na.value = 'grey')
 
 ggsave("prob_maxm.png",
@@ -535,15 +544,20 @@ trophic_level, gregarious_primary and season_migrant
 
 behav_trophic_prob1 <- gheatmap(prob_basic, my_prey_prob[,'trophic_level', drop=FALSE], 
                                 offset=0, width=0.05, colnames = F) +
+  theme(legend.position = c(1.05,0.80),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Trophic Level", na.value = 'grey') +
-  #scale_fill_gradientn(name = "Trophic Level", colours = c('grey90', 'purple4'), na.value = 'white')+
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.04, y = -6.5, label = 'Trophic Level', angle = -85, size = 3)
+  annotate('text', x = 1.04, y = -6.5, label = 'Trophic Level', angle = -85, size = 4)
 
 behav_trophic_prob1.5 <- behav_trophic_prob1 + new_scale_fill()
 
 behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious_primary",drop=FALSE], 
                                 offset=0.05, width=0.05, colnames = F) +
+   theme(legend.position = c(1.05,0.65),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_viridis_d(name = "Gregariousness", 
                        direction = -1,
                        breaks = c("solitary", "shoaling","schooling"),
@@ -554,11 +568,14 @@ behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious
                        guide = guide_legend(order = 1), 
                        na.value = 'grey')+
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.09, y = -6.5, label = 'Gregariousness', angle = -85, size = 3)
+  annotate('text', x = 1.09, y = -6.5, label = 'Gregariousness', angle = -85, size = 4)
 
 behav_trophic_prob2.5 <- behav_trophic_prob2 + new_scale_fill()
 
 behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'season_migrant',drop=FALSE], offset=0.10, width=0.05, colnames = F) +
+  theme(legend.position = c(1.05,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_fill_manual(name = "Seasonal Migrant",
                     breaks = c("0", "1"),
                     limits = c("0", "1"),
@@ -567,7 +584,7 @@ behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'seas
                     na.value = 'grey') +
   theme(legend.position = c(1,0.5985))+
   scale_y_continuous(expand = c(0,4))+
-  annotate('text', x = 1.14, y = -6.5, label = 'Seasonal Migrant', angle = -85, size = 3)
+  annotate('text', x = 1.14, y = -6.5, label = 'Seasonal Migrant', angle = -85, size = 4)
 
 #Save graph 1
 ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), plot=behav_trophic_prob1, width=12, height=10, dpi=300)
