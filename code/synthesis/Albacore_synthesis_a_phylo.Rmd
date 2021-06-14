@@ -301,7 +301,9 @@ prob_class <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular'
         legend.text = element_text(size = 18))+
   scale_colour_manual('Class', aesthetics = c('colour'), values = pal_prob_class,
                       breaks = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"),
-                      labels = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"))## these are the only 3 classes in this dataset
+                      labels = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"))
+
+prob_class
 
 # plotting the tree with tip labels
 prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
@@ -313,13 +315,16 @@ prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circu
                       labels = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea")) +
   geom_tiplab(size = 2)
 
+prob_class_lab
+
+#Save class graphs
 ggsave("prob_class.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
-  plot=prob_class, width=10, height=10, dpi=300)
+  plot=prob_class, width=15, height=10, dpi=300)
 
 ggsave("prob_class_lab.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
-  plot=prob_class_lab, width=8, height=8, dpi=300)
+  plot=prob_class_lab, width=15, height=12, dpi=300)
 
 
 ```
