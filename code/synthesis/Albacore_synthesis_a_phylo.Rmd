@@ -2,29 +2,772 @@
 title: "Albacore Diet Synthesis A - Phylo Graphs"
 author: "Natasha Hardy"
 date: "15/04/2021"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library("rstudioapi")
+setwd(dirname(getActiveDocumentContext()$path))
 ```
 
-## R Markdown
+## Set-up your working environment
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+**Note:** Code issue has arisen discussed here: https://stackoverflow.com/questions/26619434/install-an-old-version-of-dplyr-0-12-in-r
+Here we will be updating some of the phylogenetic packages.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r working environment, echo=FALSE, results=hide}
+#getwd()
+#eval=FALSE, 
 
-```{r cars}
-summary(cars)
+#remotes::install_github("YuLab-SMU/ggtree")
+
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+
+# graphics
+
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(ggnewscale)
+library(ggimage)
+library(reshape2)
+library(pander)
+library(gridExtra)
+library(captioner)
+library(unmarked)
+library(cowplot)
+library(gtable)
+library(viridis)
+library(PNWColors)
+library(RColorBrewer)
+
+# phylogenetic & other tools
+library(ape)
+library(Biostrings)
+library(raster)
+library(dismo)
+library(patchwork)
+library(ggtree)
+library(ggstance)
+library(geiger)
+library(rotl) #for phylogenetic analyses, get all the species? from Hinchliff et al. 2015 PNAS
+library(phylobase)
+library(phytools)
+library(phangorn)
+library(stringr)
+library(taxize)
+library(treeio)
+
+
+#Install packages if needed
+
+#remotes::install_github("eliocamp/ggnewscale@dev")
+
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+
+#BiocManager::install("Biostrings")
+#BiocManager::install("ggtree")
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+## Load Data
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Using combination of my trial code and Matt Savoca and company's code to build a phylo tree with associated trait and %FO data
+
+```{r load prey info data}
+
+#data contains sp list, class, order & family + traits.
+
+#Probable life stage data
+my_prey_prob = read.csv(here("./data/output_data/prey_probable_traits.csv"), header=TRUE) %>%
+  dplyr::select(prey_sp, prey_class:prey_family, life_stage, vert_habitat:maxM, -X) %>%
+  filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
+#298 species and 32 variables
+str(my_prey_prob)
+
+sapply(my_prey_prob, class)
+## these need to be factors to work on the trees properly
+my_prey_prob[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade")] <- lapply(my_prey_prob[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade")], factor)
+
+my_prey_prob$maxFO[my_prey_prob$maxFO == 0.00] <- NA
+my_prey_prob$maxN[my_prey_prob$maxN == 0.00] <- NA
+my_prey_prob$maxM[my_prey_prob$maxM == 0.00] <- NA
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+**NOTES**
+A lot of troubleshooting later and I found that the species list needs to go on the far left side of the data, all other data/factors need to be added to the RHS of the species list
+
+## Tree Build
+
+Building the basic tree
+
+```{r building basic tree}
+
+# Tree build 1
+breaks <- c(seq(1,nrow(my_prey_prob),50),nrow(my_prey_prob)+1)  # why are we doing this?
+#looking up each of the species in dataset to a phylogeny, doing it by sets of 50
+#if there's an NA (species that didn't match a value in known phylogeny), breaks the whole chunk of 50 species
+
+for (i in 1:(length(breaks)-1)){
+  taxa <- as.character(my_prey_prob$prey_sp[breaks[i]:(breaks[i+1]-1)])
+  taxa <- taxa[taxa != "" & !is.na(taxa)]
+
+  resolved_namest <- tnrs_match_names(taxa)                          # I think this is where all the extra species fall out
+  resolved_namest <- resolved_namest[!is.na(resolved_namest$unique_name),]  # ignore an NA
+  if (i==1){
+    resolved_namess <- resolved_namest
+  } else {
+    resolved_namess <- rbind(resolved_namess, resolved_namest)
+  }
+}
+resolved_names <- resolved_namess
+resolved_names <- resolved_names[resolved_names$flags!="INCERTAE_SEDIS_INHERITED",]
+
+#original tree based on simple taxon datset
+my_tree_prob <- tol_induced_subtree(ott_ids = resolved_names$ott_id, label_format = "name")
+
+my_tree_prob$tip.label<-gsub("_"," ",my_tree_prob$tip.label) # removes underscore between genus and species names
+my_tree_prob$tip.label<-str_extract(my_tree_prob$tip.label, "[A-Z][a-z]+ [a-z]+")
+
+my_tree_prob <- compute.brlen(my_tree_prob, method = "Grafen", power = 1/2) #add branch lengths to my tree using the Grafen (1989) method
+my_tree_prob <- ladderize(my_tree_prob, right = TRUE)
+
+View(my_tree_prob)
+
+# SAVE TREE ----
+write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
+```
+
+``` {r Load tree}
+# Reload tree
+
+my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
+
+
+```
+
+## Sort out the tree for graphing
+
+```{r Prep tree to plot #1}
+
+#Edit tip labels
+my_tree_prob$tip.label <- as.factor(sub("_", " ", my_tree_prob$tip.label))
+
+
+# dataframe dimensions issue? ----
+# according to Matt's code dataframe dimension should not be an issue when parsing data to tip labels...
+# Try dimension solution
+#we have a data frame dimension issue when plotting our data values onto the tree
+nrow(my_prey_prob) == length(my_tree_prob$tip.label) #TRUE
+nrow(my_prey_prob) #298
+length(my_tree_prob$tip.label) #298
+#Need to fix nrow issue
+
+```
+
+
+```{r Prep tree to plot #2}
+
+#my_prey_prob$prey_sp <- gsub(" ", "_", my_prey_prob$prey_sp) #for ease of plotting take away " "
+
+tree_names_prob = data.frame(sort(my_tree_prob$tip.label)) #sort the species names from the phylo tree
+#Still 301 spp
+## sort brings tree_names_prob from 301 to 300 because of an NA in the tip labels
+prey_names_prob = data.frame(sort(my_prey_prob$prey_sp)) #sort the species names from the original list
+
+nrow(tree_names_prob); nrow(prey_names_prob) #one species didn't make it to the tree
+
+## here we check the names that are in the prey data but not on the tip labels of the tree
+names_not_in_tree_prob = prey_names_prob %>%
+  filter(sort.my_prey_prob.prey_sp. %notin% tree_names_prob$sort.my_tree_prob.tip.label.)
+
+## check names that are in the tree tip labels but not in the prey data
+names_not_in_prey_prob =  tree_names_prob %>%
+  filter(sort.my_tree_prob.tip.label. %notin% prey_names_prob$sort.my_prey_prob.prey_sp.)
+
+## here we decide to match the names in the prey data to the tip labels, so we create a dataset with the names in the prey data that are in the tree (I see this looks kind of confusing with the double negative, the names not not in the tree). These are the names that do not need to be fixed, which we will bind the fixed names to afterwards so we do not get doubles of the same names (with different spelling).
+my_prey_keep_prob = my_prey_prob %>%
+  filter(prey_sp %notin% names_not_in_tree_prob$sort.my_prey_prob.prey_sp.)
+
+## these are the names we are going to fix to match the tip labels of the tree, given they are synonyms/misspellings. These are the same names in 'names_not_in_tree_adult', except they now have the columns of data which will allow use to merge it to 'my_prey_keep_adult' after we fix the names.
+my_prey_fix_prob = my_prey_prob %>%
+  filter(prey_sp %in% names_not_in_tree_prob$sort.my_prey_prob.prey_sp.)
+## this step isn't necessary, but it does make it easier in the names are in alphabetical order
+my_prey_fix_prob = my_prey_fix_prob[order(my_prey_fix_prob$prey_sp),]
+# the names have to be characters for the name reassignment to work, it will give an error if we don't do this (they are factors before this)
+my_prey_fix_prob$prey_sp <- as.character(my_prey_fix_prob$prey_sp)
+## we make these into x2 and y2 because it makes it much easier to write the next section
+x2 = my_prey_fix_prob
+y2 = as.vector(names_not_in_prey_prob$sort.my_tree_prob.tip.label.)
+
+#here we look at the names in both of the lists and see if there are misspellings/synonyms in the names that caused the discrepancy between the name lists. As you can see this is true for all of the species in these lists expect one. 'Diplodus sargus' does not have a match in the tree, since the only other tip labels left in the tree is an NA after the rest of the reassignments.
+# if you want to see how this works you can run individual pieces of this before running the whole thing. For example x2[4,1] is "Leuroglossus stilbius", and y2[1] is "Bathylagus stilbius". Then after running this code we match the name in the prey data (x2) to the names in the tree (y2), so "Leuroglossus stilbius" becomes "Bathylagus stilbius".
+x2[1,1] = y2[4]; x2[2,1] = y2[1]; x2[3,1] = y2[2]; x2[4,1] = y2[3]; 
+x2[5,1] = y2[5]; x2[6,1] = y2[7]; x2[7,1] = y2[6];
+
+# we need to do the opposite for one of the names here "Diplodus sargus", which is in the prey data but not in the tip labels. So, we are replacing the NA in the tip labels
+tip_labels_prob <- as.vector(my_tree_prob$tip.label)
+tip_labels_prob[28] ##this is the NA we want to replace
+tip_labels_prob[28] = "Diplodus sargus"
+## replacing the tip labels with the additional name
+my_tree_prob$tip.label <- tip_labels_prob
+
+# here we bind the fixed names to the names that didnt need to be fixed
+my_prey_prob = rbind(my_prey_keep_prob, x2)
+#here we get rid of any of the names in the data that didn't have a match in the tree tip labels, which was only 'Diplodus sargus'
+my_prey_prob = my_prey_prob %>%
+  filter(prey_sp %in% my_tree_prob$tip.label)
+nrow(my_prey_prob);length(my_tree_prob$tip.label) ## one of those tip labels is an NA
+
+#the prey names need to be the rownames for the heatmap to work on the tree
+rownames(my_prey_prob) <- my_prey_prob$prey_sp
+
+#tip labels need to be characters to pipe onto the tree
+my_tree_prob$tip.label <- as.character(my_tree_prob$tip.label)
+str(my_tree_prob)
+
+```
+
+## Paper figures - the list
+
+### Basic phylogenies
+
+```{r Figure A Prey species basic}
+#Plot without and with species labels
+
+#Phylotree without labels
+prob_basic = ggtree(my_tree_prob, layout = 'circular')
+
+#Phylotree with species labels
+prob_basic_lab = ggtree(my_tree_prob, layout = 'circular') + geom_tiplab(size = 2)
+
+#problems saving figures from here on
+
+ggsave("prob_basic.png",
+  #here('./output_figures/phylos/prey_prob/prob_basic.png'), 
+  plot=prob_basic, width=8, height=8, dpi=300)
+
+ggsave("prob_basic_lab.png",
+  #here('./output_figures/phylos/prey_prob/prob_basic_lab.png'), 
+  plot=prob_basic_lab, width=10, height=10, dpi=300)
+
+```
+
+```{r Figure B Prey Class basic}
+#Use basic + prey_sp labels + prey_class
+
+# creating a dataset that splits the species data by class
+prey_class_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_class)
+unique(my_prey_prob$prey_class)
+# splitting the tree species by class
+my_tree_prob_class <- groupOTU(my_tree_prob, prey_class_prob_info)
+as.character(sort(unique(my_prey_prob$prey_class)))
+
+#creating a palette for the class split
+#pal_prob_class = c("grey40", '#0047ab', '#751308', '#4B0082', '#F05E23', '#013220', '#B80F0A', "#66C2A5", "#3288BD") ## the grey40 is needed for a branch between branches, but doesn't assign to a class
+
+
+pal_prob_class = c("grey40", ## the grey40 is needed for a branch between branches, but doesn't assign to a class
+                    '#0047ab', #Actinopterygii
+                    #'#751308', #Branchiopoda #older teal colour "#66C2A5" #Not in prob data just was used for adult data
+                    '#4B0082', #Cephalopoda
+                    "#AD15E2", #Gastropoda #old orange '#F05E23'
+                    '#B80F0A', #Hexanauplia
+                    "#773405", #Hydrozoa #'#013220'
+                    "#E86103", #Malacostraca '
+                    "#3288BD"  #Thaliacea
+                    )
+
+## plotting the tree without tip labels
+
+prob_class <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
+  theme(legend.position = c(1,0.80),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_colour_manual('Class', aesthetics = c('colour'), values = pal_prob_class,
+                      breaks = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"),
+                      labels = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"))## these are the only 3 classes in this dataset
+
+# plotting the tree with tip labels
+prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
+  theme(legend.position = c(1,0.80),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_colour_manual('Class', aesthetics = c('colour', 'fill'), values = pal_prob_class,
+                      breaks = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea"),
+                      labels = c("Actinopterygii", "Cephalopoda","Gastropoda", "Hexanauplia", "Hydrozoa", "Malacostraca","Thaliacea")) +
+  geom_tiplab(size = 2)
+
+ggsave("prob_class.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
+  plot=prob_class, width=10, height=10, dpi=300)
+
+ggsave("prob_class_lab.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
+  plot=prob_class_lab, width=8, height=8, dpi=300)
+
+
+```
+
+```{r Figure C Prey order basic}
+#Use basic + prey_sp labels + prey_order
+
+# creating a dataset that splits the species data by order
+prey_order_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_order)
+
+# splitting the tree species by order
+my_tree_prob_order <- groupOTU(my_tree_prob, prey_order_prob_info)
+
+#checking number of order, in a format easy to copy and paste to scale_color_manual()
+as.character(sort(unique(my_prey_prob$prey_order))) ## there are 35 orders, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
+
+pal_prob_order = pnw_palette("Starfish", 43)
+
+#View(my_tree_adult_order)
+
+## plotting the tree (needs a lot of work)
+prob_order_lab <- ggtree(my_tree_prob_order, aes(color = group), layout = 'circular')  +
+  geom_tiplab(size = 2) +
+  #theme(legend.position = 'none') +
+  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_order)
+
+ggsave("prob_order_lab.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_order_lab.png'), 
+  plot=prob_order_lab, width=12, height=8, dpi=300)
+
+#TO DO:
+#1 This graph is currently a lower priority and we may not get to this, however if we do, I there is no way we can have a legend that is so large and colours that are barely differentiated. I suggest not changing the colours as they clearly show different groups just not which ones are which using the legend. Is there any way to plot the "order" names near the branch of the tree or in a ring around the tree?
+#2 Also fix legend labels
+
+```
+
+```{r Figure D Prey family basic}
+#Use basic + prey_sp labels + prey_family
+
+# creating a dataset that splits the species data by family
+prey_family_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_family)
+
+# splitting the tree species by family
+my_tree_prob_family <- groupOTU(my_tree_prob, prey_family_prob_info)
+
+#checking number of family, in a format easy to copy and paste to scale_color_manual()
+as.character(sort(unique(my_prey_prob$prey_family))) ## there are 130 families, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
+pal_prob_fam = pnw_palette("Starfish", 138)
+
+## plotting the tree (needs a lot of work)
+prob_fam_lab <- ggtree(my_tree_prob_family, aes(color = group), layout = 'circular')  +
+  geom_tiplab(size = 2)+  
+  #theme(legend.position = 'none') +
+  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_fam)
+
+ggsave("prob_fam_lab.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_fam_lab.png'), 
+       plot=prob_fam_lab, width=20, height=8, dpi=300)
+
+#TO-DO:
+#Similar problem as for order, but low priority
+```
+
+### Diet use data
+
+```{r Figure E Frequency Occurrence}
+#Overlay maxFO (frequency of occurrence data) on a basic prey tree coloured by Class
+#Use prey_class, maxFO
+
+prob_maxfo <- gheatmap(prob_class, my_prey_prob[,"maxFO", drop = FALSE], 
+                       offset = 0, width = 0.05, colnames = FALSE) +
+  scale_fill_viridis_c(name = "Percent frequency consumed (%)", na.value = 'grey')
+
+ggsave("prob_maxfo.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxfo.png'), 
+       plot=prob_maxfo, width=10, height=8, dpi=300)
+
+```
+
+```{r Figure F Abundance}
+#Overlay maxN (abundance data) on a basic prey tree coloured by Class
+#Use prey_class, maxN
+
+prob_maxn <- gheatmap(prob_class, my_prey_prob[,"maxN", drop = FALSE], 
+                      offset = 0, width = 0.05, colnames = FALSE) +
+  scale_fill_viridis_c(name = "Percent abundance consumed (% n)", na.value = 'grey')
+
+ggsave("prob_maxn.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxn.png'), 
+       plot=prob_maxn, width=10, height=8, dpi=300)
+
+```
+
+```{r Figure G Mass}
+#Overlay maxM (biomass data) on a basic prey tree coloured by Class
+#Use prey_class, maxM
+
+prob_maxm <- gheatmap(prob_class, my_prey_prob[,"maxM", drop = FALSE], 
+                      offset = 0, width = 0.05, colnames = FALSE) +
+  scale_fill_viridis_c(name = "Percent biomass consumed (% kg)", na.value = 'grey')
+
+ggsave("prob_maxm.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxm.png'),
+       plot=prob_maxm, width=10, height=8, dpi=300)
+
+
+```
+
+### Trait data
+
+For habitat use traits:
+We are going to plot multiple rings of data around the phylogenetic trees using vert_habitat, horz_habitat, diel_migrant (change to yes/no), refuge
+
+```{r Figure H Habitat use traits}
+
+#creating this plot one iteration at a time. Adding one layer of the heatmap, then allowing for another legend on the plot, and then another layer of the heatmap
+
+habitat_traits_prob1 <- gheatmap(prob_basic, my_prey_prob[, 'vert_habitat',drop=FALSE], 
+                                 offset= 0, width=0.05, colnames = FALSE) +
+  scale_fill_viridis_d(name = "Vertical Habitat (VH)", 
+                       direction = -1, 
+                       breaks = c("benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic"),
+                       limits = c("benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic"), 
+                       na.translate = TRUE, 
+                       option = 'D', 
+                       na.value = 'grey')+
+  theme(legend.position = c(1,0.80),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+ #this opens up the gap for the Vertical habitat label around the tree
+  annotate('text', x = 1.03, y = -7, label = 'VH', angle = -85, size = 4)
+
+habitat_traits_prob1.5 <- habitat_traits_prob1 + new_scale_fill()
+
+habitat_traits_prob2 <- gheatmap(habitat_traits_prob1.5, my_prey_prob[ ,'horz_habitat',drop=FALSE], 
+                                 offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Horizontal Habitat (HH)", 
+                       option = "D", 
+                       direction = -1,
+                       breaks = c("reef-associated", "coastal", "continental shelf","continental slope", "oceanic"),
+                       limits = c("reef-associated", "coastal", "continental shelf","continental slope", "oceanic"),
+                       na.translate = TRUE, 
+                       na.value = 'grey')+
+  theme(legend.position = c(1,0.683),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+
+annotate('text', x = 1.08, y = -7.1, label = 'HH', angle = -85, size = 4)
+
+habitat_traits_prob2.5 <- habitat_traits_prob2 + new_scale_fill()
+
+habitat_traits_prob3 <- gheatmap(habitat_traits_prob2.5, my_prey_prob[ , 'diel_migrant',drop=FALSE], offset=0.10, width=0.05, colnames = F) +
+  scale_fill_manual(name = "Diel Migrant (DM)",
+                    breaks = c("0", "1"),
+                    limits = c("0", "1"),
+                    labels = c("no","yes"),
+                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
+                    na.value = 'grey')+
+  theme(legend.position = c(1,0.5985),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.13, y = -7.5, label = 'DM', angle = -85, size = 4)
+
+habitat_traits_prob3.5 <- habitat_traits_prob3 + new_scale_fill()
+
+habitat_traits_prob_final <- gheatmap(habitat_traits_prob3.5, my_prey_prob[ ,'refuge',drop=FALSE], offset=0.15, width=0.05, colnames = F)+
+  scale_fill_manual(name = "Refuge (RF)",
+                    breaks = c("0", "1"),
+                    limits = c("0", "1"),
+                    labels = c("no", "yes"),
+                    values = c("1"="#FDE725FF", "0"="#39568CFF"),
+                    na.value = 'grey')+
+  theme(legend.position = c(1,0.531),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.18, y = -7.5, label = 'RF', angle = -85, size = 4)
+
+#Check graph
+habitat_traits_prob_final
+
+#Save vertical graph
+ggsave("prob_hab1.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab1.png'), 
+       plot=habitat_traits_prob1, width=13, height=10, dpi=300)
+#save vert + horizontal graph
+ggsave("prob_hab2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab2.png'), 
+       plot=habitat_traits_prob2, width=13, height=10, dpi=300)
+##PROBLEM STARTS HERE
+#save vert + horizontal + diel graph
+ggsave("prob_hab3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
+       plot=habitat_traits_prob3, width=13, height=10, dpi=300)
+#save vert + horizontal + diel graph
+ggsave("prob_hab4.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
+       plot=habitat_traits_prob_final, width=13, height=10, dpi=300)
+
+#Some issues with the legend plotting to the graph?
+#Namely the issue is for the vertical and horizontal habitat association values disappear once the diel + refuge use get added.
+
+```
+
+For seasonal, trophic & aggregation behaviour use:
+trophic_level, gregarious_primary and season_migrant
+
+```{r Figure I Behaviour}
+
+behav_trophic_prob1 <- gheatmap(prob_basic, my_prey_prob[,'trophic_level', drop=FALSE], 
+                                offset=0, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Trophic Level", na.value = 'grey') +
+  #scale_fill_gradientn(name = "Trophic Level", colours = c('grey90', 'purple4'), na.value = 'white')+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.04, y = -6.5, label = 'Trophic Level', angle = -85, size = 3)
+
+behav_trophic_prob1.5 <- behav_trophic_prob1 + new_scale_fill()
+
+behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious_primary",drop=FALSE], 
+                                offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Gregariousness", 
+                       direction = -1,
+                       breaks = c("solitary", "shoaling","schooling"),
+                       limits = c("solitary", "shoaling","schooling"),
+                       na.translate = TRUE,
+                       option = "D", #'magma',
+                       begin = 0.2,end = 0.8,
+                       guide = guide_legend(order = 1), 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.09, y = -6.5, label = 'Gregariousness', angle = -85, size = 3)
+
+behav_trophic_prob2.5 <- behav_trophic_prob2 + new_scale_fill()
+
+behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'season_migrant',drop=FALSE], offset=0.10, width=0.05, colnames = F) +
+  scale_fill_manual(name = "Seasonal Migrant",
+                    breaks = c("0", "1"),
+                    limits = c("0", "1"),
+                    labels = c("no", "yes"),
+                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
+                    na.value = 'grey') +
+  theme(legend.position = c(1,0.5985))+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.14, y = -6.5, label = 'Seasonal Migrant', angle = -85, size = 3)
+
+#Save graph 1
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), plot=behav_trophic_prob1, width=12, height=10, dpi=300)
+#Save graph 2
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav2.png'), plot=behav_trophic_prob2, width=12, height=10, dpi=300)
+#Save graph 3
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav3.png'), plot=behav_trophic_prob_final, width=12, height=10, dpi=300)
+
+
+```
+
+For morphological (shape) traits:
+Use body_shape, b_shape_r and eye_body_r
+
+```{r Figure J Morpholigical - shape}
+
+morphology_comparison_prob1 <- gheatmap(prob_basic, my_prey_prob[ ,'body_shape',drop=FALSE],
+                                        offset=0, width=0.05,font.size=2, colnames = F) +
+  scale_fill_viridis_d(name = "Body Shape", 
+                       option = 'C',
+                       breaks = c("eel-like", "elongated", "fusiform", "compressiform", "depressiform",
+                                  "globiform", "unique"),
+                       limits = c("eel-like", "elongated", "fusiform", "compressiform", "depressiform",
+                                  "globiform", "unique"),
+                       guide = guide_legend(order = 1), 
+                       na.value = 'grey')+
+  theme(legend.position = c(1.05,0.71))+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.04, y = -6.5, label = 'Body Shape', angle = -85, size = 3)
+
+morphology_comparison_prob1.5 <- morphology_comparison_prob1 + new_scale_fill()
+
+morphology_comparison_prob2 <- gheatmap(morphology_comparison_prob1.5, my_prey_prob[ ,'b_shape_r',drop=FALSE], 
+                                        offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Body Shape Ratio", 
+                       option = 'C', limits=c(0,15), 
+                       oob = scales::squish, 
+                       breaks = c(0,5,10,15), 
+                       labels = c(0,5,10,"15+"), 
+                       na.value = 'grey')+
+  theme(legend.position = c(1.05,0.605))+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.095, y = -6.5, label = 'Body Shape Ratio', angle = -85, size = 3)
+
+morphology_comparison_prob2.5 <- morphology_comparison_prob2 + new_scale_fill()
+
+morphology_comparison_prob_final <- gheatmap(morphology_comparison_prob2.5, my_prey_prob[ ,'eye_body_r',drop=FALSE], 
+                                             offset=0.10, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Eye-Body Ratio", 
+                       option = 'C',
+                       limits=c(0,3), 
+                       oob = scales::squish, 
+                       breaks = c(0,1,2,3),
+                       labels = c(0,1,2,"3+"), 
+                       na.value = 'grey')+
+  theme(legend.position = c(1.05,0.499))+
+  scale_y_continuous(expand = c(0,3.5))+
+annotate('text', x = 1.15, y = -6.5, label = 'Eye-Body Ratio', angle = -85, size = 3)
+
+#Save graph 1
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), plot=morphology_comparison_prob1, width=13, height=10, dpi=300)
+#Save graph 2
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph2.png'), plot=morphology_comparison_prob2, width=13, height=10, dpi=300)
+#Save graph 3
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph3.png'), plot=morphology_comparison_prob_final, width=13, height=10, dpi=300)
+
+
+
+```
+
+For morphological (defense/avoidance) traits:
+Use phys_defense, countershade, col_disrupt, silver and transparent (in that order)
+
+```{r Figure K Morphological - defense/avoid}
+
+morphology_binary_prob1 <- gheatmap(prob_basic, my_prey_prob[ ,'phys_defense',drop=FALSE], offset=0, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Physical Defence", #"\nCountershading\nColour disruption\nSilver\nTransparent",
+                       option = 'C',
+                       breaks = c("1", "0"),
+                       limits = c("1", "0"),
+                       labels = c("yes", "no"),
+                       begin=0.5, end=0.1, 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4.5))+
+  annotate('text', x = 1.04, y = -8.5, label = 'Physical Defence', angle = -85, size = 3)
+
+morphology_binary_prob2 <- gheatmap(morphology_binary_prob1, my_prey_prob[ ,'countershade',drop=FALSE], 
+                                    offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Physical Defence\nCountershading", #"\nColour disruption\nSilver\nTransparent", 
+                       option = 'C',
+                       breaks = c("1", "0"),
+                       limits = c("1", "0"),
+                       begin=0.5, end=0.1, 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4.5))+
+  annotate('text', x = 1.09, y = -8.5, label = 'Countershading', angle = -85, size = 3)
+
+morphology_binary_prob3 <- gheatmap(morphology_binary_prob2, my_prey_prob[ ,'col_disrupt',drop=FALSE],
+                                    offset=0.10, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Physical Defence\nCountershading\nColour disruption", #"\nSilver\nTransparent", 
+                       option = 'C',
+                       breaks = c("1", "0"),
+                       limits = c("1", "0"),
+                       labels = c("yes", "no"),
+                       begin=0.5, end=0.1, 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4.5))+
+  annotate('text', x = 1.14, y = -8.5, label = 'Colour Disruption', angle = -85, size = 3)
+
+morphology_binary_prob4 <- gheatmap(morphology_binary_prob3, my_prey_prob[ ,'silver',drop=FALSE], 
+                                    offset=0.15, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Physical Defence\nCountershading\nColour disruption\nSilver", #"\nTransparent", 
+                       option = 'C',
+                       breaks = c("1", "0"),
+                       limits = c("1", "0"),
+                       labels = c("yes", "no"),
+                       begin=0.5, end=0.1, 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4.5))+
+  annotate('text', x = 1.19, y = -8.5, label = 'Silver', angle = -85, size = 3)
+
+morphology_binary_prob_final <- gheatmap(morphology_binary_prob4, my_prey_prob[ ,'transparent',drop=FALSE], 
+                                         offset=0.20, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Physical Defence\nCountershading\nColour disruption\nSilver\nTransparent", 
+                       option = 'C',
+                       breaks = c("1", "0"),
+                       limits = c("1", "0"),
+                       labels = c("yes", "no"),
+                       begin=0.5, end=0.1, 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4.5))+
+  annotate('text', x = 1.24, y = -8.5, label = 'Transparent', angle = -85, size = 3)
+
+#Save graph 1
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
+#Save graph 2
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
+#Save graph 3
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
+#Save graph 4
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
+#Save graph 5
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
+
+
+```
+
+For Prey nutritional quality
+Use energy_density, percent_protein, percent_lipid
+
+```{r Figure L Prey Nutritional Quality}
+
+nutritional_quality_prob1 <- gheatmap(prob_basic, my_prey_prob[,'energy_density',drop=FALSE], 
+                                      offset=0, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Energy density (unit)", 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.04, y = -6.5, label = 'Energy density', angle = -85, size = 3)
+
+nutritional_quality_prob1.5 <- nutritional_quality_prob1 + new_scale_fill()
+
+nutritional_quality_prob2 <- gheatmap(nutritional_quality_prob1.5, my_prey_prob[,"percent_protein",drop=FALSE], 
+                                      offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Percent protein (%)", 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.09, y = -6.5, label = 'Percent protein (%)', angle = -85, size = 3)
+
+nutritional_quality_prob2.5 <- nutritional_quality_prob2 + new_scale_fill()
+
+nutritional_quality_prob_final <- gheatmap(nutritional_quality_prob2.5, my_prey_prob[ ,'percent_lipid',drop=FALSE], 
+                                           offset=0.10, width=0.05, colnames = F) +
+  scale_fill_viridis_c(name = "Percent lipid (%)", 
+                       na.value = 'grey') +
+  theme(legend.position = c(1,0.5985))+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.14, y = -6.5, label = 'Percent lipid (%)', angle = -85, size = 3)
+
+#Save graph 1
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
+#Save graph 2
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_protein.png'), plot=nutritional_quality_prob2, width=12, height=10, dpi=300)
+#Save graph 3
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_lipid.png'), plot=nutritional_quality_prob_final, width=12, height=10, dpi=300)
+
+
+```
+
+For Fisheries status use: fisheries_status
+```{r Figure M Fisheries Status}
+
+fishery_prob <- gheatmap(prob_basic, my_prey_prob[ ,'fisheries_status',drop=FALSE], 
+                         offset=0, width=0.05,font.size=2, colnames = F) +
+  scale_fill_viridis_d(name = "Fisheries status", 
+                       option = 'C',
+                       breaks = c("none","aquarium", "aquaculture", "potential","minor commercial",
+                                  "commercial", "highly commercial"),
+                       limits = c("none","aquarium", "aquaculture", "potential","minor commercial",
+                                  "commercial", "highly commercial"))+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.04, y = -6.5, label = 'Fishery status', angle = -85, size = 3)
+
+#Save graph
+ggsave(here('./output_figures/diet_phylo/prey_prob/prob_fishery.png'), plot=fishery_prob, width=12, height=10, dpi=300)
+
+```

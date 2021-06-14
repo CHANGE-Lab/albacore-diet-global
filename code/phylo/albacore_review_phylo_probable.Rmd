@@ -8,14 +8,15 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/Helder/Documents/GitHub/Tuna_postdoc")
+
 ```
 
 ## Set-up your working environment
 
 ```{r working environment, echo=FALSE}
-#getwd()
+getwd()
 #eval=FALSE, 
 
 # general
