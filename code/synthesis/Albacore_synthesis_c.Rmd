@@ -497,7 +497,6 @@ print(prob_life_spp_graph)
 
 ```
 
-
 ```{r TraitGLM - SPP - ocean manyglm binom}
 
 prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
@@ -526,6 +525,17 @@ SAVE OUTPUTS SO FAR
 saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
 saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
 saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
+
+```
+
+RELOAD OUTPUTS BACK IN
+
+```{r READ IN SPP MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+prob_life_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
+prob_ocean_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
+prob_lat_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
 
 ```
 
@@ -653,8 +663,6 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_cluster7_LASSO_
        plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
-
-
 
 #### Ocean Basin
 
@@ -785,6 +793,15 @@ saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_li
 
 ```
 
+RELOAD OUTPUTS BACK IN
+
+```{r SAVE CLUSTER MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+prob_life_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
+prob_ocean_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
+
+```
 
 ### Trait models
 
@@ -974,6 +991,16 @@ SAVE OUTPUTS SO FAR
 
 saveRDS(prob_life_trait_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_trait_many.rds")) 
 saveRDS(prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_trait_many.rds"))
+
+```
+
+RELOAD OUTPUTS BACK IN
+
+```{r SAVE TRAIT MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+prob_life_trait_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_trait_many.rds")) 
+prob_ocean_trait_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_trait_many.rds"))
 
 ```
 
