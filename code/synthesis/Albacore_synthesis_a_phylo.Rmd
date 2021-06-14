@@ -10,8 +10,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library("rstudioapi")
-setwd(dirname(getActiveDocumentContext()$path))
+#library("rstudioapi")
+#setwd(dirname(getActiveDocumentContext()$path))
 ```
 
 ## Set-up your working environment
@@ -20,7 +20,7 @@ setwd(dirname(getActiveDocumentContext()$path))
 Here we will be updating some of the phylogenetic packages.
 
 ```{r working environment, echo=FALSE, results=hide}
-#getwd()
+getwd()
 #eval=FALSE, 
 
 #remotes::install_github("YuLab-SMU/ggtree")
@@ -180,7 +180,6 @@ length(my_tree_prob$tip.label) #298
 
 ```
 
-
 ```{r Prep tree to plot #2}
 
 #my_prey_prob$prey_sp <- gsub(" ", "_", my_prey_prob$prey_sp) #for ease of plotting take away " "
@@ -296,7 +295,7 @@ pal_prob_class = c("grey40", ## the grey40 is needed for a branch between branch
 ## plotting the tree without tip labels
 
 prob_class <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
-  theme(legend.position = c(1,0.80),
+   theme(legend.position = c(1.05,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
   scale_colour_manual('Class', aesthetics = c('colour'), values = pal_prob_class,
@@ -307,7 +306,7 @@ prob_class
 
 # plotting the tree with tip labels
 prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
-  theme(legend.position = c(1,0.80),
+   theme(legend.position = c(0.5,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
   scale_colour_manual('Class', aesthetics = c('colour', 'fill'), values = pal_prob_class,
@@ -317,14 +316,13 @@ prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circu
 
 prob_class_lab
 
-#Save class graphs
 ggsave("prob_class.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
-  plot=prob_class, width=15, height=10, dpi=300)
+  plot=prob_class, width=13, height=10, dpi=300)
 
 ggsave("prob_class_lab.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
-  plot=prob_class_lab, width=15, height=12, dpi=300)
+  plot=prob_class_lab, width=14, height=12, dpi=300)
 
 
 ```
