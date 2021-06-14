@@ -295,7 +295,7 @@ pal_prob_class = c("grey40", ## the grey40 is needed for a branch between branch
 ## plotting the tree without tip labels
 
 prob_class <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circular') +
-   theme(legend.position = c(1.05,0.50),
+   theme(legend.position = c(0.5,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
   scale_colour_manual('Class', aesthetics = c('colour'), values = pal_prob_class,
@@ -397,7 +397,7 @@ prob_maxfo <- gheatmap(prob_class, my_prey_prob[,"maxFO", drop = FALSE],
   theme(#legend.position = c(0.5,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_viridis_c(name = "Percent frequency consumed (%)", na.value = 'grey')
+  scale_fill_viridis_c(name = "Percent frequency (%FO)", na.value = 'grey')
 
 ggsave("prob_maxfo.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxfo.png'), 
@@ -414,7 +414,7 @@ prob_maxn <- gheatmap(prob_class, my_prey_prob[,"maxN", drop = FALSE],
   theme(#legend.position = c(0.5,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_viridis_c(name = "Percent abundance consumed (% n)", na.value = 'grey')
+  scale_fill_viridis_c(name = "Percent abundance (%N)", na.value = 'grey')
 
 ggsave("prob_maxn.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxn.png'), 
@@ -431,7 +431,7 @@ prob_maxm <- gheatmap(prob_class, my_prey_prob[,"maxM", drop = FALSE],
   theme(#legend.position = c(0.5,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_viridis_c(name = "Percent biomass consumed (% kg)", na.value = 'grey')
+  scale_fill_viridis_c(name = "Percent biomass (%KG)", na.value = 'grey')
 
 ggsave("prob_maxm.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxm.png'),
