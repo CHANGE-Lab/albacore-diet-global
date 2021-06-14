@@ -547,9 +547,9 @@ behav_trophic_prob1 <- gheatmap(prob_basic, my_prey_prob[,'trophic_level', drop=
   theme(legend.position = c(1.05,0.80),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_viridis_c(name = "Trophic Level", na.value = 'grey') +
+  scale_fill_viridis_c(name = "Trophic Level (TL)", na.value = 'grey') +
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.04, y = -6.5, label = 'Trophic Level', angle = -85, size = 4)
+  annotate('text', x = 1.04, y = -6.5, label = 'TL', angle = -85, size = 4)
 
 behav_trophic_prob1.5 <- behav_trophic_prob1 + new_scale_fill()
 
@@ -558,7 +558,7 @@ behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious
    theme(legend.position = c(1.05,0.65),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_viridis_d(name = "Gregariousness", 
+  scale_fill_viridis_d(name = "Gregariousness (GG)", 
                        direction = -1,
                        breaks = c("solitary", "shoaling","schooling"),
                        limits = c("solitary", "shoaling","schooling"),
@@ -568,7 +568,7 @@ behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious
                        guide = guide_legend(order = 1), 
                        na.value = 'grey')+
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.09, y = -6.5, label = 'Gregariousness', angle = -85, size = 4)
+  annotate('text', x = 1.09, y = -6.5, label = 'GG', angle = -85, size = 4)
 
 behav_trophic_prob2.5 <- behav_trophic_prob2 + new_scale_fill()
 
@@ -576,7 +576,7 @@ behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'seas
   theme(legend.position = c(1.05,0.50),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
-  scale_fill_manual(name = "Seasonal Migrant",
+  scale_fill_manual(name = "Seasonal Migrant (SM)",
                     breaks = c("0", "1"),
                     limits = c("0", "1"),
                     labels = c("no", "yes"),
@@ -584,14 +584,22 @@ behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'seas
                     na.value = 'grey') +
   theme(legend.position = c(1,0.5985))+
   scale_y_continuous(expand = c(0,4))+
-  annotate('text', x = 1.14, y = -6.5, label = 'Seasonal Migrant', angle = -85, size = 4)
+  annotate('text', x = 1.14, y = -6.5, label = 'SM', angle = -85, size = 4)
+
+behav_trophic_prob_final
 
 #Save graph 1
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), plot=behav_trophic_prob1, width=12, height=10, dpi=300)
+ggsave("prob_behav1.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), 
+       plot=behav_trophic_prob1, width=12, height=10, dpi=300)
 #Save graph 2
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav2.png'), plot=behav_trophic_prob2, width=12, height=10, dpi=300)
+ggsave("prob_behav2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav2.png'), 
+       plot=behav_trophic_prob2, width=12, height=10, dpi=300)
 #Save graph 3
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_behav3.png'), plot=behav_trophic_prob_final, width=12, height=10, dpi=300)
+ggsave("prob_behav3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav3.png'),
+       plot=behav_trophic_prob_final, width=12, height=10, dpi=300)
 
 
 ```
