@@ -692,7 +692,7 @@ ggsave("prob_morph3.png",
 For morphological (defense/avoidance) traits:
 Use phys_defense, countershade, col_disrupt, silver and transparent (in that order)
 
-```{r Figure K Morphological - defense/avoid}
+```{r Figure K Morphological - defense/avoid - NOT UPDATED}
 
 morphology_binary_prob1 <- gheatmap(prob_basic, my_prey_prob[ ,'phys_defense',drop=FALSE], offset=0, width=0.05, colnames = F) +
   scale_fill_viridis_d(name = "Physical Defence", #"\nCountershading\nColour disruption\nSilver\nTransparent",
@@ -753,15 +753,15 @@ morphology_binary_prob_final <- gheatmap(morphology_binary_prob4, my_prey_prob[ 
   annotate('text', x = 1.24, y = -8.5, label = 'Transparent', angle = -85, size = 3)
 
 #Save graph 1
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
 #Save graph 2
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
 #Save graph 3
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
 #Save graph 4
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
 #Save graph 5
-ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
 
 
 ```
@@ -769,7 +769,7 @@ ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=m
 For Prey nutritional quality
 Use energy_density, percent_protein, percent_lipid
 
-```{r Figure L Prey Nutritional Quality}
+```{r Figure L Prey Nutritional Quality - NOT UPDATED}
 
 nutritional_quality_prob1 <- gheatmap(prob_basic, my_prey_prob[,'energy_density',drop=FALSE], 
                                       offset=0, width=0.05, colnames = F) +
@@ -797,6 +797,8 @@ nutritional_quality_prob_final <- gheatmap(nutritional_quality_prob2.5, my_prey_
   scale_y_continuous(expand = c(0,4))+
   annotate('text', x = 1.14, y = -6.5, label = 'Percent lipid (%)', angle = -85, size = 3)
 
+nutritional_quality_prob_final 
+
 #Save graph 1
 ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
 #Save graph 2
@@ -808,7 +810,7 @@ ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_lipid.png'), plot=
 ```
 
 For Fisheries status use: fisheries_status
-```{r Figure M Fisheries Status}
+```{r Figure M Fisheries Status - NOT UPDATED}
 
 fishery_prob <- gheatmap(prob_basic, my_prey_prob[ ,'fisheries_status',drop=FALSE], 
                          offset=0, width=0.05,font.size=2, colnames = F) +
