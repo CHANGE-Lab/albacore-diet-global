@@ -608,25 +608,38 @@ Use body_shape, b_shape_r and eye_body_r
 
 ```{r Figure J Morpholigical - shape}
 
-morphology_comparison_prob1 <- gheatmap(prob_basic, my_prey_prob[ ,'body_shape',drop=FALSE],
+
+levels(as.factor(my_prey_prob$body_shape))
+my_prey_prob$body_shape <- as.factor(my_prey_prob$body_shape)
+my_prey_prob$body_shape <- factor(my_prey_prob$body_shape,
+                                  levels = c("unique", "globiform", "depressiform", "compressiform",
+                                             "fusiform", "elongated", "eel-like"))
+levels(my_prey_prob$body_shape)
+
+
+morphology_comparison_prob1 <- gheatmap(prob_basic, 
+                                        my_prey_prob[ ,'body_shape',drop=FALSE],
                                         offset=0, width=0.05,font.size=2, colnames = F) +
-  scale_fill_viridis_d(name = "Body Shape", 
+  scale_fill_viridis_d(name = "Body Shape (BD)", 
                        option = 'C',
-                       breaks = c("eel-like", "elongated", "fusiform", "compressiform", "depressiform",
-                                  "globiform", "unique"),
-                       limits = c("eel-like", "elongated", "fusiform", "compressiform", "depressiform",
-                                  "globiform", "unique"),
-                       guide = guide_legend(order = 1), 
+                       breaks = c("unique", "globiform", "depressiform", "compressiform",
+                                  "fusiform", "elongated", "eel-like"),
+                       limits = c("unique", "globiform", "depressiform", "compressiform",
+                                  "fusiform", "elongated", "eel-like"),
+                       guide = guide_legend(order = 1, 
+                                            reverse = TRUE
+                                            ), #order = 1
                        na.value = 'grey')+
   theme(legend.position = c(1.05,0.71))+
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.04, y = -6.5, label = 'Body Shape', angle = -85, size = 3)
+  annotate('text', x = 1.04, y = -6.5, label = 'BD', angle = -85, size = 4)
 
 morphology_comparison_prob1.5 <- morphology_comparison_prob1 + new_scale_fill()
 
-morphology_comparison_prob2 <- gheatmap(morphology_comparison_prob1.5, my_prey_prob[ ,'b_shape_r',drop=FALSE], 
+morphology_comparison_prob2 <- gheatmap(morphology_comparison_prob1.5, 
+                                        my_prey_prob[ ,'b_shape_r',drop=FALSE], 
                                         offset=0.05, width=0.05, colnames = F) +
-  scale_fill_viridis_c(name = "Body Shape Ratio", 
+  scale_fill_viridis_c(name = "Body Shape Ratio (BDR)", 
                        option = 'C', limits=c(0,15), 
                        oob = scales::squish, 
                        breaks = c(0,5,10,15), 
@@ -634,13 +647,14 @@ morphology_comparison_prob2 <- gheatmap(morphology_comparison_prob1.5, my_prey_p
                        na.value = 'grey')+
   theme(legend.position = c(1.05,0.605))+
   scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.095, y = -6.5, label = 'Body Shape Ratio', angle = -85, size = 3)
+  annotate('text', x = 1.095, y = -6.5, label = 'BDR', angle = -85, size = 4)
 
 morphology_comparison_prob2.5 <- morphology_comparison_prob2 + new_scale_fill()
 
-morphology_comparison_prob_final <- gheatmap(morphology_comparison_prob2.5, my_prey_prob[ ,'eye_body_r',drop=FALSE], 
+morphology_comparison_prob_final <- gheatmap(morphology_comparison_prob2.5, 
+                                             my_prey_prob[ ,'eye_body_r',drop=FALSE], 
                                              offset=0.10, width=0.05, colnames = F) +
-  scale_fill_viridis_c(name = "Eye-Body Ratio", 
+  scale_fill_viridis_c(name = "Eye-Body Ratio (EBR)", 
                        option = 'C',
                        limits=c(0,3), 
                        oob = scales::squish, 
@@ -649,7 +663,9 @@ morphology_comparison_prob_final <- gheatmap(morphology_comparison_prob2.5, my_p
                        na.value = 'grey')+
   theme(legend.position = c(1.05,0.499))+
   scale_y_continuous(expand = c(0,3.5))+
-annotate('text', x = 1.15, y = -6.5, label = 'Eye-Body Ratio', angle = -85, size = 3)
+annotate('text', x = 1.15, y = -6.5, label = 'EBR', angle = -85, size = 4)
+
+morphology_comparison_prob_final
 
 #Save graph 1
 ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), plot=morphology_comparison_prob1, width=13, height=10, dpi=300)
