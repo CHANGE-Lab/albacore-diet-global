@@ -3,8 +3,8 @@ title: "Albacore Diet Synthesis A - Phylo Graphs"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +35,8 @@ Here we will be updating some of the phylogenetic packages.
 
 ```
 
-```{r Load packages, echo=TRUE, results=hide}
+
+```{r Load packages, results='hide'}
 
 # general
 library(tidyverse)
