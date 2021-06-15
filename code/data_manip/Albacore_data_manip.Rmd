@@ -239,6 +239,7 @@ prey_length_wide = prey_length_data %>%
 
 #unique(prey_length_wide$prey_sp) #309 spp
 
+write.csv(prey_length_wide, here("data/output_data/prey_length_wide.csv"))
 ```
 
 ```{r Prey length ratio summaries by group}
@@ -306,6 +307,8 @@ prey_length_ratiosp = prey_length_wide %>%
 #---> Here we obtain size ratios for all 309 species in trait db
 ##Problem with NA values
 glimpse(prey_length_ratiosp)
+
+write.csv(prey_length_ratiosp, here("data/output_data/prey_length_ratiosp.csv"))
 
 ```
 

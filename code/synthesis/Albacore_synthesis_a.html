@@ -186,8 +186,100 @@ library(here)
 &quot;%notin%&quot; = Negate(&#39;%in%&#39;)
 here::here()</code></pre>
 <pre><code>## [1] &quot;/Users/tashhardy/Documents/GitHub/albacore-diet-global&quot;</code></pre>
-<div id="summary-data" class="section level2">
-<h2>Summary Data</h2>
+<div id="summary-data---methods" class="section level2">
+<h2>Summary Data - Methods</h2>
+<p>Below, we extract summary information for reported albacore tuna fork lengths and the maxillary lengths that we calculated based on known or estimated albacore FL (Ménard et al. 2006 paper for yellowfin tunas).</p>
+<pre class="r"><code>alb_global_diet_total = read.csv(here(&quot;data/output_data/alb_global_diet_total.csv&quot;)) %&gt;%
+  dplyr::select(-X)
+
+#We estimate the range in albacore fork lengths in this study to be:
+range(alb_global_diet_total$pred_flmean) #47.23 101.00</code></pre>
+<pre><code>## [1]  47.23 101.00</code></pre>
+<pre class="r"><code>#Thus based on Ménard et al. (2006) fork length calculations, the albacore maxillary lengths or gape lengths used in this study were:
+range(alb_global_diet_total$gape_lmax) #5.645029 10.070300</code></pre>
+<pre><code>## [1]  5.645029 10.070300</code></pre>
+<p>Here we extract summary information for instances where prey size information were recorded in published literature or historical diet analysis reports.</p>
+<pre class="r"><code>alb_prey_size_recorded = alb_global_diet_total %&gt;%
+  filter(maxtl_use &gt; 0)
+
+unique(alb_prey_size_recorded$StudyID)</code></pre>
+<pre><code>## [1] &quot;Aloncle1973&quot;     &quot;Bernard1985&quot;     &quot;Glaser2015&quot;      &quot;Joubin1918&quot;     
+## [5] &quot;Matthews1977&quot;    &quot;OrtizZarate1987&quot; &quot;Pinkas1971&quot;      &quot;Pusineri2005&quot;</code></pre>
+<pre class="r"><code>#Note these are in mm not cm
+range(alb_prey_size_recorded$maxtl_use)</code></pre>
+<pre><code>## [1]   0.6000 228.5528</code></pre>
+<pre class="r"><code>#We therefore lack prey size information for
+1028-51 #= 977</code></pre>
+<pre><code>## [1] 977</code></pre>
+<pre class="r"><code>#This information was therefore available for only ...% of the time:
+51*100/1028 #= 4.96%</code></pre>
+<pre><code>## [1] 4.961089</code></pre>
+<p>Below we summarise how many species for which we had complete enough max length, length at maturity and larval length data and with which individual larval-adult and juvenile-adult prey length ratios could be calculated.</p>
+<pre class="r"><code>prey_length_wide_info = read.csv(here(&quot;data/output_data/prey_length_wide.csv&quot;)) %&gt;%
+  drop_na()
+
+length(unique(prey_length_wide_info$prey_sp)) #118</code></pre>
+<pre><code>## [1] 118</code></pre>
+<pre class="r"><code>length(unique(prey_length_wide_info$prey_sp))*100/298 #(species)</code></pre>
+<pre><code>## [1] 39.59732</code></pre>
+<pre class="r"><code>#39.59% of species</code></pre>
+<p>Here we extract summary information for our calculations of prey larval-adult and juvenile-adult length ratios.</p>
+<pre class="r"><code>prey_length_ratiosp = read.csv(here(&quot;data/output_data/prey_length_ratiosp.csv&quot;)) %&gt;%
+  dplyr::select(-X) %&gt;%
+  filter(prey_class != &quot;NA&quot;,
+         l_adult != &quot;Inf&quot;,
+         l_juve != &quot;Inf&quot;,
+         larva_adult_use != &quot;Inf&quot;,
+         juve_adult_use != &quot;Inf&quot;
+         )
+
+#Summarise size info - range overall
+#Note that these include some very very small taxa (e.g., amphipods as adults)
+range(prey_length_ratiosp$l_adult, na.rm = TRUE) #0.1 500.0</code></pre>
+<pre><code>## [1]   1.67 500.00</code></pre>
+<pre class="r"><code>range(prey_length_ratiosp$l_juve, na.rm = TRUE) #0.58 180.00</code></pre>
+<pre><code>## [1]   0.58 180.00</code></pre>
+<pre class="r"><code>range(prey_length_ratiosp$l_larva, na.rm = TRUE) #0.462 14.600</code></pre>
+<pre><code>## [1]  0.462 14.600</code></pre>
+<pre class="r"><code>#Create sub-df&#39;s by class for summary purposes
+unique(prey_length_ratiosp$prey_class)</code></pre>
+<pre><code>## [1] &quot;Actinopterygii&quot; &quot;Cephalopoda&quot;    &quot;Malacostraca&quot;</code></pre>
+<pre class="r"><code>#Taxonomic group - hull loop
+cl = as.character(unique(prey_length_ratiosp$prey_class))
+for(i in 1:length(cl)) {
+  temp = cl[i]
+  df = prey_length_ratiosp[prey_length_ratiosp$prey_class == temp, ]
+  assign(paste0(&#39;grp.&#39;,temp), df)
+}
+
+#By class
+range(grp.Actinopterygii$l_adult, na.rm = TRUE)</code></pre>
+<pre><code>## [1]   7.461881 500.000000</code></pre>
+<pre class="r"><code>range(grp.Actinopterygii$l_juve, na.rm = TRUE)</code></pre>
+<pre><code>## [1]   2.380803 180.000000</code></pre>
+<pre class="r"><code>range(grp.Actinopterygii$l_larva, na.rm = TRUE)</code></pre>
+<pre><code>## [1]  0.65 14.60</code></pre>
+<pre class="r"><code>range(grp.Actinopterygii$larva_adult_use, na.rm = TRUE) #0.2320 29.0441</code></pre>
+<pre><code>## [1]  0.2320 29.0441</code></pre>
+<pre class="r"><code>range(grp.Actinopterygii$juve_adult_use, na.rm = TRUE) #10.86957 85.00000</code></pre>
+<pre><code>## [1] 10.86957 85.00000</code></pre>
+<pre class="r"><code>mean(grp.Actinopterygii$juve_adult_use, na.rm = TRUE) #42.66437</code></pre>
+<pre><code>## [1] 42.66437</code></pre>
+<pre class="r"><code>mean(grp.Actinopterygii$larva_adult_use, na.rm = TRUE) #8.879331</code></pre>
+<pre><code>## [1] 8.879331</code></pre>
+<p>Checking the number of prey species ultimately used in multivariate analyses. Note here that we only use 137 out of the 298 species, because we only obtained complete trait information for 137 species. The remainder had incomplete trait information, and we chose to exclude them for now.</p>
+<pre class="r"><code>alb_global_wide_dietfo = read.csv(here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;)) %&gt;%
+  dplyr::select(-X, -c(StudyID:grouped_id))
+
+#The number of observations (rows) and species (columns)
+dim(alb_global_wide_dietfo)</code></pre>
+<pre><code>## [1] 225 137</code></pre>
+</div>
+<div id="summary-data---results" class="section level2">
+<h2>Summary Data - Results</h2>
+</div>
+<div id="summary---results" class="section level2">
+<h2>Summary - Results</h2>
 <p><strong>Results text</strong> – Through a historical and global synthesis of albacore tuna diets using reported stomach content data from the 1880’s–2010’s, we report a large biodiversity in the diets of albacore tunas. A total of 550 individual taxa identified in the diets of juvenile and adult albacore tuna across the world’s oceans, representing 203 families of prey taxa, mainly of ray-finned fishes (n = 108 families of prey), cephalopods (n = 29), and crustaceans (Malacostraca n = 45, Hexanauplia n = 6), but also several taxa of pelagic gastropods (n = 6), salps (n = 2) and hydrozoans (n = 1), and one elasmobranch (n = 1) (ESM data).</p>
 <pre class="r"><code>diet_all = as.data.frame(read_xlsx(here(&quot;data/input_data/albacore_diet_global.xlsx&quot;),
                       sheet = &quot;albacore_diet_global&quot;))
@@ -236,27 +328,17 @@ print(nrow(diet_species_level))</code></pre>
 print(nrow(prey_probable_traits))</code></pre>
 <pre><code>## [1] 298</code></pre>
 <p>We obtain quantitative data in the form of (i) percent frequency of occurrence for 137 species, (ii) percent numerical abundance for 100 species, and (iii) percent of biomass consumed for only 82 species.</p>
-<pre class="r"><code># % FO data
-
-diet_fo = read.csv(here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;)) %&gt;%
-  dplyr::select(-X)
-  
-print(ncol(diet_fo[,15:ncol(diet_fo)]))</code></pre>
-<pre><code>## [1] 137</code></pre>
-<pre class="r"><code># % Numerical data
-
-diet_num = read.csv(here(&quot;data/output_data/alb_global_wide_dietn.csv&quot;)) %&gt;%
-  dplyr::select(-X)
-
-print(ncol(diet_fo[,15:ncol(diet_num)]))</code></pre>
-<pre><code>## [1] 100</code></pre>
-<pre class="r"><code># % Biomass data
-
-diet_mass = read.csv(here(&quot;data/output_data/alb_global_wide_dietm.csv&quot;)) %&gt;%
-  dplyr::select(-X)
-
-print(ncol(diet_fo[,15:ncol(diet_mass)]))</code></pre>
-<pre><code>## [1] 82</code></pre>
+<pre class="r"><code>TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="phylogenetic-and-traits-final-graphs" class="section level2">
+<h2>Phylogenetic and Traits Final Graphs</h2>
+<p>Of these, 298 species parsed to phylogenetic trees (Fig. 2a, will work on cleaning phylo code later). Notably, only a subset of species are frequently observed in their diets: 26 species occur in &gt; 50% of samples within studies across the world’s oceans (+ESM), a further 44 species are relatively common, reported in &gt; 25% of samples (Fig. 2c). Uncommon prey species are often excluded from further analyses due to insufficient data and therefore difficulties in diet modelling. However, we posit that they contribute to diet variability in sharing consumable traits with more common prey species. # Report trait diversity observed and that recur in prey species, hotspots and traits that were most common - for habitat use, morphological and aggregation traits.</p>
+</div>
+<div id="discussion-paragraphs" class="section level2">
+<h2>Discussion paragraphs</h2>
+<p>(Discussion) We discuss the loss of information when we exclude species that are uncommonly consumed - these species share traits with more common species, and convey information about predator-prey interactions. → Trait-based analyses aim to capture information about predator-prey interactions as a result of generalisable traits shared by multiple prey species.</p>
+<p>(Discussion) Whilst, broad diets are expected of generalist predators, and cumulatively we would expect several hundred taxa to be represented in a global list of prey consumed, there was no published summary of the taxonomic diversity identified within albacore diets. Additionally, no data from the north Pacific were used in previous syntheses of albacore and other tunas (Young et al. 2015, Duffy et al. 2017, Pethybridge et al. 2018).</p>
 </div>
 </div>
 
