@@ -476,7 +476,7 @@ behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5,
                     labels = c("no", "yes"),
                     values = c("1"="#FDE725FF", "0"="#39568CFF"),
                     na.value = 'grey')+
-  theme(legend.position = c(1,0.531),
+  theme(legend.position = c(1.05,0.5),
         legend.title = element_text(size = 18), 
         legend.text = element_text(size = 18))+
   scale_y_continuous(expand = c(0,4))+
@@ -762,7 +762,7 @@ Including code for saving this graph. Code for saving output for all other figur
 
 **Phylogeny by Class**
 
-```{r Save Figures - class, include = FALSE}
+```{r Save Figures - class, include = FALSE, eval=FALSE}
 #ggsave("prob_class.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
 #  plot=prob_class, width=13, height=10, dpi=300)
@@ -775,7 +775,7 @@ Including code for saving this graph. Code for saving output for all other figur
 
 **Phylogeny by diet use**
 
-```{r Save Figures - diet use, include = FALSE}
+```{r Save Figures - diet use, include = FALSE, eval=FALSE}
 
 #FO
 #ggsave("prob_maxfo.png",
@@ -822,7 +822,7 @@ ggsave("prob_hab4.png",
 
 **Phylogeny by behaviour & habitat use**
 
-```{r Save Figures - behaviour, include = FALSE}
+```{r Save Figures - behaviour, include = FALSE, eval=FALSE}
 
 #Save graph 1
 ggsave("prob_behav1.png",
@@ -843,7 +843,7 @@ ggsave("prob_behav3.png",
 
 **Phylogeny by morphology - shape**
 
-```{r Save Figures - morphology / shape, include = FALSE}
+```{r Save Figures - morphology / shape, include = FALSE, eval=FALSE}
 
 #Save graph 1
 #ggsave("prob_morph1.png",
@@ -862,7 +862,7 @@ ggsave("prob_behav3.png",
 
 **Phylogeny by defensive morphology**
 
-```{r Save Figures - morphology / defense, include = FALSE}
+```{r Save Figures - morphology / defense, include = FALSE, eval=FALSE}
 
 #Save graph 1
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
@@ -881,7 +881,7 @@ ggsave("prob_behav3.png",
 
 **Phylogeny by nutritional quality**
 
-```{r Save Figures - nutritional quality, include = FALSE}
+```{r Save Figures - nutritional quality, include = FALSE, eval=FALSE}
 #Save graph 1
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
 #Save graph 2
@@ -893,7 +893,7 @@ ggsave("prob_behav3.png",
 
 **Phylogeny by fisheries status**
 
-```{r Save Figures - fisheries status, include = FALSE}
+```{r Save Figures - fisheries status, include = FALSE, eval=FALSE}
 
 #Save graph
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_fishery.png'), plot=fishery_prob, width=12, height=10, dpi=300)
