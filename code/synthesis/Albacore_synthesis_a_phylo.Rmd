@@ -1,11 +1,11 @@
 ---
 title: "Albacore Diet Synthesis A - Phylo Graphs"
-author: "Natasha Hardy"
+author: "Natasha Hardy & Zachary Roote"
 date: "15/04/2021"
 output:
   pdf_document: default
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -34,6 +34,9 @@ Here we will be updating some of the phylogenetic packages.
 #BiocManager::install("Biostrings")
 #BiocManager::install("ggtree")
 
+#For document rendering
+#tinytex::install_tinytex()
+
 ```
 
 
@@ -48,6 +51,7 @@ library(devtools)
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
+library(tinytex)
 
 # graphics
 
