@@ -796,28 +796,27 @@ Including code for saving this graph. Code for saving output for all other figur
 
 **Phylogeny by habitat Use Traits**
 
-```{r Save Figures - habitat use, include = FALSE}
+```{r Save Figures - habitat use, include = FALSE, eval=FALSE}
 
 #Save vertical graph
-#ggsave("prob_hab1.png",
+ggsave("prob_hab1.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_hab1.png'), 
-#       plot=habitat_traits_prob1, width=13, height=10, dpi=300)
-#save vert + horizontal graph
-#ggsave("prob_hab2.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab2.png'), 
-#       plot=habitat_traits_prob2, width=13, height=10, dpi=300)
-##PROBLEM STARTS HERE
-#save vert + horizontal + diel graph
-#ggsave("prob_hab3.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
-#       plot=habitat_traits_prob3, width=13, height=10, dpi=300)
-#save vert + horizontal + diel graph
-#ggsave(#"prob_hab4.png",
-#       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
-#       plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
+       plot=habitat_traits_prob1, width=13, height=10, dpi=300)
 
-#Some issues with the legend plotting to the graph?
-#Namely the issue is for the vertical and horizontal habitat association values disappear once the diel + refuge use get added.
+#Save vert + horizontal graph
+ggsave("prob_hab2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab2.png'), 
+       plot=habitat_traits_prob2, width=13, height=10, dpi=300)
+
+#Save vert + horizontal + diel graph
+ggsave("prob_hab3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
+       plot=habitat_traits_prob3, width=13, height=10, dpi=300)
+
+#Save vert + horizontal + diel graph + seasonal
+ggsave("prob_hab4.png",
+#       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
+       plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
 
 ```
 
