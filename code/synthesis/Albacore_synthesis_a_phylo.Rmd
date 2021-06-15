@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 **Note:** Code issue has arisen discussed here: https://stackoverflow.com/questions/26619434/install-an-old-version-of-dplyr-0-12-in-r
 Here we will be updating some of the phylogenetic packages.
 
-```{r working environment, echo=FALSE, results=hide}
+```{r working environment, echo=TRUE, results=hide}
 getwd()
 #eval=FALSE, 
 
@@ -116,7 +116,7 @@ A lot of troubleshooting later and I found that the species list needs to go on 
 
 Building the basic tree
 
-```{r building basic tree}
+```{r Building basic tree, eval=FALSE}
 
 # Tree build 1
 breaks <- c(seq(1,nrow(my_prey_prob),50),nrow(my_prey_prob)+1)  # why are we doing this?
@@ -153,11 +153,9 @@ View(my_tree_prob)
 write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
 ```
 
-``` {r Load tree}
-# Reload tree
+```{r Load in saved tree}
 
 my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
-
 
 ```
 
@@ -168,17 +166,13 @@ my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
 #Edit tip labels
 my_tree_prob$tip.label <- as.factor(sub("_", " ", my_tree_prob$tip.label))
 
-
-# dataframe dimensions issue? ----
-# according to Matt's code dataframe dimension should not be an issue when parsing data to tip labels...
-# Try dimension solution
-#we have a data frame dimension issue when plotting our data values onto the tree
 nrow(my_prey_prob) == length(my_tree_prob$tip.label) #TRUE
 nrow(my_prey_prob) #298
 length(my_tree_prob$tip.label) #298
-#Need to fix nrow issue
 
 ```
+
+**NOTE:** We have in the past encountered a data frame dimension issue when plotting our data values onto the tree. There are also several species names that do not line up. This issue is addressed in the chunk below.
 
 ```{r Prep tree to plot #2}
 
@@ -498,19 +492,23 @@ habitat_traits_prob3 <- gheatmap(habitat_traits_prob2.5, my_prey_prob[ , 'diel_m
 
 habitat_traits_prob3.5 <- habitat_traits_prob3 + new_scale_fill()
 
-habitat_traits_prob_final <- gheatmap(habitat_traits_prob3.5, my_prey_prob[ ,'refuge',drop=FALSE], offset=0.15, width=0.05, colnames = F)+
-  scale_fill_manual(name = "Refuge (RF)",
+habitat_traits_prob_final <- gheatmap(habitat_traits_prob3.5, 
+                                      my_prey_prob[ ,'season_migrant',drop=FALSE],
+                                     offset=0.15, width=0.05, colnames = F) +
+  theme(legend.position = c(1.05,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_fill_manual(name = "Seasonal Migrant (SM)",
                     breaks = c("0", "1"),
                     limits = c("0", "1"),
                     labels = c("no", "yes"),
-                    values = c("1"="#FDE725FF", "0"="#39568CFF"),
-                    na.value = 'grey')+
-  theme(legend.position = c(1,0.531),
-        legend.title = element_text(size = 18), 
-        legend.text = element_text(size = 18))+
+                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
+                    na.value = 'grey') +
   scale_y_continuous(expand = c(0,4))+
-  annotate('text', x = 1.18, y = -7.5, label = 'RF', angle = -85, size = 4)
+  annotate('text', x = 1.18, y = -7.5, label = 'SM', angle = -85, size = 4)
 
+  
+  
 #Check graph
 habitat_traits_prob_final
 
@@ -528,8 +526,8 @@ ggsave("prob_hab3.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
        plot=habitat_traits_prob3, width=13, height=10, dpi=300)
 #save vert + horizontal + diel graph
-ggsave("prob_hab4.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
+ggsave(#"prob_hab4.png",
+       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
        plot=habitat_traits_prob_final, width=13, height=10, dpi=300)
 
 #Some issues with the legend plotting to the graph?
@@ -572,18 +570,20 @@ behav_trophic_prob2 <- gheatmap(behav_trophic_prob1.5, my_prey_prob[,"gregarious
 
 behav_trophic_prob2.5 <- behav_trophic_prob2 + new_scale_fill()
 
-behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, my_prey_prob[ ,'season_migrant',drop=FALSE], offset=0.10, width=0.05, colnames = F) +
-  theme(legend.position = c(1.05,0.50),
-        legend.title = element_text(size = 18), 
-        legend.text = element_text(size = 18))+
-  scale_fill_manual(name = "Seasonal Migrant (SM)",
+behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5, 
+                                     my_prey_prob[ ,'refuge',drop=FALSE], 
+                                     offset=0.10, width=0.05, colnames = F)+  
+  scale_fill_manual(name = "Refuge (RF)",
                     breaks = c("0", "1"),
                     limits = c("0", "1"),
                     labels = c("no", "yes"),
-                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
-                    na.value = 'grey') +
+                    values = c("1"="#FDE725FF", "0"="#39568CFF"),
+                    na.value = 'grey')+
+  theme(legend.position = c(1,0.531),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
   scale_y_continuous(expand = c(0,4))+
-  annotate('text', x = 1.14, y = -6.5, label = 'SM', angle = -85, size = 4)
+  annotate('text', x = 1.14, y = -6.5, label = 'RF', angle = -85, size = 4)
 
 behav_trophic_prob_final
 
