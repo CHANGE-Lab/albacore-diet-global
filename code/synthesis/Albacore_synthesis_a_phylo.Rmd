@@ -3,8 +3,9 @@ title: "Albacore Diet Synthesis A - Phylo Graphs"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  html_document: default
+  pdf_document: default
   word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -36,7 +37,7 @@ Here we will be updating some of the phylogenetic packages.
 ```
 
 
-```{r Load packages, results='hide'}
+```{r Load packages, results='hide', tidy=TRUE, message=FALSE}
 
 # general
 library(tidyverse)
@@ -89,7 +90,7 @@ library(treeio)
 
 Using combination of my trial code and Matt Savoca and company's code to build a phylo tree with associated trait and %FO data
 
-```{r load prey info data, tidy=TRUE}
+```{r load prey info data, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #data contains sp list, class, order & family + traits.
 
@@ -116,7 +117,7 @@ my_prey_prob$maxM[my_prey_prob$maxM == 0.00] <- NA
 
 Building the basic tree
 
-```{r Building basic tree, eval=FALSE}
+```{r Building basic tree, eval=FALSE, warning=FALSE, message=FALSE}
 
 # Tree build 1
 breaks <- c(seq(1,nrow(my_prey_prob),50),nrow(my_prey_prob)+1)  # why are we doing this?
@@ -153,7 +154,7 @@ View(my_tree_prob)
 write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
 ```
 
-```{r Load in saved tree}
+```{r Load in saved tree, warning=FALSE, message=FALSE}
 
 my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
 
@@ -161,7 +162,7 @@ my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
 
 ## Sort out the tree for graphing
 
-```{r Prep tree to plot #1, tidy=TRUE}
+```{r Prep tree to plot #1, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Edit tip labels
 my_tree_prob$tip.label <- as.factor(sub("_", " ", my_tree_prob$tip.label))
@@ -174,7 +175,7 @@ length(my_tree_prob$tip.label) #298
 
 **NOTE:** We have in the past encountered a data frame dimension issue when plotting our data values onto the tree. There are also several species names that do not line up. This issue is addressed in the chunk below.
 
-```{r Prep tree to plot #2, tidy=TRUE}
+```{r Prep tree to plot #2, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #my_prey_prob$prey_sp <- gsub(" ", "_", my_prey_prob$prey_sp) #for ease of plotting take away " "
 
@@ -240,8 +241,9 @@ str(my_tree_prob)
 
 ### Basic phylogenies
 
-```{r Figure A Prey species basic, tidy=TRUE}
-#Plot without and with species labels
+**Basic prey species phylogeny graph**
+
+```{r Figure A Prey species basic, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Phylotree without labels
 prob_basic = ggtree(my_tree_prob, layout = 'circular')
@@ -249,19 +251,11 @@ prob_basic = ggtree(my_tree_prob, layout = 'circular')
 #Phylotree with species labels
 prob_basic_lab = ggtree(my_tree_prob, layout = 'circular') + geom_tiplab(size = 2)
 
-#problems saving figures from here on
-
-#ggsave("prob_basic.png",
-  #here('./output_figures/phylos/prey_prob/prob_basic.png'), 
-#  plot=prob_basic, width=8, height=8, dpi=300)
-
-#ggsave("prob_basic_lab.png",
-  #here('./output_figures/phylos/prey_prob/prob_basic_lab.png'), 
-#  plot=prob_basic_lab, width=10, height=10, dpi=300)
-
 ```
 
-```{r Figure B Prey Class basic}
+**Class-based phylogeny graph**
+
+```{r Figure B Prey Class basic, warning=FALSE, message=FALSE}
 #Use basic + prey_sp labels + prey_class
 
 # creating a dataset that splits the species data by class
@@ -310,81 +304,11 @@ prob_class_lab <- ggtree(my_tree_prob_class, aes(color = group), layout = 'circu
 
 prob_class_lab
 
-#ggsave("prob_class.png",
-  #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
-#  plot=prob_class, width=13, height=10, dpi=300)
-
-#ggsave("prob_class_lab.png",
-  #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
-#  plot=prob_class_lab, width=14, height=12, dpi=300)
-
-
-```
-
-**Graphs - Prey Order & Fam -- TO DO:**
-
-1. This graph is currently a lower priority and we may not get to this, however if we do, I there is no way we can have a legend that is so large and colours that are barely differentiated. I suggest not changing the colours as they clearly show different groups just not which ones are which using the legend. Is there any way to plot the "order" names near the branch of the tree or in a ring around the tree?
-
-2. Also fix legend labels
-
-```{r Figure C Prey order basic, eval=FALSE}
-#Use basic + prey_sp labels + prey_order
-
-# creating a dataset that splits the species data by order
-prey_order_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_order)
-
-# splitting the tree species by order
-my_tree_prob_order <- groupOTU(my_tree_prob, prey_order_prob_info)
-
-#checking number of order, in a format easy to copy and paste to scale_color_manual()
-as.character(sort(unique(my_prey_prob$prey_order))) ## there are 35 orders, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
-
-pal_prob_order = pnw_palette("Starfish", 43)
-
-#View(my_tree_adult_order)
-
-## plotting the tree (needs a lot of work)
-prob_order_lab <- ggtree(my_tree_prob_order, aes(color = group), layout = 'circular')  +
-  geom_tiplab(size = 2) +
-  #theme(legend.position = 'none') +
-  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_order)
-
-#ggsave("prob_order_lab.png",
-  #here('./output_figures/diet_phylo/prey_prob/prob_order_lab.png'), 
-#  plot=prob_order_lab, width=12, height=8, dpi=300)
-
-```
-
-```{r Figure D Prey family basic, eval=FALSE}
-#Use basic + prey_sp labels + prey_family
-
-# creating a dataset that splits the species data by family
-prey_family_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_family)
-
-# splitting the tree species by family
-my_tree_prob_family <- groupOTU(my_tree_prob, prey_family_prob_info)
-
-#checking number of family, in a format easy to copy and paste to scale_color_manual()
-as.character(sort(unique(my_prey_prob$prey_family))) ## there are 130 families, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
-pal_prob_fam = pnw_palette("Starfish", 138)
-
-## plotting the tree (needs a lot of work)
-prob_fam_lab <- ggtree(my_tree_prob_family, aes(color = group), layout = 'circular')  +
-  geom_tiplab(size = 2)+  
-  #theme(legend.position = 'none') +
-  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_fam)
-
-#ggsave("prob_fam_lab.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_fam_lab.png'), 
-#       plot=prob_fam_lab, width=20, height=8, dpi=300)
-
-#TO-DO:
-#Similar problem as for order, but low priority
 ```
 
 ### Diet use data
 
-```{r Figure E Frequency Occurrence}
+```{r Figure E Frequency Occurrence, warning=FALSE, message=FALSE}
 #Overlay maxFO (frequency of occurrence data) on a basic prey tree coloured by Class
 #Use prey_class, maxFO
 
@@ -396,13 +320,10 @@ prob_maxfo <- gheatmap(prob_class, my_prey_prob[,"maxFO", drop = FALSE],
   scale_fill_viridis_c(name = "Percent frequency (%FO)", na.value = 'grey')
 
 prob_maxfo
-#ggsave("prob_maxfo.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_maxfo.png'), 
-#       plot=prob_maxfo, width=10, height=8, dpi=300)
 
 ```
 
-```{r Figure F Abundance}
+```{r Figure F Abundance, warning=FALSE, message=FALSE}
 #Overlay maxN (abundance data) on a basic prey tree coloured by Class
 #Use prey_class, maxN
 
@@ -413,13 +334,10 @@ prob_maxn <- gheatmap(prob_class, my_prey_prob[,"maxN", drop = FALSE],
         legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Percent abundance (%N)", na.value = 'grey')
 prob_maxn
-#ggsave("prob_maxn.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_maxn.png'), 
-#       plot=prob_maxn, width=10, height=8, dpi=300)
 
 ```
 
-```{r Figure G Mass}
+```{r Figure G Mass, warning=FALSE, message=FALSE}
 #Overlay maxM (biomass data) on a basic prey tree coloured by Class
 #Use prey_class, maxM
 
@@ -430,19 +348,14 @@ prob_maxm <- gheatmap(prob_class, my_prey_prob[,"maxM", drop = FALSE],
         legend.text = element_text(size = 18))+
   scale_fill_viridis_c(name = "Percent biomass (%KG)", na.value = 'grey')
 prob_maxm
-#ggsave("prob_maxm.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_maxm.png'),
-#       plot=prob_maxm, width=10, height=8, dpi=300)
-
 
 ```
 
 ### Trait data
 
-For habitat use traits:
-We are going to plot multiple rings of data around the phylogenetic trees using vert_habitat, horz_habitat, diel_migrant (change to yes/no), refuge
+For habitat use traits: we are going to plot multiple rings of data around the phylogenetic trees using vert_habitat, horz_habitat, diel_migrant (change to yes/no), and season_migrant (yes/no)
 
-```{r Figure H Habitat use traits}
+```{r Figure H Habitat use traits, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #creating this plot one iteration at a time. Adding one layer of the heatmap, then allowing for another legend on the plot, and then another layer of the heatmap
 
@@ -514,33 +427,11 @@ habitat_traits_prob_final <- gheatmap(habitat_traits_prob3.5,
 #Check graph
 habitat_traits_prob_final
 
-#Save vertical graph
-#ggsave("prob_hab1.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab1.png'), 
-#       plot=habitat_traits_prob1, width=13, height=10, dpi=300)
-#save vert + horizontal graph
-#ggsave("prob_hab2.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab2.png'), 
-#       plot=habitat_traits_prob2, width=13, height=10, dpi=300)
-##PROBLEM STARTS HERE
-#save vert + horizontal + diel graph
-#ggsave("prob_hab3.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
-#       plot=habitat_traits_prob3, width=13, height=10, dpi=300)
-#save vert + horizontal + diel graph
-#ggsave(#"prob_hab4.png",
-#       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
-#       plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
-
-#Some issues with the legend plotting to the graph?
-#Namely the issue is for the vertical and horizontal habitat association values disappear once the diel + refuge use get added.
-
 ```
 
-For seasonal, trophic & aggregation behaviour use:
-trophic_level, gregarious_primary and season_migrant
+For seasonal, trophic & aggregation behaviour use: trophic_level, gregarious_primary and refuge_use (yes/no)
 
-```{r Figure I Behaviour}
+```{r Figure I Behaviour, tidy=TRUE, warning=FALSE, message=FALSE}
 
 behav_trophic_prob1 <- gheatmap(prob_basic, my_prey_prob[,'trophic_level', drop=FALSE], 
                                 offset=0, width=0.05, colnames = F) +
@@ -589,27 +480,11 @@ behav_trophic_prob_final <- gheatmap(behav_trophic_prob2.5,
 
 behav_trophic_prob_final
 
-#Save graph 1
-#ggsave("prob_behav1.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), 
-#       plot=behav_trophic_prob1, width=14, height=10, dpi=300)
-#Save graph 2
-#ggsave("prob_behav2.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_behav2.png'), 
-#       plot=behav_trophic_prob2, width=14, height=10, dpi=300)
-#Save graph 3
-#ggsave("prob_behav3.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_behav3.png'),
-#       plot=behav_trophic_prob_final, width=14, height=10, dpi=300)
-
-
 ```
 
-For morphological (shape) traits:
-Use body_shape, b_shape_r and eye_body_r
+For morphological (shape) traits use: body_shape, b_shape_r and eye_body_r
 
-```{r Figure J Morpholigical - shape}
-
+```{r Figure J Morpholigical - shape, tidy=TRUE, warning=FALSE, message=FALSE}
 
 levels(as.factor(my_prey_prob$body_shape))
 my_prey_prob$body_shape <- as.factor(my_prey_prob$body_shape)
@@ -675,26 +550,11 @@ annotate('text', x = 1.15, y = -6.5, label = 'EBR', angle = -85, size = 4)
 
 morphology_comparison_prob_final
 
-#Save graph 1
-#ggsave("prob_morph1.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), 
-#       plot=morphology_comparison_prob1, width=14, height=10, dpi=300)
-#Save graph 2
-#ggsave("prob_morph2.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_morph2.png'), 
-#       plot=morphology_comparison_prob2, width=14, height=10, dpi=300)
-#Save graph 3
-#ggsave("prob_morph3.png",
-       #here('./output_figures/diet_phylo/prey_prob/prob_morph3.png'), 
-#       plot=morphology_comparison_prob_final, width=14, height=10, dpi=300)
-
-
 ```
 
-For morphological (defense/avoidance) traits:
-Use phys_defense, countershade, col_disrupt, silver and transparent (in that order)
+For morphological (defense/avoidance) traits use: phys_defense, countershade, col_disrupt, silver and transparent (in that order)
 
-```{r Figure K Morphological - defense/avoid - NOT UPDATED, eval=FALSE}
+```{r Figure K Morphological - defense/avoid, tidy=TRUE, warning=FALSE, message=FALSE}
 
 morphology_binary_prob1 <- gheatmap(prob_basic, my_prey_prob[ ,'phys_defense',drop=FALSE], offset=0, width=0.05, colnames = F) +
   scale_fill_viridis_d(name = "Physical Defence", #"\nCountershading\nColour disruption\nSilver\nTransparent",
@@ -754,24 +614,13 @@ morphology_binary_prob_final <- gheatmap(morphology_binary_prob4, my_prey_prob[ 
   scale_y_continuous(expand = c(0,4.5))+
   annotate('text', x = 1.24, y = -8.5, label = 'Transparent', angle = -85, size = 3)
 
-#Save graph 1
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
-#Save graph 2
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
-#Save graph 3
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
-#Save graph 4
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
-#Save graph 5
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
-
+morphology_binary_prob_final
 
 ```
 
-For Prey nutritional quality
-Use energy_density, percent_protein, percent_lipid
+For Prey nutritional quality use: energy_density, percent_protein, percent_lipid
 
-```{r Figure L Prey Nutritional Quality - NOT UPDATED, eval=FALSE}
+```{r Figure L Prey Nutritional Quality, tidy=TRUE, warning=FALSE, message=FALSE}
 
 nutritional_quality_prob1 <- gheatmap(prob_basic, my_prey_prob[,'energy_density',drop=FALSE], 
                                       offset=0, width=0.05, colnames = F) +
@@ -801,6 +650,234 @@ nutritional_quality_prob_final <- gheatmap(nutritional_quality_prob2.5, my_prey_
 
 nutritional_quality_prob_final 
 
+```
+
+For Fisheries status use: fisheries_status
+```{r Figure M Fisheries Status, tidy=TRUE, warning=FALSE, message=FALSE}
+
+fishery_prob <- gheatmap(prob_basic, my_prey_prob[ ,'fisheries_status',drop=FALSE], 
+                         offset=0, width=0.05,font.size=2, colnames = F) +
+  scale_fill_viridis_d(name = "Fisheries status (FS)", 
+                       option = 'C',
+                       breaks = c("none","aquarium", "aquaculture", "potential","minor commercial",
+                                  "commercial", "highly commercial"),
+                       limits = c("none","aquarium", "aquaculture", "potential","minor commercial",
+                                  "commercial", "highly commercial"))+
+  scale_y_continuous(expand = c(0,3.5))+
+  annotate('text', x = 1.04, y = -6.5, label = 'FS', angle = -85, size = 3)
+
+fishery_prob
+
+```
+
+### EXTRAS
+
+**Prey Order & Fam -- TO DO:**
+
+Code for these graphs are included in the .Rmd and not in the published document. These graphs are currently a lower priority and we may not get to this, however we include the code for anyone interested. The following would need to be fixed to improve the graphs:
+
+1.  Legends are too large as they are. I suggest not changing the colours as they clearly show different groups just not which ones are which using the legend. Is there any way to plot the "order" names near the branch of the tree or in a ring around the tree?
+
+2. Also fix legend labels.
+
+```{r Figure C Prey order basic, eval=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+#Use basic + prey_sp labels + prey_order
+
+# creating a dataset that splits the species data by order
+prey_order_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_order)
+
+# splitting the tree species by order
+my_tree_prob_order <- groupOTU(my_tree_prob, prey_order_prob_info)
+
+#checking number of order, in a format easy to copy and paste to scale_color_manual()
+as.character(sort(unique(my_prey_prob$prey_order))) ## there are 35 orders, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
+
+pal_prob_order = pnw_palette("Starfish", 43)
+
+#View(my_tree_adult_order)
+
+## plotting the tree (needs a lot of work)
+prob_order_lab <- ggtree(my_tree_prob_order, aes(color = group), layout = 'circular')  +
+  geom_tiplab(size = 2) +
+  #theme(legend.position = 'none') +
+  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_order)
+
+#ggsave("prob_order_lab.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_order_lab.png'), 
+#  plot=prob_order_lab, width=12, height=8, dpi=300)
+
+```
+
+```{r Figure D Prey family basic, eval=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+#Use basic + prey_sp labels + prey_family
+
+# creating a dataset that splits the species data by family
+prey_family_prob_info <- split(x = my_prey_prob$prey_sp, f = my_prey_prob$prey_family)
+
+# splitting the tree species by family
+my_tree_prob_family <- groupOTU(my_tree_prob, prey_family_prob_info)
+
+#checking number of family, in a format easy to copy and paste to scale_color_manual()
+as.character(sort(unique(my_prey_prob$prey_family))) ## there are 130 families, I'm not sure how to make that look good on a tree, so I won't try to assign colors and will leave it as it is plotted
+pal_prob_fam = pnw_palette("Starfish", 138)
+
+## plotting the tree (needs a lot of work)
+prob_fam_lab <- ggtree(my_tree_prob_family, aes(color = group), layout = 'circular')  +
+  geom_tiplab(size = 2)+  
+  #theme(legend.position = 'none') +
+  scale_colour_manual('order', aesthetics = c('colour', 'fill'), values = pal_prob_fam)
+
+#ggsave("prob_fam_lab.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_fam_lab.png'), 
+#       plot=prob_fam_lab, width=20, height=8, dpi=300)
+
+#TO-DO:
+#Similar problem as for order, but low priority
+```
+
+## SAVING OUTPUT
+
+There are numerous issues with saving output either via ggsave() or dev.copy2pdf() functions. I'm batching the output saves below and doing all at once.
+
+**Basic phylogeny**
+
+Including code for saving this graph. Code for saving output for all other figures below are included in the .Rmd and not in the rendered document.
+
+```{r Save Figures - basic}
+
+#Basic phylogenies
+
+#ggsave("prob_basic.png",
+  #here('./output_figures/phylos/prey_prob/prob_basic.png'), 
+#  plot=prob_basic, width=8, height=8, dpi=300)
+
+#ggsave("prob_basic_lab.png",
+  #here('./output_figures/phylos/prey_prob/prob_basic_lab.png'), 
+#  plot=prob_basic_lab, width=10, height=10, dpi=300)
+```
+
+**Phylogeny by Class**
+
+```{r Save Figures - class, include = FALSE}
+#ggsave("prob_class.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
+#  plot=prob_class, width=13, height=10, dpi=300)
+
+#ggsave("prob_class_lab.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
+#  plot=prob_class_lab, width=14, height=12, dpi=300)
+
+```
+
+**Phylogeny by diet use**
+
+```{r Save Figures - diet use, include = FALSE}
+
+#FO
+#ggsave("prob_maxfo.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxfo.png'), 
+#       plot=prob_maxfo, width=10, height=8, dpi=300)
+
+#%N
+#ggsave("prob_maxn.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxn.png'), 
+#       plot=prob_maxn, width=10, height=8, dpi=300)
+
+#%M
+#ggsave("prob_maxm.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_maxm.png'),
+#       plot=prob_maxm, width=10, height=8, dpi=300)
+
+```
+
+**Phylogeny by habitat Use Traits**
+
+```{r Save Figures - habitat use, include = FALSE}
+
+#Save vertical graph
+#ggsave("prob_hab1.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab1.png'), 
+#       plot=habitat_traits_prob1, width=13, height=10, dpi=300)
+#save vert + horizontal graph
+#ggsave("prob_hab2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab2.png'), 
+#       plot=habitat_traits_prob2, width=13, height=10, dpi=300)
+##PROBLEM STARTS HERE
+#save vert + horizontal + diel graph
+#ggsave("prob_hab3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_hab3.png'), 
+#       plot=habitat_traits_prob3, width=13, height=10, dpi=300)
+#save vert + horizontal + diel graph
+#ggsave(#"prob_hab4.png",
+#       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
+#       plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
+
+#Some issues with the legend plotting to the graph?
+#Namely the issue is for the vertical and horizontal habitat association values disappear once the diel + refuge use get added.
+
+```
+
+**Phylogeny by behaviour & habitat use**
+
+```{r Save Figures - behaviour, include = FALSE}
+
+#Save graph 1
+#ggsave("prob_behav1.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav1.png'), 
+#       plot=behav_trophic_prob1, width=14, height=10, dpi=300)
+#Save graph 2
+#ggsave("prob_behav2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav2.png'), 
+#       plot=behav_trophic_prob2, width=14, height=10, dpi=300)
+#Save graph 3
+#ggsave("prob_behav3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_behav3.png'),
+#       plot=behav_trophic_prob_final, width=14, height=10, dpi=300)
+
+
+```
+
+**Phylogeny by morphology - shape**
+
+```{r Save Figures - morphology / shape, include = FALSE}
+
+#Save graph 1
+#ggsave("prob_morph1.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), 
+#       plot=morphology_comparison_prob1, width=14, height=10, dpi=300)
+#Save graph 2
+#ggsave("prob_morph2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph2.png'), 
+#       plot=morphology_comparison_prob2, width=14, height=10, dpi=300)
+#Save graph 3
+#ggsave("prob_morph3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph3.png'), 
+#       plot=morphology_comparison_prob_final, width=14, height=10, dpi=300)
+
+```
+
+**Phylogeny by defensive morphology**
+
+```{r Save Figures - morphology / defense, include = FALSE}
+
+#Save graph 1
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
+#Save graph 2
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
+#Save graph 3
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
+#Save graph 4
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
+#Save graph 5
+#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
+
+
+
+```
+
+**Phylogeny by nutritional quality**
+
+```{r Save Figures - nutritional quality, include = FALSE}
 #Save graph 1
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
 #Save graph 2
@@ -808,24 +885,14 @@ nutritional_quality_prob_final
 #Save graph 3
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_lipid.png'), plot=nutritional_quality_prob_final, width=12, height=10, dpi=300)
 
-
 ```
 
-For Fisheries status use: fisheries_status
-```{r Figure M Fisheries Status - NOT UPDATED, eval=FALSE}
+**Phylogeny by fisheries status**
 
-fishery_prob <- gheatmap(prob_basic, my_prey_prob[ ,'fisheries_status',drop=FALSE], 
-                         offset=0, width=0.05,font.size=2, colnames = F) +
-  scale_fill_viridis_d(name = "Fisheries status", 
-                       option = 'C',
-                       breaks = c("none","aquarium", "aquaculture", "potential","minor commercial",
-                                  "commercial", "highly commercial"),
-                       limits = c("none","aquarium", "aquaculture", "potential","minor commercial",
-                                  "commercial", "highly commercial"))+
-  scale_y_continuous(expand = c(0,3.5))+
-  annotate('text', x = 1.04, y = -6.5, label = 'Fishery status', angle = -85, size = 3)
+```{r Save Figures - fisheries status, include = FALSE}
 
 #Save graph
 #ggsave(here('./output_figures/diet_phylo/prey_prob/prob_fishery.png'), plot=fishery_prob, width=12, height=10, dpi=300)
 
 ```
+
