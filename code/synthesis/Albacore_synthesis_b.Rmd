@@ -3,20 +3,29 @@ title: "Albacore Diet Synthesis B"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 # Prey typologies identified in the diets of albacore tuna
 
+## About
+
+**Prey typologies text from Ms.** Here, we identified key prey typologies or functional groups in albacore tuna diets using hierarchical clustering calculated with divisive algorithms (Jain et al., 1999; Legendre & Legendre, 1998) on a Gower dissimilarity matrix (Gower, 1971) to identify relational structure between mixed ecological traits types: 3 binomial variables and 2 categorical variables for prey species traits (packages included: cluster, vegan and dendextend; code found under ‘Albacore_synthesis_b.Rmd’). Our objective in clustering selection (Brock et al., 2008; Charrad et al., 2014; Theodoridis & Koutroumbas, 2006) is to optimise the number of clusters based on (1) maximum differentiation or separation of species between clusters, (2) minimum differentiation of species or compactness within clusters, (3) optimal silhouette width coefficient value as well as Dunny Smith residuals, and (4) evenness or balance of cluster composition (number of species in each cluster). We assessed clusters visually for balance and consistency using cluster dendrograms and trait values that influenced a species’ occupancy within a cluster are visualised using heatmaps. The relative position of species to each other in relation to their cluster occupancy, and based on shared or separation of trait values, was visualised using multivariate ordination-based, non-metric multidimensional scaling (nMDS) (Field et al., 1982).
+
+We use code and concepts described by Anastasia Reusova here: https://towardsdatascience.com/hierarchical-clustering-on-categorical-data-in-r-a27e578f2995
+
+And cluster validation concepts further discussed here: https://www.datanovia.com/en/lessons/cluster-validation-statistics-must-know-methods/#silhouette-coefficient
+
+
 ## Workspace
 
-```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 
-```{r Worspace, message=FALSE}
+```{r Worspace, results='hide', tidy=TRUE, message=FALSE}
 
 #Need packages
 library(plyr)
@@ -46,8 +55,11 @@ library(NbClust)
 
 ## PROBABLE prey traits load & cluster algorithms
 
-### Prey & traits for cluster ----
+### Prey & traits for cluster
 
+Here we use the cleaned file for prey species traits based on probable life stage consumed by albacore. We need to select species for which we have complete trait information for the selected traits. We obtain 156 taxa with complete trait information for the selected traits noted here.
+
+Below we select variables for use in clustering algorithms. We selected vertical and horizontal habitat association, as well as diel and seasonal migratory traits, the probable life stage consumed and aggregation behaviour. We selected these traits because we hypothesised that these relate to the first level of filtering in the predation process -- encountering prey.
 
 ```{r Load & manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
 
@@ -68,19 +80,20 @@ prey_probable_load = read.csv(here("data/output_data/prey_probable_traits.csv"),
                                 season_cat == "season_NA" ~ "season (unknown)",
                                 season_cat == "season_yes" ~ "season (yes)")
          ) 
+#Note that we are grouping shoaling and schooling as traits due to low numbers, as well as solitary and pairing species.
 
 prey_probable = prey_probable_load %>%
   filter(diel_migrant_cat != "diel (unknown)", 
          refuge_cat != "refuge (unknown)", 
          season_cat != "season (unknown)"
          ) %>%
-  drop_na() 
-#reduced from ~298 taxa to ~156
-#levels(as.factor(prey_probable$gregarious))
+  drop_na()
 
 summary(prey_probable)
 
 ```
+
+Dataframes for analyses:
 
 ```{r Data manip for cluster analyses & dendrogram, tidy=TRUE, warning=FALSE, message=FALSE}
 
@@ -101,7 +114,9 @@ probable_traits = prey_probable %>%
 str(probable_traits)
 ```
 
-### Cluster techniques ----
+### Cluster techniques
+
+Here we generate a multivariate species-based dissimilarity matrix of the data, and both a hierarchical divisive and agglomerative clustering algorithm in order to select the most appropriate algorithm.
 
 ```{r Cluster & Dissimilarity Matrix, warning=FALSE, message=FALSE}
 
@@ -120,13 +135,16 @@ plot(prob.divisive.clust, main = "Divisive")
 prob.aggl.clustc <- hclust(prob.gower.dist, method = "complete")
 plot(prob.aggl.clustc, main = "Agglomerative, complete linkages")
 
+```
+
+```{r Check ordination, warning=FALSE, message=FALSE, results='hide'}
+
 #### nMDS for dissimilarity - checking the dissimilarity matrix
-#trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 100)
-#trait_NMDS_prob[["stress"]] #stress = 0.1177472
+trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 100)
+trait_NMDS_prob[["stress"]] #stress = 0.1177472
 
 #Plot --> 
-#plot(trait_NMDS_prob) #plots species as black dots, traits as red crosses 
-###Why are species scores not available?
+plot(trait_NMDS_prob) #plots species as black dots
 
 #Note that the ordination looks good!
 #Need to revisit this and plot in relation to clusters!
@@ -137,17 +155,14 @@ plot(prob.aggl.clustc, main = "Agglomerative, complete linkages")
 
 **Notes**
 20-24/07/2020
-Ultimately we are aiming for distinct clusters of species, such that the difference within clusters is minimal and between clusters is maximised. Assessing cluster statistical tables, we are consistently observing lower average.within cluster differences using agglomerative clustering compared to divisive algorithms. Additionally, cluster sizes and balance are consistently more even using agglomerative vs. divisive.
 
-Using habitat use + gregarious (binary) traits, selecting:
-(i) Divisive DONT USE
-(ii) Agglomerative (complete) #8 clusters (based on balanced clusters +optimal avg.silwidth value)
+Ultimately we are aiming for distinct clusters of species, such that the difference within clusters is minimal and between clusters is maximised. Assessing cluster statistical tables, we are consistently observing lower average.within cluster differences using agglomerative clustering compared to divisive algorithms.
 
-Using all traits (habitat use, gregarious, body shape and physical defenses)
-(i) Divisive - DO NOT USE
-(ii) Agglomerative - 10-11 clusters (based on balanced clusters + optimal avg.silwidth value)
+Below we are using habitat use + gregarious (as binary) traits for:
+(i) Divisive
+(ii) Agglomerative (complete)
 
-```{r Cluster stat table function,  warning=FALSE, message=FALSE}
+```{r Cluster stat table function, warning=FALSE, message=FALSE}
 
 # Cluster stats comes out as list while it is more convenient to look at it as a table
 # This code below will produce a dataframe with observations in columns and variables in row
@@ -193,6 +208,18 @@ cstats.table <- function(dist, tree, k) {
 }
 
 ```
+
+In the output below, we assess primarily: 
+
+(i) Balance between and within clusters == the number of species per cluster and between cluster. We are looking for the method which provides the greatest balance.
+
+(ii) Balance of the lowest 'average.within' and greatest 'average.between' differences between clusters.
+
+(iii) Lower 'dunn2' or dunny smith residual values.
+
+(iv) Higher 'avg.sildwidth' or average silhouette width values.
+
+**NOTE: We observe the greatest balance between these cluster validation criteria for the hierarchical divisive clustering algorithm and for k = 7 clusters.**
 
 ```{r Cluster Assessment Tables, warning=FALSE, message=FALSE}
 
@@ -282,9 +309,10 @@ ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20
 
 ```
 
-## PROBABLE Divisive k = 7, excl. refuge use
-### Cluster Dendrograms ---
-Going to use k = 6 for the probable life stage traits
+## PROBABLE Divisive k = 7
+### Cluster Dendrograms
+
+Using k = 7 for the habitat association, aggregation behaviour & probable life stage traits.
 
 **Horizontal dendrogram**
 
@@ -382,7 +410,7 @@ ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.vert2.k7
 ```
 
 
-### Albacore Cluster Heatmap ----
+### Cluster Heatmaps 
 
 ```{r Extract cluster number to trait matrix, warning=FALSE, message=FALSE}
 
@@ -408,7 +436,7 @@ write.csv(prob.prey.cl, here("outputs_figures/clusters/probable_divis_simple/pro
 # factors have to be converted to characters in order not to be dropped
 
 #Note plyr can mess with this!!
-detach("package:plyr", unload=TRUE)
+#detach("package:plyr", unload=TRUE)
 
 #Create dfs for graphs
 prob.clust.long = prob.prey.cl %>%
@@ -431,7 +459,7 @@ levels(prob.clust.long$trait)
 #Example: View(alb.cust.long.q[96:nrow(alb.cust.long.q),])
 heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level)) +
   geom_tile(aes(fill = count))+
-  labs(title = "Distribution of characteristics across clusters", x = "Cluster number", y = NULL) +
+  labs(title = "Distribution of characteristics across clusters by counts", x = "Cluster number", y = NULL) +
   scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
   facet_grid(trait~. , scales="free_y")
 heatmap.c
@@ -441,7 +469,7 @@ ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.heatcoun
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
   geom_tile(aes(fill = percent), alpha = 0.85)+
-  labs(title = "Distribution of characteristics across clusters", x = "Cluster number", y = NULL) +
+  labs(title = "Distribution of characteristics across clusters by percentage", x = "Cluster number", y = NULL) +
   #scale_fill_gradient2(low = "darkslategray1", mid = "yellow", high = "turquoise4") +
   scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
   facet_grid(trait~., scales="free_y")
@@ -449,11 +477,11 @@ heatmap.p
 
 ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.heatpercent.divis.k7.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
 
+#library(plyr)
+
 ```
 
-
-```{r Summary info, eval=FALSE, warning=FALSE, message=FALSE}
-
+```{r Summary info, warning=FALSE, message=FALSE}
 summary(as.factor(prob.prey.cl$prob.clust.num))
 #clusters  1  2  3  4  5  6  7 
 #         31 36 26 21  8 21 13 
@@ -463,9 +491,11 @@ summary(as.factor(prob.prey.cl$prob.clust.num))
 
 ## NMDS for checking on our ordination - divisive
 
+Here we want to visualise species' occupancy of trait-based cluster in multivariate space. Species have been treated as sites and their trait occupancy as 'species' in the ordination and nMDS routines. Thus their position in multivariate space is based off similar and dissimilar trait values. We then overlay their cluster number graphically.
+
 ### Ordination
 
-```{r NMDS & Clusters ~ Species, eval=FALSE, tidy=TRUE, warning=FALSE, message=FALSE}
+```{r NMDS & Clusters ~ Species, tidy=TRUE, warning=FALSE, message=FALSE, results='hide'}
 #### nMDS for dissimilarity
 trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 541 iterations
 trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
@@ -474,7 +504,7 @@ trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
 
 ### Extract NMDS coordinates and associate with co-variates/grouping factors
 
-```{r Data scores for plotting - USE, eval=FALSE, warning=FALSE, message=FALSE}
+```{r Data scores for plotting - USE, warning=FALSE, message=FALSE}
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 
@@ -494,16 +524,15 @@ str(treatment.scores)
 ```
 
 ### Convex hull calculations
-For each ordination and set of grouping variables input to data scores chunk
 
+For each ordination and set of grouping variables input to data scores chunk.
 
-```{r Convex hulls - Taxonomic specific, eval=FALSE, warning=FALSE, message=FALSE}
-# Taxonomic groups (specific)
-#Create convex hulls for the space occupied by each Taxonomic values
+```{r Convex hulls - by cluster number, warning=FALSE, message=FALSE}
+#Create convex hulls for the space occupied by each cluster value
 unique(treatment.scores$prob.clust.num)
-length(treatment.scores$prob.clust.num) #174
+length(treatment.scores$prob.clust.num)
 
-#Taxonomic group - hull loop
+#Cluster number - hull loop
 clust = as.character(unique(treatment.scores$prob.clust.num))
 for(i in 1:length(clust)) {
   temp = clust[i]
@@ -515,14 +544,13 @@ for(i in 1:length(clust)) {
 hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6, grp.7)  
 
 str(hull.data)
-#Just wondering how do 174 species (obs) become 46???
 
 ```
 
 
 ### NMDS plot
 
-```{r nMDS Cluster #, eval=FALSE, warning=FALSE, message=FALSE}
+```{r nMDS Cluster #,warning=FALSE, message=FALSE}
 #nMDS plot for the assessmenet of global change (yes/no) and the drivers.
 #as.integer(unique(treatment.scores$adult.clust.num))
 
@@ -557,12 +585,12 @@ trait_nMDS_prob_fig <- ggplot() +
 trait_nMDS_prob_fig
 ##Not perfect, some issues to troubleshoot
 
-ggsave(here("outputs_figures/clusters/probable_divis_simple/trait_nMDS_prob_clusters.png"), 
-       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+#ggsave(here("outputs_figures/clusters/probable_divis_simple/trait_nMDS_prob_clusters.png"), 
+#       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```
 
-```{r nMDS Cluster + FO, eval=FALSE, warning=FALSE, message=FALSE}
+```{r nMDS Cluster + FO, warning=FALSE, message=FALSE}
 
 trait_nMDS_prob_fo <- ggplot() + 
   geom_polygon(data=hull.data, 
