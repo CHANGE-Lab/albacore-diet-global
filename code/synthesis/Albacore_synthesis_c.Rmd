@@ -20,8 +20,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library("rstudioapi")
-setwd(dirname(getActiveDocumentContext()$path))
+#library("rstudioapi")
+#setwd(dirname(getActiveDocumentContext()$path))
 ```
 
 ```{r Workspace, include=FALSE, echo=FALSE}
