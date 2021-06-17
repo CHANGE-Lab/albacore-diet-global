@@ -43,3 +43,38 @@ Below is code for once we have filtered the prey species matrix by the trait mat
 #                                     194, 200, 202), 1:13]
 
 ```
+
+## Trait models
+
+*Note:* that the 'Albacore_synthesis_c_extra.Rmd' doc also contains additional code to evaluate these models and for plotting the species models.
+
+```{r Plot 4th corner life many, eval=FALSE, include=FALSE}
+
+#Can cut this graph in half with matrix manipulation of prob_life_clusters_spp$fourth.corner
+
+#a        = max( abs(prob_life_spp$fourth.corner) )
+#colort   = colorRampPalette(c("blue","white","red")) 
+#temp = t(as.matrix(prob_life_spp$fourth.corner))
+
+#rownames(temp) = c("Adult", "Juvenile")
+
+#colnames(temp) = c("Vert. habitat - demersal",
+#                   "Vert. habitat - epipelagic",
+#                   "Vert. habitat - mesopelagic",
+#                   "Horz. habitat - continental shelf",
+#                   "Horz. habitat - oceanic",
+#                   "Diel migrant (yes)",
+#                   "Seasonal migrant (yes)",
+#                   "Gregarious - schooling")
+
+#prob_life_spp_graph = levelplot(temp, 
+#                     xlab=list("Predator Life Stage", cex=1.5),
+#                     ylab=list("Species", cex=1.5), 
+#                     col.regions=colort(100), 
+#                     at=seq(-a, a,length=100),
+#                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+#                     colorkey=list(labels=list(cex=1.3)))
+
+#print(prob_life_spp_graph)
+
+```

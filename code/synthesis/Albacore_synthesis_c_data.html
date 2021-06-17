@@ -291,7 +291,7 @@ dim(alb_prob_traits)  #123  17</code></pre>
 ##  $ maxN            : num  0 0 1.65 4.9 0 4 2.37 0 0 0 ...
 ##  $ maxM            : num  0 0 3.3 0.71 0 0 1.6 0.1 0 0 ...
 ##  $ prob.clust.num  : int  1 2 3 3 4 1 4 4 3 2 ...</code></pre>
-<pre class="r"><code>write.csv(alb_prob_traits, here(&quot;./data/output_data/alb_prob_traits_k7.csv&quot;))</code></pre>
+<p><strong>Trait value checks</strong></p>
 <p>Here we check the trait values for each trait, and check the distribution of values. Note we merge certain values with low occurrences of species within them, and if we have a logical reason to merge.</p>
 <pre class="r"><code>summary(alb_prob_traits$life_stage) #we will remove larva as a value from the df, larval taxa didn&#39;t make it through the data cleaning and manipulation.</code></pre>
 <pre><code>##    adult juvenile    larva 
@@ -316,9 +316,8 @@ dim(alb_prob_traits)  #123  17</code></pre>
 <pre class="r"><code>summary(as.factor(alb_prob_traits$prob.clust.num)) #good distribution of species within clusters</code></pre>
 <pre><code>##  1  2  3  4  5  6  7 
 ## 27 24 24 18  8 13  9</code></pre>
-<pre class="r"><code>#str(alb_prob_traits)
-
-#levels(alb_prob_traits$life_stage) #check
+<p><strong>Cleaning and preparing trait values for analyses</strong></p>
+<pre class="r"><code>#levels(alb_prob_traits$life_stage) #check
 #alb_prob_traits$life_stage &lt;- factor(alb_prob_traits$life_stage, 
 #                                            levels = c(&quot;adult&quot;, &quot;juvenile&quot;, &quot;larva&quot;),
 #                                            labels = c(&quot;adult&quot;, &quot;juvenile&quot;, &quot;juvenile&quot;))
@@ -345,7 +344,9 @@ alb_prob_traits$horz_habitat &lt;- factor(alb_prob_traits$horz_habitat,
 #Levels gregarious
 #levels(alb_adult_traits$gregarious) #check
 alb_prob_traits$gregarious &lt;- factor(alb_prob_traits$gregarious, 
-                                            levels = c(&quot;solitary&quot;, &quot;schooling&quot;))</code></pre>
+                                            levels = c(&quot;solitary&quot;, &quot;schooling&quot;))
+
+write.csv(alb_prob_traits, here(&quot;./data/output_data/alb_prob_traits_k7.csv&quot;))</code></pre>
 </div>
 <div id="update-diet-data-l-select-covars-r" class="section level2">
 <h2>UPDATE DIET DATA (L) &amp; SELECT COVARS (R)</h2>
@@ -355,6 +356,7 @@ alb_prob_traits$gregarious &lt;- factor(alb_prob_traits$gregarious,
 dim(alb_prob_preyPA)  #225 123</code></pre>
 <pre><code>## [1] 225 123</code></pre>
 <pre class="r"><code># alternatively filter by stricter dataset</code></pre>
+<p>Now we need to check for and remove any zero-sum columns or rows of data, and adjust the co-variate data.</p>
 <pre class="r"><code># Need to check for empty columns and rows again Check for empty columns
 which(colSums(alb_prob_preyPA) == 0)  #None! #Otherwise remove these</code></pre>
 <pre><code>## named integer(0)</code></pre>
@@ -378,13 +380,15 @@ dim(alb_prob_covars)  #209  13</code></pre>
 </div>
 <div id="covars-r---manips" class="section level2">
 <h2>Covars (R) - MANIPS</h2>
+<p>Checking co-variates for analyses.</p>
 <pre class="r"><code>#Summary stats on covars
 unique(alb_prob_covars$StudyID) #22 studies
-unique(alb_prob_covars$OceanBasin) #6 Ocean basins
+unique(alb_prob_covars$OceanBasin) #6 Ocean basins --&gt; &quot;N Atlantic&quot;    &quot;Mediterranean&quot; &quot;N Pacific&quot;     &quot;S Atlantic&quot;    &quot;Indian&quot;        &quot;S Pacific&quot;
 unique(alb_adult_fo$OceanBasinQ) #10 Ocean basin quarters, but data gets thin for many
 unique(alb_prob_covars$YearEnd) #~27 years (or groups of years) are represented in this study
 unique(alb_prob_covars$code) #10 Longhurst provinces represented, similar to Ocean Basin Q but also gets thin
-unique(alb_prob_covars$pred_life) #</code></pre>
+unique(alb_prob_covars$pred_life) #Need to clean these up to --&gt; adult, juvenile and mixed cohorts.</code></pre>
+<p>Cleaning and manipulating co-variates for analyses. Any study for which we weren’t able to estimate albacore life stage or size, either based on location or fork length data, we will consider to be of ‘mixed’ cohort.</p>
 <pre class="r"><code>#Clean covars
 alb_prob_covars = alb_prob_covars %&gt;%
   mutate(pred_life=case_when(pred_life == &quot;juvenile&quot; ~ &quot;juvenile&quot;,
@@ -396,6 +400,7 @@ alb_prob_covars[,1:ncol(alb_prob_covars)] =  lapply(alb_prob_covars[,1:ncol(alb_
 
 dim(alb_prob_covars) #209  13</code></pre>
 <pre><code>## [1] 209  13</code></pre>
+<p>Checking the level replication for each covariate. Note that our best covars ==&gt; pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but would need to exclude low numbered levels.</p>
 <pre class="r"><code>#Check representation
 #summary(alb_adult_covars)
 
@@ -417,9 +422,7 @@ summary(alb_prob_covars$OceanBasinQ)
 summary(alb_prob_covars$code)
 #Not going to use
 
-dim(alb_prob_covars) #209 observations for 13 covars
-
-#Best covars ==&gt; pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but need to exclude low numbered levels.</code></pre>
+dim(alb_prob_covars) #209 observations for 13 covars</code></pre>
 </div>
 <div id="df-checks" class="section level2">
 <h2>DF checks</h2>
@@ -436,33 +439,17 @@ dim(alb_prob_preyPA_mv) #209 123
 dim(alb_prob_traits) #123 species and 17 traits
 dim(alb_prob_preyPA_mv) #209 obs, 123 species
 dim(alb_prob_covars) #209 obs, 13 variables</code></pre>
-<pre class="r"><code>#Select some covars &amp; traits
-alb_prob_covars$OceanBasin &lt;- factor(alb_prob_covars$OceanBasin, levels = c(&quot;Mediterranean&quot;, &quot;N Atlantic&quot;, &quot;S Atlantic&quot;, &quot;N Pacific&quot;, &quot;S Pacific&quot;, &quot;Indian&quot;))
-prob_ocean = alb_prob_covars$OceanBasin
-levels(prob_ocean)</code></pre>
-<pre><code>## [1] &quot;Mediterranean&quot; &quot;N Atlantic&quot;    &quot;S Atlantic&quot;    &quot;N Pacific&quot;    
-## [5] &quot;S Pacific&quot;     &quot;Indian&quot;</code></pre>
-<pre class="r"><code>#Predator life stage
-alb_prob_covars$pred_life &lt;- factor(alb_prob_covars$pred_life, 
-                                            levels = c(&quot;mixed&quot;, &quot;adult&quot;, &quot;juvenile&quot;))
-prob_pred_life = alb_prob_covars$pred_life
-levels(prob_pred_life)</code></pre>
-<pre><code>## [1] &quot;mixed&quot;    &quot;adult&quot;    &quot;juvenile&quot;</code></pre>
-<pre class="r"><code>#Latitude
-prob_lat = alb_prob_covars$lat_cat
+</div>
+<div id="save-dfs-for-analyses" class="section level2">
+<h2>SAVE DFS FOR ANALYSES</h2>
+<pre class="r"><code>#L - species df
+write.csv(alb_prob_preyPA, here(&quot;./data/output_data/alb_prob_preyPA_use.csv&quot;))
 
-#All traits to try -- ideally we want to use the same df here
-traits_prob = alb_prob_traits[,c(2:6,13,17)] %&gt;%
-  dplyr::rename(cluster = prob.clust.num)
+#R - covars df
+write.csv(alb_prob_covars, here(&quot;./data/output_data/alb_prob_covars_use.csv&quot;))
 
-traits_prob$cluster &lt;- as.factor(traits_prob$cluster)
-
-traits_prob_try = as.data.frame(traits_prob[,1:6])
-
-traits_prob_clust = as.data.frame(alb_prob_traits[,17]) %&gt;%
-  dplyr::rename(cluster = `alb_prob_traits[, 17]`)
-
-traits_prob_clust$cluster &lt;- as.factor(traits_prob_clust$cluster)</code></pre>
+#Q - trait df
+write.csv(alb_prob_traits, here(&quot;./data/output_data/alb_prob_traits_use.csv&quot;))</code></pre>
 </div>
 </div>
 

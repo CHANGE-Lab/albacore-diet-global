@@ -2,7 +2,9 @@
 title: "Albacore Diet Synthesis C"
 author: "Natasha Hardy"
 date: "15/04/2021"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # Trait variation in albacore diet across geographies
@@ -136,7 +138,7 @@ alb_adult_preyPA_df = cbind(alb_adult_fo[,1:13], alb_adult_preyPA)
 dim(alb_adult_preyPA) #225 obs, 137 species
 ```
 
-## Traits PROBABLE (Q)
+## Traits Probable (Q)
 
 - Using all the occurrence data in 'alb_adult_preyPA' df.
 
@@ -196,9 +198,9 @@ summary(as.factor(alb_prob_traits$prob.clust.num)) #good distribution of species
 
 ```
 
-```{r Trait factor levels, warning=FALSE, message=FALSE}
+**Cleaning and preparing trait values for analyses**
 
-#str(alb_prob_traits)
+```{r Trait factor levels, warning=FALSE, message=FALSE}
 
 #levels(alb_prob_traits$life_stage) #check
 #alb_prob_traits$life_stage <- factor(alb_prob_traits$life_stage, 
@@ -246,6 +248,8 @@ dim(alb_prob_preyPA) #225 123
 #alternatively filter by stricter dataset
 ```
 
+Now we need to check for and remove any zero-sum columns or rows of data, and adjust the co-variate data.
+
 ```{r Diet data manip, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Need to check for empty columns and rows again
@@ -268,17 +272,21 @@ dim(alb_prob_covars) #209  13
 
 ## Covars (R) - MANIPS
 
+Checking co-variates for analyses.
+
 ```{r Covars (R) - summary, eval=FALSE}
 
 #Summary stats on covars
 unique(alb_prob_covars$StudyID) #22 studies
-unique(alb_prob_covars$OceanBasin) #6 Ocean basins
+unique(alb_prob_covars$OceanBasin) #6 Ocean basins --> "N Atlantic"    "Mediterranean" "N Pacific"     "S Atlantic"    "Indian"        "S Pacific"
 unique(alb_adult_fo$OceanBasinQ) #10 Ocean basin quarters, but data gets thin for many
 unique(alb_prob_covars$YearEnd) #~27 years (or groups of years) are represented in this study
 unique(alb_prob_covars$code) #10 Longhurst provinces represented, similar to Ocean Basin Q but also gets thin
-unique(alb_prob_covars$pred_life) #
+unique(alb_prob_covars$pred_life) #Need to clean these up to --> adult, juvenile and mixed cohorts.
 
 ```
+
+Cleaning and manipulating co-variates for analyses. Any study for which we weren't able to estimate albacore life stage or size, either based on location or fork length data, we will consider to be of 'mixed' cohort.
 
 ```{r Covars (R) - clean}
 
@@ -293,6 +301,8 @@ alb_prob_covars[,1:ncol(alb_prob_covars)] =  lapply(alb_prob_covars[,1:ncol(alb_
 
 dim(alb_prob_covars) #209  13
 ```
+
+Checking the level replication for each covariate. Note that our best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but would need to exclude low numbered levels.
 
 ```{r Covars (R) checking, eval=FALSE}
 #Check representation
@@ -318,10 +328,7 @@ summary(alb_prob_covars$code)
 
 dim(alb_prob_covars) #209 observations for 13 covars
 
-#Best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but need to exclude low numbered levels.
-
 ```
-
 
 ## DF checks
 
@@ -343,34 +350,19 @@ dim(alb_prob_covars) #209 obs, 13 variables
 
 ```
 
-```{r Select covars + traits + levels}
 
-#Select some covars & traits
-alb_prob_covars$OceanBasin <- factor(alb_prob_covars$OceanBasin, levels = c("Mediterranean", "N Atlantic", "S Atlantic", "N Pacific", "S Pacific", "Indian"))
-prob_ocean = alb_prob_covars$OceanBasin
-levels(prob_ocean)
+## SAVE DFS FOR ANALYSES
 
-#Predator life stage
-alb_prob_covars$pred_life <- factor(alb_prob_covars$pred_life, 
-                                            levels = c("mixed", "adult", "juvenile"))
-prob_pred_life = alb_prob_covars$pred_life
-levels(prob_pred_life)
+```{r Saving dfs for analysis}
 
-#Latitude
-prob_lat = alb_prob_covars$lat_cat
+#L - species df
+write.csv(alb_prob_preyPA, here("./data/output_data/alb_prob_preyPA_use.csv"))
 
-#All traits to try -- ideally we want to use the same df here
-traits_prob = alb_prob_traits[,c(2:6,13,17)] %>%
-  dplyr::rename(cluster = prob.clust.num)
+#R - covars df
+write.csv(alb_prob_covars, here("./data/output_data/alb_prob_covars_use.csv"))
 
-traits_prob$cluster <- as.factor(traits_prob$cluster)
-
-traits_prob_try = as.data.frame(traits_prob[,1:6])
-
-traits_prob_clust = as.data.frame(alb_prob_traits[,17]) %>%
-  dplyr::rename(cluster = `alb_prob_traits[, 17]`)
-
-traits_prob_clust$cluster <- as.factor(traits_prob_clust$cluster)
+#Q - trait df
+write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_use.csv"))
 
 ```
 
