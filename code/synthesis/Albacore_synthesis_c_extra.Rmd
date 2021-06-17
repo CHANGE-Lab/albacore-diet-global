@@ -1,0 +1,45 @@
+---
+title: "Albacore_synthesis_c_extra"
+author: "Natasha Hardy"
+date: "17/06/2021"
+output: html_document
+---
+
+## About
+
+This document contains extra code for assessing and evaluation fourth corner models.
+
+## Data manipulation
+
+### Removing single occurrence taxa (optional)
+
+Remove low occurrence species! Here we obtain 179 observations for 103 species.
+
+```{r Species PA (L) remove 1 occurrenc, warning=FALSE, message=FALSE}
+#Remove low occurrence species?
+#Remove columns that contain < 2 occurrences #can vary this number
+alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
+#Not sure why some explanatory variable columns disappear also, so adding them back in:
+alb_adult_preyPA_df3 = cbind(alb_adult_preyPA_df2[,1:13], alb_adult_preyPA_df2[,12:ncol(alb_adult_preyPA_df2)])
+#Then delete rows that sum to zero for the trait occurrences
+alb_adult_preyPA_clean = alb_adult_preyPA_df3[-which(rowSums(alb_adult_preyPA_df3[14:ncol(alb_adult_preyPA_df3)])==0),] #209 observations of 103 spp.
+
+dim(alb_adult_preyPA_clean) #179 103
+#write.csv....
+
+```
+
+Below is code for once we have filtered the prey species matrix by the trait matrix for which we have trait information.
+
+```{r Not Using -- Diet data manip for >1 FO, eval=FALSE, include=FALSE}
+
+#If filtering
+#alb_prob_preyPA = alb_prob_preyPA[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
+#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
+#                                     194, 200, 202),]
+
+#alb_prob_covars = alb_adult_fo[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
+#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
+#                                     194, 200, 202), 1:13]
+
+```

@@ -87,7 +87,7 @@ source("get_polys.R")
 
 Load frequency of occurrence data.
 
-```{r Species %FO (L) - load data}
+```{r Species FO (L) load data, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
@@ -98,10 +98,9 @@ alb_adult_fo = read.csv(paste(here("./data/output_data/alb_global_wide_dietfo.cs
 print(dim(alb_adult_fo)) #225 150
 ```
 
-Manipulate and subset data.
-Here we obtain 137 species as columns and 225 obs.
+Manipulate and subset data. Here we obtain 137 species as columns and 225 obs.
 
-```{r Species %FO (L) - manipulate}
+```{r Species FO (L) manipulate, tidy=TRUE, warning=FALSE, message=FALSE}
 #Check for empty columns
 which(colSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0) #None! #Otherwise remove these
 #Check for empty rows
@@ -125,10 +124,9 @@ alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adu
 
 ```
 
-Convert data to presence absence & remove low occurrence species!
-Here we obtain 179 observations for 103 species.
+Convert data to presence absence and we obtain the following observations and species:
 
-```{r Species PA (L)}
+```{r Species PA (L), tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Convert to presence/absence
 alb_adult_preyPA = alb_adult_prey
@@ -138,39 +136,25 @@ alb_adult_preyPA_df = cbind(alb_adult_fo[,1:13], alb_adult_preyPA)
 dim(alb_adult_preyPA) #225 obs, 137 species
 ```
 
-```{r Species PA (L) - >1 occurrence -- currently not using}
-#Remove low occurrence species?
-#Remove columns that contain < 2 occurrences #can vary this number
-alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
-#Not sure why some explanatory variable columns disappear also, so adding them back in:
-alb_adult_preyPA_df3 = cbind(alb_adult_preyPA_df2[,1:13], alb_adult_preyPA_df2[,12:ncol(alb_adult_preyPA_df2)])
-#Then delete rows that sum to zero for the trait occurrences
-alb_adult_preyPA_clean = alb_adult_preyPA_df3[-which(rowSums(alb_adult_preyPA_df3[14:ncol(alb_adult_preyPA_df3)])==0),] #209 observations of 103 spp.
-
-dim(alb_adult_preyPA_clean) #179 103
-#write.csv....
-
-```
-
 ## Traits PROBABLE (Q)
 
-- Using all the occurence data in 'alb_adult_preyPA' df.
+- Using all the occurrence data in 'alb_adult_preyPA' df.
 
-- Could filter out low occurrences using 'alb_adult_preyPA_clean' df.
+- Could filter out low occurrences using 'alb_adult_preyPA_clean' df, extra code to do this is provided in the 'Albacore_synthesis_c_extra.Rmd'.
 
 - Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
 
-```{r Trait DF (Q) - prob clust num}
+```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
 
 alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum_habgreg.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
    dplyr::select(prey_sp:prob.clust.num, -refuge_cat)
 
-dim(alb_prob_clust) #156 species,  17 traits/covariates
+dim(alb_prob_clust) #we obtain 156 species,  17 traits or covariates
 
 #Relabel to add underscore in names
 alb_prob_clust$prey_sp = str_replace_all(alb_prob_clust$prey_sp, " ", "_")
-#Assign speces as rownames
+#Assign species as row names
 rownames(alb_prob_clust) <- alb_prob_clust$prey_sp
 #Order species list
 alb_prob_clust <- alb_prob_clust[ order(row.names(alb_prob_clust)), ]
@@ -191,15 +175,10 @@ str(alb_prob_traits)
 
 write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_k7.csv"))
 
-alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_k7.csv")) %>%
-  select(-X)
-
-alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
-rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
 
 ```
 
-```{r Trait values check, eval=FALSE}
+```{r Trait values check, warning=FALSE, message=FALSE}
 summary(alb_prob_traits$life_stage)
 
 summary(alb_prob_traits$vert_habitat) #merge bathypelagic and mesopelagic
@@ -216,7 +195,16 @@ summary(alb_prob_traits$prob.clust.num) #low numbers in cluster #8 = 2
 
 ```
 
-```{r Trait factor levels}
+```{r RELOAD TRAIT DATA (Q), tidy=TRUE, warning=FALSE, message=FALSE}
+alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_k7.csv")) %>%
+  select(-X)
+
+alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
+
+```
+
+```{r Trait factor levels, warning=FALSE, message=FALSE}
 
 #str(alb_prob_traits)
 
@@ -255,7 +243,7 @@ alb_prob_traits$gregarious <- factor(alb_prob_traits$gregarious,
 
 Here we filter our prey species (presence/absence data) by the species that were also used for cluster analysis, because we have complete trait information for these species, as well as frequency of occurrence data.
 
-```{r FILTER PREY BY PROB TRAITS}
+```{r FILTER PREY BY PROB TRAITS, tidy=TRUE, warning=FALSE, message=FALSE}
 
 alb_prob_preyPA <- alb_adult_preyPA[colnames(alb_adult_preyPA) %in% rownames(alb_prob_traits)]
 
@@ -264,7 +252,7 @@ dim(alb_prob_preyPA) #225 123
 #alternatively filter by stricter dataset
 ```
 
-```{r Diet data manip}
+```{r Diet data manip, tidy=TRUE, warning=FALSE, message=FALSE}
 
 #Need to check for empty columns and rows again
 #Check for empty columns
@@ -282,19 +270,6 @@ alb_prob_covars = alb_adult_fo[-c(31, 32, 58, 64, 69, 72, 79, 81, 86, 90, 102, 1
 #209 observations for 13 environmental variables
 
 dim(alb_prob_covars) #209  13
-```
-
-```{r Not Using -- Diet data manip for >1 FO, eval=FALSE, include=FALSE}
-
-#If filtering
-#alb_prob_preyPA = alb_prob_preyPA[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
-#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
-#                                     194, 200, 202),]
-
-#alb_prob_covars = alb_adult_fo[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
-#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
-#                                     194, 200, 202), 1:13]
-
 ```
 
 ## Covars (R) - MANIPS
