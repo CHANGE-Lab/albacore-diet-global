@@ -61,7 +61,7 @@ Here we use the cleaned file for prey species traits based on probable life stag
 
 Below we select variables for use in clustering algorithms. We selected vertical and horizontal habitat association, as well as diel and seasonal migratory traits, the probable life stage consumed and aggregation behaviour. We selected these traits because we hypothesised that these relate to the first level of filtering in the predation process -- encountering prey.
 
-```{r Load & manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
+```{r Load and manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
 
 prey_probable_load = read.csv(here("data/output_data/prey_probable_traits.csv"), header=TRUE) %>%
   dplyr::select(-c(X, diel_migrant, refuge, season_migrant, l_max, trophic_level:standard_total, energy_density:percent_lipid)) %>% 
@@ -95,7 +95,7 @@ summary(prey_probable)
 
 Dataframes for analyses:
 
-```{r Data manip for cluster analyses & dendrogram, tidy=TRUE, warning=FALSE, message=FALSE}
+```{r Data manip for cluster analyses and dendrogram, tidy=TRUE, warning=FALSE, message=FALSE}
 
 ## Row name as column datasets
 #For probable prey traits
@@ -118,7 +118,7 @@ str(probable_traits)
 
 Here we generate a multivariate species-based dissimilarity matrix of the data, and both a hierarchical divisive and agglomerative clustering algorithm in order to select the most appropriate algorithm.
 
-```{r Cluster & Dissimilarity Matrix, warning=FALSE, message=FALSE}
+```{r Cluster and Dissimilarity Matrix, warning=FALSE, message=FALSE}
 
 #### Distance measure ----
 #select just the traits you want to contribute to ordination
@@ -495,7 +495,7 @@ Here we want to visualise species' occupancy of trait-based cluster in multivari
 
 ### Ordination
 
-```{r NMDS & Clusters ~ Species, tidy=TRUE, warning=FALSE, message=FALSE, results='hide'}
+```{r nMDS dissimilarity, tidy=TRUE, warning=FALSE, message=FALSE, results='hide'}
 #### nMDS for dissimilarity
 trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 541 iterations
 trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
@@ -504,7 +504,7 @@ trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
 
 ### Extract NMDS coordinates and associate with co-variates/grouping factors
 
-```{r Data scores for plotting - USE, warning=FALSE, message=FALSE}
+```{r Data scores for plotting, warning=FALSE, message=FALSE}
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 
@@ -518,7 +518,7 @@ data.scores$points <- rownames(data.scores)
 treatment.scores <- cbind(prob.prey.cl, data.scores)
 
 #Check
-str(treatment.scores)  
+#str(treatment.scores)  
 #Awesome
 
 ```
@@ -527,7 +527,7 @@ str(treatment.scores)
 
 For each ordination and set of grouping variables input to data scores chunk.
 
-```{r Convex hulls - by cluster number, warning=FALSE, message=FALSE}
+```{r Convex hulls by cluster number, warning=FALSE, message=FALSE}
 #Create convex hulls for the space occupied by each cluster value
 unique(treatment.scores$prob.clust.num)
 length(treatment.scores$prob.clust.num)
@@ -543,14 +543,13 @@ for(i in 1:length(clust)) {
 #combine the hull data
 hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6, grp.7)  
 
-str(hull.data)
+#str(hull.data)
 
 ```
 
-
 ### NMDS plot
 
-```{r nMDS Cluster #,warning=FALSE, message=FALSE}
+```{r nMDS Cluster Number, warning=FALSE, message=TRUE}
 #nMDS plot for the assessmenet of global change (yes/no) and the drivers.
 #as.integer(unique(treatment.scores$adult.clust.num))
 
@@ -577,20 +576,17 @@ trait_nMDS_prob_fig <- ggplot() +
         panel.grid.major = element_blank(),  #remove major-grid labels
         panel.grid.minor = element_blank(),  #remove minor-grid labels
         plot.background = element_blank()) +
-  #guides(fill = FALSE, colour = FALSE) +
-  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
   scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") + 
   scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
   
 trait_nMDS_prob_fig
-##Not perfect, some issues to troubleshoot
 
 #ggsave(here("outputs_figures/clusters/probable_divis_simple/trait_nMDS_prob_clusters.png"), 
 #       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```
 
-```{r nMDS Cluster + FO, warning=FALSE, message=FALSE}
+```{r nMDS Cluster by FO, warning=FALSE, message=TRUE}
 
 trait_nMDS_prob_fo <- ggplot() + 
   geom_polygon(data=hull.data, 
@@ -617,8 +613,6 @@ trait_nMDS_prob_fo <- ggplot() +
         panel.grid.major = element_blank(),  #remove major-grid labels
         panel.grid.minor = element_blank(),  #remove minor-grid labels
         plot.background = element_blank()) +
-  #guides(fill = FALSE, colour = FALSE) +
-  #guides(fill = guide_legend(order = 1), colour = guide_legend(order = 2)) +
   scale_colour_viridis(option="magma", begin = 0, end = 1, name = "Frequency of Occurrence (%)") + 
   scale_fill_viridis(option="magma", begin = 0.9, end = 0, name = "Cluster Number") #+
   

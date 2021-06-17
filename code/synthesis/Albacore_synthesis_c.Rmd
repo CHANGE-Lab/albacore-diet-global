@@ -7,6 +7,10 @@ output: html_document
 
 # Trait variation in albacore diet across geographies
 
+## About
+
+This document contains code for data manipulation, refinement and conversion to presence absence, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
+
 ## Blueprint for paragraphs:
 
 1. (Results) Describe the dominant significant traits and non-sig traits in relation to albacore age and geography sampled (Fig. R3).
@@ -14,6 +18,12 @@ output: html_document
 2. Relate to clusters (potential additional analysis/figure).
 
 3. Discussion - Investigate how species traits may be used to explain variation in prey use by albacore tuna using a multi-matrix approach.
+
+## Current Issues
+
+- SHOULD WE EXCULDE ANYTHING WITH %fo < 1% ?
+
+- This will have been done in Albacore_data_manip.Rmd at point of dataframe creation?
 
 ## Workspace
 
@@ -24,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #setwd(dirname(getActiveDocumentContext()$path))
 ```
 
-```{r Workspace, include=FALSE, echo=FALSE}
+```{r Workspace, include=FALSE, echo=FALSE, message=FALSE, results='hide'}
 #If need to clear 'Environment'
 #First view environment if you like
 #ls()
@@ -71,16 +81,6 @@ source("traitglm.R")
 source("get_polys.R")
 
 ```
-
-## About
-
-This document contains code for data manipulation, refinement and conversion to presence absence, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
-
-## Current Issues
-
-- SHOULD WE EXCULDE ANYTHING WITH %fo < 1%
-
-- This will have been done in Albacore_data_manip.Rmd at point of dataframe creation?
 
 
 ## Data (L)
@@ -357,15 +357,17 @@ dim(alb_prob_covars) #209 observations for 13 covars
 ## DF checks
 
 ```{r Check names and df dimensions, eval=FALSE}
+
 ## Make sure species names match abund matrix
-rownames(alb_prob_traits) == colnames(alb_prob_preyPA) #awesome!
+#rownames(alb_prob_traits) == colnames(alb_prob_preyPA) #awesome!
 # And the mvabund matrix
 alb_prob_preyPA_mv = as.mvabund(alb_prob_preyPA)
 
 dim(alb_prob_preyPA_mv) #209 123
 
-rownames(alb_prob_traits) == colnames(alb_prob_preyPA_mv) #awesome!
+#rownames(alb_prob_traits) == colnames(alb_prob_preyPA_mv) #awesome!
 
+#Check all matrix dimensions
 dim(alb_prob_traits) #123 species and 17 traits
 dim(alb_prob_preyPA_mv) #209 obs, 123 species
 dim(alb_prob_covars) #209 obs, 13 variables
@@ -401,18 +403,12 @@ traits_prob_clust = as.data.frame(alb_prob_traits[,17]) %>%
 
 traits_prob_clust$cluster <- as.factor(traits_prob_clust$cluster)
 
-#str(traits_prob)
-#str(traits_prob$cluster)
-#check
-#summary(traits_prob$cluster)
-
 ```
 
 
 ## TRAIT GLMS
 
-ALL MODELS TALLY
-
+### MODELS TALLY
 
 **NOTE** Model Comparisons
 
@@ -445,9 +441,9 @@ LASSO MODELS
 
 ### Species models
 
-SPP Manyglm - Predator Life
+SPP Manyglm - Predator Life Stage
 
-```{r TraitGLM - SPP - life manyglm binom}
+```{r TraitGLM - SPP - life manyglm binom, eval=FALSE}
 
 prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
                           R = alb_prob_covars$pred_life,
@@ -455,18 +451,56 @@ prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
                           family=binomial(link = "logit")
                           ) #note default is "manyglm"
 
+```
+
+SPP Manyglm - Ocean Basin
+
+```{r TraitGLM - SPP - ocean manyglm binom, eval=FALSE}
+
+prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
+                                    R = alb_prob_covars$OceanBasin,
+                                    family=binomial(link = "logit")
+                                    ) #note default is "manyglm"
+
+#check model output if needed
+```
+
+SPP Manyglm - Latitude
+
+```{r TraitGLM - SPP - lat manyglm binom, eval=FALSE}
+
+prob_lat_spp <- traitglm(L = alb_prob_preyPA_mv,
+                         R = alb_prob_covars$lat_cat,
+                         family=binomial(link = "logit")
+                         ) #note default is "manyglm"
+
+#check model output if needed
+```
+
+SAVE OUTPUTS SO FAR
+
+```{r SAVE SPP MODELS, eval=FALSE}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
+saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
+saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
+
+```
+
+*Note:* that the .Rmd doc also contains additional code to evaluate these models and for plotting the species models.
+
+```{r EXTRA code for model eval, eval=FALSE, include=FALSE}
+
 #Check model output - residuals TEST
 #qqnorm(residuals(prob_life_clusters_spp)[which(residuals(prob_life_clusters_spp)<10000)]); abline(c(0,1),col="red")
 
 #omit non-finite residuals FULL MODEL
 #resids.full = residuals(prob_life_clusters_spp)[is.finite((residuals(prob_life_clusters_spp)))]
 #plot(resids.full); abline(c(0,0),col="red")
-
 ```
 
-Need to cut species in list in half to make the SPP models legible.
-
-```{r Plot 4th corner - life many}
+```{r Plot 4th corner - life many, eval=FALSE, include=FALSE}
 
 #Can cut this graph in half with matrix manipulation of prob_life_clusters_spp$fourth.corner
 
@@ -497,47 +531,6 @@ print(prob_life_spp_graph)
 
 ```
 
-```{r TraitGLM - SPP - ocean manyglm binom}
-
-prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
-                                    R = alb_prob_covars$OceanBasin,
-                                    family=binomial(link = "logit")
-                                    ) #note default is "manyglm"
-
-#check model output if needed
-```
-
-```{r TraitGLM - SPP - lat manyglm binom}
-
-prob_lat_spp <- traitglm(L = alb_prob_preyPA_mv,
-                         R = alb_prob_covars$lat_cat,
-                         family=binomial(link = "logit")
-                         ) #note default is "manyglm"
-
-#check model output if needed
-```
-
-SAVE OUTPUTS SO FAR
-
-```{r SAVE SPP MODELS}
-#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
-
-saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
-saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
-saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
-
-```
-
-RELOAD OUTPUTS BACK IN
-
-```{r READ IN SPP MODELS}
-#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
-
-prob_life_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
-prob_ocean_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
-prob_lat_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
-
-```
 
 ### Trait clusters models
 
@@ -546,7 +539,7 @@ prob_lat_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_lat_
 **MANYGLM**
 Trait (cluster) *Env - Manyglm
 
-```{r TraitGLM - life + clusters manyglm binom}
+```{r TraitGLM - life + clusters manyglm binom, eval=FALSE}
 
 prob_life_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
                                     R = alb_prob_covars$pred_life,
@@ -564,7 +557,7 @@ prob_life_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
 
 ```
 
-```{r Plot 4th corner - life many}
+```{r Plot 4th corner - life many, eval=FALSE}
 
 a        = max( abs(prob_life_clusters_many$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
@@ -600,7 +593,7 @@ ggsave(here("./outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many
 
 Predator Life Stage - Using binomial (logit link) function + glm1path LASSO model
 
-```{r TraitGLM - life + clusters LASSO}
+```{r TraitGLM - life + clusters LASSO, eval=FALSE}
 
 prob_life_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                     R = prob_pred_life,
@@ -625,7 +618,7 @@ prob_life_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
 
 ```
 
-```{r Plot 4th corner - life + cluster LASSO}
+```{r Plot 4th corner - life + cluster LASSO, eval=FALSE}
 
 a        = max( abs(prob_life_cluster_LASSO$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
@@ -668,7 +661,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_cluster7_LASSO_
 
 **MANYGLM**
 
-```{r TraitGLM - ocean + clusters manyglm binom}
+```{r TraitGLM - ocean + clusters manyglm binom, eval=FALSE}
 #levels(ocean)
 
 prob_ocean_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
@@ -679,7 +672,7 @@ prob_ocean_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
 
 ```
 
-```{r Plot 4th corner - ocean many}
+```{r Plot 4th corner - ocean many, eval=FALSE}
 
 a        = max( abs(prob_ocean_clusters_many$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
@@ -719,7 +712,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_
 
 Ocean Basin - Using binomial (logit link) function + glm1path LASSO model
 
-```{r TraitGLM - Ocean + clusters LASSO}
+```{r TraitGLM - Ocean + clusters LASSO, eval=FALSE}
 
 prob_ocean_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                      R = prob_ocean,
@@ -741,7 +734,7 @@ prob_ocean_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
 #dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_resids.pdf", width=5, height=5)
 ```
 
-```{r Plot 4th corner - life + cluster LASSO}
+```{r Plot 4th corner - life + cluster LASSO, eval=FALSE}
 
 a        = max( abs(prob_ocean_cluster_LASSO$fourth.corner) )
 colort   = colorRampPalette(c("blue","white","red")) 
@@ -785,21 +778,11 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_
 
 SAVE OUTPUTS SO FAR
 
-```{r SAVE CLUSTER MODELS}
+```{r SAVE CLUSTER MODELS, eval=FALSE}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
 
 saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
 saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
-
-```
-
-RELOAD OUTPUTS BACK IN
-
-```{r SAVE CLUSTER MODELS}
-#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
-
-prob_life_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
-prob_ocean_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
 
 ```
 
@@ -1068,6 +1051,29 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_LASSO_graph.jpeg
 
 ### MODEL COMPARISON
 
+#### READ MODELS BACK IN
+
+Species and environment matrix models - manyglm.
+
+```{r READ IN SPP MODELS}
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
+
+prob_life_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_spp.rds")) 
+prob_ocean_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_spp.rds"))
+prob_lat_spp = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_lat_spp.rds"))
+
+```
+
+Species, cluster number and environment models - manyglm.
+
+```{r READ IN CLUSTER MODELS}
+
+prob_life_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
+prob_ocean_clusters_many = readRDS(here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
+
+```
+
+#### Model Outputs
 Cluster, trait, spp models each for (i) predator life stage and (ii) ocean basins
 
 ###### prob_life_spp
@@ -1218,7 +1224,7 @@ Model 1  25338     232 476.9     0.01 **
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Arguments: P-value calculated using 99 iterations via PIT-trap block resampling.
 
-```{r Reload Model Comps - Life}
+```{r Reload Model Comps - Life, eval = FALSE, include = FALSE}
 
 anova.life1 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
 anova.life2 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
@@ -1275,11 +1281,11 @@ text(pl, "species", col="blue", cex=0.9)
 
 ```
 
-#### nMDS - composition
+### nMDS - composition
 
 Extract NMDS coordinates and associate with co-variates/grouping factors
 
-```{r Data scores for plotting - USE, eval = FALSE, include = FALSE}
+```{r Data scores for plotting, eval = FALSE, include = FALSE}
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 #Using the scores function from vegan to extract the site scores and convert to a data.frame
