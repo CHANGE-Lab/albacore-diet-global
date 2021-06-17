@@ -9,21 +9,7 @@ output: html_document
 
 ## About
 
-This document contains code for data manipulation, refinement and conversion to presence absence, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
-
-## Blueprint for paragraphs:
-
-1. (Results) Describe the dominant significant traits and non-sig traits in relation to albacore age and geography sampled (Fig. R3).
-
-2. Relate to clusters (potential additional analysis/figure).
-
-3. Discussion - Investigate how species traits may be used to explain variation in prey use by albacore tuna using a multi-matrix approach.
-
-## Current Issues
-
-- SHOULD WE EXCULDE ANYTHING WITH %fo < 1% ?
-
-- This will have been done in Albacore_data_manip.Rmd at point of dataframe creation?
+This document contains code for loading mostly manipulated data for global albacore prey communities consumed and for conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
 
 ## Workspace
 
@@ -34,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #setwd(dirname(getActiveDocumentContext()$path))
 ```
 
-```{r Workspace, include=FALSE, echo=FALSE, message=FALSE, results='hide'}
+```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
 #If need to clear 'Environment'
 #First view environment if you like
 #ls()
@@ -81,6 +67,16 @@ source("traitglm.R")
 source("get_polys.R")
 
 ```
+
+
+
+## Data needs
+
+- Species (L):
+
+- Traits (Q): alb_prob_traits == 
+
+- Env/Site (R): 
 
 
 ## Data (L)
@@ -232,6 +228,15 @@ alb_prob_traits$horz_habitat <- factor(alb_prob_traits$horz_habitat,
 #levels(alb_adult_traits$gregarious) #check
 alb_prob_traits$gregarious <- factor(alb_prob_traits$gregarious, 
                                             levels = c("solitary", "schooling"))
+
+```
+
+```{r LOAD TRAIT DATA (Q), tidy=TRUE, warning=FALSE, message=FALSE}
+alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_k7.csv")) %>%
+  select(-X)
+
+alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
 
 ```
 
