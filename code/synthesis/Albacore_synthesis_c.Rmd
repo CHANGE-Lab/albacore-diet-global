@@ -781,8 +781,13 @@ SAVE OUTPUTS SO FAR
 ```{r SAVE CLUSTER MODELS, eval=FALSE}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_stage
 
+#manyglms
 saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_clusters_many.rds")) 
 saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_clusters_many.rds"))
+
+#LASSO glms
+saveRDS(prob_life_cluster_LASSO, file = here("outputs_figures/traitglms/prob_life_stage/prob_life_cluster_LASSO.rds"))
+saveRDS(prob_ocean_cluster_LASSO, file = here("outputs_figures/traitglms/prob_life_stage/prob_ocean_cluster_LASSO.rds"))
 
 ```
 
