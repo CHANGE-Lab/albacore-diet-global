@@ -3,8 +3,8 @@ title: "Albacore Diet Synthesis C"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 # Trait variation in albacore diet across geographies
@@ -446,7 +446,7 @@ ggsave(here("./outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many
        plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.jpeg"), 
-       plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
+       plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
 
