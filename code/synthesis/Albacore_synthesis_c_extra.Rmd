@@ -48,6 +48,37 @@ Below is code for once we have filtered the prey species matrix by the trait mat
 
 *Note:* that the 'Albacore_synthesis_c_extra.Rmd' doc also contains additional code to evaluate these models and for plotting the species models.
 
+```{r Check & save model output, eval=FALSE}
+
+#For prob_life_cluster
+
+#Check model output - residuals TEST
+#x11()
+#qqnorm(residuals(prob_life_cluster_LASSO)[which(residuals(prob_life_cluster_LASSO)<10000)]); abline(c(0,1),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_cluster7_LASSO_QQ.pdf", width=5, height=5)
+
+#omit non-finite residuals FULL MODEL
+#resids.full = residuals(prob_life_cluster_LASSO)[is.finite((residuals(prob_life_cluster_LASSO)))]
+#plot(resids.full); abline(c(0,0),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_life_cluster7_LASSO_resids.pdf", width=5, height=5)
+
+#For prob_ocean_cluster
+
+#Check model output - residuals TEST
+#x11()
+#qqnorm(residuals(trait_ocean_binom)[which(residuals(trait_ocean_binom)<10000)]); abline(c(0,1),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_QQ.pdf", width=5, height=5)
+
+#omit non-finite residuals FULL MODEL
+#resids.full = residuals(trait_ocean_binom)[is.finite((residuals(trait_ocean_binom)))]
+#plot(resids.full); abline(c(0,0),col="red")
+#dev.copy(device = x11)
+#dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_resids.pdf", width=5, height=5)
+```
+
 ```{r Plot 4th corner life many, eval=FALSE, include=FALSE}
 
 #Can cut this graph in half with matrix manipulation of prob_life_clusters_spp$fourth.corner
@@ -78,3 +109,243 @@ Below is code for once we have filtered the prey species matrix by the trait mat
 #print(prob_life_spp_graph)
 
 ```
+
+
+
+## Model comparisons
+###### Compare outputs - life stage
+
+Comparing SPP -- Cluster --- Trait models for predator life stage
+
+```{r Compare outputs - predator life, eval = FALSE, include = FALSE}
+
+anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
+saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
+
+anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
+saveRDS(anova.life2, file = here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
+
+#Does not want to run > 2 model comparisons, even though both previous worked
+#anova.life3 = anova.traitglm(prob_life_spp, prob_life_clusters_many, prob_life_trait_many)
+
+#Does not want to compare the cluster and trait outputs
+#anova.life3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many) #prob_life_spp, 
+#saveRDS(anova.life3, file = here("outputs_figures/traitglms/prob_life_stage/anova.life3.rds"))
+
+#greatest residual deviance with cluster analyses
+
+```
+
+Significant Difference between spp model and cluster model --> latter explained more deviance:
+
+Multivariate test:
+        Res.Df Df.diff   Dev Pr(>Dev)   
+Model 2  25570                          
+Model 1  25338     232 476.9     0.01 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Arguments: P-value calculated using 99 iterations via PIT-trap block resampling.
+
+```{r Reload Model Comps - Life, eval = FALSE, include = FALSE}
+
+anova.life1 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
+anova.life2 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
+#anova.life3 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life3.rds"))
+
+```
+
+
+###### Compare outputs - ocean
+
+Comparing SPP -- Cluster --- Trait models for ocean basin
+
+```{r Compare outputs - ocean basin, eval = FALSE, include = FALSE}
+
+#anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
+
+anova.ocean1 = anova.traitglm(prob_ocean_spp, prob_ocean_clusters_many)
+saveRDS(anova.ocean1, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean1.rds"))
+
+anova.ocean2 = anova.traitglm(prob_ocean_spp, prob_ocean_trait_many)
+saveRDS(anova.ocean2, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean2.rds"))
+
+#anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
+
+#greatest residual deviance with cluster analyses
+
+```
+
+```{r Compare outputs - ocean basin, eval = FALSE, include = FALSE}
+
+#anova.ocean3 = anova.traitglm(prob_life_clusters_many, prob_life_trait_many, prob_life_spp)
+
+```
+
+
+
+## Ordination
+
+```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
+
+
+#PA
+alb_prob_nMDS_pa = metaMDS(alb_prob_preyPA, 
+                         distance="bray", 
+                         trymax = 10000, #1000
+                         k=4) #could increase to k = 4
+
+saveRDS(alb_prob_nMDS_pa, here("outputs_figures/traitglmsalb_prob_nMDS_pa.rds"))
+
+#Note pb with this!! insufficient data?
+
+pl <- ordiplot(alb_prob_nMDS_pa, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
+
+### nMDS - composition
+
+Extract NMDS coordinates and associate with co-variates/grouping factors
+
+```{r Data scores for plotting, eval = FALSE, include = FALSE}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(alb_prob_nMDS_pa))  #, "species"
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+#bind treatment labels and score values
+treatment.scores <- cbind(alb_prob_covars, data.scores)
+#Check
+str(treatment.scores)  
+#Awesome
+
+```
+
+### Predator Life Stage
+
+Convex hull calculations
+For each ordination and set of grouping variables input to data scores chunk
+
+```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$pred_life)
+#Taxonomic group - hull loop
+pred = as.character(unique(treatment.scores$pred_life))
+for(i in 1:length(pred)) {
+  temp = pred[i]
+  df = treatment.scores[treatment.scores$pred_life == temp, ][chull(treatment.scores[treatment.scores$pred_life == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data.pred <- rbind(grp.mixed, grp.juvenile, grp.adult)  
+
+str(hull.data.pred)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+NMDS plot
+
+```{r nMDS Pred Life, eval = FALSE, include = FALSE}
+
+nMDS_prob_life <- ggplot() + 
+  geom_polygon(data = hull.data.pred, 
+               aes(x = NMDS1, y = NMDS2, 
+                   fill = pred_life, 
+                   group = pred_life), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data = treatment.scores, 
+             aes(x = NMDS1, y = NMDS2, colour = pred_life), 
+             size = 2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Predator Life Stage") + 
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Predator Life Stage")
+
+nMDS_prob_life
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/nMDS_prob_life.jpeg"), plot = nMDS_prob_life, width = 8, height = 8, dpi = 300)
+
+```
+
+### Ocean Basin
+
+Convex Hull calculations
+
+
+```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
+# Taxonomic groups (specific)
+#Create convex hulls for the space occupied by each Taxonomic values
+unique(treatment.scores$OceanBasin)
+#Taxonomic group - hull loop
+oc = as.character(unique(treatment.scores$OceanBasin))
+for(i in 1:length(oc)) {
+  temp = oc[i]
+  df = treatment.scores[treatment.scores$OceanBasin == temp, ][chull(treatment.scores[treatment.scores$OceanBasin == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+
+#combine the hull data
+hull.data.ocean <- rbind(`grp.N Atlantic`, `grp.Mediterranean`, `grp.N Pacific`, `grp.S Atlantic`, `grp.Indian`, `grp.S Pacific`)  
+
+str(hull.data.ocean)
+#Just wondering how do 174 species (obs) become 46???
+
+```
+
+nMDS for Ocean Basin
+
+```{r nMDS Ocean Basin, eval = FALSE, include = FALSE}
+#nMDS plot for the assessmenet of global change (yes/no) and the drivers.
+#unique(treatment.scores$OceanBasin)
+
+nMDS_prob_ocean <- ggplot() + 
+  geom_polygon(data = hull.data.ocean, 
+               aes(x = NMDS1, y = NMDS2, 
+                   fill = OceanBasin, 
+                   group = OceanBasin), 
+               alpha=0.30) + # add the convex hulls
+  geom_point(data = treatment.scores, 
+             aes(x = NMDS1, y = NMDS2, colour = OceanBasin), 
+             size = 2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin") + 
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin")
+
+nMDS_prob_ocean
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/nMDS_prob_ocean.jpeg"), plot = nMDS_prob_ocean, width = 8, height = 8, dpi = 300)
+
+```
+
+## Ordination - sub outliers
+
