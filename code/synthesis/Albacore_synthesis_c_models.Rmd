@@ -2,7 +2,9 @@
 title: "Albacore Diet Synthesis C"
 author: "Natasha Hardy"
 date: "15/04/2021"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 # Trait variation in albacore diet across geographies
@@ -443,6 +445,9 @@ print(prob_life_clusters_many_graph)
 ggsave(here("./outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.pdf"), 
        plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.jpeg"), 
+       plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
+
 ```
 
 **GLM1PATH Clusters - Predator Life Stage**
@@ -528,6 +533,9 @@ prob_ocean_clusters_many_graph = levelplot(temp,
 print(prob_ocean_clusters_many_graph)
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.jpeg"), 
        plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -650,6 +658,9 @@ print(prob_life_many_4th)
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th.pdf"), plot = as.ggplot(prob_life_many_4th), width=12, height=12, dpi=300)
 
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th_graph.jpeg"), 
+       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+
 #dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
 
 ```
@@ -698,11 +709,11 @@ prob_life_LASSO_graph = levelplot(temp,
 
 print(prob_life_LASSO_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.pdf"), 
-#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.jpeg"), 
-#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -746,6 +757,9 @@ prob_ocean_trait_many_graph = levelplot(temp,
 print(prob_ocean_trait_many_graph)
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_trait_many_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_trait_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_trait_many_graph.jpeg"), 
        plot = as.ggplot(prob_ocean_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
