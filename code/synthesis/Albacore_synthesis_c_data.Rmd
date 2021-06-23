@@ -46,7 +46,6 @@ knitr::opts_chunk$set(echo = TRUE)
 getwd()
 
 # general
-library(tidyverse)
 library(readxl)
 library(plyr)
 library(dplyr)
