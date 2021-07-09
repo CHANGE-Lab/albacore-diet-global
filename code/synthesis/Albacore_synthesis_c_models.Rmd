@@ -306,10 +306,12 @@ Species, cluster number and environment models - manyglms + LASSOs.
 #Manyglms
 prob_life_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_clusters_many.rds")) 
 prob_ocean_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_clusters_many.rds"))
+prob_lat_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_clusters_many.rds"))
 
 #LASSO glms
 prob_life_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_cluster_LASSO.rds"))
 prob_ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_cluster_LASSO.rds"))
+prob_lat_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_cluster_LASSO.rds"))
 
 ```
 
@@ -339,6 +341,7 @@ prob_inter_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob
 prob_inter_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO.rds"))
 ```
 
+
 ### Species models
 
 **SPP Manyglm - Predator Life Stage**
@@ -367,7 +370,7 @@ prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
 
 **SPP Manyglm - Latitude**
 
-```{r SPP latitude manyglm, eval=FALSE}
+```{r SPP climate manyglm, eval=FALSE}
 
 prob_lat_spp <- traitglm(L = alb_prob_preyPA_mv,
                          R = alb_prob_covars$lat_cat,
@@ -597,9 +600,88 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_
 ```
 
 
-#### Latitude
+#### Climate
 
-Not done yet. Latitude models had lower explanatory power than ocean basin or predator life stage.
+**MANYGLM Clusters - Climate**
+
+Trait (cluster)*Env (climate) - Manyglm
+
+```{r Clusters latitude manyglm, eval=FALSE}
+
+prob_lat_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$lat_cat,
+                                     Q = traits_use$cluster,
+                                     family=binomial(link = "logit")
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot clusters latitude manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_lat_clusters_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_lat_clusters_many$fourth.corner))
+
+rownames(temp) = c("Tropical")
+
+prob_lat_clusters_many_graph = levelplot(temp, 
+                     xlab=list("Climate", cex=1.5),
+                     ylab=list("Species clusters", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_lat_clusters_many_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_clusters_many_graph.pdf"), 
+       plot = as.ggplot(prob_lat_clusters_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_clusters_many_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_clusters_many_graph), width=12, height=12, dpi=300)
+
+```
+
+**GLM1PATH Clusters - Cliamte**
+
+Using method = glm1path == LASSO model.
+
+```{r Clusters latitude LASSO, eval=FALSE}
+
+prob_lat_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$lat_cat,
+                                     Q = traits_use$cluster,
+                                     family=binomial(link = "logit"),
+                                     method="glm1path"
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot clusters latitude LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_lat_cluster_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_lat_cluster_LASSO$fourth.corner))
+
+rownames(temp) = c("Tropical")
+
+prob_lat_cluster_LASSO_graph = levelplot(temp, 
+                     xlab=list("Climate", cex=1.5),
+                     ylab=list("Species clusters", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_lat_cluster_LASSO_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_cluster_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_lat_cluster_LASSO_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_cluster_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_cluster_LASSO_graph), width=12, height=12, dpi=300)
+
+```
 
 #### SAVE CLUSTER OUTPUTS
 
@@ -609,10 +691,12 @@ Not done yet. Latitude models had lower explanatory power than ocean basin or pr
 #Manyglms
 saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_life_clusters_many.rds")) 
 saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_ocean_clusters_many.rds"))
+saveRDS(prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_lat_clusters_many.rds"))
 
 #LASSO glms
 saveRDS(prob_life_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_life_cluster_LASSO.rds"))
 saveRDS(prob_ocean_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_ocean_cluster_LASSO.rds"))
+saveRDS(prob_lat_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_lat_cluster_LASSO.rds"))
 
 ```
 
@@ -1073,6 +1157,12 @@ prob_life_clusters_many
 prob_ocean_clusters_many
 ```
 
+##### Model: prob_lat_clusters_many
+
+```{r Model Output prob_lat_clusters_many}
+prob_lat_clusters_many
+```
+
 ##### Model: prob_life_trait_many
 
 ```{r Model Output prob_life_trait_many}
@@ -1096,12 +1186,105 @@ prob_lat_trait_many
 
 ```{r Model Output: prob_inter_trait_many}
 prob_inter_trait_many
+
+prob_inter_trait_many$aic
+
+#prob_inter_trait_many$two.loglike same as deviance explained
+
+prob_inter_trait_many$deviance
+
+prob_inter_trait_many$call
+
+
+temp = as.data.frame(prob_inter_trait_many$coefficients)
+
+
 ```
 
 ## Conclusions
 
-The species models had the lowest residual deviance explained, and typically higher AIC values./
+The species models had the lowest residual deviance explained, and typically higher AIC values.
 Cluster models performed slightly better than traits models, but not massive difference. Both cluster and trait sets of models outperformed species models.
 
 The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
 The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
+
+## Remaining to do's
+
+- Run a null model?
+- Run latitude + cluster model?
+
+## Model Comp Outputs
+Species and environment matrix models - manyglm.
+
+```{r Model list for outputs, eval=FALSE}
+
+#Species*env models
+prob_life_spp
+prob_ocean_spp
+prob_lat_spp
+
+#Cluster*env models (manyglm and LASSO)
+#Manyglms
+prob_life_clusters_many
+prob_ocean_clusters_many
+#LASSO glms
+prob_life_cluster_LASSO
+prob_ocean_cluster_LASSO
+
+#Trait*env models
+# Manyglms
+prob_life_trait_many 
+prob_ocean_trait_many
+prob_lat_trait_many
+#LASSO glms
+prob_life_trait_LASSO
+prob_ocean_trait_LASSO
+prob_lat_trait_LASSO 
+
+#Additive multi-variable env models
+#Manyglm
+prob_inter_trait_many
+#LASSO glms
+prob_inter_trait_LASSO
+```
+
+**Note**
+
+- Could add additive models, LASSO models?
+
+```{r Make output dataframe, eval=FALSE}
+
+model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
+          "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
+          "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many")
+mod_type = c("species*env", "species*env", "species*env", 
+             "trait*env", "trait*env", "trait*env",
+             "cluster*env", "cluster*env", "cluster*env")
+covar = c("predator life stage", "ocean basin", "climate",
+          "predator life stage", "ocean basin", "climate",
+          "predator life stage", "ocean basin", "climate")
+deviance = c(prob_life_spp$deviance, prob_ocean_spp$deviance, prob_lat_spp$deviance,
+             prob_life_trait_many$deviance, prob_ocean_trait_many$deviance, prob_lat_trait_many$deviance,
+             prob_life_clusters_many$deviance, prob_ocean_clusters_many$deviance, prob_lat_clusters_many$deviance)
+aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
+        prob_life_trait_many$AICsum, prob_ocean_trait_many$AICsum, prob_lat_trait_many$AICsum,
+        prob_life_clusters_many$AICsum, prob_ocean_clusters_many$AICsum, prob_lat_clusters_many$AICsum)
+mod_dev = data.frame(covar, mod_type, model, deviance, aic)
+
+
+```
+
+```{r Make output graph}
+
+mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  facet_grid(.~ mod_type)
+
+mod_dev_graph = ggplot(data = mod_dev) + 
+  geom_bar(aes(y = deviance, color = covar)) + 
+  facet_grid(.~ mod_type)
+
+mod_dev_graph
+```
+

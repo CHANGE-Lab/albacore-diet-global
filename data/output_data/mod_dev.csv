@@ -1,0 +1,10 @@
+"","covar","mod_type","model","deviance","aic"
+"1","predator life stage","species*env","prob_life_spp",3328.68262914982,4066.68262914982
+"2","ocean basin","species*env","prob_ocean_spp",2978.26465227364,4454.26465227364
+"3","climate","species*env","prob_lat_spp",3656.05075704556,4148.05075704557
+"4","predator life stage","trait*env","prob_life_trait_many",3764.36785349806,4050.36785349806
+"5","ocean basin","trait*env","prob_ocean_trait_many",3746.3584569489,4092.3584569489
+"6","climate","trait*env","prob_lat_trait_many",3874.59721814743,4140.59721814744
+"7","predator life stage","cluster*env","prob_life_clusters_many",3805.56589856748,4079.56589856748
+"8","ocean basin","cluster*env","prob_ocean_clusters_many",3776.39390411537,4092.39390411537
+"9","climate","cluster*env","prob_lat_clusters_many",3893.69031816225,4153.69031816225
