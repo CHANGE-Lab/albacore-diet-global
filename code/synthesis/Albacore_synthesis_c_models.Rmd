@@ -1228,9 +1228,11 @@ prob_lat_spp
 #Manyglms
 prob_life_clusters_many
 prob_ocean_clusters_many
+prob_lat_clusters_many
 #LASSO glms
 prob_life_cluster_LASSO
 prob_ocean_cluster_LASSO
+prob_lat_cluster_LASSO
 
 #Trait*env models
 # Manyglms
@@ -1272,7 +1274,7 @@ aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
         prob_life_clusters_many$AICsum, prob_ocean_clusters_many$AICsum, prob_lat_clusters_many$AICsum)
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
-
+write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
 ```
 
 ```{r Make output graph}
@@ -1282,9 +1284,17 @@ mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = cova
   facet_grid(.~ mod_type)
 
 mod_dev_graph = ggplot(data = mod_dev) + 
-  geom_bar(aes(y = deviance, color = covar)) + 
-  facet_grid(.~ mod_type)
+  geom_bar(aes(y = deviance, color = mod_type)) + 
+  #facet_grid(.~ mod_type)
+  facet_grid(.~ covar)
 
 mod_dev_graph
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph.pdf"), 
+       plot = mod_dev_graph, width=5, height=4, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph.jpeg"), 
+       plot = mod_dev_graph, width=5, height=4, dpi=300)
+
 ```
 

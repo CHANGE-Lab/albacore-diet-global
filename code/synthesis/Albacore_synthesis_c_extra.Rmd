@@ -115,6 +115,41 @@ Below is code for once we have filtered the prey species matrix by the trait mat
 
 
 ## Model comparisons
+
+**Model List**
+```{r Model list for outputs, eval=FALSE}
+
+#Species*env models
+prob_life_spp
+prob_ocean_spp
+prob_lat_spp
+
+#Cluster*env models (manyglm and LASSO)
+#Manyglms
+prob_life_clusters_many
+prob_ocean_clusters_many
+prob_lat_clusters_many
+#LASSO glms
+prob_life_cluster_LASSO
+prob_ocean_cluster_LASSO
+prob_lat_cluster_LASSO
+
+#Trait*env models
+# Manyglms
+prob_life_trait_many 
+prob_ocean_trait_many
+prob_lat_trait_many
+#LASSO glms
+prob_life_trait_LASSO
+prob_ocean_trait_LASSO
+prob_lat_trait_LASSO 
+
+#Additive multi-variable env models
+#Manyglm
+prob_inter_trait_many
+#LASSO glms
+prob_inter_trait_LASSO
+```
 ###### Compare outputs - life stage
 
 Comparing SPP -- Cluster --- Trait models for predator life stage
@@ -159,6 +194,18 @@ anova.life2 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life
 
 ###### Compare outputs - ocean
 
+###### Compare outputs by model type
+
+Doesn't work, probably because the environmental covariate is different.
+
+```{r Trait and env model compare}
+
+#anova.traitenv1 = anova.traitglm(prob_life_trait_many, prob_ocean_trait_many)
+                                #, prob_lat_trait_many
+#saveRDS(anova.ocean1, file = here("outputs_figures/traitglms/prob_models/anova.ocean1.rds"))
+
+```
+
 ##### RUN THESE
 Comparing SPP -- Cluster --- Trait models for ocean basin
 
@@ -167,10 +214,13 @@ Comparing SPP -- Cluster --- Trait models for ocean basin
 #anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
 anova.ocean1 = anova.traitglm(prob_ocean_spp, prob_ocean_clusters_many)
-saveRDS(anova.ocean1, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean1.rds"))
+saveRDS(anova.ocean1, file = here("outputs_figures/traitglms/prob_models/anova.ocean1.rds"))
 
 anova.ocean2 = anova.traitglm(prob_ocean_spp, prob_ocean_trait_many)
-saveRDS(anova.ocean2, file = here("outputs_figures/traitglms/prob_life_stage/anova.ocean2.rds"))
+saveRDS(anova.ocean2, file = here("outputs_figures/traitglms/prob_models/anova.ocean2.rds"))
+
+anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many)
+saveRDS(anova.ocean3, file = here("outputs_figures/traitglms/prob_models/anova.ocean3.rds"))
 
 #anova.ocean3 = anova.traitglm(prob_ocean_clusters_many, prob_ocean_trait_many, prob_ocean_spp)
 
