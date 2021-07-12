@@ -336,9 +336,12 @@ Interaction models
 ```{r READ IN INTERACTION MODELS}
 #Manyglm
 prob_inter_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_many.rds"))
+prob_inter_trait_many2 = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_many2.rds"))
 
 #LASSO glms
 prob_inter_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO.rds"))
+prob_inter_trait_LASSO2 = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO2.rds"))
+
 ```
 
 
@@ -916,7 +919,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_LASSO_graph.jp
 
 ```
 
-#### Temperate / Tropical
+#### Climate
 
 **MANYGLM Trait values - Latitude**
 
@@ -1034,6 +1037,8 @@ saveRDS(prob_lat_trait_LASSO, file = here("outputs_figures/traitglms/prob_models
 
 ### Interactions
 
+#### Ocean Basin + Predator Life stage
+
 **MANYGLM Interaction Model**
 
 ```{r Traits interactions manyglm, eval=FALSE}
@@ -1043,6 +1048,8 @@ prob_inter_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                   Q = traits_use[,1:6],
                                   family=binomial(link = "logit")
                                     ) #note default is "manyglm"
+
+#prob_inter_trait_many$deviance
 
 ```
 
@@ -1103,20 +1110,99 @@ print(prob_inter_trait_LASSO_graph)
 ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_inter_trait_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_inter_trait_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
+#### Ocean Basin + Climate
 
-SAVE THESE
+**MANYGLM Interaction Model**
+
+```{r Traits interactions manyglm 2, eval=FALSE}
+
+prob_inter_trait_many2 <- traitglm(L = alb_prob_preyPA_mv,
+                                  R = alb_prob_covars[,c(4,9)],
+                                  Q = traits_use[,1:6],
+                                  family=binomial(link = "logit")
+                                    ) #note default is "manyglm"
+
+#prob_inter_trait_many$deviance
+
+```
+
+
+```{r Plot interactions manyglm 2, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_inter_trait_many2$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_inter_trait_many2$fourth.corner))
+
+prob_inter_trait_many2_graph = levelplot(temp, 
+                     xlab=list("Predator Life Stage + Climate", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_inter_trait_many2_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many2_graph.pdf"), 
+       plot = as.ggplot(prob_inter_trait_many2_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many2_graph.jpeg"), 
+       plot = as.ggplot(prob_inter_trait_many2_graph), width=12, height=12, dpi=300)
+
+```
+
+**GLM1PATH Interaction Model**
+
+```{r Traits interactions LASSO 2, eval=FALSE}
+
+prob_inter_trait_LASSO2 <- traitglm(L = alb_prob_preyPA_mv,
+                                  R = alb_prob_covars[,c(4,9)],
+                                  Q = traits_use[,1:6],
+                                  family=binomial(link = "logit"),
+                                  method="glm1path"
+                                    ) #note default is "manyglm"
+
+```
+
+```{r Plot interactions LASSO 2, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_inter_trait_LASSO2$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_inter_trait_LASSO2$fourth.corner))
+
+prob_inter_trait_LASSO2_graph = levelplot(temp, 
+                     xlab=list("Predator Life Stage + Climate", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_inter_trait_LASSO2_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO2_graph.pdf"), 
+       plot = as.ggplot(prob_inter_trait_LASSO2_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO2_graph.jpeg"), 
+       plot = as.ggplot(prob_inter_trait_LASSO2_graph), width=12, height=12, dpi=300)
+
+```
+
+#### SAVE THESE
 
 ```{r Save interaction models, eval=FALSE}
 
 #Manyglm
 saveRDS(prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_many.rds"))
+saveRDS(prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_many2.rds"))
 
 #LASSO glms
 saveRDS(prob_inter_trait_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO.rds"))
+saveRDS(prob_inter_trait_LASSO2, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO2.rds"))
 
 ```
 
@@ -1201,6 +1287,14 @@ temp = as.data.frame(prob_inter_trait_many$coefficients)
 
 ```
 
+##### Model: prob_inter_trait_many2
+
+```{r Model Output: prob_inter_trait_many2}
+
+prob_inter_trait_many2
+
+```
+
 ## Conclusions
 
 The species models had the lowest residual deviance explained, and typically higher AIC values.
@@ -1247,8 +1341,10 @@ prob_lat_trait_LASSO
 #Additive multi-variable env models
 #Manyglm
 prob_inter_trait_many
+prob_inter_trait_many2
 #LASSO glms
 prob_inter_trait_LASSO
+prob_inter_trait_LASSO2
 ```
 
 **Note**
@@ -1259,19 +1355,24 @@ prob_inter_trait_LASSO
 
 model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
           "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
-          "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many")
+          "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many") 
+#,        "prob_inter_trait_many", "prob_inter_trait_many2"
 mod_type = c("species*env", "species*env", "species*env", 
              "trait*env", "trait*env", "trait*env",
              "cluster*env", "cluster*env", "cluster*env")
+#,           "trait*ocean*life stage", "trait*ocean*climate"
 covar = c("predator life stage", "ocean basin", "climate",
           "predator life stage", "ocean basin", "climate",
           "predator life stage", "ocean basin", "climate")
+#,        "ocean*life stage", "ocean*climate"
 deviance = c(prob_life_spp$deviance, prob_ocean_spp$deviance, prob_lat_spp$deviance,
              prob_life_trait_many$deviance, prob_ocean_trait_many$deviance, prob_lat_trait_many$deviance,
              prob_life_clusters_many$deviance, prob_ocean_clusters_many$deviance, prob_lat_clusters_many$deviance)
+#,           prob_inter_trait_many$deviance, prob_inter_trait_many2$deviance
 aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
         prob_life_trait_many$AICsum, prob_ocean_trait_many$AICsum, prob_lat_trait_many$AICsum,
         prob_life_clusters_many$AICsum, prob_ocean_clusters_many$AICsum, prob_lat_clusters_many$AICsum)
+#,      prob_inter_trait_many$AICsum, prob_inter_trait_many2$AICsum
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
 write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
@@ -1290,10 +1391,10 @@ mod_dev_graph = ggplot(data = mod_dev) +
 
 mod_dev_graph
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.pdf"), 
        plot = mod_dev_graph, width=5, height=4, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.jpeg"), 
        plot = mod_dev_graph, width=5, height=4, dpi=300)
 
 ```
