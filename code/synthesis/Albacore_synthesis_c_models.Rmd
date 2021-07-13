@@ -1219,6 +1219,15 @@ Cluster, trait, spp models each for (i) predator life stage and (ii) ocean basin
 prob_life_spp
 ```
 
+```{r Anova prob_life_spp}
+
+#an_prob_life_spp = anova.traitglm(prob_life_spp)
+#saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_life_spp.rds"))
+an_prob_life_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_spp.rds"))
+an_prob_life_spp
+
+```
+
 ##### Model: prob_ocean_spp
 
 ```{r Model Output prob_ocean_spp}
@@ -1357,9 +1366,9 @@ model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp",
           "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
           "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many") 
 #,        "prob_inter_trait_many", "prob_inter_trait_many2"
-mod_type = c("species*env", "species*env", "species*env", 
-             "trait*env", "trait*env", "trait*env",
-             "cluster*env", "cluster*env", "cluster*env")
+mod_type = c("species", "species", "species", 
+             "traits", "traits", "traits",
+             "cluster", "cluster", "cluster")
 #,           "trait*ocean*life stage", "trait*ocean*climate"
 covar = c("predator life stage", "ocean basin", "climate",
           "predator life stage", "ocean basin", "climate",
@@ -1379,14 +1388,26 @@ write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
 ```
 
 ```{r Make output graph}
+mod_dev$mod_type = as.factor(mod_dev$mod_type)
+mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "trait", "cluster"))
+levels(mod_dev$mod_type)
 
-mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
-  geom_bar(stat = "identity", width = 1) + 
-  facet_grid(.~ mod_type)
+#mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
+#  geom_bar(stat = "identity", width = 1) + 
+#  facet_grid(.~ mod_type)
 
 mod_dev_graph = ggplot(data = mod_dev) + 
-  geom_bar(aes(y = deviance, color = mod_type)) + 
-  #facet_grid(.~ mod_type)
+  geom_bar(aes(y = deviance, fill = mod_type)) +
+  theme_classic() +
+  theme(axis.title = element_text(size=20),
+        axis.text = element_text(size=20),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=20),
+        legend.title = element_text(size=20),
+        legend.position = "top") +
+  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
   facet_grid(.~ covar)
 
 mod_dev_graph

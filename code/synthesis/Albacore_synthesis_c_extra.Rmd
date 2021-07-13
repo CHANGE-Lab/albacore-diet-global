@@ -147,8 +147,10 @@ prob_lat_trait_LASSO
 #Additive multi-variable env models
 #Manyglm
 prob_inter_trait_many
+prob_inter_trait_many2
 #LASSO glms
 prob_inter_trait_LASSO
+prob_inter_trait_LASSO2
 ```
 ###### Compare outputs - life stage
 
