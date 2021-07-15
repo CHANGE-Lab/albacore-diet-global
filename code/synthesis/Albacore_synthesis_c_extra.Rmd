@@ -11,44 +11,9 @@ output:
 
 This document contains extra code for assessing and evaluation fourth corner models. This document currently requires the 'Albacore_synthesis_c_models.Rmd' document to be loaded to use the same analytical objects and outputs.
 
-## Data manipulation
+## Trait models extra code
 
-### Removing single occurrence taxa (optional)
-
-Remove low occurrence species! Here we obtain 179 observations for 103 species.
-
-```{r Species PA (L) remove 1 occurrenc, eval=FALSE, include=FALSE, warning=FALSE, message=FALSE}
-#Remove low occurrence species?
-#Remove columns that contain < 2 occurrences #can vary this number
-alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
-#Not sure why some explanatory variable columns disappear also, so adding them back in:
-alb_adult_preyPA_df3 = cbind(alb_adult_preyPA_df2[,1:13], alb_adult_preyPA_df2[,12:ncol(alb_adult_preyPA_df2)])
-#Then delete rows that sum to zero for the trait occurrences
-alb_adult_preyPA_clean = alb_adult_preyPA_df3[-which(rowSums(alb_adult_preyPA_df3[14:ncol(alb_adult_preyPA_df3)])==0),] #209 observations of 103 spp.
-
-dim(alb_adult_preyPA_clean) #179 103
-#write.csv....
-
-```
-
-Below is code for once we have filtered the prey species matrix by the trait matrix for which we have trait information.
-
-```{r Not Using -- Diet data manip for >1 FO, eval=FALSE, include=FALSE}
-
-#If filtering
-#alb_prob_preyPA = alb_prob_preyPA[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
-#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
-#                                     194, 200, 202),]
-
-#alb_prob_covars = alb_adult_fo[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
-#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
-#                                     194, 200, 202), 1:13]
-
-```
-
-## Trait models
-
-*Note:* that the 'Albacore_synthesis_c_extra.Rmd' doc also contains additional code to evaluate these models and for plotting the species models.
+*Note:* that the 'Albacore_synthesis_c_extra.Rmd' doc also contains additional code to evaluate these models and for plotting the species models. This code is to save outputs of model build.
 
 ```{r Check & save model output, eval=FALSE}
 
@@ -81,40 +46,9 @@ Below is code for once we have filtered the prey species matrix by the trait mat
 #dev.copy2pdf(file="/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/trait_ocean_binom_resids.pdf", width=5, height=5)
 ```
 
-```{r Plot 4th corner life many, eval=FALSE, include=FALSE}
-
-#Can cut this graph in half with matrix manipulation of prob_life_clusters_spp$fourth.corner
-
-#a        = max( abs(prob_life_spp$fourth.corner) )
-#colort   = colorRampPalette(c("blue","white","red")) 
-#temp = t(as.matrix(prob_life_spp$fourth.corner))
-
-#rownames(temp) = c("Adult", "Juvenile")
-
-#colnames(temp) = c("Vert. habitat - demersal",
-#                   "Vert. habitat - epipelagic",
-#                   "Vert. habitat - mesopelagic",
-#                   "Horz. habitat - continental shelf",
-#                   "Horz. habitat - oceanic",
-#                   "Diel migrant (yes)",
-#                   "Seasonal migrant (yes)",
-#                   "Gregarious - schooling")
-
-#prob_life_spp_graph = levelplot(temp, 
-#                     xlab=list("Predator Life Stage", cex=1.5),
-#                     ylab=list("Species", cex=1.5), 
-#                     col.regions=colort(100), 
-#                     at=seq(-a, a,length=100),
-#                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
-#                     colorkey=list(labels=list(cex=1.3)))
-
-#print(prob_life_spp_graph)
-
-```
-
-
-
 ## Model comparisons
+
+We need to officially compare model outputs thematically based on using the same datasets.
 
 **Model List**
 ```{r Model list for outputs, eval=FALSE}
@@ -152,6 +86,7 @@ prob_inter_trait_many2
 prob_inter_trait_LASSO
 prob_inter_trait_LASSO2
 ```
+
 ###### Compare outputs - life stage
 
 Comparing SPP -- Cluster --- Trait models for predator life stage
@@ -159,7 +94,8 @@ Comparing SPP -- Cluster --- Trait models for predator life stage
 ```{r Compare outputs - predator life, eval = FALSE, include = FALSE}
 
 anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
-saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
+saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_models/anova.life1.rds"))
+anova.life1 = readRDS(here("outputs_figures/traitglms/prob_models/anova.life1.rds"))
 
 anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
 saveRDS(anova.life2, file = here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
@@ -236,6 +172,40 @@ saveRDS(anova.ocean3, file = here("outputs_figures/traitglms/prob_models/anova.o
 
 ```
 
+## Data manipulation
+
+### Removing single occurrence taxa (optional)
+
+Remove low occurrence species! Here we obtain 179 observations for 103 species.
+
+```{r Species PA (L) remove 1 occurrenc, eval=FALSE, include=FALSE, warning=FALSE, message=FALSE}
+#Remove low occurrence species?
+#Remove columns that contain < 2 occurrences #can vary this number
+alb_adult_preyPA_df2 = alb_adult_preyPA_df[,-which(colSums(alb_adult_preyPA_df[,14:ncol(alb_adult_preyPA_df)])<2)]
+#Not sure why some explanatory variable columns disappear also, so adding them back in:
+alb_adult_preyPA_df3 = cbind(alb_adult_preyPA_df2[,1:13], alb_adult_preyPA_df2[,12:ncol(alb_adult_preyPA_df2)])
+#Then delete rows that sum to zero for the trait occurrences
+alb_adult_preyPA_clean = alb_adult_preyPA_df3[-which(rowSums(alb_adult_preyPA_df3[14:ncol(alb_adult_preyPA_df3)])==0),] #209 observations of 103 spp.
+
+dim(alb_adult_preyPA_clean) #179 103
+#write.csv....
+
+```
+
+Below is code for once we have filtered the prey species matrix by the trait matrix for which we have trait information.
+
+```{r Not Using -- Diet data manip for >1 FO, eval=FALSE, include=FALSE}
+
+#If filtering
+#alb_prob_preyPA = alb_prob_preyPA[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
+#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
+#                                     194, 200, 202),]
+
+#alb_prob_covars = alb_adult_fo[-c(39, 43, 47, 53, 57, 58, 64, 68, 69, 72, 76, 79, 81, 85, 86, 90, 93, 109, 119, 120,
+#                                     130, 132, 135, 143, 146, 155, 156, 157, 169, 174, 177, 178, 183, 184, 185, 190, 192,
+#                                     194, 200, 202), 1:13]
+
+```
 
 
 
