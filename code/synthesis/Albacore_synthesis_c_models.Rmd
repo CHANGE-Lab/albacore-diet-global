@@ -1234,8 +1234,7 @@ an_prob_life_spp
 prob_ocean_spp
 ```
 
-
-```{r Anova prob_life_spp}
+```{r Anova prob_ocean_spp}
 
 an_prob_ocean_spp = anova.traitglm(prob_ocean_spp)
 #saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_spp.rds"))
@@ -1248,6 +1247,15 @@ an_prob_ocean_spp
 
 ```{r Model Output prob_lat_spp}
 prob_lat_spp
+```
+
+```{r Anova prob_lat_spp}
+
+an_prob_lat_spp = anova.traitglm(prob_lat_spp)
+#saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
+#an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
+an_prob_lat_spp
+
 ```
 
 ##### Model: prob_life_clusters_many
@@ -1394,12 +1402,12 @@ aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
 #,      prob_inter_trait_many$AICsum, prob_inter_trait_many2$AICsum
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
-write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
+#write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
 ```
 
 ```{r Make output graph}
 mod_dev$mod_type = as.factor(mod_dev$mod_type)
-mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "trait", "cluster"))
+mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "cluster"))
 levels(mod_dev$mod_type)
 
 #mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
@@ -1418,15 +1426,16 @@ mod_dev_graph = ggplot(data = mod_dev) +
         legend.position = "top") +
   xlab("Covariate fitted to model") + ylab("Deviance explained") + 
   scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
-  facet_grid(.~ covar)
+  facet_grid(.~ covar) +
+  theme(strip.text = element_text(face="bold", size=rel(1.5)))
 
 mod_dev_graph
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.pdf"), 
-       plot = mod_dev_graph, width=5, height=4, dpi=300)
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.jpeg"), 
-       plot = mod_dev_graph, width=5, height=4, dpi=300)
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
 
 ```
 
