@@ -1250,12 +1250,11 @@ an_prob_ocean_spp
 prob_lat_spp
 ```
 
-
 ```{r Anova prob_lat_spp}
 
-an_prob_lat_spp = anova.traitglm(prob_lat_spp)
+#an_prob_lat_spp = anova.traitglm(prob_lat_spp)
 #saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
-#an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
+an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
 an_prob_lat_spp
 
 ```
@@ -1264,6 +1263,15 @@ an_prob_lat_spp
 
 ```{r Model Output prob_life_clusters_many}
 prob_life_clusters_many
+```
+
+```{r Anova prob_life_clusters_many}
+
+an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
+saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
+an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
+an_prob_life_clusters_many
+
 ```
 
 ##### Model: prob_ocean_clusters_many
