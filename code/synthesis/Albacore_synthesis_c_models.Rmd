@@ -1267,10 +1267,12 @@ prob_life_clusters_many
 
 ```{r Anova prob_life_clusters_many}
 
-an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
-saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
+#an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
+#saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
 an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
 an_prob_life_clusters_many
+
+
 
 ```
 
@@ -1278,6 +1280,15 @@ an_prob_life_clusters_many
 
 ```{r Model Output prob_ocean_clusters_many}
 prob_ocean_clusters_many
+```
+
+```{r Anova prob_life_clusters_many}
+
+an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
+saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many
+
 ```
 
 ##### Model: prob_lat_clusters_many
