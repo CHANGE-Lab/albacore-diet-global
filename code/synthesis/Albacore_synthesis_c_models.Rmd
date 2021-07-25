@@ -548,11 +548,11 @@ prob_ocean_clusters_many_graph = levelplot(temp,
 
 print(prob_ocean_clusters_many_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.pdf"), 
-       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.pdf"), 
+#       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.jpeg"), 
-       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.jpeg"), 
+#       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -594,11 +594,11 @@ prob_ocean_cluster_LASSO_graph = levelplot(temp,
 
 print(prob_ocean_cluster_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.pdf"), 
-       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.pdf"), 
+#       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.jpeg"), 
-       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.jpeg"), 
+#       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -1282,10 +1282,10 @@ an_prob_life_clusters_many
 prob_ocean_clusters_many
 ```
 
-```{r Anova prob_life_clusters_many}
+```{r Anova prob_ocean_clusters_many}
 
-an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
-saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+#an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
+#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
 an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
 an_prob_ocean_clusters_many
 
@@ -1296,6 +1296,15 @@ an_prob_ocean_clusters_many
 ```{r Model Output prob_lat_clusters_many}
 prob_lat_clusters_many
 ```
+```{r Anova prob_lat_clusters_many}
+
+an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
+#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many
+
+```
+
 
 ##### Model: prob_life_trait_many
 
