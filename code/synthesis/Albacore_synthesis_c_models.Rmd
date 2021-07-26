@@ -1366,8 +1366,7 @@ prob_inter_trait_many$deviance
 
 prob_inter_trait_many$call
 
-
-temp = as.data.frame(prob_inter_trait_many$coefficients)
+#temp = as.data.frame(prob_inter_trait_many$coefficients)
 
 
 ```
