@@ -28,6 +28,14 @@ library(here)
 "%notin%" = Negate('%in%')
 here::here()
 
+#Biodiversity
+library(BiodiversityR)
+library(vegan)
+# From GitHub
+install_github("MoBiodiv/mobr")
+library(mobr)
+#devtools::install_github('bbc/bbplot')
+#library(bbplot)
 ```
 
 ## Summary Data - Methods
@@ -131,6 +139,109 @@ alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.
 #The number of observations (rows) and species (columns)
 dim(alb_global_wide_dietfo)
 ```
+
+Rarefaction curves for known taxa:
+
+```{r Rarefaction curves}
+
+alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
+  dplyr::select(-X)
+## Albacore prey species P/A data
+# data
+PreyPA
+str(PreyPA)
+Ocean <- PreyPASite$OceanBasinQ
+
+# 2 dataset!! subsetted out the SW Atlantic and NE Indian for cumulative species richness by collector method
+PreyDat2 <- read.csv("Albacore_preyPA3.csv",header=TRUE)
+str(PreyDat2)
+PreyPA2 = PreyDat2[,6:ncol(PreyDat2)]
+PreySite2 = PreyDat2[,1:5]
+
+# number of species and the factor that I want to group them by
+Sp <- specnumber(PreyPA) #, PreySite$OceanBasinQ)
+Sp
+
+SpO <- specnumber(PreyPA, PreyPASite$OceanBasinQ)
+SpO
+# Result
+#Mediterranean   NE Atlantic   NW Atlantic   SW Atlantic     SE Indian    NE Pacific    SW Pacific 
+#       77           128            68           15              13           264            62 
+
+# Acummresult function
+Alb.accum <- accumresult(PreyPA, y=Ocean, method='exact', conditioned=TRUE)
+Alb.accum
+accumplot(Alb.accum)
+
+Alb.accum2 <- accumresult(PreyPA, y=Ocean, method='collector', conditioned=TRUE)
+Alb.accum2
+accumplot(Alb.accum2)
+
+Plot <- accumcomp(PreyPA, y=PreyPASite, factor='OceanBasinQ', method='exact', legend=FALSE, conditioned=TRUE)
+str(PreyPASite)
+
+#save and export that data
+
+accum.data <- read.csv("Accum_plot.csv", header=TRUE)
+
+accum.data$Ocean <- factor(accum.data$Ocean, levels = c("Mediterranean", "NE Atlantic",
+                                                                    "NW Atlantic", "SW Atlantic",
+                                                                    "NE Indian", "NE Pacific", 
+                                                                    "SW Pacific"))
+
+Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Study, colour=Ocean)) +
+  geom_point(size=2) +
+  geom_line(size=1.5) + 
+  theme_classic() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
+  theme(axis.title=element_text(size=18)) +
+  theme(axis.text=element_text(size=18)) +
+  theme(legend.text=element_text(size=18)) +
+  theme(legend.title=element_text(size=18)) +
+  labs(x="Years sampled", y="Species cumulative richness")+
+  scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")+
+  geom_errorbar(data = accum.data, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
+Accum.plot
+
+## method = collector plot using 2nd dataset
+
+
+Plot2 <- accumcomp(PreyPA2, y=PreySite2, factor='OceanBasinQ', method='collector', legend=FALSE, conditioned=TRUE)
+
+# save and export the accumcomp data in order to add SW back in with just the one point
+
+write.csv(Plot2, "Accum_plot2.csv")
+
+accum.data2 <- read.csv("Accum_plot2.csv", header=TRUE)
+
+View(accum.data2)
+
+accum.data2$Ocean <- factor(accum.data2$Ocean, levels = c("Mediterranean", "NE Atlantic",
+                                                        "NW Atlantic", "SW Atlantic",
+                                                        "NE Indian", "NE Pacific", 
+                                                        "SW Pacific"))
+
+Accum.plot <- ggplot(data = accum.data2, aes(y=Richness, x=Year, colour=Ocean)) +
+  geom_point(size=2) +
+  geom_line(size=1.5) + 
+  theme_classic() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  #scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
+  #geom_text(aes(x=Year, label=Stomachs), size=4, hjust=0.5, col="black") +
+  geom_text_repel(data = accum.data2, aes(x=Year, label=Stomachs),
+                  nudge_x = -10, nudge_y = 10) +
+  theme(axis.title=element_text(size=18)) +
+  theme(axis.text=element_text(size=18)) +
+  theme(legend.text=element_text(size=18)) +
+  theme(legend.title=element_text(size=18)) +
+  labs(x="Years sampled", y="Species cumulative richness")+
+  scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
+Accum.plot
+
+#Note no error bar for pure accumulation plot
+```
+
 
 ## Summary Data - Results
 
