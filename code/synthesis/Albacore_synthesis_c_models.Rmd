@@ -1299,8 +1299,8 @@ prob_lat_clusters_many
 
 ```{r Anova prob_lat_clusters_many}
 
-an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
-saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_clusters_many.rds"))
+#an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
+#saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many
 
@@ -1315,8 +1315,8 @@ prob_life_trait_many
 
 ```{r Anova prob_life_trait_many}
 
-an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
-saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_life_trait_many.rds"))
+#an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
+#saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_life_trait_many.rds"))
 an_prob_life_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_trait_many.rds"))
 an_prob_life_trait_many
 
@@ -1331,8 +1331,8 @@ prob_ocean_trait_many
 
 ```{r Anova prob_ocean_trait_many}
 
-an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
-saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_trait_many.rds"))
+#an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
+#saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_trait_many.rds"))
 an_prob_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_trait_many.rds"))
 an_prob_ocean_trait_many
 
@@ -1346,8 +1346,8 @@ prob_lat_trait_many
 
 ```{r Anova prob_lat_trait_many}
 
-an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
-saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_trait_many.rds"))
+#an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
+#saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_trait_many.rds"))
 an_prob_lat_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_trait_many.rds"))
 an_prob_lat_trait_many
 
