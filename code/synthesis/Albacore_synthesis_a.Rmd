@@ -28,6 +28,12 @@ library(here)
 "%notin%" = Negate('%in%')
 here::here()
 
+#Graphics
+library(ggplot2)
+library(viridis)
+library(RColorBrewer)
+library(wesanderson)
+
 #Biodiversity
 library(BiodiversityR)
 library(vegan)
@@ -143,53 +149,76 @@ dim(alb_global_wide_dietfo)
 Rarefaction curves for known taxa:
 
 ```{r Rarefaction curves}
+#Data -- using total diet data
+alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.xlsx"),
+                      sheet = "albacore_diet_global")) %>%
+  dplyr::filter(TaxLev %in% c("species", "genus")) %>% 
+  #There are ~1105 observations when we filter by species
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% 
+  mutate(presence = 1) %>%
+#Note there are duplicates
+#View(alb_global[c(953,954,112,119,686,687),])
+#Delete the second of each of these
+  slice(., -c(954,119,687)) %>%
+  dplyr::select(StudyID:YearEnd, pred_life, pred_flmean, prey_sp, pFOuse, presence) %>%
+  #pivot_wider(names_from = prey_sp, 
+  #            values_from = presence, 
+  #            values_fill = list(presence = 0))
+  tidyr::spread(prey_sp, presence, fill = 0, convert = FALSE)
 
-alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
-  dplyr::select(-X)
 ## Albacore prey species P/A data
 # data
-PreyPA
-str(PreyPA)
-Ocean <- PreyPASite$OceanBasinQ
+PreyPAdata = alb_global[,21:ncol(alb_global)]
+PreyPAsite = alb_global[,1:20]
+Ocean <- alb_global$OceanBasin
 
-# 2 dataset!! subsetted out the SW Atlantic and NE Indian for cumulative species richness by collector method
-PreyDat2 <- read.csv("Albacore_preyPA3.csv",header=TRUE)
-str(PreyDat2)
-PreyPA2 = PreyDat2[,6:ncol(PreyDat2)]
-PreySite2 = PreyDat2[,1:5]
 
 # number of species and the factor that I want to group them by
 Sp <- specnumber(PreyPA) #, PreySite$OceanBasinQ)
 Sp
 
-SpO <- specnumber(PreyPA, PreyPASite$OceanBasinQ)
+SpO <- specnumber(PreyPA, Ocean)
 SpO
+
+
 # Result
-#Mediterranean   NE Atlantic   NW Atlantic   SW Atlantic     SE Indian    NE Pacific    SW Pacific 
-#       77           128            68           15              13           264            62 
+#Ocean Basin
+#     Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
+#      103            43           127           188            75            24 
+
+#Ocean Basin Q - not using
+#Mediterranean   NE Atlantic    NE Pacific   NW Atlantic     NW Indian    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific
+#           43           111           172            18            22            25            65            15           100            24
 
 # Acummresult function
+
+#Produces average species accumulation curve
 Alb.accum <- accumresult(PreyPA, y=Ocean, method='exact', conditioned=TRUE)
 Alb.accum
 accumplot(Alb.accum)
 
+#Produces cumulative species curves
 Alb.accum2 <- accumresult(PreyPA, y=Ocean, method='collector', conditioned=TRUE)
 Alb.accum2
 accumplot(Alb.accum2)
 
-Plot <- accumcomp(PreyPA, y=PreyPASite, factor='OceanBasinQ', method='exact', legend=FALSE, conditioned=TRUE)
-str(PreyPASite)
 
-#save and export that data
+#Produces average species accumulation curve
+Plot <- accumcomp(PreyPA, y=PreyPAsite, factor='OceanBasin', method='exact', legend=FALSE, conditioned=TRUE)
+Plot
 
-accum.data <- read.csv("Accum_plot.csv", header=TRUE)
+#Produces cumulative species curves
+Plot2 <- accumcomp(PreyPA, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
+Plot2 
+str(accum.data)
+View(accum.data)
 
-accum.data$Ocean <- factor(accum.data$Ocean, levels = c("Mediterranean", "NE Atlantic",
-                                                                    "NW Atlantic", "SW Atlantic",
-                                                                    "NE Indian", "NE Pacific", 
-                                                                    "SW Pacific"))
+levels(as.factor(accum.data$Ocean))
 
-Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Study, colour=Ocean)) +
+accum.data$Ocean <- factor(accum.data$Ocean, levels = c("Mediterranean", "N Atlantic", "S Atlantic",
+                                                        "N Pacific", "S Pacific", "Indian"))
+
+Accum.plot <- ggplot(data = Alb.accum, aes(y=Richness, x=Study, colour=OceanBasin)) +
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
@@ -201,13 +230,9 @@ Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Study, colour=Ocean)) 
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
   scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")+
-  geom_errorbar(data = accum.data, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
+  geom_errorbar(data = accum.data, aes(ymin=Richness-sd, ymax=Richness+sd), width=.2)
 Accum.plot
 
-## method = collector plot using 2nd dataset
-
-
-Plot2 <- accumcomp(PreyPA2, y=PreySite2, factor='OceanBasinQ', method='collector', legend=FALSE, conditioned=TRUE)
 
 # save and export the accumcomp data in order to add SW back in with just the one point
 
@@ -241,10 +266,6 @@ Accum.plot
 
 #Note no error bar for pure accumulation plot
 ```
-
-
-## Summary Data - Results
-
 
 ## Summary - Results
 
