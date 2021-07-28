@@ -146,9 +146,9 @@ alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.
 dim(alb_global_wide_dietfo)
 ```
 
-Rarefaction curves for known taxa:
+### Rarefaction curves for known taxa:
 
-```{r Rarefaction curves}
+```{r Rarefaction curves data}
 #Data -- using total diet data
 alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.xlsx"),
                       sheet = "albacore_diet_global")) %>%
@@ -173,51 +173,57 @@ PreyPAsite = alb_global %>%
   select(StudyID, OceanBasin, YearEnd)
 Ocean <- alb_global$OceanBasin
 
+```
+
+```{r Rarefaction curves 2}
 
 # number of species and the factor that I want to group them by
-Sp <- specnumber(PreyPAdata) #, PreySite$OceanBasinQ)
-Sp
-
 SpO <- specnumber(PreyPAdata, Ocean)
 SpO
-
-
-# Result
-#Ocean Basin
-#     Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
-#      103            43           127           188            75            24 
-
-#Ocean Basin Q - not using
-#Mediterranean   NE Atlantic    NE Pacific   NW Atlantic     NW Indian    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific
-#           43           111           172            18            22            25            65            15           100            24
-
-temp_accum = specaccum(PreyPAdata, method = "collector", conditioned = TRUE)
 
 # Acummresult function
 
 #Produces average species accumulation curve
-Alb.accum <- accumresult(PreyPAdata, y=PreyPAsite, #Ocean, 
+Alb.accum <- accumresult(PreyPAdata, y=Ocean, #PreyPAsite, 
                          method='exact', conditioned=TRUE)
-Alb.accum
+str(Alb.accum)
 accumplot(Alb.accum)
 
 #Produces cumulative species curves
 Alb.accum2 <- accumresult(PreyPAdata, y=Ocean, method='collector', conditioned=TRUE)
-Alb.accum2
+str(Alb.accum2)
 accumplot(Alb.accum2)
 
 
 #Produces average species accumulation curve
-Plot <- accumcomp(PreyPAdata, y=PreyPAsite, 
-                  factor='OceanBasin', method='exact', legend=FALSE, conditioned=TRUE)
-Plot
+Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='exact', legend=FALSE, conditioned=TRUE)
+str(Plot)
 Plot.long <- accumcomp.long(Plot)
 str(Plot.long)
 
+Plot.long.covar = Plot.long %>%
+  rename(OceanBasin = Grouping) %>%
+  left_join(PreyPAsite, by = "OceanBasin")
+
 #Produces cumulative species curves
 Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
-Plot2 
-str(Plot)
+str(Plot2)
+
+# save and export the accumcomp data in order to add SW back in with just the one point
+
+# Did this for first and second Plot output for accumcomp function.
+plot_temp = as.data.frame(Plot)
+write.csv(Plot, here("data/output_data/accum_plot.csv"))
+accum.data <- read.csv(here("data/output_data/accum_plot.csv"))
+View(accum.data)
+
+
+#write.csv(Plot2, "Accum_plot2.csv")
+
+#accum.data2 <- read.csv("Accum_plot2.csv", header=TRUE)
+
+#View(accum.data2)
+
 
 View(accum.data)
 
@@ -242,14 +248,6 @@ Accum.plot <- ggplot(data = Alb.accum, aes(y=Richness, x=Study, colour=OceanBasi
 Accum.plot
 
 
-# save and export the accumcomp data in order to add SW back in with just the one point
-
-write.csv(Plot2, "Accum_plot2.csv")
-
-accum.data2 <- read.csv("Accum_plot2.csv", header=TRUE)
-
-View(accum.data2)
-
 accum.data2$Ocean <- factor(accum.data2$Ocean, levels = c("Mediterranean", "NE Atlantic",
                                                         "NW Atlantic", "SW Atlantic",
                                                         "NE Indian", "NE Pacific", 
@@ -273,7 +271,9 @@ Accum.plot <- ggplot(data = accum.data2, aes(y=Richness, x=Year, colour=Ocean)) 
 Accum.plot
 
 #Note no error bar for pure accumulation plot
+
 ```
+
 
 ## Summary - Results
 
