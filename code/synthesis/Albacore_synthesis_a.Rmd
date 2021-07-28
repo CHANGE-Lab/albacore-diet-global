@@ -201,9 +201,9 @@ str(Plot)
 Plot.long <- accumcomp.long(Plot)
 str(Plot.long)
 
-Plot.long.covar = Plot.long %>%
-  rename(OceanBasin = Grouping) %>%
-  left_join(PreyPAsite, by = "OceanBasin")
+#Plot.long.covar = Plot.long %>%
+#  rename(OceanBasin = Grouping) %>%
+#  left_join(PreyPAsite, by = "OceanBasin")
 
 #Produces cumulative species curves
 Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
@@ -223,7 +223,9 @@ View(accum.data)
 #accum.data2 <- read.csv("Accum_plot2.csv", header=TRUE)
 
 #View(accum.data2)
+```
 
+```{r rarefaction graphs}
 
 View(accum.data)
 
