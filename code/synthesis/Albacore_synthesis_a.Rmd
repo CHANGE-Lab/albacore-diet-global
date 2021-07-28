@@ -169,15 +169,16 @@ alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.
 ## Albacore prey species P/A data
 # data
 PreyPAdata = alb_global[,21:ncol(alb_global)]
-PreyPAsite = alb_global[,1:20]
+PreyPAsite = alb_global %>%
+  select(StudyID, OceanBasin, YearEnd)
 Ocean <- alb_global$OceanBasin
 
 
 # number of species and the factor that I want to group them by
-Sp <- specnumber(PreyPA) #, PreySite$OceanBasinQ)
+Sp <- specnumber(PreyPAdata) #, PreySite$OceanBasinQ)
 Sp
 
-SpO <- specnumber(PreyPA, Ocean)
+SpO <- specnumber(PreyPAdata, Ocean)
 SpO
 
 
@@ -190,27 +191,34 @@ SpO
 #Mediterranean   NE Atlantic    NE Pacific   NW Atlantic     NW Indian    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific
 #           43           111           172            18            22            25            65            15           100            24
 
+temp_accum = specaccum(PreyPAdata, method = "collector", conditioned = TRUE)
+
 # Acummresult function
 
 #Produces average species accumulation curve
-Alb.accum <- accumresult(PreyPA, y=Ocean, method='exact', conditioned=TRUE)
+Alb.accum <- accumresult(PreyPAdata, y=PreyPAsite, #Ocean, 
+                         method='exact', conditioned=TRUE)
 Alb.accum
 accumplot(Alb.accum)
 
 #Produces cumulative species curves
-Alb.accum2 <- accumresult(PreyPA, y=Ocean, method='collector', conditioned=TRUE)
+Alb.accum2 <- accumresult(PreyPAdata, y=Ocean, method='collector', conditioned=TRUE)
 Alb.accum2
 accumplot(Alb.accum2)
 
 
 #Produces average species accumulation curve
-Plot <- accumcomp(PreyPA, y=PreyPAsite, factor='OceanBasin', method='exact', legend=FALSE, conditioned=TRUE)
+Plot <- accumcomp(PreyPAdata, y=PreyPAsite, 
+                  factor='OceanBasin', method='exact', legend=FALSE, conditioned=TRUE)
 Plot
+Plot.long <- accumcomp.long(Plot)
+str(Plot.long)
 
 #Produces cumulative species curves
-Plot2 <- accumcomp(PreyPA, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
+Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
 Plot2 
-str(accum.data)
+str(Plot)
+
 View(accum.data)
 
 levels(as.factor(accum.data$Ocean))

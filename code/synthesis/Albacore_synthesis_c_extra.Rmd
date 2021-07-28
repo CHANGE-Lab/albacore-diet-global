@@ -51,6 +51,7 @@ This document contains extra code for assessing and evaluation fourth corner mod
 We need to officially compare model outputs thematically based on using the same datasets.
 
 **Model List**
+
 ```{r Model list for outputs, eval=FALSE}
 
 #Species*env models
@@ -93,12 +94,15 @@ Comparing SPP -- Cluster --- Trait models for predator life stage
 
 ```{r Compare outputs - predator life, eval = FALSE, include = FALSE}
 
-anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
-saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_models/anova.life1.rds"))
+#anova.life1 = anova.traitglm(prob_life_spp, prob_life_clusters_many)
+#saveRDS(anova.life1, file = here("outputs_figures/traitglms/prob_models/anova.life1.rds"))
 anova.life1 = readRDS(here("outputs_figures/traitglms/prob_models/anova.life1.rds"))
+anova.life1
 
-anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
-saveRDS(anova.life2, file = here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
+#anova.life2 = anova.traitglm(prob_life_spp, prob_life_trait_many)
+#saveRDS(anova.life2, file = here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
+anova.life2 = readRDS(here("outputs_figures/traitglms/prob_models/anova.life2.rds"))
+anova.life2
 
 #Does not want to run > 2 model comparisons, even though both previous worked
 #anova.life3 = anova.traitglm(prob_life_spp, prob_life_clusters_many, prob_life_trait_many)
@@ -120,14 +124,6 @@ Model 1  25338     232 476.9     0.01 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Arguments: P-value calculated using 99 iterations via PIT-trap block resampling.
-
-```{r Reload Model Comps - Life, eval = FALSE, include = FALSE}
-
-anova.life1 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life1.rds"))
-anova.life2 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life2.rds"))
-#anova.life3 = readRDS(here("outputs_figures/traitglms/prob_life_stage/anova.life3.rds"))
-
-```
 
 
 ###### Compare outputs - ocean

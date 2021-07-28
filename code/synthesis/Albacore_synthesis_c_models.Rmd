@@ -1373,8 +1373,8 @@ prob_inter_trait_many$call
 
 ```{r Anova prob_inter_trait_many}
 
-an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
-saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many.rds"))
+#an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
+#saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many.rds"))
 an_prob_inter_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many.rds"))
 an_prob_inter_trait_many
 
@@ -1390,8 +1390,8 @@ prob_inter_trait_many2
 
 ```{r Anova prob_inter_trait_many2}
 
-an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
-saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many2.rds"))
+#an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
+#saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many2.rds"))
 an_prob_inter_trait_many2 = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many2.rds"))
 an_prob_inter_trait_many2
 
