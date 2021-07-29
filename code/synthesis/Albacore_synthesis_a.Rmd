@@ -146,7 +146,7 @@ alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.
 dim(alb_global_wide_dietfo)
 ```
 
-### Rarefaction curves for known taxa:
+## Rarefaction curves for known taxa:
 
 ```{r Rarefaction curves data}
 #Data -- using total diet data
@@ -208,21 +208,19 @@ str(Plot.long)
 #Produces cumulative species curves
 Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='collector', legend=FALSE, conditioned=TRUE)
 str(Plot2)
-
+Plot2.long <- accumcomp.long(Plot2)
+str(Plot2.long)
 # save and export the accumcomp data in order to add SW back in with just the one point
 
 # Did this for first and second Plot output for accumcomp function.
-plot_temp = as.data.frame(Plot)
-write.csv(Plot, here("data/output_data/accum_plot.csv"))
+write.csv(Plot.long, here("data/output_data/accum_plot.csv"))
 accum.data <- read.csv(here("data/output_data/accum_plot.csv"))
 View(accum.data)
 
+write.csv(Plot2.long, here("data/output_data/accum2_plot.csv"))
+accum2.data <- read.csv(here("data/output_data/accum2_plot.csv"))
+View(accum2.data)
 
-#write.csv(Plot2, "Accum_plot2.csv")
-
-#accum.data2 <- read.csv("Accum_plot2.csv", header=TRUE)
-
-#View(accum.data2)
 ```
 
 ```{r rarefaction graphs}
