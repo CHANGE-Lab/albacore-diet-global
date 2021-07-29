@@ -238,50 +238,55 @@ View(accum2.data)
 
 ```{r rarefaction graphs}
 
-View(accum.data)
+levels(as.factor(accum.data$Grouping))
 
-levels(as.factor(accum.data$Ocean))
+accum.data$Grouping <- factor(accum.data$Grouping, levels = c("Mediterranean", "N Atlantic",
+                                                        "S Atlantic", "Indian",
+                                                        "N Pacific", "S Pacific"))
 
-accum.data$Ocean <- factor(accum.data$Ocean, levels = c("Mediterranean", "N Atlantic", "S Atlantic",
-                                                        "N Pacific", "S Pacific", "Indian"))
-
-Accum.plot <- ggplot(data = Alb.accum, aes(y=Richness, x=Study, colour=OceanBasin)) +
+Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Sites, colour=Grouping)) +
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
+  #scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
   theme(axis.title=element_text(size=18)) +
   theme(axis.text=element_text(size=18)) +
   theme(legend.text=element_text(size=18)) +
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
   scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")+
-  geom_errorbar(data = accum.data, aes(ymin=Richness-sd, ymax=Richness+sd), width=.2)
+  geom_errorbar(data = accum.data, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
 Accum.plot
 
+ggsave(here("outputs_figures/accum.plot1.jpeg"), plot=Accum.plot, height = 8, width = 12, dpi = 300)
 
-accum.data2$Ocean <- factor(accum.data2$Ocean, levels = c("Mediterranean", "NE Atlantic",
-                                                        "NW Atlantic", "SW Atlantic",
-                                                        "NE Indian", "NE Pacific", 
-                                                        "SW Pacific"))
+##Second plot
+str(accum2.data)
+levels(as.factor(accum2.data$Grouping))
+accum2.data$Grouping <- factor(accum2.data$Grouping, levels = c("Mediterranean", "N Atlantic",
+                                                        "S Atlantic", "Indian",
+                                                        "N Pacific", "S Pacific"))
 
-Accum.plot <- ggplot(data = accum.data2, aes(y=Richness, x=Year, colour=Ocean)) +
+Accum.plot2 <- ggplot(data = accum2.data, aes(y=Richness, x=Sites, colour=Grouping)) +
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   #scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
   #geom_text(aes(x=Year, label=Stomachs), size=4, hjust=0.5, col="black") +
-  geom_text_repel(data = accum.data2, aes(x=Year, label=Stomachs),
-                  nudge_x = -10, nudge_y = 10) +
+  #geom_text_repel(data = accum.data2, aes(x=Year, label=Stomachs),
+  #                nudge_x = -10, nudge_y = 10) +
   theme(axis.title=element_text(size=18)) +
   theme(axis.text=element_text(size=18)) +
   theme(legend.text=element_text(size=18)) +
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
   scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
-Accum.plot
+Accum.plot2
+
+ggsave(here("outputs_figures/accum.plot2.jpeg"), plot=Accum.plot2, height = 8, width = 12, dpi = 300)
+
 
 #Note no error bar for pure accumulation plot
 
