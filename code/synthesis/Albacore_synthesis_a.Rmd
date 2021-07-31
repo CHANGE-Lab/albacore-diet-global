@@ -139,6 +139,9 @@ Checking the number of prey species ultimately used in multivariate analyses. No
 
 ```{r Summary - wide diet data, tidy=TRUE, message=FALSE}
 
+alb_global_wide_dietfo_sites = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
+  dplyr::select(-X, StudyID:grouped_id)
+
 alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
   dplyr::select(-X, -c(StudyID:grouped_id))
 
