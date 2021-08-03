@@ -50,7 +50,7 @@ Below, we extract summary information for reported albacore tuna fork lengths an
 
 ```{r Summary - albacore size info, tidy=TRUE, message=FALSE}
 
-alb_global_diet_total = read.csv(here("data/output_data/alb_global_diet_total.csv")) %>%
+alb_global_diet_total = read.csv(here::here("data/output_data/alb_global_diet_total.csv")) %>%
   dplyr::select(-X)
 
 #We estimate the range in albacore fork lengths in this study to be:
