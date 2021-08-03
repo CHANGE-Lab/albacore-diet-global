@@ -480,8 +480,8 @@ write.csv(prey_probable_merge, here("data/output_data/prey_probable_traits.csv")
 ```{r Covariates}
 
 alb_covars = alb_global %>%
-  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:pred_life_est) %>% #, stomachs_used
-  distinct(StudyID, CiteYear, OceanBasinQ, LocatLatitude, LocatLongitude, YearEnd, pred_life) %>% 
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %>% #, stomachs_used
+  distinct(StudyID, CiteYear, OceanBasinQ, LocatName, LocatLatitude, LocatLongitude, YearEnd, MonthRange, stomachs_used, pred_life) %>% 
   #, stomachs_used
   mutate(lat_cat = if_else(abs(LocatLatitude) > 23.43662, "temperate", "tropical"),
          pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
