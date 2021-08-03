@@ -28,19 +28,14 @@ library(here)
 "%notin%" = Negate('%in%')
 here::here()
 #Graphics
-library(graphics)
-library(ggplot2)
-library(RColorBrewer)
-library(Hmisc)
-library(lattice)
-library(gridExtra)
-library(captioner)
-library(unmarked)
-#Analyses
-library(lme4)
-library(mgcv)
-library(mvabund)
-library(tweedie)
+#library(graphics)
+#library(ggplot2)
+#library(RColorBrewer)
+#library(Hmisc)
+#library(lattice)
+#library(gridExtra)
+#library(captioner)
+#library(unmarked)
 
 ```
 
@@ -333,17 +328,17 @@ Tasks performed in these chunks:
 #Should be able to get this from prey_length_ratiosp
 
 alb_global = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.xlsx"),
-                      sheet = "albacore_diet_global")) %>%
-  dplyr::filter(TaxLev == "species") %>% 
+                      sheet = "albacore_diet_global")) %>% #2134 rows and 77 vars
+  dplyr::filter(TaxLev == "species") %>% #1107 rows and 77 vars
   #There are ~1105 observations when we filter by species
-  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% 
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1028 rows
   #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %>%
-  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatLatitude:LocatLongitude, YearEnd, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
-  mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>%
+  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:LocatLongitude, MonthRange, YearEnd, stomachs_used, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
+  mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %>% #1028 obsm 44 vars
   #calculates the gape length and height limits
   #Add reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
-  left_join(prey_morph_sum, by="prey_sp") 
+  left_join(prey_morph_sum, by="prey_sp") #added morph info --> 1028 obs, 45 vars
 
 #Correct data type
 alb_global$maxl_use <- as.numeric(alb_global$maxl_use)
@@ -364,7 +359,7 @@ alb_global$prey_age_reported_1 <- replace_na(alb_global$prey_age_reported_1, "no
 
 #Save total df
 write.csv(alb_global, here("data/output_data/alb_global_diet_total.csv")) 
-#1028 observations and 40 variables
+#1028 observations and 43 variables
 
 ```
 
@@ -378,7 +373,7 @@ alb_global_ad_metrics = alb_global %>%
   group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
   dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE)) 
 
-#write.csv(alb_global_ad_metrics, here("data/alb_global_ad_metrics"))
+write.csv(alb_global_ad_metrics, here("data/output_data/alb_global_ad_metrics"))
 ```
 
 Here we want to estimate the probable life stage of the species consumed based on their size ratios and relationship to albacore tuna gape limits.
@@ -391,7 +386,7 @@ alb_global_prob = alb_global %>%
   mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, gape_lmax)) %>%
   mutate(prey_frac = 100*prey_length/l_adult) %>%
   mutate(prey_proba = if_else(prey_frac < larva_adult_use, "larva", if_else(prey_frac<juve_adult_use, "juvenile", "adult"))) %>%
-  mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1))
+  mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1)) #985 obs, 53 variables
 
 #And remove troublesome NA's in dataset
 #Because we need to give these a life stage, I am assigning them as "adult" because of their l_max typically was < gape limit.
@@ -413,6 +408,8 @@ alb_global_prob_metrics = alb_global_prob %>%
   dplyr::select(prey_class:prey_sp, life_stage, pFOuse, pN, pM) %>%
   group_by(prey_sp, life_stage) %>%
   dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))
+
+## SAVE DATA BELOW
 
 ```
 
