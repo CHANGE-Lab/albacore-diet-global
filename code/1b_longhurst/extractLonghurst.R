@@ -22,7 +22,7 @@ baseMap <- ggplot() +
 baseMap
 
 # Add longhurst regions information:
-longhurst <- sf::read_sf(here("code/Longhurst/longhurst/Longhurst_world_v4_2010.shp")) 
+longhurst <- sf::read_sf(here("code/1b_longhurst/longhurst/Longhurst_world_v4_2010.shp")) 
 # or wherever you have it stored
 names(longhurst)
 head(longhurst)
@@ -34,14 +34,29 @@ longhurst <- longhurst %>%
   dplyr::group_by(ProvCode,ProvDescr) %>% 
   dplyr::summarise()
 
+#Previous warning message:
 #Warning messages:
 #1: In st_is_longlat(x) :
 #  bounding box has potentially an invalid value range for longlat data
 #2: In st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance) :
 #  st_simplify does not correctly simplify longitude/latitude data, dTolerance needs to be in decimal degrees
 
-plot(longhurst)
+#Now we get this warning message
+#Error in s2_geography_from_wkb(x, oriented = oriented, check = check) : 
+#Evaluation error: Found 3 features with invalid spherical geometry.
+#[11] Loop 0 is not valid: Edge 4176 has duplicate vertex with edge 4180
+#[43] Loop 8 is not valid: Edge 2120 has duplicate vertex with edge 2137
+#[48] Loop 91 is not valid: Edge 216 has duplicate vertex with edge 224.
+#In addition: Warning messages:
+#1: In st_is_longlat(x) :
+#  bounding box has potentially an invalid value range for longlat data
+#2: In st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance) :
+#  argument preserveTopology is ignored
+#3: In st_is_longlat(x) :
+#  bounding box has potentially an invalid value range for longlat data
 
+plot(longhurst)
+glimpse(longhurst)
 
 # Plot provinces
 longMap <- baseMap + 
@@ -56,16 +71,16 @@ longMap <- baseMap +
 longMap
 
 # Longhurst shapefile
-longs <- readOGR("code/Longhurst/longhurst/Longhurst_world_v4_2010.shp")
+longs <- readOGR("code/1b_longhurst/longhurst/Longhurst_world_v4_2010.shp")
 
-list.files(path="code/Longhurst")
+list.files(path="code/1b_longhurst")
 
 #### Albacore data ----
 
 ##March 2021 data
 # Albacore locations
-alb <- read.csv("data/output_data/alb_covars.csv", head = TRUE, sep= ",") %>%
-  dplyr::select(-X)
+alb <- read.csv("data/output_data/alb_covars.csv", head = TRUE, sep= ",")
+
 # Set coordinates
 View(alb)
 coordinates(alb) <- ~ LocatLongitude + LocatLatitude
@@ -77,7 +92,7 @@ proj4string(alb) <- proj4string(longs)
 provinces <- over(alb, longs)
 alb$province <- provinces$ProvDescr
 alb$code <- provinces$ProvCode
-write.csv(alb, "data/output_data/alb_covars_longhurst.csv")
+write.csv(alb, "data/output_data/alb_covars_longhurst.csv", row.names = FALSE)
 
 # Map
 albMap <- longMap + 

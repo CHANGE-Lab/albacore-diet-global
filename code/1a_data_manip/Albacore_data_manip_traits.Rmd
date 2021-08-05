@@ -100,7 +100,7 @@ prey_morph_sum = prey_morph_clean %>%
 
 glimpse(prey_morph_sum)
 
-write.csv(prey_morph_sum, here::here("data/output_data/prey_morph_sum.csv"))
+write.csv(prey_morph_sum, here::here("data/output_data/prey_morph_sum.csv"), row.names = FALSE)
 
 ```
 
@@ -129,7 +129,7 @@ prey_qual_sum = prey_qual %>%
 
 glimpse(prey_qual_sum)
 
-write.csv(prey_qual_sum, here::here("data/output_data/prey_qual_sum.csv"))
+write.csv(prey_qual_sum, here::here("data/output_data/prey_qual_sum.csv"), row.names = FALSE)
 
 ```
 
@@ -153,7 +153,7 @@ prey_trait_select = prey_trait %>%
 
 str(prey_trait_select)
 
-write.csv(prey_trait_select, here::here("data/output_data/prey_trait_select.csv"))
+write.csv(prey_trait_select, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
 
 ```
 
@@ -165,7 +165,7 @@ prey_trait_adult = prey_trait %>%
   dplyr::filter(life_stage == "adult") %>%
   dplyr::select(prey_class:prey_sp, vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge, refuge_cat, season_migrant, season_cat, body_shape, l_max, phys_defense, transparent, col_disrupt, silver, countershade, gregarious_primary, trophic_level, fisheries_status) 
 
-write.csv(prey_trait_adult, here::here("data/output_data/prey_trait_adult.csv"))
+write.csv(prey_trait_adult, here::here("data/output_data/prey_trait_adult.csv"), row.names = FALSE)
 
 ```
 
@@ -254,7 +254,7 @@ prey_length_wide = prey_length_data %>%
   mutate(larva_adult = 100*larva/adult, juve_adult = 100*juvenile/adult)
 #we're going to want the maximum values out of this to use as cut-offs
 
-write.csv(prey_length_wide, here::here("data/output_data/prey_length_wide.csv"))
+write.csv(prey_length_wide, here::here("data/output_data/prey_length_wide.csv"), row.names = FALSE)
 ```
 
 Here we create estimate adult:larva and adult:juvenile size ratios based on family, order, class levels of classification. And we will append these to the above dataset where species-level size ratios are not known or length data were incomplete.
@@ -326,7 +326,7 @@ prey_length_ratiosp = prey_length_wide %>%
 ##Problem with NA values
 glimpse(prey_length_ratiosp)
 
-write.csv(prey_length_ratiosp, here::here("data/output_data/prey_length_ratiosp.csv"))
+write.csv(prey_length_ratiosp, here::here("data/output_data/prey_length_ratiosp.csv"), row.names = FALSE)
 
 ```
 

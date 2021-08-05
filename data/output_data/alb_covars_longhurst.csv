@@ -1,76 +1,76 @@
-"","StudyID","CiteYear","OceanBasinQ","LocatName","LocatLatitude","LocatLongitude","MonthRange","YearEnd","stomachs_used","pred_life","lat_cat","province","code","optional"
-"1","Aloncle1973","1973.0","NE Atlantic","NE Atlantic, Spain, France, Azores",44.632016,-5.5,"May–Sep",1971,1754,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"2","Bello1999","1999.0","Mediterranean","SW Adriatic",41.096462,17.512247,"Sep–Oct",1992,35,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"3","Bello1999","1999.0","Mediterranean","SW Adriatic",41.2,17.512247,"Sep–Oct",1994,21,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"4","Bernard1985","1985.0","NE Pacific","Southern CA",35.358333,-121.9083335,"Aug–Sep",1983,94,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"5","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Oct",1928,1,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"6","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Aug",1929,6,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"7","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1930,9,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"8","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1930,6,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"9","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,9,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"10","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,25,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"11","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,35,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"12","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1932,35,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"13","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1932,54,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"14","Bouxin&Legendre","1934; 1936; 1940","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Nov",1933,54,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"15","Clemens&Iselin1963","1963.0","NE Pacific","A",38,-124,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"16","Clemens&Iselin1963","1963.0","NE Pacific","A-B",36.046601,-123.6211254,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"17","Clemens&Iselin1963","1963.0","NE Pacific","A-B-C",32.5,-121.835632,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"18","Clemens&Iselin1963","1963.0","NE Pacific","B",33.5,-121.835632,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"19","Clemens&Iselin1963","1963.0","NE Pacific","B-C",31.5,-119.5,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"20","Clemens&Iselin1963","1963.0","NE Pacific","C",30,-120,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"21","Clemens&Iselin1963","1963.0","NE Pacific","D",26,-115,"Jul–Sep",1961,NA,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"22","Consoli2008","2008.0","Mediterranean","Central Mediterranean Sea",38.744181,15.059509,"Year-round",2006,116,"mixed","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"23","DosSantos&Haimovici2002","2002.0","SW Atlantic","Southern Brazil",-30,-47.035828,"Multi-month",1998,NA,NA,"temperate","Trades - South Atlantic Gyral Province (SATG)","SATL",TRUE
-"24","Glaser2015","2015.0","NE Pacific","Mexico to Canada, northern Baja California to Vancouver Island",42,-128.992307,"Jun–Sep",2006,371,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"25","Goni2011","2011.0","Mediterranean","Balearic",40.158082,5,"Oct",2005,24,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"26","Goni2011","2011.0","Mediterranean","S Adriatic",41.824403,16.766758,"Nov",2006,24,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"27","Goni2011","2011.0","Mediterranean","Tyrrhenian",40.658373,11.445351,"Jan",2008,29,"mixed","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"28","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 1)",48,-13,"Jul–Aug",2005,46,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"29","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Aug–Oct",2004,19,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"30","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2005,14,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"31","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2006,39,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"32","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Aug",2005,29,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"33","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Sep–Oct",2006,32,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"34","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 4)",45.4,-3.5,"Jul–Sep",2006,22,"mixed","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"35","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2005,186,"mixed","temperate","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
-"36","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2006,58,"mixed","temperate","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
-"37","Goni2011","2011.0","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Aug–Oct",2007,31,"mixed","temperate","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
-"38","Hart1948","1948.0","NE Pacific","Deck Collection Washington Coast",47.046499,-124.79124,NA,1947,4,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"39","Hart1948","1948.0","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1941,214,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"40","Hart1948","1948.0","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1946,3,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"41","Hart1948","1948.0","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1941,196,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"42","Hart1948","1948.0","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1945,45,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"43","Hart1948","1948.0","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1946,222,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"44","Hart1948","1948.0","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1947,84,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"45","Iversen1962","1962.0","NE Pacific","Central NE Pacific",15,-150,"Year-round",1957,348,"juvenile","tropical","Trades - N. Pacific Tropical Gyre Province","NPTG",TRUE
-"46","Jordan1880","1880.0","NE Pacific","Central CA, Santa Barbara Channel",34.345859,-119.723274,NA,1880,1,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"47","Joubin1918","1918.0","NE Atlantic","Golfe de Gascogne",46.307336,-12.25,NA,1918,NA,"adult","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"48","Madigan2015","2015.0","NE Pacific","Mexico to California",34.633208,-124.292542,"Jul–Oct",2010,86,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"49","Matthews1977","1977.0","NW Atlantic","NW Atlantic",38,-56,NA,1964,38,"adult","temperate","Westerlies - N. Atlantic Subtropical Gyral Province (West) (STGW)","NASW",TRUE
-"50","McHugh1952","1952.0","NE Pacific","Baja to northern CA",32.5,-121,"Jun & Oct",1949,301,"juvenile","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"51","Monaco1888","1888.0","Mediterranean","Mediterranean",34.061761,19.209595,"Sep",1888,NA,"adult","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"52","OrtizZarate1987","1987.0","NE Atlantic","Bay of Biscay",46.986108,-5.407589,NA,1968,97,"mixed","temperate","Coastal - NE Atlantic Shelves Province","NECS",TRUE
-"53","Pinkas1971","1971.0","NE Pacific","Central California (Region 2)",35.283333333,-122,"Jul–Nov",1968,286,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"54","Pinkas1971","1971.0","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Nov",1968,177,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"55","Pinkas1971","1971.0","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Sep",1969,20,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"56","Pinkas1971","1971.0","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Nov",1968,222,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"57","Pinkas1971","1971.0","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Sep",1969,200,"mixed","temperate","Coastal - California Upwelling Coastal Province","CCAL",TRUE
-"58","Pusineri2005","2005.0","NE Atlantic","Bay of Biscay",45,-17.5,"Jun–Sep",1993,27,"juvenile","temperate","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
-"59","Romanov2020","2020.0","NW Indian","Indian Monsoon Gyre Province",-8,57,"Multi-month",2015,150,"adult","tropical","Trades - Indian Monsoon Gyres Province","MONS",TRUE
-"60","Romanov2020","2020.0","SW Indian","Indian South Subtropical Gyre Province, Reunion Island",-19,53,"Multi-month",2014,184,"adult","tropical","Trades - Indian S. Subtropical Gyre Province","ISSG",TRUE
-"61","Romanov2020","2020.0","SW Indian","Mozambique Channel, Madagascar",-15.5,42.76,"Multi-month",2014,63,"adult","tropical","Coastal - E. Africa Coastal Province","EAFR",TRUE
-"62","Romanov2020","2020.0","SE Atlantic","Atlantic Ocean off Cape Town, South Africa",-35,18,"Multi-month",2014,290,"adult","temperate","Coastal - E. Africa Coastal Province","EAFR",TRUE
-"63","Romeo2012","2012.0","Mediterranean","S. Tyrrhenian sea and Strait of Messina",38.6,15,NA,2008,NA,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"64","Salman&Karakulak2009","2009.0","Mediterranean","Antalya Bay (Levantine Sea)",36.5,31.5,"May-July",2007,61,"juvenile","temperate","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
-"65","Watanabe-etal2004","2004.0","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",40,163,"September",2001,14,"juvenile","temperate","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
-"66","Watanabe-etal2004","2004.0","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"July",2002,46,"juvenile","temperate","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
-"67","Watanabe-etal2004","2004.0","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"May-June",2002,64,"juvenile","temperate","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
-"68","Williams2015","2015.0","SW Pacific","New Caledonia",-19,168,"Feb–Oct",2010,340,"mixed","tropical","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
-"69","Williams2015","2015.0","SW Pacific","New Zealand",-42.5,170,"Jan–Apr",2008,144,"mixed","temperate","Westerlies - Subantarctic Province","SANT",TRUE
-"70","Williams2015","2015.0","SW Pacific","New Zealand",-42.5,170,"Jan–Mar",2009,50,"mixed","temperate","Westerlies - Subantarctic Province","SANT",TRUE
-"71","Williams2015","2015.0","SW Pacific","New Zealand",-40,178,"Apr–May",2010,27,"mixed","temperate","Coastal - New Zealand Coastal Province","NEWZ",TRUE
-"72","Williams2015","2015.0","SW Pacific","New Zealand",-40,178,"Apr–May",2010,11,"mixed","temperate","Coastal - New Zealand Coastal Province","NEWZ",TRUE
-"73","Williams2015","2015.0","SW Pacific","Tonga",-20,-175.093115,"Jun–Jul",2010,42,"mixed","tropical","Westerlies - S. Pacific Subtropical Gyre Province","SPSG",TRUE
-"74","Young2010","2010.0","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-31,160,"Year-round",2006,10,"adult","temperate","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
-"75","Young2010","2010.0","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-30,160,"Year-round",2006,36,"mixed","temperate","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
+"StudyID","CiteYear","OceanBasin","OceanBasinQ","LocatName","LocatLatitude","LocatLongitude","MonthRange","YearEnd","stomachs_used","pred_life","lat_cat","pred_life_adjust","province","code","optional"
+"Aloncle1973","1973.0","N Atlantic","NE Atlantic","NE Atlantic, Spain, France, Azores",44.632016,-5.5,"May–Sep",1971,"1754","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bello1999","1999.0","Mediterranean","Mediterranean","SW Adriatic",41.096462,17.512247,"Sep–Oct",1992,"35","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Bello1999","1999.0","Mediterranean","Mediterranean","SW Adriatic",41.2,17.512247,"Sep–Oct",1994,"21","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Bernard1985","1985.0","N Pacific","NE Pacific","Southern CA",35.358333,-121.9083335,"Aug–Sep",1983,"94","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Oct",1928,"1","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Aug",1929,"6","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1930,"9","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1930,"6","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,"9","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,"25","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,"35","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1932,"35","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1932,"54","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Nov",1933,"54","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A",38,-124,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A-B",36.046601,-123.6211254,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A-B-C",32.5,-121.835632,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","B",33.5,-121.835632,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","B-C",31.5,-119.5,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","C",30,-120,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","D",26,-115,"Jul–Sep",1961,"none reported","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Consoli2008","2008.0","Mediterranean","Mediterranean","Central Mediterranean Sea",38.744181,15.059509,"Year-round",2006,"116","juvenile, adult","temperate","mixed","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"DosSantos&Haimovici2002","2002.0","S Atlantic","SW Atlantic","Southern Brazil",-30,-47.035828,"Multi-month",1998,"none reported","none","temperate","mixed","Trades - South Atlantic Gyral Province (SATG)","SATL",TRUE
+"Glaser2015","2015.0","N Pacific","NE Pacific","Mexico to Canada, northern Baja California to Vancouver Island",42,-128.992307,"Jun–Sep",2006,"371","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Goni2011","2011.0","Mediterranean","Mediterranean","Balearic",40.158082,5,"Oct",2005,"24","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Goni2011","2011.0","Mediterranean","Mediterranean","S Adriatic",41.824403,16.766758,"Nov",2006,"24","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Goni2011","2011.0","Mediterranean","Mediterranean","Tyrrhenian",40.658373,11.445351,"Jan",2008,"29","juvenile, adult","temperate","mixed","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 1)",48,-13,"Jul–Aug",2005,"46","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Aug–Oct",2004,"19","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2005,"14","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2006,"39","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Aug",2005,"29","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Sep–Oct",2006,"32","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 4)",45.4,-3.5,"Jul–Sep",2006,"22","juvenile, adult","temperate","mixed","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2005,"186","juvenile, adult","temperate","mixed","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2006,"58","juvenile, adult","temperate","mixed","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
+"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Aug–Oct",2007,"31","juvenile, adult","temperate","mixed","Coastal - Canary Coastal Province (EACB)","CNRY",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Deck Collection Washington Coast",47.046499,-124.79124,NA,1947,"4","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1941,"214","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1946,"3","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1941,"196","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1945,"45","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1946,"222","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1947,"84","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Iversen1962","1962.0","N Pacific","NE Pacific","Central NE Pacific",15,-150,"Year-round",1957,"348","juvenile","tropical","juvenile","Trades - N. Pacific Tropical Gyre Province","NPTG",TRUE
+"Jordan1880","1880.0","N Pacific","NE Pacific","Central CA, Santa Barbara Channel",34.345859,-119.723274,NA,1880,"1","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Joubin1918","1918.0","N Atlantic","NE Atlantic","Golfe de Gascogne",46.307336,-12.25,NA,1918,"none reported","adult","temperate","adult","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Madigan2015","2015.0","N Pacific","NE Pacific","Mexico to California",34.633208,-124.292542,"Jul–Oct",2010,"86","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Matthews1977","1977.0","N Atlantic","NW Atlantic","NW Atlantic",38,-56,NA,1964,"38","adult","temperate","adult","Westerlies - N. Atlantic Subtropical Gyral Province (West) (STGW)","NASW",TRUE
+"McHugh1952","1952.0","N Pacific","NE Pacific","Baja to northern CA",32.5,-121,"Jun & Oct",1949,"301","juvenile","temperate","juvenile","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Monaco1888","1888.0","Mediterranean","Mediterranean","Mediterranean",34.061761,19.209595,"Sep",1888,"none reported","adult","temperate","adult","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"OrtizZarate1987","1987.0","N Atlantic","NE Atlantic","Bay of Biscay",46.986108,-5.407589,NA,1968,"97","juvenile, adult","temperate","mixed","Coastal - NE Atlantic Shelves Province","NECS",TRUE
+"Pinkas1971","1971.0","N Pacific","NE Pacific","Central California (Region 2)",35.283333333,-122,"Jul–Nov",1968,"286","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Pinkas1971","1971.0","N Pacific","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Nov",1968,"177","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Pinkas1971","1971.0","N Pacific","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Sep",1969,"20","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Pinkas1971","1971.0","N Pacific","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Nov",1968,"222","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Pinkas1971","1971.0","N Pacific","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Sep",1969,"200","juvenile, adult","temperate","mixed","Coastal - California Upwelling Coastal Province","CCAL",TRUE
+"Pusineri2005","2005.0","N Atlantic","NE Atlantic","Bay of Biscay",45,-17.5,"Jun–Sep",1993,"27","juvenile","temperate","juvenile","Westerlies - N. Atlantic Drift Province (WWDR)","NADR",TRUE
+"Romanov2020","2020.0","Indian","NW Indian","Indian Monsoon Gyre Province",-8,57,"Multi-month",2015,"150","adult","tropical","adult","Trades - Indian Monsoon Gyres Province","MONS",TRUE
+"Romanov2020","2020.0","Indian","SW Indian","Indian South Subtropical Gyre Province, Reunion Island",-19,53,"Multi-month",2014,"184","adult","tropical","adult","Trades - Indian S. Subtropical Gyre Province","ISSG",TRUE
+"Romanov2020","2020.0","Indian","SW Indian","Mozambique Channel, Madagascar",-15.5,42.76,"Multi-month",2014,"63","adult","tropical","adult","Coastal - E. Africa Coastal Province","EAFR",TRUE
+"Romanov2020","2020.0","S Atlantic","SE Atlantic","Atlantic Ocean off Cape Town, South Africa",-35,18,"Multi-month",2014,"290","adult","temperate","adult","Coastal - E. Africa Coastal Province","EAFR",TRUE
+"Romeo2012","2012.0","Mediterranean","Mediterranean","S. Tyrrhenian sea and Strait of Messina",38.6,15,NA,2008,"none reported","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Salman&Karakulak2009","2009.0","Mediterranean","Mediterranean","Antalya Bay (Levantine Sea)",36.5,31.5,"May-July",2007,"61","juvenile","temperate","juvenile","Westerlies - Mediterranean Sea, Black Sea Province","MEDI",TRUE
+"Watanabe-etal2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",40,163,"September",2001,"14","juvenile","temperate","juvenile","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
+"Watanabe-etal2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"July",2002,"46","juvenile","temperate","juvenile","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
+"Watanabe-etal2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"May-June",2002,"64","juvenile","temperate","juvenile","Westerlies - N. Pacific Polar Front Province","NPPF",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","New Caledonia",-19,168,"Feb–Oct",2010,"340","juvenile, adult","tropical","mixed","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","New Zealand",-42.5,170,"Jan–Apr",2008,"144","juvenile, adult","temperate","mixed","Westerlies - Subantarctic Province","SANT",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","New Zealand",-42.5,170,"Jan–Mar",2009,"50","juvenile, adult","temperate","mixed","Westerlies - Subantarctic Province","SANT",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","New Zealand",-40,178,"Apr–May",2010,"27","juvenile, adult","temperate","mixed","Coastal - New Zealand Coastal Province","NEWZ",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","New Zealand",-40,178,"Apr–May",2010,"11","juvenile, adult","temperate","mixed","Coastal - New Zealand Coastal Province","NEWZ",TRUE
+"Williams2015","2015.0","S Pacific","SW Pacific","Tonga",-20,-175.093115,"Jun–Jul",2010,"42","juvenile, adult","tropical","mixed","Westerlies - S. Pacific Subtropical Gyre Province","SPSG",TRUE
+"Young2010","2010.0","S Pacific","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-31,160,"Year-round",2006,"10","adult","temperate","adult","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
+"Young2010","2010.0","S Pacific","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-30,160,"Year-round",2006,"36","juvenile, adult","temperate","mixed","Trades - Archipelagic Deep Basins Province","ARCH",TRUE
