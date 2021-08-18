@@ -253,9 +253,11 @@ prey_length_data = prey_length_data %>%
                              #if_else(prey_length_data$`l_type_use`=="TL", length, 0)
                              ))
 
+write.csv(prey_length_data, here::here("data/output_data/alb_prey_raw_length_info.csv"), row.names = FALSE)
+
 #Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
 prey_length_wide = prey_length_data %>%
-  dplyr::select(prey_class:life_stage, measure, length_tl) %>%
+  dplyr::select(prey_class:life_stage, measure, length_tl) %>% #l_type_use, 
   spread(life_stage, length_tl, convert=TRUE) %>%
   mutate(larva_adult = 100*larva/adult, juve_adult = 100*juvenile/adult)
 #we're going to want the maximum values out of this to use as cut-offs
@@ -302,8 +304,14 @@ prey_length_ratios = prey_length_fam %>%
 ##Make a cut-off selection based on family > order > class level information
 
 #And remove troublesome NA's in original dataset
-prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
-prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
+prey_length_ratios_max$larva_adult[is.na(prey_length_ratios_max$larva_adult)] <- NaN
+prey_length_ratios_max$juve_adult[is.na(prey_length_ratios_max$juve_adult)] <- NaN
+
+prey_length_ratios_max = prey_length_ratios %>%
+  filter(measure == "l_max")
+
+write.csv(prey_length_ratios_max, here::here("data/output_data/alb_prey_length_ratios_phyla.csv"), row.names = FALSE)
+
 
 ```
 
@@ -317,15 +325,19 @@ We can use these to see what essentially fits in albacore jaws, by using gape le
 ```{r Size ratios for all taxa, tidy=TRUE}
 ##Now we need to merge this back onto species, and make selection again based on whether the species level info is there
 
+#And remove troublesome NA's in original dataset
+prey_length_wide$larva_adult[is.na(prey_length_wide$larva_adult)] <- NaN
+prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
+
 prey_length_ratiosp = prey_length_wide %>%
   dplyr::filter(measure == "l_max") %>%
   dplyr::rename(l_larva = "larva", l_juve = "juvenile", l_adult = "adult") %>%
-  left_join(prey_length_ratios, by = c("prey_family", "prey_order", "prey_class", "measure")) %>%
+  left_join(prey_length_ratios_max, by = c("prey_family", "prey_order", "prey_class", "measure")) %>%
   #dplyr::select(prey_class:measure, larva_adult:juve_adult, larva_adult_u:juve_adult_u) %>%
   mutate(larva_adult_use = if_else(larva_adult == "NaN", larva_adult_u, larva_adult),
          juve_adult_use = if_else(juve_adult == "NaN", juve_adult_u, juve_adult)
          ) %>%
-  dplyr::select(prey_class:l_larva, larva_adult_use:juve_adult_use) #%>%
+  dplyr::select(prey_class:l_larva, larva_adult:juve_adult, larva_adult_u:juve_adult_u, larva_adult_use:juve_adult_use) #%>%
   #dplyr::filter(larva_adult_use != "NaN")
 
 #---> Here we obtain size ratios for all 309 species in trait db

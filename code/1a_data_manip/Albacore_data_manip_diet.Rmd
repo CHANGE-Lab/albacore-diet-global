@@ -73,6 +73,8 @@ Tasks performed in these chunks:
 
 - Retain frequency of occurrence + stomach sampled information for traitglm.
 
+### Albacore diet raw data
+
 ```{r Albacore diet data load & manipulation}
 
 #Load diet data spreadsheet
@@ -142,6 +144,8 @@ write.csv(alb_global_ad_metrics, here("data/output_data/alb_global_ad_metrics"),
 
 Here we want to estimate the probable life stage of the species consumed based on their size ratios and relationship to albacore tuna gape limits.
 
+### Albacore diet + probable life stage estimation
+
 ```{r Albacore diet data + probable life stage estimation}
 
 alb_global_prob = alb_global %>%
@@ -174,7 +178,8 @@ alb_global_prob_metrics = alb_global_prob %>%
   dplyr::select(prey_class:prey_sp, prey_age_reported_1, life_stage, pFOuse, pN, pM, maxtl_use, gape_lmax, prey_length) %>%
   group_by(prey_sp, prey_age_reported_1, life_stage) %>%
   dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE),
-                   maxTL = max(maxtl_use, na.rm=TRUE)/10, maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length, na.rm=TRUE))
+                   maxTL = max(maxtl_use, na.rm=TRUE)/10, meanGAPE = mean(gape_lmax, na.rm=TRUE), meanLENGTH = mean(prey_length, na.rm=TRUE))
+#maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length, na.rm=TRUE)
 
 ## SAVE DATA BELOW
 write.csv(alb_global_prob_metrics, here("data/output_data/alb_global_prob_metrics_alllife.csv"), row.names = FALSE)
@@ -199,6 +204,22 @@ write.csv(alb_global_prob_metrics2, here("data/output_data/alb_global_prob_metri
 ```
 
 *Note: the maxFO, maxN or maxM are related to the study, they are typically the same between both sets of summary data for adult and probable life stage.
+
+### Albacore prey size when reported
+
+```{r Extract information when albacore prey size was reported}
+
+alb_prey_raw_size = alb_global %>%
+  filter(maxtl_use > 0) %>%
+  dplyr::select(StudyID, OceanBasin, LocatName, LocatLatitude, LocatLongitude, YearEnd, pred_life, pred_flmean, pred_flmin, pred_flmax, 
+                gape_lmax, prey_sp, maxl_use, maxl_type, standard_total, maxtl_use, pFOuse, pN, pM) %>%
+  mutate(maxtl_use = maxtl_use/10,
+         maxl_use = maxl_use/10,
+         presence = 1)
+
+write.csv(alb_prey_raw_size, here("data/output_data/alb_prey_raw_size.csv"), row.names = FALSE)
+```
+
 
 ## Data Joins
 
