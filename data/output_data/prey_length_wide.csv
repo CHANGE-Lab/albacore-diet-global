@@ -147,7 +147,7 @@
 "Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","l_min",5,2.64507730737492,0.365678890420496,7.31357780840992,52.9015461474984
 "Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","l_max",7.5,4.5,2.14231594862342,28.5642126483123,60
 "Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","l_min",4.5,2.14231594862342,0.238035105402603,5.28966900894673,47.6070210805204
-"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","l_max",NA,NA,NA,NA,NA
+"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","l_max",10,NA,NA,NA,NA
 "Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","l_min",NA,NA,NA,NA,NA
 "Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","l_max",40.4,NA,7,17.3267326732673,NA
 "Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","l_min",NA,7,0.36,NA,NA
@@ -159,8 +159,8 @@
 "Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","l_min",16,4.32374042823507,0.494141763226866,3.08838602016791,27.0233776764692
 "Actinopterygii","Perciformes","Ammodytidae","Ammodytes tobianus","l_max",10.4557309147228,3.3981125472849,1.20240905519312,11.5,32.4999999999999
 "Actinopterygii","Perciformes","Ammodytidae","Ammodytes tobianus","l_min",3.3981125472849,1.20240905519312,0.209114618294455,6.15384615384614,35.3846153846154
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","l_max",240,50,Inf,Inf,20.8333333333333
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","l_min",50,Inf,NA,NA,Inf
+"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","l_max",240,50,8.2,3.41666666666667,20.8333333333333
+"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","l_min",50,8.2,NA,NA,16.4
 "Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","l_max",20,9.73,NA,NA,48.65
 "Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","l_min",9.73,NA,NA,NA,NA
 "Actinopterygii","Perciformes","Bramidae","Brama brama","l_max",100,NA,1.32037692000532,1.32037692000532,NA
@@ -373,7 +373,7 @@
 "Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","l_min",35.9380459261386,2.40784907705129,1.61721206667624,4.50000000000001,6.70000000000001
 "Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","l_max",40.4510882670787,22.4728268150437,8.98913072601749,22.2222222222222,55.5555555555555
 "Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","l_min",22.4728268150437,8.98913072601749,0.898913072601749,4,40
-"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","l_max",NA,NA,NA,NA,NA
+"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","l_max",10.0920804867994,NA,NA,NA,NA
 "Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","l_min",NA,NA,NA,NA,NA
 "Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","l_max",187.15164333918,NA,NA,NA,NA
 "Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","l_min",NA,NA,NA,NA,NA
@@ -387,8 +387,8 @@
 "Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","l_min",NA,5.89726114637363,NA,NA,NA
 "Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","l_max",56.0818912394107,NA,2.24327564957643,4,NA
 "Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","l_min",NA,2.24327564957643,NA,NA,NA
-"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","l_max",NA,NA,NA,NA,NA
-"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","l_min",NA,NA,NA,NA,NA
+"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","l_max",20.8192192744261,18.0433233711693,5.27420221618795,25.3333333333334,86.6666666666667
+"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","l_min",18.0433233711693,5.27420221618795,0.458022824037375,2.53846153846154,29.2307692307692
 "Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","l_max",75.5721945597442,43.3610952391975,1.61055496602734,2.13114754098361,57.3770491803279
 "Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","l_min",43.3610952391975,1.61055496602734,NA,NA,3.71428571428572
 "Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","l_max",365.4754479286,NA,13.5361277010592,3.70370370370369,NA

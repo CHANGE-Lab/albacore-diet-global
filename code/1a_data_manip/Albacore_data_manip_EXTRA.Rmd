@@ -57,35 +57,6 @@ str(prey_trait)
 
 ### Prey size graphs
 
-``` {r Prey size ratios graphs}
-#Check the ratios out with graphs
-prey_length_ratios %>% 
-  dplyr::filter(prey_class %in% c("Cephalopoda")) %>% #"Actinopterygii", , "Malacostraca"
-  ggplot() +
-  geom_boxplot(aes(x=prey_order, y=larva_adult_o, fill=measure)) +
-  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
-  theme_classic() +
-  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Larva to adult length ratio")+
-  theme(axis.title=element_text(size=20)) +
-  theme(axis.text=element_text(size=20)) +
-  theme(legend.text=element_text(size=20)) +
-  theme(legend.title=element_text(size=20)) +
-  theme(legend.position="top")
-#Note significant variation in family-level mean l_max and l_min values
-
-
-
-#This never seems to work for me
-#prey_length_ratios = prey_length_wide %>% 
-#  group_by(prey_class, measure) %>%
-#  plyr::summarise(larva_adult_m = mean(larva_adult)) #%>%
-#   group_vars(larva_adult)
-
-
-
-```
-
-
 ```{r PREY SIZE GRAPHS}
 
 ##Now we need cut offs for larva and juveniles maybe based either at class, order or family levels

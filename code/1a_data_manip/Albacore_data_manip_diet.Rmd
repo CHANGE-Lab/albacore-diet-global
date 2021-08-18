@@ -31,7 +31,7 @@ here::here()
 ```
 
 
-## Outputs needed for these manips:
+## Outputs needed for these manips + load:
 
 - Prey species' morphometric trait information (body shape, eye diameter to body, and standard to total length): *data/output_data/prey_morph_sum.csv*
 
@@ -44,8 +44,6 @@ here::here()
 - Prey species + filled in length ratios: *data/output_data/prey_length_ratiosp.csv*
 
 - Diet data below.
-
-## Load trait dataframes
 
 ```{r Load trait dataframes}
 
@@ -134,9 +132,10 @@ The following summarises the max observed FO, N and M for each species in the da
 
 alb_global_ad_metrics = alb_global %>%
   #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
-  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %>%
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxtl_use) %>%
   group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE)) 
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE), 
+                   maxTL = max(maxtl_use, na.rm=TRUE)) 
 
 write.csv(alb_global_ad_metrics, here("data/output_data/alb_global_ad_metrics"), row.names = FALSE)
 ```
@@ -149,6 +148,7 @@ alb_global_prob = alb_global %>%
   inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) %>%
   #In using an inner_join I am selecting only rows for which we have all length-based data
   mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, gape_lmax)) %>%
+  #Note that we recorded any reported prey lengths in cm's and we need them in mm's now.
   mutate(prey_frac = 100*prey_length/l_adult) %>%
   mutate(prey_proba = if_else(prey_frac < larva_adult_use, "larva", if_else(prey_frac<juve_adult_use, "juvenile", "adult"))) %>%
   mutate(life_stage = if_else(prey_age_reported_1 == "none", prey_proba, prey_age_reported_1)) #985 obs, 53 variables
@@ -165,15 +165,16 @@ write.csv(alb_global_prob, here("data/output_data/alb_global_diet_prob.csv"), ro
 
 ```
 
-The following summarises the max observed FO, N and M for each species in the dataset AND for each life stage likely consumed.
+The following summarises the max observed FO, N and M for each species in the dataset AND for each life stage likely consumed. Note that there are 28 taxa for which two stages were consumed. In the chunk below this one we will select the prey species and life stage combination that was most common. Most of the time this wouldn't be a large problem because typically one life stage was consumed much more frequently than the other. However, for *Cololabis saira*, the %FO of the adult and juvenile life stages consumed were very similar in summary with the adult life stage slightly higher. 
 
 ```{r Alb probable diet metrics summary}
 
 #All combinations of life stages and species consumed
 alb_global_prob_metrics = alb_global_prob %>%
-  dplyr::select(prey_class:prey_sp, life_stage, pFOuse, pN, pM) %>%
-  group_by(prey_sp, life_stage) %>%
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE))
+  dplyr::select(prey_class:prey_sp, prey_age_reported_1, life_stage, pFOuse, pN, pM, maxtl_use, gape_lmax, prey_length) %>%
+  group_by(prey_sp, prey_age_reported_1, life_stage) %>%
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE),
+                   maxTL = max(maxtl_use, na.rm=TRUE)/10, maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length, na.rm=TRUE))
 
 ## SAVE DATA BELOW
 write.csv(alb_global_prob_metrics, here("data/output_data/alb_global_prob_metrics_alllife.csv"), row.names = FALSE)
@@ -188,12 +189,12 @@ AND we need to select the max observed --> this is also where we essentially sel
 #So we should obtain 300 species in the following code.
 
 #The most common life stage and species consumed!!
-alb_global_prob_metrics = alb_global_prob_metrics %>%
+alb_global_prob_metrics2 = alb_global_prob_metrics %>%
   group_by(prey_sp) %>%
   top_n(1, maxFO) %>%
   sample_n(1)
 
-write.csv(alb_global_prob_metrics, here("data/output_data/alb_global_prob_metrics"), row.names = FALSE)
+write.csv(alb_global_prob_metrics2, here("data/output_data/alb_global_prob_metrics"), row.names = FALSE)
 
 ```
 

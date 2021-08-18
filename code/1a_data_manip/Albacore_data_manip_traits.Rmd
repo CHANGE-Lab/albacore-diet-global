@@ -61,6 +61,8 @@ We first want to load in and clean the prey morphometric measurements for adult 
 
 - Summarise to give an average value for each species for which we obtained images. We are able to obtain values for 292 species.
 
+- Note that I've ensured that whenever a species had no SL recorded in morphometrics, that we at least included it's recorded TL such that whenever we have SL data later on, at least that gets used as TL in absence of knowledge of a species' SL. This is visible in the raw data wherever a species' s_length == t_length.
+
 ```{r Prey Morph Data Clean, tidy=TRUE}
 
 #Load prey morphometric measurement data
@@ -99,6 +101,8 @@ prey_morph_sum = prey_morph_clean %>%
 #eye_body_se = sd(eye_body_r)/sqrt(length(eye_body_r)).
 
 glimpse(prey_morph_sum)
+
+range(prey_morph_sum$standard_total) #0.1709843 2.4766719
 
 write.csv(prey_morph_sum, here::here("data/output_data/prey_morph_sum.csv"), row.names = FALSE)
 
@@ -203,7 +207,7 @@ prey_length <- rbind(prey_min, prey_max)
 
 ```
 
-Here we clean the levels of 'l_type' (length measurement type) factor as follows:
+Here we clean the levels of 'l_type' (length measurement type) factor as follows. Note that we provide definitions for these in Appendix B.
 
 ```{r Cleaning L type values, tidy=TRUE}
 
@@ -245,7 +249,9 @@ prey_length_data = prey_length %>%
   left_join(prey_morph_sum, by="prey_sp") #%>% #c("prey_sp", "life_stage")
 
 prey_length_data = prey_length_data %>%
-  mutate(`length_tl`=if_else(prey_length_data$`l_type_use`=="SL", length/standard_total, length))
+  mutate(`length_tl`=if_else(prey_length_data$`l_type_use`=="SL", length/standard_total, length
+                             #if_else(prey_length_data$`l_type_use`=="TL", length, 0)
+                             ))
 
 #Reshape to wide data where each species has row for max and min values, and add two columns with ratios of larval and juvenile sizes to adult by species. We can then summarise these for family, order and class to fill in info.
 prey_length_wide = prey_length_data %>%
@@ -304,7 +310,7 @@ prey_length_wide$juve_adult[is.na(prey_length_wide$juve_adult)] <- NaN
 ### Length ratio data
 
 Finally, the code below provides us with the following data that can be extracted:
-(i) prey trait data as rows for 3x life stages as columns;
+(i) prey l_max data as rows for 3x life stages as columns;
 (ii) prey length, measurement and type info + average ratio metrics x3 for x3 life stages
 We can use these to see what essentially fits in albacore jaws, by using gape length and width formulas for yellowfin tuna applied. These are calculated in a later chunk.
 
@@ -326,8 +332,47 @@ prey_length_ratiosp = prey_length_wide %>%
 ##Problem with NA values
 glimpse(prey_length_ratiosp)
 
+range(prey_length_ratiosp$larva_adult_use)
+range(prey_length_ratiosp$juve_adult_use)
+
 write.csv(prey_length_ratiosp, here::here("data/output_data/prey_length_ratiosp.csv"), row.names = FALSE)
 
 ```
 
+### Prey size ratio graphs
+
+``` {r Prey size ratio graphs}
+#Check the ratios out with graphs
+#Cephalopods
+prey_length_ratios %>% 
+  dplyr::filter(prey_class %in% c("Cephalopoda")) %>% #"Actinopterygii", , "Malacostraca"
+  ggplot() +
+  geom_boxplot(aes(x=prey_order, y=larva_adult_o, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Larva to adult length ratio")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+#Note significant variation in order-level larva to adult size ratios
+
+#Fish
+prey_length_ratios %>% 
+  dplyr::filter(prey_class %in% c("Actinopterygii")) %>% #"Actinopterygii", , "Malacostraca"
+  ggplot() +
+  geom_boxplot(aes(x=prey_order, y=larva_adult_o, fill=measure)) +
+  #xlab("Ocean Basin") + ylab("Frequency of Occurance(%)") + 
+  theme_classic() +
+  scale_fill_viridis_d(option="D", begin = 1, end = 0.6, name = "Larva to adult length ratio")+
+  theme(axis.title=element_text(size=20)) +
+  theme(axis.text=element_text(size=20)) +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.title=element_text(size=20)) +
+  theme(legend.position="top")
+#Note significant variation in order-level mean l_max and l_min values
+
+
+```
 
