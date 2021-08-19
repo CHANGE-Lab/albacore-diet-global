@@ -143,7 +143,7 @@ alb_global_ad_metrics = alb_global %>%
   dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE), 
                    maxTL = max(maxtl_use, na.rm=TRUE)) 
 
-write.csv(alb_global_ad_metrics, here("data/output_data/alb_global_ad_metrics"), row.names = FALSE)
+write.csv(alb_global_ad_metrics, here("data/output_data/alb_global_ad_metrics.csv"), row.names = FALSE)
 ```
 
 
@@ -154,7 +154,7 @@ Here we want to estimate the probable life stage of the species consumed using t
 ```{r Albacore diet data + probable life stage estimation}
 
 alb_global_prob = alb_global %>%
-  inner_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) %>%
+  left_join(prey_length_ratiosp, by=c("prey_sp", "prey_family", "prey_order", "prey_class")) %>% #previously used an inner_join()
   #In using an inner_join I am selecting only rows for which we have all length-based data
   mutate(prey_length = if_else(maxtl_use > 0, maxtl_use/10, 
                                if_else(l_adult < gape_lmax, l_adult, gape_lmax))) %>%
@@ -170,8 +170,12 @@ alb_global_prob$life_stage[is.na(alb_global_prob$life_stage)] <- "adult"
 
 ## SAVE DATA
 write.csv(alb_global_prob, here("data/output_data/alb_global_diet_prob.csv"), row.names = FALSE) 
-#985 observations 55 variables
 #This include data for which we are able to make an assessment of probable life stage --> therefore will exclude coarse taxonomic classifications
+
+#Note that the inner join created an issue where we had missing data --
+#985 observations 55 variables
+#alb_missing = alb_global %>%
+#  anti_join(alb_global_prob)
 
 ```
 
@@ -190,7 +194,7 @@ alb_global_prob_metrics = alb_global_prob %>%
                    maxTL = max(maxtl_use, na.rm=TRUE)/10, meanGAPE = mean(gape_lmax, na.rm=TRUE), 
                    meanLENGTH = mean(prey_length, na.rm=TRUE), meanFRAC = mean(prey_frac, na.rm=TRUE)) %>%
   dplyr::select(prey_sp, prey_age_reported_1, maxTL, meanGAPE, l_adult, meanLENGTH, meanFRAC, 
-                larva_adult_use, juve_adult_use, life_stage, maxFO)
+                larva_adult_use, juve_adult_use, life_stage, maxFO, maxN, maxM)
 
 #maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length, na.rm=TRUE)
 
@@ -248,7 +252,10 @@ write.csv(alb_prey_raw_size, here("data/output_data/alb_prey_raw_size.csv"), row
 prey_adults_merge = prey_trait_adult %>% 
   left_join(prey_morph_sum, by="prey_sp") %>% 
   left_join(prey_qual_sum, by="prey_sp") %>%
-  left_join(alb_global_ad_metrics, by="prey_sp")
+  left_join(alb_global_ad_metrics, by="prey_sp") %>%
+  dplyr::select(prey_class:season_cat, gregarious_primary, l_max, body_shape, 
+                b_shape_r:standard_total, phys_defense:countershade, 
+                energy_density:maxTL, trophic_level, fisheries_status)
 
 #308 spp and ~31 traits
 glimpse(prey_adults_merge)
@@ -269,7 +276,10 @@ prey_probable_merge = alb_global_prob_metrics %>%
   left_join(prey_trait_select, by=c("prey_sp", "life_stage")) %>% 
   left_join(prey_morph_sum, by="prey_sp") %>% 
   left_join(prey_qual_sum, by="prey_sp") %>%
-  dplyr::select(prey_class:prey_family, prey_sp:life_stage, vert_habitat:percent_lipid, maxFO:maxM)
+  dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage, 
+                vert_habitat:season_cat, gregarious_primary, l_max, body_shape, 
+                b_shape_r:standard_total, phys_defense:countershade, 
+                energy_density:percent_lipid, maxFO:maxM, maxTL, trophic_level, fisheries_status)
 
 #303 spp and ~28 traits
 glimpse(prey_probable_merge)
@@ -294,6 +304,8 @@ alb_covars = alb_global %>%
                              pred_life == "none" ~ "mixed",
                              pred_life == "adult" ~ "adult"))
 
+alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
+
 #Merge these back to the diet df
 alb_global_diet = alb_global %>%
   left_join(alb_covars)
@@ -304,6 +316,7 @@ write.csv(alb_covars, here("data/output_data/alb_covars.csv"), row.names = FALSE
 
 Could edit the Longhurst doc to separate biomes and codes as per province definitions:
 https://en.wikipedia.org/wiki/Longhurst_code#:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions 
+Note that we are having issues with this code and need to re-run it / troubleshoot.
 
 ```{r Covars + Longhurst}
 #Covars + Longhurst
@@ -321,6 +334,7 @@ unique(alb_covars_geog$code)
 unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
 unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_global$CiteYear)) #they do
 unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_global$YearEnd)) #they do
+unique(sort(alb_covars_geog$code))
 
 alb_covars_use = alb_covars %>%
   left_join(alb_covars_geog) %>%
