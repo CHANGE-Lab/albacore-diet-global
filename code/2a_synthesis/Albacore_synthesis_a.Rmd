@@ -3,8 +3,8 @@ title: "Albacore Diet Synthesis A"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 # Biological and trait diversity in diets of a highly migratory predator
@@ -50,8 +50,7 @@ Below, we extract summary information for reported albacore tuna fork lengths an
 
 ```{r Summary - albacore size info, tidy=TRUE, message=FALSE}
 
-alb_global_diet_total = read.csv(here::here("data/output_data/alb_global_diet_total.csv")) %>%
-  dplyr::select(-X)
+alb_global_diet_total = read.csv(here::here("data/output_data/alb_global_diet_total.csv"))
 
 #We estimate the range in albacore fork lengths in this study to be:
 range(alb_global_diet_total$pred_flmean) #47.23 101.00
@@ -98,7 +97,6 @@ Here we extract summary information for our calculations of prey larval-adult an
 ```{r Summary - morph data, tidy=TRUE, message=FALSE}
 
 prey_length_ratiosp = read.csv(here("data/output_data/prey_length_ratiosp.csv")) %>%
-  dplyr::select(-X) %>%
   filter(prey_class != "NA",
          l_adult != "Inf",
          l_juve != "Inf",
@@ -137,13 +135,25 @@ mean(grp.Actinopterygii$larva_adult_use, na.rm = TRUE) #8.879331
 
 Checking the number of prey species ultimately used in multivariate analyses. Note here that we only use 137 out of the 298 species, because we only obtained complete trait information for 137 species. The remainder had incomplete trait information, and we chose to exclude them for now.
 
-```{r Summary - wide diet data, tidy=TRUE, message=FALSE}
+```{r Summary - wide diet pa data, tidy=TRUE, message=FALSE}
+
+alb_global_wide_dietpa_sites = read.csv(here("data/output_data/alb_global_wide_dietpa.csv")) %>%
+  dplyr::select(StudyID:lat_cat)
+
+alb_global_wide_dietpa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv")) %>%
+  dplyr::select(-c(StudyID:lat_cat))
+
+#The number of observations (rows) and species (columns)
+dim(alb_global_wide_dietpa)
+```
+
+```{r Summary - wide diet fo data, tidy=TRUE, message=FALSE}
 
 alb_global_wide_dietfo_sites = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
-  dplyr::select(-X, StudyID:grouped_id)
+  dplyr::select(StudyID:lat_cat)
 
 alb_global_wide_dietfo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
-  dplyr::select(-X, -c(StudyID:grouped_id))
+  dplyr::select(-c(StudyID:lat_cat))
 
 #The number of observations (rows) and species (columns)
 dim(alb_global_wide_dietfo)
