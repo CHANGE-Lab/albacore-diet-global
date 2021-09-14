@@ -31,8 +31,8 @@ Here we will be updating some of the phylogenetic packages.
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
 
-#BiocManager::install("Biostrings")
-#BiocManager::install("ggtree")
+BiocManager::install("Biostrings")
+BiocManager::install("ggtree")
 
 #For document rendering
 #tinytex::install_tinytex()
@@ -86,7 +86,7 @@ library(phytools)
 library(phangorn)
 library(stringr)
 library(taxize)
-library(treeio)
+#library(treeio)
 
 ```
 
@@ -99,8 +99,8 @@ Using combination of my trial code and Matt Savoca and company's code to build a
 #data contains sp list, class, order & family + traits.
 
 #Probable life stage data
-my_prey_prob = read.csv(here("./data/output_data/prey_probable_traits.csv"), header=TRUE) %>%
-  dplyr::select(prey_sp, prey_class:prey_family, life_stage, vert_habitat:maxM, -X) %>%
+my_prey_prob = read.csv(here("./data/output_data/prey_trait_probable_select.csv"), header=TRUE) %>%
+  dplyr::select(prey_sp, prey_class:prey_family, life_stage, vert_habitat:maxM) %>%
   filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
 #298 species and 32 variables
 str(my_prey_prob)

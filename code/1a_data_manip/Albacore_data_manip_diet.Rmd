@@ -429,7 +429,7 @@ summary(as.factor(alb_global_dietpa$code))
 summary(as.factor(alb_global_dietpa$OceanBasin))
 summary(as.factor(alb_global_dietpa$OceanBasinQ))
 
-write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"))
+write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"), row.names = FALSE)
 ```
 
 #### Diet data - frequency of occurrence
@@ -458,7 +458,7 @@ summary(as.factor(alb_global_dietfo$code))
 summary(as.factor(alb_global_dietfo$OceanBasin))
 summary(as.factor(alb_global_dietfo$OceanBasinQ))
 
-write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"))
+write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"), row.names = FALSE)
 
 ```
 
@@ -480,7 +480,7 @@ summary(as.factor(alb_global_dietn$code))
 summary(as.factor(alb_global_dietn$OceanBasin))
 summary(as.factor(alb_global_dietn$OceanBasinQ))
 
-write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"))
+write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
 ```
 
 #### Diet data - biomass
@@ -502,7 +502,7 @@ summary(as.factor(alb_global_dietm$code))
 summary(as.factor(alb_global_dietm$OceanBasin))
 summary(as.factor(alb_global_dietm$OceanBasinQ))
 
-write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"))
+write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
 
 ```
 
