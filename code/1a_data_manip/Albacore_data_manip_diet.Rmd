@@ -326,30 +326,42 @@ Note that we are having issues with this code and need to re-run it / troublesho
 #Covars + Longhurst
 
 alb_covars_geog <- read.csv(here("data/output_data/alb_covars_longhurst.csv")) #%>%
+#  dplyr::rename(MonthRange2 = `MonthRange`)
+#  dplyr::select(-MonthRange)
 #  dplyr::select(StudyID, lat_cat:code) #%>%
 #  group_by(StudyID) %>%
 #  sample_n(1)
 #names(alb_covars_geog)
 
+str(alb_covars_geog)
+str(alb_covars)
+
 #Need to merge this with diet data first overall data then probable prey consumed
 unique(alb_covars_geog$code)
 
 #check names match
-unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
-unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_global$CiteYear)) #they do
-unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_global$YearEnd)) #they do
-unique(sort(alb_covars_geog$code))
+#unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
+#unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_global$CiteYear)) #they do
+#unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_global$YearEnd)) #they do
+#unique(sort(alb_covars_geog$code))
 
-alb_covars_use = alb_covars %>%
-  left_join(alb_covars_geog) %>%
-  dplyr::select(-optional)
+#check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they do
+unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
+unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
+unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do NOT
+# Potential problem with MonthRange
+
+alb_covars_use = alb_covars_geog %>%
+  dplyr::select(-optional, -MonthRange)
 
 ```
 
 ```{r Covars + Longhurst + Diet data}
 
 alb_global_diet = alb_global %>%
-  left_join(alb_covars_use) #looks good #, by = "StudyID"
+  left_join(alb_covars_use) %>% #looks good #, by = "StudyID"
+  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxtl_use)
 
 #Write over previous output from first data chunk
 write.csv(alb_global_diet, here("data/output_data/alb_global_diet_total.csv"), row.names = FALSE)
@@ -364,9 +376,13 @@ Note that there are a handful of cases where the same prey species was consumed 
 
 ```{r Check on duplicates for prey by life stage}
 
-View(alb_global[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
+View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
 
 #select 192, 111, 247, 117, 248
+
+alb_global_diet_use = alb_global_diet %>%
+  slice(., -c(226, 118, 99, 204, 227))
+
 ```
 
 #### Presence/absence
@@ -375,7 +391,7 @@ Here we will join our additional covariates (inc. Longhurst province data) with 
 
 ```{r Covars + Longhurst + cluster + Diet data PA}
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
-alb_global_dietpa = alb_global_diet %>%
+alb_global_dietpa = alb_global_diet_use %>%
   dplyr::select(StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp) %>%
   mutate(pa="1") #%>%
   #group_by(prey_sp) %>%
@@ -384,6 +400,24 @@ alb_global_dietpa = alb_global_diet %>%
 
 ```
 
+```{r Covars + Longhurst + cluster + Diet data PA}
+#Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
+alb_global_dietpa = alb_global_diet_use %>%
+  dplyr::select(#StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp
+    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp) %>%
+  mutate(pa="1") %>%
+  group_by(prey_sp) %>%
+  #dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pa, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietpa$lat_cat))
+summary(as.factor(alb_global_dietpa$code))
+summary(as.factor(alb_global_dietpa$OceanBasin))
+summary(as.factor(alb_global_dietpa$OceanBasinQ))
+
+write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"))
+```
 
 #### Diet data - frequency of occurrence
 
@@ -392,21 +426,24 @@ Here we will join our additional covariates (inc. Longhurst province data) with 
 ```{r Covars + Longhurst + cluster + Diet data FO}
 
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
-alb_global_dietfo = alb_global_diet %>%
-  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pFOuse) %>%
-  filter(pFOuse >= 1) %>% #set this value to include or exclude species #goes down to 708 observations
+alb_global_dietfo = alb_global_diet_use %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pFOuse) %>%
+  filter(pFOuse >= 1) %>% #set this value to include or exclude species #goes down to 62 observations
   group_by(prey_sp) %>%
-  dplyr::mutate(grouped_id = row_number()) %>%
+  #dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pFOuse, fill = 0, convert = FALSE)
+
+#Check these data
+which(rowSums(alb_global_dietfo[,9:ncol(alb_global_dietfo)])<1)
 
 #Before spreading data - range(alb_global_dietfo$pFOuse) 
 #0 to 100 need to exclude zeros as they are not true zeros --> 0.1 to 100%
 
 #Check covariate representation
-#summary(as.factor(alb_global_dietfo$lat_cat))
-#summary(as.factor(alb_global_dietfo$code))
-#summary(as.factor(alb_global_dietfo$OceanBasin))
-#summary(as.factor(alb_global_dietfo$OceanBasinQ))
+summary(as.factor(alb_global_dietfo$lat_cat))
+summary(as.factor(alb_global_dietfo$code))
+summary(as.factor(alb_global_dietfo$OceanBasin))
+summary(as.factor(alb_global_dietfo$OceanBasinQ))
 
 write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"))
 
@@ -417,19 +454,18 @@ write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv")
 
 ```{r Covars + Longhurst + Diet data N}
 #Extract for %N data
-alb_global_dietn = alb_global_diet %>%
-  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pN) %>%
+alb_global_dietn = alb_global_diet_use %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pN) %>%
   filter(pN > 0) %>%
-  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  #filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
   group_by(prey_sp) %>%
-  dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pN, fill = 0, convert = FALSE)
 
 #Check covariate representation
-#summary(as.factor(alb_global_dietn$lat_cat))
-#summary(as.factor(alb_global_dietn$code))
-#summary(as.factor(alb_global_dietn$OceanBasin))
-#summary(as.factor(alb_global_dietn$OceanBasinQ))
+summary(as.factor(alb_global_dietn$lat_cat))
+summary(as.factor(alb_global_dietn$code))
+summary(as.factor(alb_global_dietn$OceanBasin))
+summary(as.factor(alb_global_dietn$OceanBasinQ))
 
 write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"))
 ```
@@ -441,18 +477,17 @@ write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"))
 #range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
 
 alb_global_dietm = alb_global_diet %>%
-  dplyr::select(StudyID:YearEnd, lat_cat:code, pred_life, pred_flmean, prey_sp, pM) %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pM) %>%
   filter(pM > 0) %>%
-  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+#  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
   group_by(prey_sp) %>%
-  dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pM, fill = 0, convert = FALSE)
 
 #Check covariate representation
-#summary(as.factor(alb_global_dietm$lat_cat))
-#summary(as.factor(alb_global_dietm$code))
-#summary(as.factor(alb_global_dietm$OceanBasin))
-#summary(as.factor(alb_global_dietm$OceanBasinQ))
+summary(as.factor(alb_global_dietm$lat_cat))
+summary(as.factor(alb_global_dietm$code))
+summary(as.factor(alb_global_dietm$OceanBasin))
+summary(as.factor(alb_global_dietm$OceanBasinQ))
 
 write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"))
 
