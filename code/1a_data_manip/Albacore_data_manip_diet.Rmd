@@ -314,6 +314,10 @@ write.csv(alb_covars, here("data/output_data/alb_covars.csv"), row.names = FALSE
 
 ```
 
+#### GO TO 'longhurst' work then back here
+
+#### Extracting co-variates
+
 Could edit the Longhurst doc to separate biomes and codes as per province definitions:
 https://en.wikipedia.org/wiki/Longhurst_code#:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions 
 Note that we are having issues with this code and need to re-run it / troubleshoot.

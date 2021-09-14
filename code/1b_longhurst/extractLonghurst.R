@@ -61,7 +61,7 @@ glimpse(longhurst)
 # Plot provinces
 longMap <- baseMap + 
   geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
-  #ggtitle(paste("Longhurst Biogeochemical Provinces -", length(unique(longhurst$ProvCode)),"provinces"))+
+  ggtitle(paste("Longhurst Biogeochemical Provinces -", length(unique(longhurst$ProvCode)),"provinces"))+
   theme(legend.position="none",
         axis.title = element_blank())+
   geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
@@ -79,6 +79,7 @@ list.files(path="code/1b_longhurst")
 
 ##March 2021 data
 # Albacore locations
+# CHANGE DIRECTORY FOR THIS DOC
 alb <- read.csv("data/output_data/alb_covars.csv", head = TRUE, sep= ",")
 
 # Set coordinates
