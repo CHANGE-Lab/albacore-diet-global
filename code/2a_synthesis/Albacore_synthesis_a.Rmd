@@ -38,7 +38,7 @@ library(wesanderson)
 library(BiodiversityR)
 library(vegan)
 # From GitHub
-install_github("MoBiodiv/mobr")
+#install_github("MoBiodiv/mobr")
 library(mobr)
 #devtools::install_github('bbc/bbplot')
 #library(bbplot)

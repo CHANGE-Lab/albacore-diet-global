@@ -261,14 +261,14 @@ prey_adults_merge = prey_trait_adult %>%
 glimpse(prey_adults_merge)
 
 #Save
-write.csv(prey_adults_merge, here("data/output_data/prey_adults_traits.csv"), row.names = FALSE)
+write.csv(prey_adults_merge, here("data/output_data/prey_traits_adults.csv"), row.names = FALSE)
 
 #Reload
 #prey_adults_merge = read.csv(here("data/output_data/prey_adults_traits.csv"))
 
 ```
 
-#### Prey traits - probable life stage
+#### Prey traits - probable life stage - all life stages
 
 ```{r Prey probable list + traits + morph + qual data, include=FALSE, eval = FALSE}
 
@@ -284,7 +284,31 @@ prey_probable_merge = alb_global_prob_metrics %>%
 #303 spp and ~28 traits
 glimpse(prey_probable_merge)
 
-write.csv(prey_probable_merge, here("data/output_data/prey_probable_traits.csv"), row.names = FALSE)
+write.csv(prey_probable_merge, here("data/output_data/prey_trait_probable_all.csv"), row.names = FALSE)
+
+#prey_probable_merge = read.csv(here("data/prey_probable_traits.csv"))
+
+```
+
+#### Prey traits - probable life stage - select life stages
+
+```{r Prey probable list + traits + morph + qual data, include=FALSE, eval = FALSE}
+
+prey_probable_merge2 = alb_global_prob_metrics2 %>%
+  left_join(prey_trait_select, by=c("prey_sp", "life_stage")) %>% 
+  left_join(prey_morph_sum, by="prey_sp") %>% 
+  left_join(prey_qual_sum, by="prey_sp") %>%
+  dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage, 
+                vert_habitat:season_cat, gregarious_primary, l_max, body_shape, 
+                b_shape_r:standard_total, phys_defense:countershade, 
+                energy_density:percent_lipid, maxFO:maxM, maxTL, trophic_level, fisheries_status) #meanGAPE, meanLENGTH, meanFRAC,
+
+
+
+#308 spp and ~28 traits
+glimpse(prey_probable_merge2)
+
+write.csv(prey_probable_merge2, here("data/output_data/prey_trait_probable_select.csv"), row.names = FALSE)
 
 #prey_probable_merge = read.csv(here("data/prey_probable_traits.csv"))
 
@@ -359,9 +383,9 @@ alb_covars_use = alb_covars_geog %>%
 
 ```{r Covars + Longhurst + Diet data}
 
-alb_global_diet = alb_global %>%
+alb_global_diet = alb_global_prob %>%
   left_join(alb_covars_use) %>% #looks good #, by = "StudyID"
-  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxtl_use)
+  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxtl_use, prey_length:life_stage)
 
 #Write over previous output from first data chunk
 write.csv(alb_global_diet, here("data/output_data/alb_global_diet_total.csv"), row.names = FALSE)
@@ -376,12 +400,12 @@ Note that there are a handful of cases where the same prey species was consumed 
 
 ```{r Check on duplicates for prey by life stage}
 
-View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
+#View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
 
-#select 192, 111, 247, 117, 248
+#select 192, 111, 247, 99, 248
 
 alb_global_diet_use = alb_global_diet %>%
-  slice(., -c(226, 118, 99, 204, 227))
+  slice(., -c(226, 118, 117, 204, 227))
 
 ```
 
@@ -389,18 +413,7 @@ alb_global_diet_use = alb_global_diet %>%
 
 Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for species' presence absence (PA). These data will be used for traitglms.
 
-```{r Covars + Longhurst + cluster + Diet data PA}
-#Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
-alb_global_dietpa = alb_global_diet_use %>%
-  dplyr::select(StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp) %>%
-  mutate(pa="1") #%>%
-  #group_by(prey_sp) %>%
-  #dplyr::mutate(grouped_id = row_number()) %>%
-  #spread(prey_sp, pa, fill = 0, convert = FALSE)
-
-```
-
-```{r Covars + Longhurst + cluster + Diet data PA}
+```{r Covars + Longhurst + Diet data PA}
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
 alb_global_dietpa = alb_global_diet_use %>%
   dplyr::select(#StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp
@@ -423,7 +436,7 @@ write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv")
 
 Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for reported frequency of occurrence (FO). Because these data may be used for traitglms and converted to presence/absence, we filter for very low occurrence species (< 1%).
 
-```{r Covars + Longhurst + cluster + Diet data FO}
+```{r Covars + Longhurst + Diet data FO}
 
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
 alb_global_dietfo = alb_global_diet_use %>%
