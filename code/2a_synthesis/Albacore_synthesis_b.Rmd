@@ -63,8 +63,8 @@ Below we select variables for use in clustering algorithms. We selected vertical
 
 ```{r Load and manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
 
-prey_probable_load = read.csv(here("data/output_data/prey_probable_traits.csv"), header=TRUE) %>%
-  dplyr::select(-c(X, diel_migrant, refuge, season_migrant, l_max, trophic_level:standard_total, energy_density:percent_lipid)) %>% 
+prey_probable_load = read.csv(here("data/output_data/prey_trait_probable_select.csv"), header=TRUE) %>% #prey_probable_traits.csv
+  dplyr::select(-c(diel_migrant, refuge, season_migrant, l_max:fisheries_status)) %>% 
   dplyr::rename(gregarious = gregarious_primary) %>%
   mutate(diel_migrant_cat = case_when(diel_migrant_cat == "diel_no" ~ "diel (no)",
                                       diel_migrant_cat == "diel_UN" ~ "diel (unknown)",
@@ -105,11 +105,12 @@ prey_probable <- cbind(dendlabs, prey_probable_row)
 
 #Probable trait df subsets
 probable_species = prey_probable$prey_sp
-prey_probable[,6:17] = lapply(prey_probable[,6:17] , as.factor)
-probable_traits = as.data.frame(prey_probable[,c(6:10,11)]) #12
+prey_probable[,6:13] = lapply(prey_probable[,6:13] , as.factor)
+probable_traits = as.data.frame(prey_probable[,c(7:13)]) #12
 
 probable_traits = prey_probable %>%
-  dplyr::select(life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat)
+  dplyr::select(life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat, gregarious)
+#Old version didn't include gregarious
 
 str(probable_traits)
 ```
@@ -227,14 +228,14 @@ In the output below, we assess primarily:
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
 View(prob.stats.df.divisive)
-write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob.stats.df.divisive.csv"))
+write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_sep2021/prob.stats.df.divisive.csv"))
 
 #Stats table for agglomerative method
 prob.stats.df.aggl <- cstats.table(prob.gower.dist, prob.aggl.clustc, 15) 
 #complete linkages looks like the most balanced approach
 prob.stats.df.aggl
 View(prob.stats.df.aggl)
-write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob.stats.df.aggl.csv"))
+write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob_cluster_sep2021/prob.stats.df.aggl.csv"))
 #As per text for adult, average within cluster metric is minimised for ~7-10 clusters, and the average between for about the same. The agglomerative clustering appears more balanced.
 
 ```
@@ -285,7 +286,6 @@ ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.aggl.clustc, 20)))
 
 # Elbow method
 
-# Agglomerative clustering,provides a more ambiguous picture
 ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20))), 
        aes(x=cluster.number, y=within.cluster.ss)) + 
   geom_point()+
@@ -336,7 +336,7 @@ prob.dendro.graph <- ggplot(prob.ggd1, theme = theme_minimal()) +
   labs(x = "Num. observations", y = "Height", title = "Dendrogram, k = 6")
 prob.dendro.graph
 
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
 
 ```
 
@@ -352,7 +352,7 @@ prob.dendro.rad
 #No labels on this one, labels were too cluttered/problems
 #Save radial dendrogram for chat
 
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
 
 ```
 
@@ -395,7 +395,7 @@ ggd1 <- ggd1 + theme(panel.grid.major = element_blank(),
 ggd1 <- ggd1 + ylim(max(get_branches_heights(prob.dendro)), -1)
 ggd1
 
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.vertlabs.k7.pdf'), plot=ggd1, width=5, height=20, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.vertlabs.k7.pdf'), plot=ggd1, width=5, height=20, dpi=300)
 
 #With labels removed!!!
 
@@ -404,7 +404,7 @@ prob.dendro.vert <- ggplot(prob.ggd1, horiz = TRUE, labels = FALSE) +
 #coord_polar(theta="x")
 prob.dendro.vert 
 #Export as .png
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.vert2.k7.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.vert2.k7.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300)
 
 
 ```
@@ -426,7 +426,7 @@ prob.prey.cl <- cbind(prey_probable, prob.clust.num)
 #View(prob.prey.cl)
 
 #write.csv(prob.prey.cl, here("data/output_data/prob.prey.clusternum_habgreg.divis.k8.csv"))
-write.csv(prob.prey.cl, here("outputs_figures/clusters/probable_divis_simple/prob.prey.clusternum_habgreg.divis.k7.csv"))
+write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_sep2021/prob.prey.clusternum_habgreg.divis.k7.csv"))
 
 ```
 
@@ -464,7 +464,7 @@ heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level))
   facet_grid(trait~. , scales="free_y")
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.heatcounts.divis.k7.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.heatcounts.divis.k7.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
@@ -475,7 +475,7 @@ heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(
   facet_grid(trait~., scales="free_y")
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.heatpercent.divis.k7.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_sep2021/prob.dendro.heatpercent.divis.k7.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
 
 #library(plyr)
 
@@ -483,9 +483,14 @@ ggsave(here('outputs_figures/clusters/probable_divis_simple/prob.dendro.heatperc
 
 ```{r Summary info, warning=FALSE, message=FALSE}
 summary(as.factor(prob.prey.cl$prob.clust.num))
+
+#Previous version prob_divis_simple
 #clusters  1  2  3  4  5  6  7 
 #         31 36 26 21  8 21 13 
 
+#Sep 2021 version
+#clusters  1  2  3  4  5  6  7 
+#         40 27 45 24 15  2  5 
 ```
 
 
