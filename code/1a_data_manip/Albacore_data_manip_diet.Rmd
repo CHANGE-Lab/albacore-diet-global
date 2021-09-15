@@ -417,7 +417,7 @@ Here we will join our additional covariates (inc. Longhurst province data) with 
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
 alb_global_dietpa = alb_global_diet_use %>%
   dplyr::select(#StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp
-    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp) %>%
+    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp) %>%
   mutate(pa="1") %>%
   group_by(prey_sp) %>%
   #dplyr::mutate(grouped_id = row_number()) %>%
@@ -440,7 +440,7 @@ Here we will join our additional covariates (inc. Longhurst province data) with 
 
 #Extract %FO data --> filter for only species that we have adult traits + cluster info for --> transform to wide data for MV GLMs + trait GLMs
 alb_global_dietfo = alb_global_diet_use %>%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pFOuse) %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pFOuse) %>%
   filter(pFOuse >= 1) %>% #set this value to include or exclude species #goes down to 62 observations
   group_by(prey_sp) %>%
   #dplyr::mutate(grouped_id = row_number()) %>%
@@ -468,7 +468,7 @@ write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv")
 ```{r Covars + Longhurst + Diet data N}
 #Extract for %N data
 alb_global_dietn = alb_global_diet_use %>%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pN) %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pN) %>%
   filter(pN > 0) %>%
   #filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
   group_by(prey_sp) %>%
@@ -490,7 +490,7 @@ write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"), 
 #range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
 
 alb_global_dietm = alb_global_diet %>%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, prey_sp, pM) %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pM) %>%
   filter(pM > 0) %>%
 #  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
   group_by(prey_sp) %>%

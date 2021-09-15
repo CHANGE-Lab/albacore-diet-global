@@ -474,6 +474,7 @@ prob.prey.cl <- cbind(prey_probable, prob.clust.num)
 
 #View(prob.prey.cl)
 
+##NOTE TO CHANGE THIS TO ADD DATA TO OUTPUT
 #write.csv(prob.prey.cl, here("data/output_data/prob.prey.clusternum_habgreg.divis.k8.csv"))
 write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_sep2021_simple/prob.prey.clusternum_aggl.k7.csv"), row.names = FALSE)
 

@@ -11,6 +11,43 @@ output:
 
 This document contains extra code for assessing and evaluation fourth corner models. This document currently requires the 'Albacore_synthesis_c_models.Rmd' document to be loaded to use the same analytical objects and outputs.
 
+## DF manips
+
+```{r Trait factor levels, warning=FALSE, message=FALSE, eval=FALSE, include=FALSE}
+
+#levels(alb_prob_traits$life_stage) #check
+#alb_prob_traits$life_stage <- factor(alb_prob_traits$life_stage, 
+#                                            levels = c("adult", "juvenile", "larva"),
+#                                            labels = c("adult", "juvenile", "juvenile"))
+
+#Levels vertical habitat
+#levels(alb_prob_traits$vert_habitat) #check
+alb_prob_traits$vert_habitat <- factor(alb_prob_traits$vert_habitat, 
+                                            levels = c("benthic", "demersal", "epipelagic",
+                                                       "mesopelagic", "bathypelagic"),
+                                            labels = c("benthic", "demersal", "epipelagic",
+                                                       "mesopelagic", "mesopelagic"))
+#Too low sample size for bathypelagic, merged with mesopelagic here
+
+#Levels horizontal habitat
+#levels(alb_prob_traits$horz_habitat) #check
+alb_prob_traits$horz_habitat <- factor(alb_prob_traits$horz_habitat, 
+                                            levels = c("reef-associated", "coastal", 
+                                                       "continental shelf", "continental slope",
+                                                       "oceanic"),
+                                            labels = c("coastal", "coastal", 
+                                                       "continental shelf", "continental shelf",
+                                                       "oceanic"))
+
+#Levels gregarious
+#levels(alb_adult_traits$gregarious) #check
+alb_prob_traits$gregarious <- factor(alb_prob_traits$gregarious, 
+                                            levels = c("solitary", "schooling"))
+
+write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_k7.csv"))
+
+```
+
 ## Trait models extra code
 
 *Note:* that the 'Albacore_synthesis_c_extra.Rmd' doc also contains additional code to evaluate these models and for plotting the species models. This code is to save outputs of model build.
