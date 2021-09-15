@@ -319,7 +319,7 @@ Using k = 7 for the habitat association, aggregation behaviour & probable life s
 ```{r Horizontal dendrogram, warning=FALSE, message=FALSE}
 
 #Using agglomerative hierarchical clustering, k = 8
-prob.dendro <- as.dendrogram(prob.divisive.clust) #156 species
+prob.dendro <- as.dendrogram(prob.aggl.clustc) #156 species
 PNW.pal7 <- pnw_palette(7, name = "Bay", type = "continuous")
 ###Horizontal dendrogram - Probable traits
 
@@ -415,7 +415,7 @@ ggsave(here('outputs_figures/clusters/prob_cluster_sep2021_nonagg/prob.dendro.ve
 ```{r Extract cluster number to trait matrix, warning=FALSE, message=FALSE}
 
 #Extract cluster number to trait matrix
-prob.clust.num <- cutree(prob.divisive.clust, k = 7)
+prob.clust.num <- cutree(prob.aggl.clustc, k = 7)
 
 #we want to bind the original dataset with the cluster numbers such that each species is assigned a cluster
 #can use whole data or just traits use to just look at unique species clusters in relation to traits
@@ -440,7 +440,7 @@ write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_sep2021_nona
 
 #Create dfs for graphs
 prob.clust.long = prob.prey.cl %>%
-  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`, -refuge_cat) %>% #maxFO:maxM, 
+  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
   reshape2::melt(id.vars = c("prey_sp", "prob.clust.num"), variable.name = "trait", value.name = "level") %>%
   group_by(prob.clust.num, trait, level) %>%
   mutate(count = n_distinct(prey_sp)) %>%

@@ -89,7 +89,7 @@ prey_probable = prey_probable_load %>%
          ) %>%
   drop_na()
 
-summary(prey_probable)
+prey_probable[,6:11] = lapply(prey_probable[,6:11] , as.factor)
 
 ```
 
@@ -101,15 +101,15 @@ We could merge values are we do later for 4th corner analyses.
 Here we check the trait values for each trait, and check the distribution of values. Note we merge certain values with low occurrences of species within them, and if we have a logical reason to merge.
 
 ```{r Trait values check, warning=FALSE, message=FALSE}
-summary(probable_traits$life_stage) #we will remove larva as a value from the df, larval taxa didn't make it through the data cleaning and manipulation.
+summary(prey_probable$life_stage) #we will remove larva as a value from the df, larval taxa didn't make it through the data cleaning and manipulation.
 
-summary(probable_traits$vert_habitat) #merge bathypelagic and mesopelagic, these prey could not have been consumed in the bathypelagic anyways.
+summary(prey_probable$vert_habitat) #merge bathypelagic and mesopelagic, these prey could not have been consumed in the bathypelagic anyways.
 
-summary(probable_traits$horz_habitat) #merge of continental shelf/slope, and coastal/reef assoc, we do not have enough data to properly differentiate and represent these habitat values, so we merge and take a coarser definition of 'continental shelf & slope' and 'coastal & reef-assoc'.
+summary(prey_probable$horz_habitat) #merge of continental shelf/slope, and coastal/reef assoc, we do not have enough data to properly differentiate and represent these habitat values, so we merge and take a coarser definition of 'continental shelf & slope' and 'coastal & reef-assoc'.
 
-summary(probable_traits$diel_migrant_cat) #a lot more diel migrants than not
+summary(prey_probable$diel_migrant_cat) #a lot more diel migrants than not
 
-summary(probable_traits$season_cat) #more seasonal taxa than not
+summary(prey_probable$season_cat) #more seasonal taxa than not
 
 ```
 
@@ -151,7 +151,7 @@ prey_probable <- cbind(dendlabs, prey_probable_row)
 
 #Probable trait df subsets
 probable_species = prey_probable$prey_sp
-prey_probable[,6:12] = lapply(prey_probable[,6:12] , as.factor)
+#prey_probable[,6:12] = lapply(prey_probable[,6:12] , as.factor)
 probable_traits = as.data.frame(prey_probable[,c(7:12)]) #12
 
 probable_traits = prey_probable %>%
@@ -489,7 +489,7 @@ write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_sep2021_simp
 
 #Create dfs for graphs
 prob.clust.long = prob.prey.cl %>%
-  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`, -refuge_cat) %>% #maxFO:maxM, 
+  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
   reshape2::melt(id.vars = c("prey_sp", "prob.clust.num"), variable.name = "trait", value.name = "level") %>%
   group_by(prob.clust.num, trait, level) %>%
   mutate(count = n_distinct(prey_sp)) %>%
@@ -545,6 +545,9 @@ summary(as.factor(prob.prey.cl$prob.clust.num))
 #clusters   1  2  3  4  5  6  7 
 #          31 21 27 22  8 28 21 
 
+#Simplified version
+#clusters    1  2  3  4  5  6  7 
+#           38 14 42 19 28  9  6 
 ```
 
 
@@ -640,8 +643,8 @@ trait_nMDS_prob_fig <- ggplot() +
   
 trait_nMDS_prob_fig
 
-ggsave(here("outputs_figures/clusters/prob_cluster_sep2021_nonagg/trait_nMDS_prob_clusters.png"), 
-       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+#ggsave(here("outputs_figures/clusters/prob_cluster_sep2021_simpleg/trait_nMDS_prob_clusters.png"), 
+#       plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```
 
