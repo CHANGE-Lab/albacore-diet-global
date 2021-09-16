@@ -986,7 +986,7 @@ saveRDS(prob_lat_trait_LASSO, file = here("outputs_figures/traitglms/prob_models
 ```{r Traits interactions manyglm, eval=FALSE}
 
 prob_inter_trait_many <- traitglm(L = alb_prob_preyPA_mv,
-                                  R = alb_prob_covars[,c(4,12)],
+                                  R = alb_prob_covars[,c("pred_life_adjust", "OceanBasinUse")],
                                   Q = traits_use[,1:6],
                                   family=binomial(link = "logit")
                                     ) #note default is "manyglm"
@@ -1012,10 +1012,10 @@ prob_inter_trait_many_graph = levelplot(temp,
 
 print(prob_inter_trait_many_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many_graph.pdf"), 
        plot = as.ggplot(prob_inter_trait_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many_graph.jpeg"), 
        plot = as.ggplot(prob_inter_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -1025,7 +1025,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many_gra
 ```{r Traits interactions LASSO, eval=FALSE}
 
 prob_inter_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
-                                  R = alb_prob_covars[,c(4,12)],
+                                  R = alb_prob_covars[,c("pred_life_adjust", "OceanBasinUse")],
                                   Q = traits_use[,1:6],
                                   family=binomial(link = "logit"),
                                   method="glm1path"
@@ -1049,13 +1049,14 @@ prob_inter_trait_LASSO_graph = levelplot(temp,
 
 print(prob_inter_trait_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_inter_trait_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_inter_trait_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
+
 #### Ocean Basin + Climate
 
 **MANYGLM Interaction Model**
@@ -1063,7 +1064,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO_gr
 ```{r Traits interactions manyglm 2, eval=FALSE}
 
 prob_inter_trait_many2 <- traitglm(L = alb_prob_preyPA_mv,
-                                  R = alb_prob_covars[,c(4,9)],
+                                  R = alb_prob_covars[,c("OceanBasinUse", "lat_cat")],
                                   Q = traits_use[,1:6],
                                   family=binomial(link = "logit")
                                     ) #note default is "manyglm"
@@ -1080,7 +1081,7 @@ colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "wh
 temp = t(as.matrix(prob_inter_trait_many2$fourth.corner))
 
 prob_inter_trait_many2_graph = levelplot(temp, 
-                     xlab=list("Predator Life Stage + Climate", cex=1.5),
+                     xlab=list("Ocean Basin + Climate", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
@@ -1089,10 +1090,10 @@ prob_inter_trait_many2_graph = levelplot(temp,
 
 print(prob_inter_trait_many2_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many2_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many2_graph.pdf"), 
        plot = as.ggplot(prob_inter_trait_many2_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many2_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many2_graph.jpeg"), 
        plot = as.ggplot(prob_inter_trait_many2_graph), width=12, height=12, dpi=300)
 
 ```
@@ -1102,7 +1103,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_many2_gr
 ```{r Traits interactions LASSO 2, eval=FALSE}
 
 prob_inter_trait_LASSO2 <- traitglm(L = alb_prob_preyPA_mv,
-                                  R = alb_prob_covars[,c(4,9)],
+                                  R = alb_prob_covars[,c("OceanBasinUse", "lat_cat")],
                                   Q = traits_use[,1:6],
                                   family=binomial(link = "logit"),
                                   method="glm1path"
@@ -1117,7 +1118,7 @@ colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "wh
 temp = t(as.matrix(prob_inter_trait_LASSO2$fourth.corner))
 
 prob_inter_trait_LASSO2_graph = levelplot(temp, 
-                     xlab=list("Predator Life Stage + Climate", cex=1.5),
+                     xlab=list("Ocean Basin + Climate", cex=1.5),
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
@@ -1126,10 +1127,10 @@ prob_inter_trait_LASSO2_graph = levelplot(temp,
 
 print(prob_inter_trait_LASSO2_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO2_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO2_graph.pdf"), 
        plot = as.ggplot(prob_inter_trait_LASSO2_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO2_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO2_graph.jpeg"), 
        plot = as.ggplot(prob_inter_trait_LASSO2_graph), width=12, height=12, dpi=300)
 
 ```
@@ -1148,310 +1149,4 @@ saveRDS(prob_inter_trait_LASSO2, file = here("outputs_figures/traitglms/prob_mod
 
 ```
 
-
-### MODEL COMPARISON
-
-#### Model Outputs
-
-Cluster, trait, spp models each for (i) predator life stage and (ii) ocean basins
-
-##### Model: prob_life_spp
-
-```{r Model Output prob_life_spp}
-prob_life_spp
-```
-
-```{r Anova prob_life_spp}
-
-#an_prob_life_spp = anova.traitglm(prob_life_spp)
-#saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
-an_prob_life_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
-an_prob_life_spp
-
-```
-
-##### Model: prob_ocean_spp
-
-```{r Model Output prob_ocean_spp}
-prob_ocean_spp
-```
-
-
-```{r Anova prob_ocean_spp}
-
-#an_prob_ocean_spp = anova.traitglm(prob_ocean_spp)
-#saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
-an_prob_ocean_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
-an_prob_ocean_spp
-
-```
-
-##### Model: prob_lat_spp
-
-```{r Model Output prob_lat_spp}
-prob_lat_spp
-```
-
-```{r Anova prob_lat_spp}
-
-#an_prob_lat_spp = anova.traitglm(prob_lat_spp)
-#saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
-an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
-an_prob_lat_spp
-
-```
-
-##### Model: prob_life_clusters_many
-
-```{r Model Output prob_life_clusters_many}
-prob_life_clusters_many
-```
-
-```{r Anova prob_life_clusters_many}
-
-#an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
-#saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
-an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
-an_prob_life_clusters_many
-
-
-
-```
-
-##### Model: prob_ocean_clusters_many
-
-```{r Model Output prob_ocean_clusters_many}
-prob_ocean_clusters_many
-```
-
-```{r Anova prob_ocean_clusters_many}
-
-#an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
-#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
-an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
-an_prob_ocean_clusters_many
-
-```
-
-##### Model: prob_lat_clusters_many
-
-```{r Model Output prob_lat_clusters_many}
-prob_lat_clusters_many
-```
-
-```{r Anova prob_lat_clusters_many}
-
-#an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
-#saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
-an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
-an_prob_lat_clusters_many
-
-```
-
-
-##### Model: prob_life_trait_many
-
-```{r Model Output prob_life_trait_many}
-prob_life_trait_many
-```
-
-```{r Anova prob_life_trait_many}
-
-#an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
-#saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
-an_prob_life_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
-an_prob_life_trait_many
-
-```
-
-##### Model: prob_ocean_trait_many
-
-```{r Model Output prob_ocean_trait_many}
-prob_ocean_trait_many
-```
-
-
-```{r Anova prob_ocean_trait_many}
-
-#an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
-#saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
-an_prob_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
-an_prob_ocean_trait_many
-
-```
-
-##### Model: prob_lat_trait_many
-
-```{r Model Output prob_lat_trait_many}
-prob_lat_trait_many
-```
-
-```{r Anova prob_lat_trait_many}
-
-#an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
-#saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
-an_prob_lat_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
-an_prob_lat_trait_many
-
-```
-
-##### Model: prob_inter_trait_many
-
-```{r Model Output: prob_inter_trait_many}
-prob_inter_trait_many
-
-prob_inter_trait_many$aic
-
-#prob_inter_trait_many$two.loglike same as deviance explained
-
-prob_inter_trait_many$deviance
-
-prob_inter_trait_many$call
-
-#temp = as.data.frame(prob_inter_trait_many$coefficients)
-
-
-```
-
-```{r Anova prob_inter_trait_many}
-
-#an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
-#saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
-an_prob_inter_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
-an_prob_inter_trait_many
-
-```
-
-##### Model: prob_inter_trait_many2
-
-```{r Model Output: prob_inter_trait_many2}
-
-prob_inter_trait_many2
-
-```
-
-```{r Anova prob_inter_trait_many2}
-
-#an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
-#saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
-an_prob_inter_trait_many2 = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
-an_prob_inter_trait_many2
-
-```
-
-## Conclusions
-
-The species models had the lowest residual deviance explained, and typically higher AIC values.
-Cluster models performed slightly better than traits models, but not massive difference. Both cluster and trait sets of models outperformed species models.
-
-The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
-The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
-
-## Remaining to do's
-
-- Run a null model?
-- Run latitude + cluster model?
-
-## Model Comp Outputs
-Species and environment matrix models - manyglm.
-
-```{r Model list for outputs, eval=FALSE}
-
-#Species*env models
-prob_life_spp
-prob_ocean_spp
-prob_lat_spp
-
-#Cluster*env models (manyglm and LASSO)
-#Manyglms
-prob_life_clusters_many
-prob_ocean_clusters_many
-prob_lat_clusters_many
-#LASSO glms
-prob_life_cluster_LASSO
-prob_ocean_cluster_LASSO
-prob_lat_cluster_LASSO
-
-#Trait*env models
-# Manyglms
-prob_life_trait_many 
-prob_ocean_trait_many
-prob_lat_trait_many
-#LASSO glms
-prob_life_trait_LASSO
-prob_ocean_trait_LASSO
-prob_lat_trait_LASSO 
-
-#Additive multi-variable env models
-#Manyglm
-prob_inter_trait_many
-prob_inter_trait_many2
-#LASSO glms
-prob_inter_trait_LASSO
-prob_inter_trait_LASSO2
-```
-
-**Note**
-
-- Could add additive models, LASSO models?
-
-```{r Make output dataframe, eval=FALSE}
-
-model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
-          "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
-          "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many") 
-#,        "prob_inter_trait_many", "prob_inter_trait_many2"
-mod_type = c("species", "species", "species", 
-             "traits", "traits", "traits",
-             "cluster", "cluster", "cluster")
-#,           "trait*ocean*life stage", "trait*ocean*climate"
-covar = c("predator life stage", "ocean basin", "climate",
-          "predator life stage", "ocean basin", "climate",
-          "predator life stage", "ocean basin", "climate")
-#,        "ocean*life stage", "ocean*climate"
-deviance = c(prob_life_spp$deviance, prob_ocean_spp$deviance, prob_lat_spp$deviance,
-             prob_life_trait_many$deviance, prob_ocean_trait_many$deviance, prob_lat_trait_many$deviance,
-             prob_life_clusters_many$deviance, prob_ocean_clusters_many$deviance, prob_lat_clusters_many$deviance)
-#,           prob_inter_trait_many$deviance, prob_inter_trait_many2$deviance
-aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
-        prob_life_trait_many$AICsum, prob_ocean_trait_many$AICsum, prob_lat_trait_many$AICsum,
-        prob_life_clusters_many$AICsum, prob_ocean_clusters_many$AICsum, prob_lat_clusters_many$AICsum)
-#,      prob_inter_trait_many$AICsum, prob_inter_trait_many2$AICsum
-mod_dev = data.frame(covar, mod_type, model, deviance, aic)
-
-write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
-```
-
-```{r Make output graph}
-mod_dev$mod_type = as.factor(mod_dev$mod_type)
-mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "trait", "cluster"))
-levels(mod_dev$mod_type)
-
-#mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
-#  geom_bar(stat = "identity", width = 1) + 
-#  facet_grid(.~ mod_type)
-
-mod_dev_graph = ggplot(data = mod_dev) + 
-  geom_bar(aes(y = deviance, fill = mod_type)) +
-  theme_classic() +
-  theme(axis.title = element_text(size=20),
-        axis.text = element_text(size=20),
-        axis.text.x = element_blank(),
-        axis.ticks = element_blank(),
-        legend.text = element_text(size=20),
-        legend.title = element_text(size=20),
-        legend.position = "top") +
-  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
-  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
-  facet_grid(.~ covar)
-
-mod_dev_graph
-
-ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.pdf"), 
-       plot = mod_dev_graph, width=5, height=4, dpi=300)
-
-ggsave(here("outputs_figures/traitglms/prob_all_simple/mod_dev_graph2.jpeg"), 
-       plot = mod_dev_graph, width=5, height=4, dpi=300)
-
-```
 
