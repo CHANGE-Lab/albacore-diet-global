@@ -165,8 +165,8 @@ prob_life_spp
 
 ```{r Anova prob_life_spp}
 
-#an_prob_life_spp = anova.traitglm(prob_life_spp)
-#saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
+an_prob_life_spp = anova.traitglm(prob_life_spp)
+saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
 an_prob_life_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
 an_prob_life_spp
 
@@ -181,8 +181,8 @@ prob_ocean_spp
 
 ```{r Anova prob_ocean_spp}
 
-#an_prob_ocean_spp = anova.traitglm(prob_ocean_spp)
-#saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
+an_prob_ocean_spp = anova.traitglm(prob_ocean_spp)
+saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
 an_prob_ocean_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
 an_prob_ocean_spp
 
@@ -196,8 +196,8 @@ prob_lat_spp
 
 ```{r Anova prob_lat_spp}
 
-#an_prob_lat_spp = anova.traitglm(prob_lat_spp)
-#saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
+an_prob_lat_spp = anova.traitglm(prob_lat_spp)
+saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
 an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
 an_prob_lat_spp
 
@@ -211,8 +211,8 @@ prob_life_clusters_many
 
 ```{r Anova prob_life_clusters_many}
 
-#an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
-#saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
+an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
+saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
 an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
 an_prob_life_clusters_many
 
@@ -228,8 +228,8 @@ prob_ocean_clusters_many
 
 ```{r Anova prob_ocean_clusters_many}
 
-#an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
-#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
+saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
 an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
 an_prob_ocean_clusters_many
 
@@ -243,8 +243,8 @@ prob_lat_clusters_many
 
 ```{r Anova prob_lat_clusters_many}
 
-#an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
-#saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
+an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
+saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many
 
@@ -259,8 +259,8 @@ prob_life_trait_many
 
 ```{r Anova prob_life_trait_many}
 
-#an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
-#saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
+an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
+saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
 an_prob_life_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
 an_prob_life_trait_many
 
@@ -275,8 +275,8 @@ prob_ocean_trait_many
 
 ```{r Anova prob_ocean_trait_many}
 
-#an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
-#saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
+an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
+saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
 an_prob_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
 an_prob_ocean_trait_many
 
@@ -290,8 +290,8 @@ prob_lat_trait_many
 
 ```{r Anova prob_lat_trait_many}
 
-#an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
-#saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
+an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
+saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
 an_prob_lat_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
 an_prob_lat_trait_many
 
@@ -317,8 +317,8 @@ prob_inter_trait_many$call
 
 ```{r Anova prob_inter_trait_many}
 
-#an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
-#saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
+an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
+saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
 an_prob_inter_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
 an_prob_inter_trait_many
 
@@ -334,8 +334,8 @@ prob_inter_trait_many2
 
 ```{r Anova prob_inter_trait_many2}
 
-#an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
-#saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
+an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
+saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
 an_prob_inter_trait_many2 = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
 an_prob_inter_trait_many2
 
@@ -397,7 +397,7 @@ prob_inter_trait_LASSO2
   
   - Could add additive models, LASSO models?
   
-  ```{r Make output dataframe, eval=FALSE}
+```{r Make output dataframe}
 
 model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
           "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
@@ -421,7 +421,7 @@ aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
 #,      prob_inter_trait_many$AICsum, prob_inter_trait_many2$AICsum
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
-write.csv(mod_dev, here("data/output_data/mod_dev.csv"))
+write.csv(mod_dev, here("data/output_data/mod_dev_sep2021.csv"))
 ```
 
 ```{r Make output graph}
