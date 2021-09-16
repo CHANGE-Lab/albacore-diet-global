@@ -1,5 +1,5 @@
 ---
-title: "Albacore Diet Synthesis C"
+title: "Albacore Diet Synthesis C Trait Modelling"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
@@ -65,8 +65,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("traitglm.R")
-source("get_polys.R")
+source("code/2a_synthesis/traitglm.R")
+source("code/2a_synthesis/get_polys.R")
 
 ```
 
@@ -204,7 +204,7 @@ alb_prob_covars$OceanBasinUse <- factor(alb_prob_covars$OceanBasinUse, levels = 
 
 ## DF manips for multivariate analyses
 
-```{r Check names and df dimensions, eval=FALSE}
+```{r Check names and df dimensions}
 
 ## Make sure species names match abund matrix
 #rownames(alb_prob_traits) == colnames(alb_prob_preyPA) #awesome!
@@ -286,7 +286,7 @@ str(traits_use)
 **SPP Manyglm - Predator Life Stage**
 add:, eval=FALSE
 
-```{r SPP life stage manyglm, eval=FALSE}
+```{r SPP life stage manyglm}
 
 prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
                           R = alb_prob_covars$pred_life_adjust,
@@ -297,7 +297,7 @@ prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
 
 **SPP Manyglm - Ocean Basin**
 
-```{r SPP ocean manyglm, eval=FALSE}
+```{r SPP ocean manyglm}
 
 prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
                                     R = alb_prob_covars$OceanBasinUse,
@@ -309,7 +309,7 @@ prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
 
 **SPP Manyglm - Latitude**
 
-```{r SPP climate manyglm, eval=FALSE}
+```{r SPP climate manyglm}
 
 prob_lat_spp <- traitglm(L = alb_prob_preyPA_mv,
                          R = alb_prob_covars$lat_cat,
@@ -335,7 +335,7 @@ plot(resids.full); abline(c(0,0),col="red")
 
 SAVE OUTPUTS SO FAR
 
-```{r SAVE SPP MODELS, eval=FALSE}
+```{r SAVE SPP MODELS}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models_sep2021
 
 saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_spp.rds")) 
@@ -353,7 +353,7 @@ saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021
 
 Trait (cluster)*Env (life stage) - Manyglm
 
-```{r Clusters life stage manyglm, eval=FALSE}
+```{r Clusters life stage manyglm}
 
 prob_life_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
                                     R = alb_prob_covars$pred_life_adjust,
@@ -406,7 +406,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_clusters_ma
 
 Using method = glm1path == LASSO model.
 
-```{r Clusters life  LASSO, eval=FALSE}
+```{r Clusters life  LASSO}
 
 prob_life_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                     R = alb_prob_covars$pred_life_adjust,
@@ -451,7 +451,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster_LAS
 
 Trait (cluster)*Env (ocean basin) - Manyglm
 
-```{r Clusters ocean manyglm, eval=FALSE}
+```{r Clusters ocean manyglm}
 
 prob_ocean_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
                                      R = alb_prob_covars$OceanBasinUse,
@@ -497,7 +497,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_clusters_m
 
 Using method = glm1path == LASSO model.
 
-```{r Clusters ocean LASSO, eval=FALSE}
+```{r Clusters ocean LASSO}
 
 prob_ocean_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                      R = alb_prob_covars$OceanBasinUse,
@@ -545,7 +545,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_cluster_LA
 
 Trait (cluster)*Env (climate) - Manyglm
 
-```{r Clusters latitude manyglm, eval=FALSE}
+```{r Clusters latitude manyglm}
 
 prob_lat_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
                                      R = alb_prob_covars$lat_cat,
@@ -585,7 +585,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_clusters_man
 
 Using method = glm1path == LASSO model.
 
-```{r Clusters latitude LASSO, eval=FALSE}
+```{r Clusters latitude LASSO}
 
 prob_lat_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                      R = alb_prob_covars$lat_cat,
@@ -624,7 +624,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASS
 
 #### SAVE CLUSTER OUTPUTS
 
-```{r SAVE CLUSTER MODELS, eval=FALSE}
+```{r SAVE CLUSTER MODELS}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models
 
 #Manyglms
@@ -653,7 +653,7 @@ saveRDS(prob_lat_cluster_LASSO,
 
 Trait (trait matrix)*Env (life stage) - Manyglm
 
-```{r Traits life stage manyglm, eval=FALSE}
+```{r Traits life stage manyglm}
 
 prob_life_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                  R = alb_prob_covars$pred_life_adjust,
@@ -707,7 +707,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_many_
 
 Using method = glm1path == LASSO model.
 
-```{r Traits life stage LASSO, eval=FALSE}
+```{r Traits life stage LASSO}
 
 prob_life_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                  R = alb_prob_covars$pred_life_adjust,
@@ -761,7 +761,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_LASSO
 
 Trait (trait matrix)*Env (ocean basin) - Manyglm
 
-```{r Traits ocean manyglm, eval=FALSE}
+```{r Traits ocean manyglm}
 
 prob_ocean_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                  R = alb_prob_covars$OceanBasinUse,
@@ -808,7 +808,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_trait_many
 
 Using method = glm1path == LASSO model.
 
-```{r Traits ocean LASSO, eval=FALSE}
+```{r Traits ocean LASSO}
 
 prob_ocean_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                  R = alb_prob_covars$OceanBasinUse,
@@ -867,7 +867,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_traits_LAS
 
 Trait (trait matrix)*Env (latitude) - Manyglm
 
-```{r Traits latitude manyglm, eval=FALSE}
+```{r Traits latitude manyglm}
 
 prob_lat_trait_many <-  traitglm(L = alb_prob_preyPA_mv,
                             R = alb_prob_covars$lat_cat,
@@ -907,7 +907,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_many_g
 
 Using method = glm1path == LASSO model.
 
-```{r Traits latitude LASSO, eval=FALSE}
+```{r Traits latitude LASSO}
 #levels(alb_prob_covars$lat_cat)
 
 #alb_prob_covars$lat_cat <- factor(alb_prob_covars$lat_cat, levels = c("tropical", "temperate"))
@@ -962,7 +962,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_LASSO_
 
 #### SAVE TRAITS OUTPUTS
 
-```{r SAVE TRAIT MODELS, eval=FALSE}
+```{r SAVE TRAIT MODELS}
 
 # Manyglms
 saveRDS(prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_many.rds")) 
@@ -983,7 +983,7 @@ saveRDS(prob_lat_trait_LASSO, file = here("outputs_figures/traitglms/prob_models
 
 **MANYGLM Interaction Model**
 
-```{r Traits interactions manyglm, eval=FALSE}
+```{r Traits interactions manyglm}
 
 prob_inter_trait_many <- traitglm(L = alb_prob_preyPA_mv,
                                   R = alb_prob_covars[,c("pred_life_adjust", "OceanBasinUse")],
@@ -1022,7 +1022,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many
 
 **GLM1PATH Interaction Model**
 
-```{r Traits interactions LASSO, eval=FALSE}
+```{r Traits interactions LASSO}
 
 prob_inter_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
                                   R = alb_prob_covars[,c("pred_life_adjust", "OceanBasinUse")],
@@ -1061,7 +1061,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASS
 
 **MANYGLM Interaction Model**
 
-```{r Traits interactions manyglm 2, eval=FALSE}
+```{r Traits interactions manyglm 2}
 
 prob_inter_trait_many2 <- traitglm(L = alb_prob_preyPA_mv,
                                   R = alb_prob_covars[,c("OceanBasinUse", "lat_cat")],
@@ -1100,7 +1100,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many
 
 **GLM1PATH Interaction Model**
 
-```{r Traits interactions LASSO 2, eval=FALSE}
+```{r Traits interactions LASSO 2}
 
 prob_inter_trait_LASSO2 <- traitglm(L = alb_prob_preyPA_mv,
                                   R = alb_prob_covars[,c("OceanBasinUse", "lat_cat")],
@@ -1137,7 +1137,7 @@ ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASS
 
 #### SAVE THESE
 
-```{r Save interaction models, eval=FALSE}
+```{r Save interaction models}
 
 #Manyglm
 saveRDS(prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many.rds"))
