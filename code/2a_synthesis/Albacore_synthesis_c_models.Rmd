@@ -234,11 +234,16 @@ dim(alb_prob_covars) #209 obs, 13 variables
 #Traits - select and manipulate that df - ideally we want to use the same df here
 traits_use = alb_prob_traits[,c(2:8)] %>%
   dplyr::rename(cluster = prob.clust.num) 
+
+#Predator life stage
+traits_use$gregarious <- factor(traits_use$gregarious, 
+                                            levels = c("solitary", "schooling"))
+levels(traits_use$gregarious)
 #All still factors
 #Using all traits 
 #traits_use[,1:6] 
 #and just clusters
-
+str(traits_use)
 ```
 
 
@@ -464,10 +469,11 @@ temp = t(as.matrix(prob_ocean_clusters_many$fourth.corner))
 
 rownames(temp) = c(#"Mediterranean",
                    "N Atlantic",
-                   "S Atlantic",
+                   "Idian & S Atlantic",
                    "N Pacific",
-                   "S Pacific",
-                   "Indian")
+                   "S Pacific"#,
+                   #"Indian"
+                   )
 
 prob_ocean_clusters_many_graph = levelplot(temp, 
                      xlab=list("Ocean Basins", cex=1.5),
@@ -510,10 +516,9 @@ temp = t(as.matrix(prob_ocean_cluster_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "S Atlantic",
+                   "Indian & S Atlantic",
                    "N Pacific",
-                   "S Pacific",
-                   "Indian")
+                   "S Pacific")
 
 prob_ocean_cluster_LASSO_graph = levelplot(temp, 
                      xlab=list("Ocean Basins", cex=1.5),
@@ -742,11 +747,11 @@ prob_life_LASSO_graph = levelplot(temp,
 
 print(prob_life_LASSO_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.pdf"), 
-#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.jpeg"), 
-#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -759,7 +764,7 @@ Trait (trait matrix)*Env (ocean basin) - Manyglm
 ```{r Traits ocean manyglm, eval=FALSE}
 
 prob_ocean_trait_many <- traitglm(L = alb_prob_preyPA_mv,
-                                 R = alb_prob_covars$OceanBasin,
+                                 R = alb_prob_covars$OceanBasinUse,
                                  Q = traits_use[,1:6],
                                  family=binomial(link = "logit")
                                     ) #note default is "manyglm"
@@ -774,10 +779,12 @@ temp = t(as.matrix(prob_ocean_trait_many$fourth.corner))
 
 rownames(temp) = c(#"Mediterranean",
                    "N Atlantic",
-                   "S Atlantic",
+                   "Indian & S Atlantic",
+                   #"S Atlantic",
                    "N Pacific",
-                   "S Pacific",
-                   "Indian")
+                   "S Pacific"#,
+                   #"Indian"
+                   )
 
 prob_ocean_trait_many_graph = levelplot(temp, 
                      xlab=list("Ocean Basins", cex=1.5),
@@ -789,10 +796,10 @@ prob_ocean_trait_many_graph = levelplot(temp,
 
 print(prob_ocean_trait_many_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_trait_many_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_trait_many_graph.pdf"), 
        plot = as.ggplot(prob_ocean_trait_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_trait_many_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_trait_many_graph.jpeg"), 
        plot = as.ggplot(prob_ocean_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -804,7 +811,7 @@ Using method = glm1path == LASSO model.
 ```{r Traits ocean LASSO, eval=FALSE}
 
 prob_ocean_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
-                                 R = alb_prob_covars$OceanBasin,
+                                 R = alb_prob_covars$OceanBasinUse,
                                  Q = traits_use[,1:6],
                                  family=binomial(link = "logit"),
                                  method="glm1path"
@@ -820,10 +827,9 @@ temp = t(as.matrix(prob_ocean_trait_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "S Atlantic",
+                   "Indian & S Atlantic",
                    "N Pacific",
-                   "S Pacific",
-                   "Indian")
+                   "S Pacific")
 
 colnames(temp) = c("Prey life: juvenile",
                    "Vert. habitat - benthic",
@@ -847,10 +853,10 @@ prob_ocean_LASSO_graph = levelplot(temp,
 
 print(prob_ocean_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_LASSO_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_traits_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_ocean_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_LASSO_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_traits_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_ocean_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
@@ -889,11 +895,11 @@ prob_lat_trait_many_graph = levelplot(temp,
 
 print(prob_lat_trait_many_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_trait_many_graph.pdf"), 
-#       plot = as.ggplot(prob_lat_trait_many_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_many_graph.pdf"), 
+       plot = as.ggplot(prob_lat_trait_many_graph), width=12, height=12, dpi=300)
        
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_trait_many_graph.jpeg"), 
-#       plot = as.ggplot(prob_lat_trait_many_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_many_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -946,11 +952,11 @@ prob_lat_trait_LASSO_graph = levelplot(temp,
 
 print(prob_lat_trait_LASSO_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_trait_LASSO_temp_graph.pdf"), 
-#       plot = as.ggplot(prob_lat_trait_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_LASSO_temp_graph.pdf"), 
+       plot = as.ggplot(prob_lat_trait_LASSO_graph), width=12, height=12, dpi=300)
        
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_trait_LASSO_emp_graph.jpeg"), 
-#       plot = as.ggplot(prob_lat_trait_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_LASSO_emp_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_trait_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 
