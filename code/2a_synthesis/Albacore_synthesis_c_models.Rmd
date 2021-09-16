@@ -331,7 +331,7 @@ plot(resids.full); abline(c(0,0),col="red")
 SAVE OUTPUTS SO FAR
 
 ```{r SAVE SPP MODELS, eval=FALSE}
-#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models
+#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models_sep2021
 
 saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_spp.rds")) 
 saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_spp.rds"))
@@ -432,10 +432,10 @@ prob_life_cluster_LASSO_graph = levelplot(temp,
 
 print(prob_life_cluster_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster7_LASSO_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster7_LASSO_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
@@ -479,11 +479,11 @@ prob_ocean_clusters_many_graph = levelplot(temp,
 
 print(prob_ocean_clusters_many_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.pdf"), 
-#       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_clusters_many_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_clusters_many_graph.jpeg"), 
-#       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_clusters_many_graph.jpeg"), 
+       plot = as.ggplot(prob_ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -525,11 +525,11 @@ prob_ocean_cluster_LASSO_graph = levelplot(temp,
 
 print(prob_ocean_cluster_LASSO_graph)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.pdf"), 
-#       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_cluster_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_ocean_cluster_LASSO_graph.jpeg"), 
-#       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_cluster_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 
@@ -568,10 +568,10 @@ prob_lat_clusters_many_graph = levelplot(temp,
 
 print(prob_lat_clusters_many_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_clusters_many_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_clusters_many_graph.pdf"), 
        plot = as.ggplot(prob_lat_clusters_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_clusters_many_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_clusters_many_graph.jpeg"), 
        plot = as.ggplot(prob_lat_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -609,10 +609,10 @@ prob_lat_cluster_LASSO_graph = levelplot(temp,
 
 print(prob_lat_cluster_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_cluster_LASSO_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_lat_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_cluster_LASSO_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_lat_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
@@ -623,14 +623,20 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_cluster_LASSO_gr
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models
 
 #Manyglms
-saveRDS(prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_life_clusters_many.rds")) 
-saveRDS(prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_ocean_clusters_many.rds"))
-saveRDS(prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models/prob_lat_clusters_many.rds"))
+saveRDS(prob_life_clusters_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_clusters_many.rds")) 
+saveRDS(prob_ocean_clusters_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_clusters_many.rds"))
+saveRDS(prob_lat_clusters_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_clusters_many.rds"))
 
 #LASSO glms
-saveRDS(prob_life_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_life_cluster_LASSO.rds"))
-saveRDS(prob_ocean_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_ocean_cluster_LASSO.rds"))
-saveRDS(prob_lat_cluster_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_lat_cluster_LASSO.rds"))
+saveRDS(prob_life_cluster_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster_LASSO.rds"))
+saveRDS(prob_ocean_cluster_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_cluster_LASSO.rds"))
+saveRDS(prob_lat_cluster_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASSO.rds"))
 
 ```
 
@@ -684,9 +690,9 @@ prob_life_many_4th = levelplot(temp,
 
 print(prob_life_many_4th)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th.pdf"), plot = as.ggplot(prob_life_many_4th), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_many_graph.pdf"), plot = as.ggplot(prob_life_many_4th), width=12, height=12, dpi=300)
 
-#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th_graph.jpeg"), plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_many_graph.jpeg"), plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 #dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
 
@@ -953,14 +959,14 @@ print(prob_lat_trait_LASSO_graph)
 ```{r SAVE TRAIT MODELS, eval=FALSE}
 
 # Manyglms
-saveRDS(prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models/prob_life_trait_many.rds")) 
-saveRDS(prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models/prob_ocean_trait_many.rds"))
-saveRDS(prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models/prob_lat_trait_many.rds"))
+saveRDS(prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_many.rds")) 
+saveRDS(prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_trait_many.rds"))
+saveRDS(prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_many.rds"))
 
 #LASSO glms
-saveRDS(prob_life_trait_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_life_trait_LASSO.rds"))
-saveRDS(prob_ocean_trait_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_ocean_trait_LASSO.rds"))
-saveRDS(prob_lat_trait_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_lat_trait_LASSO.rds"))
+saveRDS(prob_life_trait_LASSO, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_trait_LASSO.rds"))
+saveRDS(prob_ocean_trait_LASSO, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_trait_LASSO.rds"))
+saveRDS(prob_lat_trait_LASSO, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_trait_LASSO.rds"))
 
 ```
 
@@ -1127,12 +1133,12 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_inter_trait_LASSO2_g
 ```{r Save interaction models, eval=FALSE}
 
 #Manyglm
-saveRDS(prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_many.rds"))
-saveRDS(prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_many2.rds"))
+saveRDS(prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many.rds"))
+saveRDS(prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_many2.rds"))
 
 #LASSO glms
-saveRDS(prob_inter_trait_LASSO, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO.rds"))
-saveRDS(prob_inter_trait_LASSO2, file = here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO2.rds"))
+saveRDS(prob_inter_trait_LASSO, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO.rds"))
+saveRDS(prob_inter_trait_LASSO2, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_inter_trait_LASSO2.rds"))
 
 ```
 
@@ -1152,8 +1158,8 @@ prob_life_spp
 ```{r Anova prob_life_spp}
 
 #an_prob_life_spp = anova.traitglm(prob_life_spp)
-#saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_life_spp.rds"))
-an_prob_life_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_spp.rds"))
+#saveRDS(an_prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
+an_prob_life_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_spp.rds"))
 an_prob_life_spp
 
 ```
@@ -1168,8 +1174,8 @@ prob_ocean_spp
 ```{r Anova prob_ocean_spp}
 
 #an_prob_ocean_spp = anova.traitglm(prob_ocean_spp)
-#saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_spp.rds"))
-an_prob_ocean_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_spp.rds"))
+#saveRDS(an_prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
+an_prob_ocean_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_spp.rds"))
 an_prob_ocean_spp
 
 ```
@@ -1183,8 +1189,8 @@ prob_lat_spp
 ```{r Anova prob_lat_spp}
 
 #an_prob_lat_spp = anova.traitglm(prob_lat_spp)
-#saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
-an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_spp.rds"))
+#saveRDS(an_prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
+an_prob_lat_spp = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_spp.rds"))
 an_prob_lat_spp
 
 ```
@@ -1198,8 +1204,8 @@ prob_life_clusters_many
 ```{r Anova prob_life_clusters_many}
 
 #an_prob_life_clusters_many = anova.traitglm(prob_life_clusters_many)
-#saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
-an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_clusters_many.rds"))
+#saveRDS(an_prob_life_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
+an_prob_life_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_clusters_many.rds"))
 an_prob_life_clusters_many
 
 
@@ -1215,8 +1221,8 @@ prob_ocean_clusters_many
 ```{r Anova prob_ocean_clusters_many}
 
 #an_prob_ocean_clusters_many = anova.traitglm(prob_ocean_clusters_many)
-#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
-an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_clusters_many.rds"))
+#saveRDS(an_prob_ocean_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
+an_prob_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_clusters_many.rds"))
 an_prob_ocean_clusters_many
 
 ```
@@ -1230,8 +1236,8 @@ prob_lat_clusters_many
 ```{r Anova prob_lat_clusters_many}
 
 #an_prob_lat_clusters_many = anova.traitglm(prob_lat_clusters_many)
-#saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_clusters_many.rds"))
-an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_clusters_many.rds"))
+#saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
+an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many
 
 ```
@@ -1246,8 +1252,8 @@ prob_life_trait_many
 ```{r Anova prob_life_trait_many}
 
 #an_prob_life_trait_many = anova.traitglm(prob_life_trait_many)
-#saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_life_trait_many.rds"))
-an_prob_life_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_life_trait_many.rds"))
+#saveRDS(an_prob_life_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
+an_prob_life_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_trait_many.rds"))
 an_prob_life_trait_many
 
 ```
@@ -1262,8 +1268,8 @@ prob_ocean_trait_many
 ```{r Anova prob_ocean_trait_many}
 
 #an_prob_ocean_trait_many = anova.traitglm(prob_ocean_trait_many)
-#saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_trait_many.rds"))
-an_prob_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_ocean_trait_many.rds"))
+#saveRDS(an_prob_ocean_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
+an_prob_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_trait_many.rds"))
 an_prob_ocean_trait_many
 
 ```
@@ -1277,8 +1283,8 @@ prob_lat_trait_many
 ```{r Anova prob_lat_trait_many}
 
 #an_prob_lat_trait_many = anova.traitglm(prob_lat_trait_many)
-#saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_lat_trait_many.rds"))
-an_prob_lat_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_lat_trait_many.rds"))
+#saveRDS(an_prob_lat_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
+an_prob_lat_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_trait_many.rds"))
 an_prob_lat_trait_many
 
 ```
@@ -1304,8 +1310,8 @@ prob_inter_trait_many$call
 ```{r Anova prob_inter_trait_many}
 
 #an_prob_inter_trait_many = anova.traitglm(prob_inter_trait_many)
-#saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many.rds"))
-an_prob_inter_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many.rds"))
+#saveRDS(an_prob_inter_trait_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
+an_prob_inter_trait_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many.rds"))
 an_prob_inter_trait_many
 
 ```
@@ -1321,8 +1327,8 @@ prob_inter_trait_many2
 ```{r Anova prob_inter_trait_many2}
 
 #an_prob_inter_trait_many2 = anova.traitglm(prob_inter_trait_many2)
-#saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many2.rds"))
-an_prob_inter_trait_many2 = readRDS(file = here("outputs_figures/traitglms/prob_models/an_prob_inter_trait_many2.rds"))
+#saveRDS(an_prob_inter_trait_many2, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
+an_prob_inter_trait_many2 = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_inter_trait_many2.rds"))
 an_prob_inter_trait_many2
 
 ```
