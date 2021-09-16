@@ -93,7 +93,7 @@ alb_prob_preyPA = read.csv(here("./data/output_data/alb_prob_preyPA_use.csv")) %
 #Example code
 #alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adult_prey)], as.numeric)
 
-dim(alb_prob_preyPA) #225 obs, 123 species
+dim(alb_prob_preyPA) #74 obs, 156 species
 ```
 
 ```{r Load Covar data (R)}
@@ -122,7 +122,7 @@ alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
 #Traits as factors for analyses
 alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
 
-dim(alb_prob_traits) #123  17
+dim(alb_prob_traits) #156  8
 
 ```
 
@@ -135,9 +135,9 @@ Check trait values distribution if needed.
 ```{r Trait values check, eval=FALSE, warning=FALSE, message=FALSE}
 summary(alb_prob_traits$life_stage)
 
-summary(alb_prob_traits$vert_habitat) #merge bathypelagic and mesopelagic
+summary(alb_prob_traits$vert_habitat) #merge bathypelagic and mesopelagic #done
 
-summary(alb_prob_traits$horz_habitat) #potential merger of continental shelf/slope, and coastal/reef assoc.
+summary(alb_prob_traits$horz_habitat) #potential merger of continental shelf/slope, and coastal/reef assoc. #done
 
 summary(alb_prob_traits$diel_migrant_cat)
 
@@ -145,7 +145,7 @@ summary(alb_prob_traits$season_cat)
 
 summary(alb_prob_traits$gregarious)
 
-summary(alb_prob_traits$prob.clust.num) #low numbers in cluster #8 = 2
+summary(alb_prob_traits$prob.clust.num) 
 
 ```
 
@@ -166,12 +166,11 @@ levels(alb_prob_traits$gregarious) #check
 ```{r Covars values check, eval=FALSE}
 
 #Summary stats on covars
-unique(alb_prob_covars$StudyID) #22 studies
+unique(alb_prob_covars$StudyID) #26 studies
 unique(alb_prob_covars$OceanBasin) #6 Ocean basins
-unique(alb_adult_fo$OceanBasinQ) #10 Ocean basin quarters, but data gets thin for many
-unique(alb_prob_covars$YearEnd) #~27 years (or groups of years) are represented in this study
-unique(alb_prob_covars$code) #10 Longhurst provinces represented, similar to Ocean Basin Q but also gets thin
-unique(alb_prob_covars$pred_life) #
+unique(alb_prob_covars$OceanBasinUse) #5 Ocean basins
+unique(alb_prob_covars$pred_life) #3
+unique(alb_prob_covars$pred_life_adjust) #3
 
 ```
 
@@ -183,33 +182,23 @@ We'll be using the best covars based on balance and replication ==> pred_life, O
 
 summary(alb_prob_covars$lat_cat)
 #temperate  tropical 
-#   178        31 
+#   68        6 
 
-summary(alb_prob_covars$pred_life)
+summary(alb_prob_covars$pred_life_adjust)
 #   adult juvenile    mixed 
-#     54       62      93 
+#     8       29        37 
 #Predator life stage
-alb_prob_covars$pred_life <- factor(alb_prob_covars$pred_life, 
+alb_prob_covars$pred_life_adjust <- factor(alb_prob_covars$pred_life_adjust, 
                                             levels = c("mixed", "adult", "juvenile"))
-#Check
-#levels(alb_prob_covars$pred_life)
 
-
-summary(alb_prob_covars$OceanBasin)
-#           Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
-#            15            29            78            62            8            17 
+summary(alb_prob_covars$OceanBasinUse)
+#Indian & S Atlantic       Mediterranean          N Atlantic           N Pacific           S Pacific 
+#           5                   9                  24                  28                   8
 
 #Select some covars & traits
-alb_prob_covars$OceanBasin <- factor(alb_prob_covars$OceanBasin, levels = c("Mediterranean", "N Atlantic", "S Atlantic", "N Pacific", "S Pacific", "Indian"))
+alb_prob_covars$OceanBasinUse <- factor(alb_prob_covars$OceanBasinUse, levels = c("Mediterranean", "N Atlantic", "Indian & S Atlantic", "N Pacific", "S Pacific"))
 #Check
 #levels(alb_prob_covars$OceanBasin)
-
-
-summary(alb_prob_covars$OceanBasinQ)
-#Not going to use
-
-summary(alb_prob_covars$code)
-#Not going to use
 
 ```
 
@@ -243,7 +232,7 @@ dim(alb_prob_covars) #209 obs, 13 variables
 #alb_prob_covars$lat_cat
 
 #Traits - select and manipulate that df - ideally we want to use the same df here
-traits_use = alb_prob_traits[,c(2:6,13,17)] %>%
+traits_use = alb_prob_traits[,c(2:8)] %>%
   dplyr::rename(cluster = prob.clust.num) 
 #All still factors
 #Using all traits 
@@ -259,15 +248,15 @@ traits_use = alb_prob_traits[,c(2:6,13,17)] %>%
 
 **Manyglms for model comparisons**
 
-- prob_life_spp
+- prob_life_spp (redone)
 
-- prob_ocean_spp 
+- prob_ocean_spp (redone)
 
-- prob_lat_spp
+- prob_lat_spp (redone)
 
-- prob_life_clusters_many
+- prob_life_clusters_many (redone)
 
-- prob_ocean_clusters_many 
+- prob_ocean_clusters_many (redone)
 
 - prob_life_trait_many
 
@@ -276,73 +265,15 @@ traits_use = alb_prob_traits[,c(2:6,13,17)] %>%
 
 **LASSO glm1path models for significance testing**
 
-- prob_life_cluster_LASSO
+- prob_life_cluster_LASSO (redone)
 
-- prob_ocean_cluster_LASSO
+- prob_ocean_cluster_LASSO (redone)
 
 - prob_life_trait_LASSO
 
 - prob_ocean_trait_LASSO
 
 - prob_lat_trait_LASSO
-
-### READ MODELS BACK IN
-
-Species and environment matrix models - manyglm.
-
-```{r READ IN SPP MODELS}
-#/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models
-
-prob_life_spp = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_spp.rds")) 
-prob_ocean_spp = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_spp.rds"))
-prob_lat_spp = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_spp.rds"))
-
-```
-
-Species, cluster number and environment models - manyglms + LASSOs.
-
-```{r READ IN CLUSTER MODELS}
-
-#Manyglms
-prob_life_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_clusters_many.rds")) 
-prob_ocean_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_clusters_many.rds"))
-prob_lat_clusters_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_clusters_many.rds"))
-
-#LASSO glms
-prob_life_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_cluster_LASSO.rds"))
-prob_ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_cluster_LASSO.rds"))
-prob_lat_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_cluster_LASSO.rds"))
-
-```
-
-Species, traits and environment models - manyglms + LASSOs.
-
-```{r READ IN TRAIT MODELS}
-
-# Manyglms
-prob_life_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_trait_many.rds")) 
-prob_ocean_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_trait_many.rds"))
-prob_lat_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_trait_many.rds"))
-
-#LASSO glms
-prob_life_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_life_trait_LASSO.rds"))
-prob_ocean_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_ocean_trait_LASSO.rds"))
-prob_lat_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_lat_trait_LASSO.rds"))
-
-```
-
-Interaction models
-
-```{r READ IN INTERACTION MODELS}
-#Manyglm
-prob_inter_trait_many = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_many.rds"))
-prob_inter_trait_many2 = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_many2.rds"))
-
-#LASSO glms
-prob_inter_trait_LASSO = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO.rds"))
-prob_inter_trait_LASSO2 = readRDS(here("outputs_figures/traitglms/prob_models/prob_inter_trait_LASSO2.rds"))
-
-```
 
 
 ### Species models
@@ -353,7 +284,7 @@ add:, eval=FALSE
 ```{r SPP life stage manyglm, eval=FALSE}
 
 prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
-                          R = alb_prob_covars$pred_life,
+                          R = alb_prob_covars$pred_life_adjust,
                           family=binomial(link = "logit")
                           ) #note default is "manyglm"
 
@@ -364,7 +295,7 @@ prob_life_spp <- traitglm(L = alb_prob_preyPA_mv,
 ```{r SPP ocean manyglm, eval=FALSE}
 
 prob_ocean_spp <- traitglm(L = alb_prob_preyPA_mv,
-                                    R = alb_prob_covars$OceanBasin,
+                                    R = alb_prob_covars$OceanBasinUse,
                                     family=binomial(link = "logit")
                                     ) #note default is "manyglm"
 
@@ -402,9 +333,9 @@ SAVE OUTPUTS SO FAR
 ```{r SAVE SPP MODELS, eval=FALSE}
 #/Users/tashhardy/Documents/GitHub/albacore-diet-global/outputs_figures/traitglms/prob_models
 
-saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_models/prob_life_spp.rds")) 
-saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models/prob_ocean_spp.rds"))
-saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_models/prob_lat_spp.rds"))
+saveRDS(prob_life_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_spp.rds")) 
+saveRDS(prob_ocean_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_spp.rds"))
+saveRDS(prob_lat_spp, file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_spp.rds"))
 
 ```
 
@@ -420,7 +351,7 @@ Trait (cluster)*Env (life stage) - Manyglm
 ```{r Clusters life stage manyglm, eval=FALSE}
 
 prob_life_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
-                                    R = alb_prob_covars$pred_life,
+                                    R = alb_prob_covars$pred_life_adjust,
                                     Q = traits_use$cluster,
                                     family=binomial(link = "logit")
                                     ) #note default is "manyglm"
@@ -458,10 +389,10 @@ prob_life_clusters_many_graph = levelplot(temp,
 
 print(prob_life_clusters_many_graph)
 
-ggsave(here("./outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.pdf"), 
+ggsave(here("./outputs_figures/traitglms/prob_models_sep2021/prob_life_clusters_many_graph.pdf"), 
        plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_clusters_many_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_clusters_many_graph.jpeg"), 
        plot = as.ggplot(prob_life_clusters_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -473,7 +404,7 @@ Using method = glm1path == LASSO model.
 ```{r Clusters life  LASSO, eval=FALSE}
 
 prob_life_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
-                                    R = alb_prob_covars$pred_life,
+                                    R = alb_prob_covars$pred_life_adjust,
                                     Q = traits_use$cluster,
                                     family=binomial(link = "logit"),
                                     method="glm1path"
@@ -501,10 +432,10 @@ prob_life_cluster_LASSO_graph = levelplot(temp,
 
 print(prob_life_cluster_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_cluster7_LASSO_graph.pdf"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster7_LASSO_graph.pdf"), 
        plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_cluster7_LASSO_graph.jpeg"), 
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_cluster7_LASSO_graph.jpeg"), 
        plot = as.ggplot(prob_life_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
@@ -518,7 +449,7 @@ Trait (cluster)*Env (ocean basin) - Manyglm
 ```{r Clusters ocean manyglm, eval=FALSE}
 
 prob_ocean_clusters_many <- traitglm(L = alb_prob_preyPA_mv,
-                                     R = alb_prob_covars$OceanBasin,
+                                     R = alb_prob_covars$OceanBasinUse,
                                      Q = traits_use$cluster,
                                      family=binomial(link = "logit")
                                      ) #note default is "manyglm"
@@ -563,7 +494,7 @@ Using method = glm1path == LASSO model.
 ```{r Clusters ocean LASSO, eval=FALSE}
 
 prob_ocean_cluster_LASSO <- traitglm(L = alb_prob_preyPA_mv,
-                                     R = alb_prob_covars$OceanBasin,
+                                     R = alb_prob_covars$OceanBasinUse,
                                      Q = traits_use$cluster,
                                      family=binomial(link = "logit"),
                                      method="glm1path"
@@ -645,7 +576,7 @@ ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_lat_clusters_many_gr
 
 ```
 
-**GLM1PATH Clusters - Cliamte**
+**GLM1PATH Clusters - Climate**
 
 Using method = glm1path == LASSO model.
 
@@ -714,7 +645,7 @@ Trait (trait matrix)*Env (life stage) - Manyglm
 ```{r Traits life stage manyglm, eval=FALSE}
 
 prob_life_trait_many <- traitglm(L = alb_prob_preyPA_mv,
-                                 R = alb_prob_covars$pred_life,
+                                 R = alb_prob_covars$pred_life_adjust,
                                  Q = traits_use[,1:6],
                                     #traits_use_try,
                                  family=binomial(link = "logit")
@@ -753,10 +684,9 @@ prob_life_many_4th = levelplot(temp,
 
 print(prob_life_many_4th)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th.pdf"), plot = as.ggplot(prob_life_many_4th), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th.pdf"), plot = as.ggplot(prob_life_many_4th), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th_graph.jpeg"), 
-       plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_many_4th_graph.jpeg"), plot = as.ggplot(prob_ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
 
 #dev.copy2pdf(file=here("./outputs_figures/traitglms/fourth_lifestage.png"), width=12, height=5)
 
@@ -769,7 +699,7 @@ Using method = glm1path == LASSO model.
 ```{r Traits life stage LASSO, eval=FALSE}
 
 prob_life_trait_LASSO <- traitglm(L = alb_prob_preyPA_mv,
-                                 R = alb_prob_covars$pred_life,
+                                 R = alb_prob_covars$pred_life_adjust,
                                  Q = traits_use[,1:6],
                                  family=binomial(link = "logit"),
                                  method="glm1path"
@@ -806,11 +736,11 @@ prob_life_LASSO_graph = levelplot(temp,
 
 print(prob_life_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.pdf"), 
-       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.pdf"), 
+#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.jpeg"), 
-       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
+#ggsave(here("outputs_figures/traitglms/prob_all_simple/prob_life_LASSO_graph.jpeg"), 
+#       plot = as.ggplot(prob_life_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
 

@@ -147,9 +147,9 @@ dim(alb_adult_preyPA) #225 obs, 137 species
 
 ```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum_habgreg.divis.k7.csv"), 
+alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum_aggl.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
-   dplyr::select(prey_sp:prob.clust.num, -refuge_cat)
+   dplyr::select(prey_sp:prob.clust.num)
 
 dim(alb_prob_clust) #we obtain 156 species,  17 traits or covariates
 
