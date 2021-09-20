@@ -426,7 +426,7 @@ write.csv(mod_dev, here("data/output_data/mod_dev_sep2021.csv"))
 
 ```{r Make output graph}
 mod_dev$mod_type = as.factor(mod_dev$mod_type)
-mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "trait", "cluster"))
+mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "cluster"))
 levels(mod_dev$mod_type)
 
 #mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
