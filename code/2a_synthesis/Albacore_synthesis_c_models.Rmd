@@ -85,9 +85,8 @@ source("code/2a_synthesis/get_polys.R")
 ```{r Load Prey data (L)}
 
 #L - species df
-alb_prob_preyPA = read.csv(here("./data/output_data/alb_prob_preyPA_use.csv")) %>%
-  dplyr::select(-X)
-#Currently imported with sites as rows
+alb_prob_preyPA = read.csv(here("./data/output_data/alb_prob_preyPA_use.csv"))
+
 #Data are integers, could be numeric if modelling issues
 
 #Example code
@@ -99,9 +98,7 @@ dim(alb_prob_preyPA) #74 obs, 156 species
 ```{r Load Covar data (R)}
 
 #R - covars df
-alb_prob_covars = read.csv(here("./data/output_data/alb_prob_covars_use.csv")) %>%
-  dplyr::select(-X)
-#Currently imported with sites as rows
+alb_prob_covars = read.csv(here("./data/output_data/alb_prob_covars_use.csv"))
 
 #As factors
 alb_prob_covars[,1:ncol(alb_prob_covars)] =  lapply(alb_prob_covars[,1:ncol(alb_prob_covars)], as.factor)
@@ -111,8 +108,7 @@ alb_prob_covars[,1:ncol(alb_prob_covars)] =  lapply(alb_prob_covars[,1:ncol(alb_
 ```{r Load Trait data (Q)}
 
 #Q - trait df
-alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_use.csv"))%>%
-  dplyr::select(-X)
+alb_prob_traits = read.csv(here("./data/output_data/alb_prob_traits_use.csv"))
 
 #Needs species as rows
 #Assign speces as rownames
@@ -122,7 +118,7 @@ alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
 #Traits as factors for analyses
 alb_prob_traits[,1:ncol(alb_prob_traits)] =  lapply(alb_prob_traits[,1:ncol(alb_prob_traits)], as.factor)
 
-dim(alb_prob_traits) #156  8
+dim(alb_prob_traits) #156  12
 
 ```
 
@@ -146,6 +142,18 @@ summary(alb_prob_traits$season_cat)
 summary(alb_prob_traits$gregarious)
 
 summary(alb_prob_traits$prob.clust.num) 
+
+summary(alb_prob_traits$prey_order_test)
+
+#Need to merge Gastropoda, Hexanauplia and Hydrozoa due to low occurrence of those taxa
+alb_prob_traits$prey_order_test=as.character(alb_prob_traits$prey_order_test)
+
+alb_prob_traits$prey_order_test[alb_prob_traits$prey_order_test=="Gastropoda"] <- "Pelagic Invertebrate"
+alb_prob_traits$prey_order_test[alb_prob_traits$prey_order_test=="Hexanauplia"] <- "Pelagic Invertebrate"
+alb_prob_traits$prey_order_test[alb_prob_traits$prey_order_test=="Hydrozoa"] <- "Pelagic Invertebrate"
+
+alb_prob_traits$prey_order_test=as.factor(alb_prob_traits$prey_order_test)
+summary(alb_prob_traits$prey_order_test)
 
 ```
 
@@ -232,7 +240,7 @@ dim(alb_prob_covars) #209 obs, 13 variables
 #alb_prob_covars$lat_cat
 
 #Traits - select and manipulate that df - ideally we want to use the same df here
-traits_use = alb_prob_traits[,c(2:8)] %>%
+traits_use = alb_prob_traits[,c(4:10,12)] %>%
   dplyr::rename(cluster = prob.clust.num) 
 
 #Predator life stage
@@ -262,6 +270,10 @@ str(traits_use)
 - prob_life_clusters_many (redone)
 
 - prob_ocean_clusters_many (redone)
+
+- prob_life_phylo_many (redone)
+
+- prob_ocean_phylo_many (redone)
 
 - prob_life_trait_many
 
@@ -642,6 +654,294 @@ saveRDS(prob_ocean_cluster_LASSO,
         file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_cluster_LASSO.rds"))
 saveRDS(prob_lat_cluster_LASSO, 
         file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASSO.rds"))
+
+```
+
+### Phylogeny models
+
+#### Predator Life Stage
+
+**MANYGLM Phylo - Predator Life Stage**
+
+Trait (phylo)*Env (life stage) - Manyglm
+
+```{r Phylo life stage manyglm}
+
+prob_life_phylo_many <- traitglm(L = alb_prob_preyPA_mv,
+                                    R = alb_prob_covars$pred_life_adjust,
+                                    Q = traits_use$prey_order_test,
+                                    family=binomial(link = "logit")
+                                    ) #note default is "manyglm"
+
+```
+
+Visualise results of traitglm fit with manyglm routine, reference levels are the first cluster group and the mixed albacore life stage group.
+
+```{r Plot phylo life manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_life_phylo_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_life_phylo_many$fourth.corner))
+
+rownames(temp) = c("Adult", "Juvenile")
+
+prob_life_phylo_many_graph = levelplot(temp, 
+                     xlab=list("Predator Life Stage", cex=1.5),
+                     ylab=list("Species phylogeny", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_life_phylo_many_graph)
+
+ggsave(here("./outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_many_graph.pdf"), 
+       plot = as.ggplot(prob_life_phylo_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_many_graph.jpeg"), 
+       plot = as.ggplot(prob_life_phylo_many_graph), width=12, height=12, dpi=300)
+
+```
+
+**GLM1PATH Phylo - Predator Life Stage**
+
+Using method = glm1path == LASSO model.
+
+```{r Phylo life  LASSO}
+
+prob_life_phylo_LASSO <- traitglm(L = alb_prob_preyPA_mv,
+                                    R = alb_prob_covars$pred_life_adjust,
+                                    Q = traits_use$prey_order_test,
+                                    family=binomial(link = "logit"),
+                                    method="glm1path"
+                                    ) #note default is "manyglm"
+
+```
+
+**NOTE:** We do not get a lot of significant values for the clusters as a trait.
+
+```{r Plot phylo life LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_life_phylo_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_life_phylo_LASSO$fourth.corner))
+
+rownames(temp) = c("Mixed", "Adult", "Juvenile")
+
+prob_life_phylo_LASSO_graph = levelplot(temp,
+                                          xlab=list("Predator Life Stage", cex=1.5),
+                                          ylab=list("Species phylogeny", cex=1.5),
+                                          col.regions=colort(100),
+                                          at=seq(-a, a,length=100),
+                                          scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)),
+                                          colorkey=list(labels=list(cex=1.3)))
+
+print(prob_life_phylo_LASSO_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_life_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_life_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+```
+
+#### Ocean Basin
+
+**MANYGLM Phylo - Ocean Basin**
+
+Trait (phylo)*Env (ocean basin) - Manyglm
+
+```{r Phylo ocean manyglm}
+
+prob_ocean_phylo_many <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$OceanBasinUse,
+                                     Q = traits_use$prey_order_test,
+                                     family=binomial(link = "logit")
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot phylo ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_ocean_phylo_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_ocean_phylo_many$fourth.corner))
+
+rownames(temp) = c(#"Mediterranean",
+                   "N Atlantic",
+                   "Idian & S Atlantic",
+                   "N Pacific",
+                   "S Pacific"#,
+                   #"Indian"
+                   )
+
+prob_ocean_phylo_many_graph = levelplot(temp, 
+                     xlab=list("Ocean Basins", cex=1.5),
+                     ylab=list("Species phylogeny", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_ocean_phylo_many_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_many_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_phylo_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_many_graph.jpeg"), 
+       plot = as.ggplot(prob_ocean_phylo_many_graph), width=12, height=12, dpi=300)
+
+```
+
+**GLM1PATH Phylo - Ocean Basin**
+
+Using method = glm1path == LASSO model.
+
+```{r Phylo ocean LASSO}
+
+prob_ocean_phylo_LASSO <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$OceanBasinUse,
+                                     Q = traits_use$prey_order_test,
+                                     family=binomial(link = "logit"),
+                                     method="glm1path"
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot clusters ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_ocean_phylo_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_ocean_phylo_LASSO$fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "Indian & S Atlantic",
+                   "N Pacific",
+                   "S Pacific")
+
+prob_ocean_phylo_LASSO_graph = levelplot(temp, 
+                     xlab=list("Ocean Basins", cex=1.5),
+                     ylab=list("Species phylogeny", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_ocean_phylo_LASSO_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_ocean_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_ocean_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+```
+
+
+#### Climate
+
+**MANYGLM Phylo - Climate**
+
+Trait (phylo)*Env (climate) - Manyglm
+
+```{r Phylo latitude manyglm}
+
+prob_lat_phylo_many <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$lat_cat,
+                                     Q = traits_use$prey_order_test,
+                                     family=binomial(link = "logit")
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot phylo latitude manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_lat_phylo_many$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_lat_phylo_many$fourth.corner))
+
+rownames(temp) = c("Tropical")
+
+prob_lat_phylo_many_graph = levelplot(temp, 
+                     xlab=list("Climate", cex=1.5),
+                     ylab=list("Species phylogeny", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_lat_phylo_many_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_many_graph.pdf"), 
+       plot = as.ggplot(prob_lat_phylo_many_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_many_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_phylo_many_graph), width=12, height=12, dpi=300)
+
+```
+
+**GLM1PATH Phylo - Climate**
+
+Using method = glm1path == LASSO model.
+
+```{r Phylo latitude LASSO}
+
+prob_lat_phylo_LASSO <- traitglm(L = alb_prob_preyPA_mv,
+                                     R = alb_prob_covars$lat_cat,
+                                     Q = traits_use$prey_order_test,
+                                     family=binomial(link = "logit"),
+                                     method="glm1path"
+                                     ) #note default is "manyglm"
+
+```
+
+```{r Plot phylo latitude LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(prob_lat_phylo_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(prob_lat_phylo_LASSO$fourth.corner))
+
+rownames(temp) = c("Tropical")
+
+prob_lat_phylo_LASSO_graph = levelplot(temp, 
+                     xlab=list("Climate", cex=1.5),
+                     ylab=list("Species phylogeny", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(prob_lat_phylo_LASSO_graph)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(prob_lat_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(prob_lat_phylo_LASSO_graph), width=12, height=12, dpi=300)
+
+```
+
+#### SAVE PHYLO OUTPUTS
+
+```{r SAVE PHYLO MODELS}
+
+#Manyglms
+saveRDS(prob_life_phylo_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_many.rds")) 
+saveRDS(prob_ocean_phylo_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_many.rds"))
+saveRDS(prob_lat_phylo_many, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_many.rds"))
+
+#LASSO glms
+saveRDS(prob_life_phylo_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_LASSO.rds"))
+saveRDS(prob_ocean_phylo_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_LASSO.rds"))
+saveRDS(prob_lat_phylo_LASSO, 
+        file = here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_LASSO.rds"))
 
 ```
 

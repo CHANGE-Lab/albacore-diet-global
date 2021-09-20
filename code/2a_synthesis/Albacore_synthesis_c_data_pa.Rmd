@@ -145,9 +145,9 @@ str(which(rowSums(alb_pa[,10:ncol(alb_pa)])==1)) #None! #Otherwise remove these
 
 alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum_aggl.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
-   dplyr::select(prey_sp:prob.clust.num, -prey_age_reported_1)
+  dplyr::select(prey_class, prey_order, prey_sp:prob.clust.num, -prey_age_reported_1)
 
-dim(alb_prob_clust) #we obtain 156 species,  8 traits or covariates
+dim(alb_prob_clust) #we obtain 156 species,  9 traits or covariates
 
 #Relabel to add underscore in names
 alb_prob_clust$prey_sp = str_replace_all(alb_prob_clust$prey_sp, " ", "_")
@@ -157,12 +157,34 @@ rownames(alb_prob_clust) <- alb_prob_clust$prey_sp
 alb_prob_clust <- alb_prob_clust[ order(row.names(alb_prob_clust)), ]
 
 #Ensure traits are treated as factors for now
-alb_prob_clust[,2:8] <- lapply(alb_prob_clust[,2:8], factor) #to convert to factors
+#alb_prob_clust[,1:2] <- lapply(alb_prob_clust[,1:2], character) 
+alb_prob_clust$prey_class = as.character(alb_prob_clust$prey_class)
+alb_prob_clust$prey_order = as.character(alb_prob_clust$prey_order)
+alb_prob_clust[,4:10] <- lapply(alb_prob_clust[,4:10], factor) #to convert to factors
+
+test_phylo_df = data.frame(summary(alb_prob_traits$prey_order)) %>%
+  dplyr::rename(prey_order_sum = summary.alb_prob_traits.prey_order.) %>%
+  mutate(prey_order = row.names(test_phylo_df))
+
+alb_prob_clust_phylo = alb_prob_clust %>%
+  left_join(test_phylo_df) %>%
+  dplyr::mutate(prey_order_test = if_else(prey_order_sum > 2, prey_order, prey_class))
+
+#Assign species as row names
+rownames(alb_prob_clust_phylo) <- alb_prob_clust_phylo$prey_sp
+#Order species list
+alb_prob_clust_phylo <- alb_prob_clust_phylo[ order(row.names(alb_prob_clust_phylo)), ]
+
+alb_prob_clust_phylo$prey_order_test = as.factor(alb_prob_clust_phylo$prey_order_test)
 
 #Need to filter by prey species we want to use.
-alb_prob_traits = alb_prob_clust %>%
+alb_prob_traits = alb_prob_clust_phylo %>% #alb_prob_clust
   filter(prey_sp %in% names(alb_pa_prey)) %>%
   filter(life_stage != 'larva')
+#Assign species as row names
+rownames(alb_prob_traits) <- alb_prob_traits$prey_sp
+#Order species list
+alb_prob_traits <- alb_prob_traits[ order(row.names(alb_prob_traits)), ]
 #we get 156 species and 7 trait values
   #Currently still have low occurence species in here
   #previously filtered from this df: alb_adult_preyPA - this includes single occurrences
@@ -171,6 +193,7 @@ alb_prob_traits = alb_prob_clust %>%
 dim(alb_prob_traits) #156 spp without filtering for low occurrence #123  17
 str(alb_prob_traits)
 
+##NOTE we added a phylogenetic information columns
 ```
 
 **Trait value checks**
@@ -188,9 +211,11 @@ summary(alb_prob_traits$diel_migrant_cat) #a lot more diel migrants than not
 
 summary(alb_prob_traits$season_cat) #more seasonal taxa than not
 
-summary(as.factor(alb_prob_traits$gregarious)) #still more gregarious than not, just an artefact of the pelagic prey data.
+summary(alb_prob_traits$gregarious) #still more gregarious than not, just an artefact of the pelagic prey data.
 
-summary(as.factor(alb_prob_traits$prob.clust.num)) #good distribution of species within clusters
+summary(alb_prob_traits$prob.clust.num) #good distribution of species within clusters
+
+summary(alb_prob_traits$prey_order_test) #good distribution of species within clusters
 
 ```
 
@@ -314,13 +339,13 @@ dim(alb_prob_covars) #74 sites, 10 variables
 ```{r Saving dfs for analysis}
 
 #L - species df
-write.csv(alb_prob_prey, here("./data/output_data/alb_prob_preyPA_use.csv"))
+write.csv(alb_prob_prey, here("./data/output_data/alb_prob_preyPA_use.csv"), row.names = FALSE)
 
 #R - covars df
-write.csv(alb_prob_covars, here("./data/output_data/alb_prob_covars_use.csv"))
+write.csv(alb_prob_covars, here("./data/output_data/alb_prob_covars_use.csv"), row.names = FALSE)
 
 #Q - trait df
-write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_use.csv"))
+write.csv(alb_prob_traits, here("./data/output_data/alb_prob_traits_use.csv"), row.names = FALSE)
 
 ```
 
