@@ -519,12 +519,8 @@ mod_dev$mod_type = as.factor(mod_dev$mod_type)
 mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "cluster"))
 levels(mod_dev$mod_type)
 
-#mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
-#  geom_bar(stat = "identity", width = 1) + 
-#  facet_grid(.~ mod_type)
-
-mod_dev_graph = ggplot(data = mod_dev) + 
-  geom_bar(aes(y = deviance, fill = mod_type)) +
+mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mod_type)) + 
+  geom_bar(stat = "identity", width = 1) + 
   theme_classic() +
   theme(axis.title = element_text(size=18),
         axis.text = element_text(size=18),
@@ -540,17 +536,36 @@ mod_dev_graph = ggplot(data = mod_dev) +
 
 mod_dev_graph
 
-#ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_graph2.pdf"), 
-#       plot = mod_dev_graph, width=8, height=4, dpi=300)
+mod_dev_graph2 = ggplot(data = mod_dev) + 
+  geom_bar(aes(y = deviance, fill = mod_type)) + #, #x= mod_type, 
+           #position = position_dodge(0.5), size=2) +
+  #geom_bar(width=0.9, position=position_dodge())+
+  theme_classic() +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "top") +
+  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
 
-#ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_graph2.jpeg"), 
-#       plot = mod_dev_graph, width=8, height=4, dpi=300)
+mod_dev_graph2
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_graph.pdf"), 
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_graph.jpeg"), 
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
 
 ```
 
 ### Model outputs with phylo
 
-```{r Make output dataframe}
+```{r Make phylo output dataframe}
 
 model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
           "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
@@ -582,16 +597,32 @@ mod_dev_phylo = data.frame(covar, mod_type, model, deviance, aic)
 write.csv(mod_dev_phylo, here("data/output_data/mod_dev_phylo_sep2021.csv"))
 ```
 
-```{r Make output graph}
-mod_dev_phylo$mod_type = as.factor(mod_dev_phylo$mod_type)
-mod_dev_phylo$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "cluster", "phylo"))
+```{r Make phylo output graph}
+#mod_dev_phylo$mod_type = as.factor(mod_dev_phylo$mod_type)
+mod_dev_phylo$mod_type = factor(mod_dev_phylo$mod_type, levels = c("species", "phylo", "traits", "cluster"))
 levels(mod_dev_phylo$mod_type)
 
 #mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
 #  geom_bar(stat = "identity", width = 1) + 
 #  facet_grid(.~ mod_type)
 
-mod_dev_graph = ggplot(data = mod_dev_phylo) + 
+mod_dev_graph_phy = ggplot(data = mod_dev_phylo, aes(x = mod_type, y = deviance, fill = mod_type)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  theme_classic() +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "top") +
+  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
+mod_dev_graph_phy
+
+mod_dev_graph_phy2 = ggplot(data = mod_dev_phylo) + 
   geom_bar(aes(y = deviance, fill = mod_type)) +
   theme_classic() +
   theme(axis.title = element_text(size=18),
@@ -606,12 +637,18 @@ mod_dev_graph = ggplot(data = mod_dev_phylo) +
   facet_grid(.~ covar) +
   theme(strip.text.x = element_text(size = 18))
 
-mod_dev_graph
+mod_dev_graph_phy2
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph.pdf"), 
+       plot = mod_dev_graph_phy, width=8, height=4, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph.jpeg"), 
+       plot = mod_dev_graph_phy, width=8, height=4, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph2.pdf"), 
-       plot = mod_dev_graph, width=8, height=4, dpi=300)
+       plot = mod_dev_graph_phy2, width=8, height=4, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph2.jpeg"), 
-       plot = mod_dev_graph, width=8, height=4, dpi=300)
+       plot = mod_dev_graph_phy2, width=8, height=4, dpi=300)
 
 ```
