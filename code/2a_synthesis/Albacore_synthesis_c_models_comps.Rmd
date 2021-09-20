@@ -81,6 +81,12 @@ source("code/2a_synthesis/get_polys.R")
 
 - prob_ocean_trait_many (redone)
 
+- prob_life_phylo_many 
+
+- prob_ocean_phylo_many
+
+- prob_lat_phylo_many
+
 
 **LASSO glm1path models for significance testing**
   
@@ -88,11 +94,20 @@ source("code/2a_synthesis/get_polys.R")
 
 - prob_ocean_cluster_LASSO (redone)
 
+- prob_lat_cluster_LASSO
+
 - prob_life_trait_LASSO (redone)
 
 - prob_ocean_trait_LASSO (redone)
 
 - prob_lat_trait_LASSO (redone)
+
+- prob_life_phylo_LASSO
+
+- prob_ocean_phylo_LASSO
+
+- prob_lat_phylo_LASSO
+
 
 ### READ MODELS BACK IN
 
@@ -122,6 +137,23 @@ prob_ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models_s
 prob_lat_cluster_LASSO = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_cluster_LASSO.rds"))
 
 ```
+
+Species, phylogenetic info and environment models - manyglms + LASSOs
+
+```{r READ IN PHYLO MODELS}
+
+#Manyglms
+prob_life_phylo_many = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_many.rds")) 
+prob_ocean_phylo_many = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_many.rds"))
+prob_lat_phylo_many = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_many.rds"))
+
+#LASSO glms
+prob_life_phylo_LASSO = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_life_phylo_LASSO.rds"))
+prob_ocean_phylo_LASSO = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_ocean_phylo_LASSO.rds"))
+prob_lat_phylo_LASSO = readRDS(here("outputs_figures/traitglms/prob_models_sep2021/prob_lat_phylo_LASSO.rds"))
+
+```
+
 
 Species, traits and environment models - manyglms + LASSOs.
 
@@ -156,7 +188,7 @@ prob_inter_trait_LASSO2 = readRDS(here("outputs_figures/traitglms/prob_models_se
 
 #### Model Outputs
 
-Cluster, trait, spp models each for (i) predator life stage and (ii) ocean basins
+Cluster, phylo, trait, spp models each for (i) predator life stage and (ii) ocean basins
 
 ##### Model: prob_life_spp
 
@@ -248,6 +280,51 @@ prob_lat_clusters_many
 #saveRDS(an_prob_lat_clusters_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_clusters_many.rds"))
 an_prob_lat_clusters_many
+
+```
+
+##### Model: prob_life_phylo_many
+
+```{r Model Output prob_life_phylo_many}
+prob_life_phylo_many
+```
+
+```{r Anova prob_life_phylo_many}
+
+an_prob_life_phylo_many = anova.traitglm(prob_life_phylo_many)
+saveRDS(an_prob_life_phylo_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_phylo_many.rds"))
+an_prob_life_phylo_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_life_phylo_many.rds"))
+an_prob_life_phylo_many
+
+```
+
+##### Model: prob_ocean_phylo_many
+
+```{r Model Output prob_ocean_phylo_many}
+prob_ocean_phylo_many
+```
+
+```{r Anova prob_ocean_phylo_many}
+
+an_prob_ocean_phylo_many = anova.traitglm(prob_ocean_phylo_many)
+saveRDS(an_prob_ocean_phylo_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_phylo_many.rds"))
+an_prob_ocean_phylo_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_ocean_phylo_many.rds"))
+an_prob_ocean_phylo_many
+
+```
+
+##### Model: prob_lat_phylo_many
+
+```{r Model Output prob_lat_phylo_many}
+prob_lat_phylo_many
+```
+
+```{r Anova prob_lat_phylo_many}
+
+an_prob_lat_phylo_many = anova.traitglm(prob_lat_phylo_many)
+saveRDS(an_prob_lat_phylo_many, file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_phylo_many.rds"))
+an_prob_lat_phylo_many = readRDS(file = here("outputs_figures/traitglms/prob_models_sep2021/an_prob_lat_phylo_many.rds"))
+an_prob_lat_phylo_many
 
 ```
 
@@ -355,9 +432,9 @@ The interaction model that included ocean basin + life stage had the lowest AIC 
 - Run a null model?
   - Run latitude + cluster model?
   
-  ## Model Comp Outputs
-  Species and environment matrix models - manyglm.
+## Model Comp Outputs
 
+### Model List
 ```{r Model list for outputs, eval=FALSE}
 
 #Species*env models
@@ -374,6 +451,16 @@ prob_lat_clusters_many
 prob_life_cluster_LASSO
 prob_ocean_cluster_LASSO
 prob_lat_cluster_LASSO
+
+#Phylo*env models (manyglm and LASSO)
+#Manyglms
+prob_life_phylo_many
+prob_ocean_phylo_many
+prob_lat_phylo_many
+#LASSO glms
+prob_life_phylo_LASSO
+prob_ocean_phylo_LASSO
+prob_lat_phylo_LASSO
 
 #Trait*env models
 # Manyglms
@@ -397,6 +484,8 @@ prob_inter_trait_LASSO2
 **Note**
   
   - Could add additive models, LASSO models?
+  
+### Model outputs without phylo
   
 ```{r Make output dataframe}
 
@@ -459,3 +548,70 @@ mod_dev_graph
 
 ```
 
+### Model outputs with phylo
+
+```{r Make output dataframe}
+
+model = c("prob_life_spp", "prob_ocean_spp", "prob_lat_spp", 
+          "prob_life_trait_many", "prob_ocean_trait_many", "prob_lat_trait_many",
+          "prob_life_clusters_many", "prob_ocean_clusters_many", "prob_lat_clusters_many",
+          "prob_life_phylo_many", "prob_ocean_phylo_many", "prob_lat_phylo_many") 
+#,        "prob_inter_trait_many", "prob_inter_trait_many2"
+mod_type = c("species", "species", "species", 
+             "traits", "traits", "traits",
+             "cluster", "cluster", "cluster",
+             "phylo", "phylo", "phylo")
+#,           "trait*ocean*life stage", "trait*ocean*climate"
+covar = c("predator life stage", "ocean basin", "climate",
+          "predator life stage", "ocean basin", "climate",
+          "predator life stage", "ocean basin", "climate",
+          "predator life stage", "ocean basin", "climate")
+#,        "ocean*life stage", "ocean*climate"
+deviance = c(prob_life_spp$deviance, prob_ocean_spp$deviance, prob_lat_spp$deviance,
+             prob_life_trait_many$deviance, prob_ocean_trait_many$deviance, prob_lat_trait_many$deviance,
+             prob_life_clusters_many$deviance, prob_ocean_clusters_many$deviance, prob_lat_clusters_many$deviance,
+             prob_life_phylo_many$deviance, prob_ocean_phylo_many$deviance, prob_lat_phylo_many$deviance)
+#,           prob_inter_trait_many$deviance, prob_inter_trait_many2$deviance
+aic = c(prob_life_spp$AICsum, prob_ocean_spp$AICsum, prob_lat_spp$AICsum,
+        prob_life_trait_many$AICsum, prob_ocean_trait_many$AICsum, prob_lat_trait_many$AICsum,
+        prob_life_clusters_many$AICsum, prob_ocean_clusters_many$AICsum, prob_lat_clusters_many$AICsum,
+        prob_life_phylo_many$AICsum, prob_ocean_phylo_many$AICsum, prob_lat_phylo_many$AICsum)
+#,      prob_inter_trait_many$AICsum, prob_inter_trait_many2$AICsum
+mod_dev_phylo = data.frame(covar, mod_type, model, deviance, aic)
+
+write.csv(mod_dev_phylo, here("data/output_data/mod_dev_phylo_sep2021.csv"))
+```
+
+```{r Make output graph}
+mod_dev_phylo$mod_type = as.factor(mod_dev_phylo$mod_type)
+mod_dev_phylo$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "cluster", "phylo"))
+levels(mod_dev_phylo$mod_type)
+
+#mod_dev_graph = ggplot(data = mod_dev, aes(x = model, y = deviance, color = covar)) + 
+#  geom_bar(stat = "identity", width = 1) + 
+#  facet_grid(.~ mod_type)
+
+mod_dev_graph = ggplot(data = mod_dev_phylo) + 
+  geom_bar(aes(y = deviance, fill = mod_type)) +
+  theme_classic() +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "top") +
+  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
+
+mod_dev_graph
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph2.pdf"), 
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/prob_models_sep2021/mod_dev_phylo_graph2.jpeg"), 
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
+
+```
