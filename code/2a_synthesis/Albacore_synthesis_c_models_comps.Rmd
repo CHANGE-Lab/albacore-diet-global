@@ -607,7 +607,7 @@ levels(mod_dev_phylo$mod_type)
 #  facet_grid(.~ mod_type)
 
 mod_dev_graph_phy = ggplot(data = mod_dev_phylo, aes(x = mod_type, y = deviance, fill = mod_type)) + 
-  geom_bar(stat = "identity", width = 1) + 
+  geom_bar(stat = "identity", width = 1) + #ylim(2000, 4100) +
   theme_classic() +
   theme(axis.title = element_text(size=18),
         axis.text = element_text(size=18),
@@ -617,6 +617,7 @@ mod_dev_graph_phy = ggplot(data = mod_dev_phylo, aes(x = mod_type, y = deviance,
         legend.title = element_text(size=18),
         legend.position = "top") +
   xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  #scale_y_continuous(limits=c(2000, 4200), breaks = NULL) +
   scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
   facet_grid(.~ covar) +
   theme(strip.text.x = element_text(size = 18))
