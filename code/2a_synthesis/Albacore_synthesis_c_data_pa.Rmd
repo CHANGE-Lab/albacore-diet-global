@@ -97,7 +97,7 @@ alb_pa = read.csv(paste(here("data/output_data/alb_global_wide_dietpa.csv"),
                                    sep=""), check.names=FALSE) %>%
   dplyr::select(StudyID:ncol(.)) #-c(, `Diplospinus multistriatus`, `Sardina pilchardus`)
 
-print(dim(alb_pa)) #75 316
+print(dim(alb_pa)) #75 317
 ```
 
 Manipulate and subset data. Here we obtain 137 species as columns and 225 obs.
@@ -125,11 +125,11 @@ Note that we could simplify data at this point, but we will be truncating the da
 
 ```{r Check for single occurrence data}
 #Check for empty columns
-str(which(colSums(alb_pa[,10:ncol(alb_pa)])==1)) #None! #Otherwise remove these
+str(which(colSums(alb_pa[,10:ncol(alb_pa)])==1))
 #There are 129 taxa that only occur once. There is statistical discussion 
 
 #Check for empty rows
-str(which(rowSums(alb_pa[,10:ncol(alb_pa)])==1)) #None! #Otherwise remove these
+str(which(rowSums(alb_pa[,10:ncol(alb_pa)])==1)) 
 #There are ten rows that sum to a single species occurrence
 ```
 
