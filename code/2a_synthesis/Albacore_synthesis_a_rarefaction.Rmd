@@ -64,6 +64,7 @@ PreyPAsite$OceanBasin = as.factor(PreyPAsite$OceanBasin)
 
 str(PreyPAdata)
 str(PreyPAsite)
+View(PreyPAsite)
 
 rownames(PreyPAsite) = rownames(PreyPAdata)
 check.datasets(PreyPAdata, PreyPAsite) #ensure that the sites of the community dataset are the same sites as those from the environmental dataset --> something that is assumed to be the case for the BiodiversityR and vegan packages.
@@ -73,7 +74,7 @@ write.csv(PreyPAsite, here("data/output_data/alb_global_rarefactiondata.csv"), r
 
 ```
 
-```{r Rarefaction curves 2}
+```{r Rarefaction specnumber and accumresult}
 
 # number of species and the factor that I want to group them by
 SpO <- specnumber(PreyPAdata, PreyPAsite$OceanBasin)
@@ -91,14 +92,22 @@ Alb.accum2 <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='collector
 str(Alb.accum2)
 accumplot(Alb.accum2)
 
+```
+
+```{r Rarefaction by sites - accumulation}
 
 #Produces average species accumulation curve
-
-Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', scale = 'YearEnd', method='exact', conditioned=TRUE, plotit=TRUE) #scale = 'YearEnd'
+Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
+                  method='exact', conditioned=TRUE, plotit=TRUE) #scale = 'YearEnd'
 str(Plot)
+
 Plot.long <- accumcomp.long(Plot)
 str(Plot.long)
 
+```
+
+
+```{r}
 #Plot.long.covar = Plot.long %>%
 #  rename(OceanBasin = Grouping) %>%
 #  left_join(PreyPAsite, by = "OceanBasin")
@@ -118,8 +127,8 @@ View(accum.data)
 write.csv(Plot2.long, here("data/output_data/accum2_plot.csv"), row.names = FALSE)
 accum2.data <- read.csv(here("data/output_data/accum2_plot.csv"))
 View(accum2.data)
-
 ```
+
 
 ```{r}
 

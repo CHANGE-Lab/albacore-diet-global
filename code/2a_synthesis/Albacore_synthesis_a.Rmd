@@ -3,8 +3,8 @@ title: "Albacore Diet Synthesis A"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 # Biological and trait diversity in diets of a highly migratory predator
@@ -202,8 +202,7 @@ print(nrow(diet_species_level))
 
 ```{r Summary stats for probable prey traits, tidy=TRUE, message=FALSE}
 
-prey_probable_traits = read.csv(here("data/output_data/prey_probable_traits.csv")) %>%
-  dplyr::select(-X) %>%
+prey_probable_traits = read.csv(here("data/output_data/prey_trait_probable_select.csv")) %>%
   filter(prey_class != "NA")
 
 print(nrow(prey_probable_traits))
@@ -217,24 +216,21 @@ We obtain quantitative data in the form of (i) percent frequency of occurrence f
 
 # % FO data
 
-diet_fo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) %>%
-  dplyr::select(-X)
+diet_fo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) 
   
-print(paste0("(i) percent frequency of occurrence for", ncol(diet_fo[,15:ncol(diet_fo)])))
+print(paste0("(i) percent frequency of occurrence for ", ncol(diet_fo[,9:ncol(diet_fo)])))
 
 # % Numerical data
 
-diet_num = read.csv(here("data/output_data/alb_global_wide_dietn.csv")) %>%
-  dplyr::select(-X)
+diet_num = read.csv(here("data/output_data/alb_global_wide_dietn.csv"))
 
-print(ncol(diet_fo[,15:ncol(diet_num)]))
+print(ncol(diet_fo[,9:ncol(diet_num)]))
 
 # % Biomass data
 
-diet_mass = read.csv(here("data/output_data/alb_global_wide_dietm.csv")) %>%
-  dplyr::select(-X)
+diet_mass = read.csv(here("data/output_data/alb_global_wide_dietm.csv"))
 
-print(ncol(diet_fo[,15:ncol(diet_mass)]))
+print(ncol(diet_fo[,9:ncol(diet_mass)]))
 ```
 
 ## Phylogenetic and Traits Final Graphs
