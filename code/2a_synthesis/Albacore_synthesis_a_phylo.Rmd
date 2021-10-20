@@ -244,8 +244,12 @@ my_tree_prob$tip.label <- tip_labels_prob #Still have 306 tip labels
 my_prey_prob = rbind(my_prey_keep_prob, x2)
 
 #here we get rid of any of the names in the data that didn't have a match in the tree tip labels, which was only 'Diplodus sargus'
-my_prey_prob = my_prey_prob %>% #This is where one species drops out!
-  filter(prey_sp %in% my_tree_prob$tip.label)
+  #--> This is where one species drops out!
+# Do not run this bit
+#my_prey_prob = my_prey_prob %>% 
+  #--> This is where one species drops out!
+#  filter(prey_sp %in% my_tree_prob$tip.label)
+
 nrow(my_prey_prob);length(my_tree_prob$tip.label) ## one of those tip labels is an NA
 
 #the prey names need to be the rownames for the heatmap to work on the tree
@@ -290,15 +294,16 @@ as.character(sort(unique(my_prey_prob$prey_class)))
 #pal_prob_class = c("grey40", '#0047ab', '#751308', '#4B0082', '#F05E23', '#013220', '#B80F0A', "#66C2A5", "#3288BD") ## the grey40 is needed for a branch between branches, but doesn't assign to a class
 
 
-pal_prob_class = c("grey40", ## the grey40 is needed for a branch between branches, but doesn't assign to a class
-                    '#0047ab', #Actinopterygii
+pal_prob_class = c('#0047ab', #Actinopterygii
                     #'#751308', #Branchiopoda #older teal colour "#66C2A5" #Not in prob data just was used for adult data
                     '#4B0082', #Cephalopoda
                     "#AD15E2", #Gastropoda #old orange '#F05E23'
                     '#B80F0A', #Hexanauplia
                     "#773405", #Hydrozoa #'#013220'
                     "#E86103", #Malacostraca '
-                    "#3288BD"  #Thaliacea
+                    "#3288BD",  #Thaliacea
+                   "grey40" ## the grey40 is needed for a branch between branches, but doesn't assign to a class
+                    
                     )
 
 ## plotting the tree without tip labels
@@ -348,6 +353,7 @@ prob_maxfo
 #Overlay maxN (abundance data) on a basic prey tree coloured by Class
 #Use prey_class, maxN
 
+my_prey_prob$maxN <- as.numeric(my_prey_prob$maxN)
 prob_maxn <- gheatmap(prob_class, my_prey_prob[,"maxN", drop = FALSE], 
                       offset = 0, width = 0.05, colnames = FALSE) +
   theme(#legend.position = c(0.5,0.50),
@@ -447,6 +453,101 @@ habitat_traits_prob_final <- gheatmap(habitat_traits_prob3.5,
   
 #Check graph
 habitat_traits_prob_final
+
+```
+
+Adding aggregation to habitat use figure
+
+```{r Figure H again Habitat use + aggregation traits, tidy=TRUE, warning=FALSE, message=FALSE}
+
+#creating this plot one iteration at a time. Adding one layer of the heatmap, then allowing for another legend on the plot, and then another layer of the heatmap
+
+habitat_traits_prob1 <- gheatmap(prob_basic, my_prey_prob[, 'vert_habitat',drop=FALSE], 
+                                 offset= 0, width=0.05, colnames = FALSE) +
+  scale_fill_viridis_d(name = "Vertical Habitat (VH)", 
+                       direction = -1, 
+                       breaks = c("benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic"),
+                       limits = c("benthic", "demersal", "epipelagic", "mesopelagic", "bathypelagic"), 
+                       na.translate = TRUE, 
+                       option = 'D', 
+                       na.value = 'grey')+
+  theme(legend.position = c(1,0.80),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+ #this opens up the gap for the Vertical habitat label around the tree
+  annotate('text', x = 1.03, y = -7, label = 'VH', angle = -85, size = 4)
+
+habitat_traits_prob1.5 <- habitat_traits_prob1 + new_scale_fill()
+
+habitat_traits_prob2 <- gheatmap(habitat_traits_prob1.5, my_prey_prob[ ,'horz_habitat',drop=FALSE], 
+                                 offset=0.05, width=0.05, colnames = F) +
+  scale_fill_viridis_d(name = "Horizontal Habitat (HH)", 
+                       option = "D", 
+                       direction = -1,
+                       breaks = c("reef-associated", "coastal", "continental shelf","continental slope", "oceanic"),
+                       limits = c("reef-associated", "coastal", "continental shelf","continental slope", "oceanic"),
+                       na.translate = TRUE, 
+                       na.value = 'grey')+
+  theme(legend.position = c(1,0.683),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+
+annotate('text', x = 1.08, y = -7.1, label = 'HH', angle = -85, size = 4)
+
+habitat_traits_prob2.5 <- habitat_traits_prob2 + new_scale_fill()
+
+habitat_traits_prob3 <- gheatmap(habitat_traits_prob2.5, my_prey_prob[ , 'diel_migrant',drop=FALSE], offset=0.10, width=0.05, colnames = F) +
+  scale_fill_manual(name = "Diel Migrant (DM)",
+                    breaks = c("0", "1"),
+                    limits = c("0", "1"),
+                    labels = c("no","yes"),
+                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
+                    na.value = 'grey')+
+  theme(legend.position = c(1,0.5985),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.13, y = -7.5, label = 'DM', angle = -85, size = 4)
+
+habitat_traits_prob3.5 <- habitat_traits_prob3 + new_scale_fill()
+
+habitat_traits_prob4 <- gheatmap(habitat_traits_prob3.5, 
+                                      my_prey_prob[ ,'season_migrant',drop=FALSE],
+                                     offset=0.15, width=0.05, colnames = F) +
+  theme(legend.position = c(1.05,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_fill_manual(name = "Seasonal Migrant (SM)",
+                    breaks = c("0", "1"),
+                    limits = c("0", "1"),
+                    labels = c("no", "yes"),
+                    values = c("0"="#FDE725FF", "1"="#39568CFF"), 
+                    na.value = 'grey') +
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.18, y = -7.5, label = 'SM', angle = -85, size = 4)
+
+habitat_traits_prob4.5 <- habitat_traits_prob4 + new_scale_fill()
+
+habitat_traits_prob_agg_final <- gheatmap(habitat_traits_prob4.5, 
+                                      my_prey_prob[ ,"gregarious_primary",drop=FALSE],
+                                     offset=0.20, width=0.05, colnames = F) +
+  theme(legend.position = c(1.05,0.50),
+        legend.title = element_text(size = 18), 
+        legend.text = element_text(size = 18))+
+  scale_fill_viridis_d(name = "Gregariousness (GG)", 
+                       direction = -1,
+                       breaks = c("solitary", "shoaling","schooling"),
+                       limits = c("solitary", "shoaling","schooling"),
+                       na.translate = TRUE,
+                       option = "D", #'magma',
+                       begin = 0.2,end = 0.8,
+                       guide = guide_legend(order = 1), 
+                       na.value = 'grey')+
+  scale_y_continuous(expand = c(0,4))+
+  annotate('text', x = 1.23, y = -7.5, label = 'SM', angle = -85, size = 4)
+
+#Check graph
+habitat_traits_prob_agg_final
 
 ```
 
@@ -764,29 +865,30 @@ There are numerous issues with saving output either via ggsave() or dev.copy2pdf
 
 Including code for saving this graph. Code for saving output for all other figures below are included in the .Rmd and not in the rendered document.
 
-```{r Save Figures - basic}
+```{r Save Figures - basic, include = FALSE, eval=FALSE}
 
 #Basic phylogenies
 
-#ggsave("prob_basic.png",
-  #here('./output_figures/phylos/prey_prob/prob_basic.png'), 
-#  plot=prob_basic, width=8, height=8, dpi=300)
+ggsave("prob_basic.png",
+  #here("../output_figures/phylo_graphs/prey_prob/prob_basic.png"), 
+  plot=prob_basic, width=8, height=8, dpi=300)
 
-#ggsave("prob_basic_lab.png",
-  #here('./output_figures/phylos/prey_prob/prob_basic_lab.png'), 
-#  plot=prob_basic_lab, width=10, height=10, dpi=300)
+ggsave("prob_basic_lab.png",
+  #here('./output_figures/phylo_graphs/prey_prob/prob_basic_lab.png'), 
+  plot=prob_basic_lab, width=10, height=10, dpi=300)
 ```
 
 **Phylogeny by Class**
 
 ```{r Save Figures - class, include = FALSE, eval=FALSE}
-#ggsave("prob_class.png",
-  #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
-#  plot=prob_class, width=13, height=10, dpi=300)
 
-#ggsave("prob_class_lab.png",
+ggsave("prob_class.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_class.png'), 
+  plot=prob_class, width=13, height=10, dpi=300)
+
+ggsave("prob_class_lab.png",
   #here('./output_figures/diet_phylo/prey_prob/prob_class_lab.png'), 
-#  plot=prob_class_lab, width=14, height=12, dpi=300)
+  plot=prob_class_lab, width=14, height=12, dpi=300)
 
 ```
 
@@ -795,19 +897,19 @@ Including code for saving this graph. Code for saving output for all other figur
 ```{r Save Figures - diet use, include = FALSE, eval=FALSE}
 
 #FO
-#ggsave("prob_maxfo.png",
+ggsave("prob_maxfo.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxfo.png'), 
-#       plot=prob_maxfo, width=10, height=8, dpi=300)
+       plot=prob_maxfo, width=10, height=8, dpi=300)
 
 #%N
-#ggsave("prob_maxn.png",
+ggsave("prob_maxn.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxn.png'), 
-#       plot=prob_maxn, width=10, height=8, dpi=300)
+       plot=prob_maxn, width=10, height=8, dpi=300)
 
 #%M
-#ggsave("prob_maxm.png",
+ggsave("prob_maxm.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_maxm.png'),
-#       plot=prob_maxm, width=10, height=8, dpi=300)
+       plot=prob_maxm, width=10, height=8, dpi=300)
 
 ```
 
@@ -834,6 +936,11 @@ ggsave("prob_hab3.png",
 ggsave("prob_hab4.png",
 #       here('./output_figures/diet_phylo/prey_prob/prob_hab4.png'), 
        plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
+
+#Save vert + horizontal + diel graph + seasonal + aggreg
+ggsave("prob_hab5.png",
+       #here('./outputs_figures/phylo_graphs/prob_hab4.png'), 
+       plot=habitat_traits_prob_agg_final, width=14, height=10, dpi=300)
 
 ```
 
@@ -863,17 +970,19 @@ ggsave("prob_behav3.png",
 ```{r Save Figures - morphology / shape, include = FALSE, eval=FALSE}
 
 #Save graph 1
-#ggsave("prob_morph1.png",
+ggsave("prob_morph1.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph1.png'), 
-#       plot=morphology_comparison_prob1, width=14, height=10, dpi=300)
+       plot=morphology_comparison_prob1, width=14, height=10, dpi=300)
+
 #Save graph 2
-#ggsave("prob_morph2.png",
+ggsave("prob_morph2.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph2.png'), 
-#       plot=morphology_comparison_prob2, width=14, height=10, dpi=300)
+       plot=morphology_comparison_prob2, width=14, height=10, dpi=300)
+
 #Save graph 3
-#ggsave("prob_morph3.png",
+ggsave("prob_morph3.png",
        #here('./output_figures/diet_phylo/prey_prob/prob_morph3.png'), 
-#       plot=morphology_comparison_prob_final, width=14, height=10, dpi=300)
+       plot=morphology_comparison_prob_final, width=14, height=10, dpi=300)
 
 ```
 
@@ -882,29 +991,49 @@ ggsave("prob_behav3.png",
 ```{r Save Figures - morphology / defense, include = FALSE, eval=FALSE}
 
 #Save graph 1
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin1.png'), plot=morphology_binary_prob1, width=12, height=10, dpi=300)
+ggsave("prob_morph_bin1.png",
+  #here('./output_figures/phylo_graphs/prob_morph_bin1.png'),
+  plot=morphology_binary_prob1, width=12, height=10, dpi=300)
+
 #Save graph 2
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), plot=morphology_binary_prob2, width=12, height=10, dpi=300)
+ggsave("prob_morph_bin2.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph_bin2.png'), 
+       plot=morphology_binary_prob2, width=12, height=10, dpi=300)
+
 #Save graph 3
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), plot=morphology_binary_prob3, width=12, height=10, dpi=300)
+ggsave("prob_morph_bin3.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph_bin3.png'), 
+       plot=morphology_binary_prob3, width=12, height=10, dpi=300)
+
 #Save graph 4
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), plot=morphology_binary_prob4, width=12, height=10, dpi=300)
+ggsave("prob_morph_bin4.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph_bin4.png'), 
+       plot=morphology_binary_prob4, width=12, height=10, dpi=300)
 #Save graph 5
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
-
-
+ggsave("prob_morph_bin5.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_morph_bin5.png'), 
+       plot=morphology_binary_prob_final, width=12, height=10, dpi=300)
 
 ```
 
 **Phylogeny by nutritional quality**
 
 ```{r Save Figures - nutritional quality, include = FALSE, eval=FALSE}
+
 #Save graph 1
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
+ggsave("prob_nutri_ed.png",
+       #here('./output_figures/diet_phylo/prey_prob/prob_nutri_ed.png'), 
+       plot=nutritional_quality_prob1, width=12, height=10, dpi=300)
+
 #Save graph 2
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_protein.png'), plot=nutritional_quality_prob2, width=12, height=10, dpi=300)
+ggsave("prob_nutri_protein.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_nutri_protein.png'), 
+  plot=nutritional_quality_prob2, width=12, height=10, dpi=300)
+
 #Save graph 3
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_nutri_lipid.png'), plot=nutritional_quality_prob_final, width=12, height=10, dpi=300)
+ggsave("prob_nutri_lipid.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_nutri_lipid.png'), 
+  plot=nutritional_quality_prob_final, width=12, height=10, dpi=300)
 
 ```
 
@@ -913,7 +1042,9 @@ ggsave("prob_behav3.png",
 ```{r Save Figures - fisheries status, include = FALSE, eval=FALSE}
 
 #Save graph
-#ggsave(here('./output_figures/diet_phylo/prey_prob/prob_fishery.png'), plot=fishery_prob, width=12, height=10, dpi=300)
+ggsave("prob_fishery.png",
+  #here('./output_figures/diet_phylo/prey_prob/prob_fishery.png'), 
+  plot=fishery_prob, width=12, height=10, dpi=300)
 
 ```
 
