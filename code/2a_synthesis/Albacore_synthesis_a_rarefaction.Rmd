@@ -34,6 +34,14 @@ library(wesanderson)
 
 #Biodiversity
 library(BiodiversityR)
+
+#ERROR
+#Loading required package: vegan
+#Loading required package: lattice
+#Error in value[[3L]](cond) : 
+#  Package ‘lattice’ version 0.20.44 cannot be unloaded:
+# Error in unloadNamespace(package) : namespace ‘lattice’ is imported by ‘ape’, ‘sp’, ‘nlme’ so cannot be unloaded
+
 library(vegan)
 # From GitHub
 #install_github("MoBiodiv/mobr")
@@ -67,7 +75,7 @@ str(PreyPAsite)
 View(PreyPAsite)
 
 rownames(PreyPAsite) = rownames(PreyPAdata)
-check.datasets(PreyPAdata, PreyPAsite) #ensure that the sites of the community dataset are the same sites as those from the environmental dataset --> something that is assumed to be the case for the BiodiversityR and vegan packages.
+#check.datasets(PreyPAdata, PreyPAsite) #ensure that the sites of the community dataset are the same sites as those from the environmental dataset --> something that is assumed to be the case for the BiodiversityR and vegan packages.
 
 
 write.csv(PreyPAsite, here("data/output_data/alb_global_rarefactiondata.csv"), row.names = FALSE)
