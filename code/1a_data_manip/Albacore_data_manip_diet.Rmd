@@ -437,7 +437,7 @@ Note that there are a handful of cases where the same prey species was consumed 
 #  slice(., -c(226, 118, 117, 204, 227))
 
 #Updated data was downloaded with different order of the data so these rows have moved
-View(alb_global_diet[c(58, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
+View(alb_global_diet[c(59, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
 
 #We select to keep the most common one (typically these were the same species appearing in the same study for two different life stages and this only affected the Bouxin & Legendre papers)
 alb_global_diet_use = alb_global_diet %>%

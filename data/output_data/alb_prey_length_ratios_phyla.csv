@@ -106,6 +106,8 @@
 "Gastropoda","Caenogastropoda","Epitoniodea","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Atlantidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Carinariidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cliidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Clausocalanidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Cyclopoida","Corycaeidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
@@ -142,4 +144,5 @@
 "Malacostraca","Stomatopoda","Squillidae","l_max",NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
 "Malacostraca","Stomatopoda","Squilllidae","l_max",NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
 "Malacostraca","Stromatopoda","Protosquillidae","l_max",NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
+"Thaliacea","Pyrosomatida","Pyrosomatidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","l_max",NA,NA,NA,NA,NA,NA,NA,NA

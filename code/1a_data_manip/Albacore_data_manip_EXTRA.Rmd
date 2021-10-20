@@ -1,6 +1,6 @@
 ---
 title: "Extra"
-author: "Natasha Hardy & Caitlin Morgenson"
+author: "Natasha Hardy"
 date: "26/02/2021"
 output: html_document
 ---

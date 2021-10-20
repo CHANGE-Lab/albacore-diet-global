@@ -140,8 +140,8 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","adult","ML","l_min",1.7,"SL",4.93426901451436,0.134293187001573,0.531265219678776,3.19990832644359
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","juvenile",NA,"l_min",NA,NA,4.93426901451436,0.134293187001573,0.531265219678776,NA
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","adult",NA,"l_min",NA,NA,4.9698656964139,0.0988345556016666,0.432954020577877,NA
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","adult","ML","l_min",1.05,"SL",2.43487574284062,0.144468771718196,0.593690297946619,1.76859888671182
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","juvenile",NA,"l_min",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","adult","ML","l_min",1.05,"SL",2.43487574284062,0.144468771718196,0.593690297946619,1.76859888671182
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","juvenile",NA,"l_min",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","adult","ML","l_min",2.2,"SL",4.26313267099172,0.0814226216878224,0.453946114118484,4.84639020266133
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","juvenile",NA,"l_min",NA,NA,4.26313267099172,0.0814226216878224,0.453946114118484,NA
 "Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","larva","NL","l_min",0.231,"TL",3.13195532473199,0.0822589433865605,0.82005976021664,0.231
@@ -219,9 +219,9 @@
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","adult","SL","l_min",9,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,10.7793271853644
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","juvenile","SL","l_min",2.42,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,2.89844130984244
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","larva","SL","l_min",0.287,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,0.343740766911066
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","adult","SL","l_min",10,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,11.1412637467117
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","juvenile","SL","l_min",2.5,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,2.78531593667793
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","larva","SL","l_min",0.6,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,0.668475824802703
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","adult","SL","l_min",10,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,11.1412637467117
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","SL","l_min",2.5,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,2.78531593667793
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","larva","SL","l_min",0.6,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,0.668475824802703
 "Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","larva","BL","l_min",0.18,"TL",4.8924695405584,0.0638402681199028,0.82144819907875,0.18
 "Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","juvenile","SL","l_min",2.5,"SL",5.61690913542632,0.0534081222517407,0.793358591426083,3.1511601777781
 "Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","larva","TL","l_min",0.294,"TL",5.61690913542632,0.0534081222517407,0.793358591426083,0.294
@@ -620,7 +620,7 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","larva",NA,"l_min",NA,NA,4.93426901451436,0.134293187001573,0.531265219678776,NA
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","juvenile",NA,"l_min",NA,NA,4.9698656964139,0.0988345556016666,0.432954020577877,NA
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","larva","ML","l_min",0.2,"SL",4.9698656964139,0.0988345556016666,0.432954020577877,0.461942817237391
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","larva",NA,"l_min",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","larva",NA,"l_min",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","larva",NA,"l_min",NA,NA,4.26313267099172,0.0814226216878224,0.453946114118484,NA
 "Malacostraca","Decapoda","Alpheidae","Alpheus glaber","juvenile",NA,"l_min",NA,NA,5.77047205247166,0.0282400040246912,0.880318216897512,NA
 "Malacostraca","Decapoda","Alpheidae","Alpheus glaber","larva",NA,"l_min",NA,NA,5.77047205247166,0.0282400040246912,0.880318216897512,NA
@@ -854,6 +854,11 @@
 "Thaliacea","Salpida","Salpidae","Salpa maxima","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","juvenile",NA,"l_min",NA,NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","larva",NA,"l_min",NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","adult",NA,"l_min",NA,NA,NA,NA,NA,NA
 "Hydrozoa","Siphonophorae","Diphyidae","Chelophyes appendiculata","adult","AN","l_max",0.2,"TL",4.10585429301604,0,1,0.2
 "Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","adult","CL","l_max",27,"TL",6.23705788599511,0.0221404596661903,0.800545022150694,27
 "Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","juvenile","CL","l_max",2.8,"TL",6.23705788599511,0.0221404596661903,0.800545022150694,2.8
@@ -995,8 +1000,8 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","adult","ML","l_max",5,"SL",4.93426901451436,0.134293187001573,0.531265219678776,9.41149507777527
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","juvenile","ML","l_max",1.7,"SL",4.93426901451436,0.134293187001573,0.531265219678776,3.19990832644359
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","adult","ML","l_max",5,"SL",4.9698656964139,0.0988345556016666,0.432954020577877,11.5485704309348
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","adult","ML","l_max",2.5,"SL",2.43487574284062,0.144468771718196,0.593690297946619,4.21094973026624
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","juvenile","ML","l_max",1.05,"SL",2.43487574284062,0.144468771718196,0.593690297946619,1.76859888671182
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","adult","ML","l_max",2.5,"SL",2.43487574284062,0.144468771718196,0.593690297946619,4.21094973026624
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","juvenile","ML","l_max",1.05,"SL",2.43487574284062,0.144468771718196,0.593690297946619,1.76859888671182
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","adult","ML","l_max",5,"SL",4.26313267099172,0.0814226216878224,0.453946114118484,11.0145231878667
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","juvenile","ML","l_max",2.2,"SL",4.26313267099172,0.0814226216878224,0.453946114118484,4.84639020266133
 "Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","larva","NL","l_max",0.68,"TL",3.13195532473199,0.0822589433865605,0.82005976021664,0.68
@@ -1074,9 +1079,9 @@
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","adult","SL","l_max",39.5,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,47.309269313544
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","juvenile","SL","l_max",9,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,10.7793271853644
 "Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","larva","SL","l_max",2.42,"SL",5.6477979743036,0.0483820286711635,0.834931517082039,2.89844130984244
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","adult","SL","l_max",50,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,55.7063187335586
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","juvenile","SL","l_max",10,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,11.1412637467117
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","larva","SL","l_max",2.5,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,2.78531593667793
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","adult","SL","l_max",50,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,55.7063187335586
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","SL","l_max",10,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,11.1412637467117
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","larva","SL","l_max",2.5,"SL",10.3311636904401,0.0262177538627994,0.897564246511213,2.78531593667793
 "Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","larva","SL","l_max",2.5,"SL",4.8924695405584,0.0638402681199028,0.82144819907875,3.0434055401226
 "Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","juvenile","SL","l_max",4.5,"SL",5.61690913542632,0.0534081222517407,0.793358591426083,5.67208832000058
 "Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","larva","SL","l_max",2.5,"SL",5.61690913542632,0.0534081222517407,0.793358591426083,3.1511601777781
@@ -1475,7 +1480,7 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","larva",NA,"l_max",NA,NA,4.93426901451436,0.134293187001573,0.531265219678776,NA
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","juvenile",NA,"l_max",NA,NA,4.9698656964139,0.0988345556016666,0.432954020577877,NA
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","larva",NA,"l_max",NA,NA,4.9698656964139,0.0988345556016666,0.432954020577877,NA
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","larva",NA,"l_max",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","larva",NA,"l_max",NA,NA,2.43487574284062,0.144468771718196,0.593690297946619,NA
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","larva",NA,"l_max",NA,NA,4.26313267099172,0.0814226216878224,0.453946114118484,NA
 "Malacostraca","Decapoda","Alpheidae","Alpheus glaber","juvenile",NA,"l_max",NA,NA,5.77047205247166,0.0282400040246912,0.880318216897512,NA
 "Malacostraca","Decapoda","Alpheidae","Alpheus glaber","larva",NA,"l_max",NA,NA,5.77047205247166,0.0282400040246912,0.880318216897512,NA
@@ -1709,3 +1714,8 @@
 "Thaliacea","Salpida","Salpidae","Salpa maxima","adult","TL","l_max",10,"TL",NA,NA,NA,10
 "Thaliacea","Salpida","Salpidae","Salpa maxima","juvenile",NA,"l_max",NA,NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","larva",NA,"l_max",NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","adult","TL","l_max",2,"TL",NA,NA,NA,2
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","adult",NA,"l_max",NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","adult",NA,"l_max",NA,NA,NA,NA,NA,NA
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","adult",NA,"l_max",NA,NA,NA,NA,NA,NA
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","adult",NA,"l_max",NA,NA,NA,NA,NA,NA

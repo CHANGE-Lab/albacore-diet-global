@@ -225,7 +225,8 @@ prey_length_ratiosp = read.csv(here(&quot;data/output_data/prey_length_ratiosp.c
 <p>Load diet data and merge with prey size trait information, and undertake necessary data selection and manipulation of variables.</p>
 <pre class="r"><code>#Load diet data spreadsheet
 #need this: prey_length_ratiosp
-#This contains species as rows for which we have useable species through to class-level ratio information on larval:adult and juvenile:adult lengths
+#This contains species as rows for which we have useable species through to 
+#class-level ratio information on larval:adult and juvenile:adult lengths
 
 #Also need prey_length_wide data for l_max for adult column
 #Should be able to get this from prey_length_ratiosp
@@ -237,18 +238,26 @@ alb_global = as.data.frame(read_xlsx(here(&quot;data/input_data/albacore_diet_gl
   dplyr::filter(Include %in% c(&quot;Yes&quot;, &quot;Maybe&quot;) &amp; !pred_life == &quot;larvae&quot;) %&gt;% #1028 rows
   #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %&gt;%
-  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:LocatLongitude, MonthRange, YearEnd, stomachs_used, pred_life:est_ref, stomachs_used, prey_class:prey_sp, prey_age_reported_1:prey_age_use, Include, FO, pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %&gt;%
-  mutate(gape_lmax = pred_flmean*0.0823+1.758, gape_height_limit = pred_flmean*0.0246+4.603) %&gt;% #1028 obsm 44 vars
+  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
+                LocatLatitude:LocatLongitude, MonthRange, YearEnd, stomachs_used,
+                pred_life:est_ref, stomachs_used, prey_class:prey_sp,
+                prey_age_reported_1:prey_age_use, Include, FO, 
+                pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %&gt;%
+  mutate(gape_lmax = pred_flmean*0.0823+1.758, 
+         gape_height_limit = pred_flmean*0.0246+4.603) %&gt;% 
+  #1028 obsm 44 vars
   #calculates the gape length and height limits
   #Add reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
-  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) #added morph info --&gt; 1028 obs, 44 vars
+  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) 
+  #added morph info --&gt; 1028 obs, 44 vars
 
 #Correct data type
 alb_global$maxl_use &lt;- as.numeric(alb_global$maxl_use)
 
 #Cleaning metrics
 alb_global = alb_global %&gt;% 
-  mutate(maxtl_use = if_else(alb_global$maxl_type %in% c(&quot;SL&quot;, &quot;ML&quot;), maxl_use/standard_total, maxl_use),
+  mutate(maxtl_use = if_else(alb_global$maxl_type %in% c(&quot;SL&quot;, &quot;ML&quot;), 
+                             maxl_use/standard_total, maxl_use),
          prey_age_reported_1=case_when(
                              #prey_age_reported_1 == &quot;NA&quot; ~ &quot;none&quot;,
                              prey_age_reported_1 == &quot;larvae&quot; ~ &quot;larva&quot;,
@@ -256,7 +265,8 @@ alb_global = alb_global %&gt;%
                              prey_age_reported_1 == &quot;adult&quot; ~ &quot;adult&quot;)
          ) #%&gt;%
 
-#The NA&#39;s in the reported age for prey column cause problems later and need to be assigned a categorical value
+#The NA&#39;s in the reported age for prey column cause problems later and need 
+#to be assigned a categorical value
 alb_global$prey_age_reported_1 &lt;- as.character(alb_global$prey_age_reported_1)
 alb_global$prey_age_reported_1 &lt;- replace_na(alb_global$prey_age_reported_1, &quot;none&quot;)
 #check this
@@ -270,17 +280,21 @@ alb_global$stomachs_used &lt;- replace_na(alb_global$stomachs_used, &quot;none r
 alb_global$stomachs_used &lt;- as.character(alb_global$stomachs_used)
 
 #Save total df version
-write.csv(alb_global, here(&quot;data/output_data/alb_global_diet_total.csv&quot;), row.names = FALSE) 
+write.csv(alb_global, here(&quot;data/output_data/alb_global_diet_total.csv&quot;), 
+          row.names = FALSE) 
 #1028 observations and 45 variables</code></pre>
 <p>The following summarises the max observed FO, N and M for each species in the dataset. This information can be useful when investigating the relative importance of species in albacore diets.</p>
 <pre class="r"><code>alb_global_ad_metrics = alb_global %&gt;%
   #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
   dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxtl_use) %&gt;%
   group_by(prey_sp) %&gt;% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE), 
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE), 
                    maxTL = max(maxtl_use, na.rm=TRUE)) 
 
-write.csv(alb_global_ad_metrics, here(&quot;data/output_data/alb_global_ad_metrics.csv&quot;), row.names = FALSE)</code></pre>
+write.csv(alb_global_ad_metrics, here(&quot;data/output_data/alb_global_ad_metrics.csv&quot;),
+          row.names = FALSE)</code></pre>
 </div>
 <div id="albacore-diet-probable-life-stage-estimation" class="section level3">
 <h3>Albacore diet + probable life stage estimation</h3>
@@ -310,45 +324,50 @@ write.csv(alb_global_prob, here(&quot;data/output_data/alb_global_diet_prob.csv&
 #  anti_join(alb_global_prob)</code></pre>
 <p>The following summarises the max observed FO, N and M for each species in the dataset AND for each life stage likely consumed. This also generates <strong>Table S7, for Appendix B, Supplementary Information</strong>.</p>
 <p>Note that there are 28 taxa for which two life stages were consumed. In the chunk below this one we will select the prey species and life stage combination that was most common. Most of the time this wouldn’t be a large problem because typically one life stage was consumed much more frequently than the other. However, for <em>Cololabis saira</em>, the %FO of the adult and juvenile life stages consumed were very similar in summary with the adult life stage slightly higher.</p>
-<pre class="r"><code>#All combinations of life stages and species consumed
+<pre class="r"><code># All combinations of life stages and species consumed
 alb_global_prob_metrics = alb_global_prob %&gt;%
-  dplyr::select(prey_class:prey_sp, prey_age_reported_1, life_stage, pFOuse, pN, pM, maxtl_use, l_adult, gape_lmax, 
-                prey_length, prey_frac, larva_adult_use, juve_adult_use) %&gt;%
-  group_by(prey_sp, prey_age_reported_1, life_stage, l_adult, larva_adult_use, juve_adult_use) %&gt;%
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), maxN = max(pN, na.rm=TRUE), maxM = max(pM, na.rm=TRUE),
-                   maxTL = max(maxtl_use, na.rm=TRUE)/10, meanGAPE = mean(gape_lmax, na.rm=TRUE), 
-                   meanLENGTH = mean(prey_length, na.rm=TRUE), meanFRAC = mean(prey_frac, na.rm=TRUE)) %&gt;%
-  dplyr::select(prey_sp, prey_age_reported_1, maxTL, meanGAPE, l_adult, meanLENGTH, meanFRAC, 
-                larva_adult_use, juve_adult_use, life_stage, maxFO, maxN, maxM)</code></pre>
+    dplyr::select(prey_class:prey_sp, prey_age_reported_1, life_stage, pFOuse, pN,
+        pM, maxtl_use, l_adult, gape_lmax, prey_length, prey_frac, larva_adult_use,
+        juve_adult_use) %&gt;%
+    group_by(prey_sp, prey_age_reported_1, life_stage, l_adult, larva_adult_use,
+        juve_adult_use) %&gt;%
+    dplyr::summarize(maxFO = max(pFOuse, na.rm = TRUE), maxN = max(pN, na.rm = TRUE),
+        maxM = max(pM, na.rm = TRUE), maxTL = max(maxtl_use, na.rm = TRUE)/10, meanGAPE = mean(gape_lmax,
+            na.rm = TRUE), meanLENGTH = mean(prey_length, na.rm = TRUE), meanFRAC = mean(prey_frac,
+            na.rm = TRUE)) %&gt;%
+    dplyr::select(prey_sp, prey_age_reported_1, maxTL, meanGAPE, l_adult, meanLENGTH,
+        meanFRAC, larva_adult_use, juve_adult_use, life_stage, maxFO, maxN, maxM)</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;, &#39;prey_age_reported_1&#39;, &#39;life_stage&#39;, &#39;l_adult&#39;, &#39;larva_adult_use&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>#maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length, na.rm=TRUE)
+<pre class="r"><code># maxGAPE = max(gape_lmax, na.rm=TRUE), maxLENGTH = max(prey_length,
+# na.rm=TRUE)
 
 ## SAVE DATA BELOW
-write.csv(alb_global_prob_metrics, here(&quot;data/output_data/alb_global_prob_metrics_alllife.csv&quot;), row.names = FALSE)</code></pre>
+write.csv(alb_global_prob_metrics, here(&quot;data/output_data/alb_global_prob_metrics_alllife.csv&quot;),
+    row.names = FALSE)</code></pre>
 <p>AND we need to select the max observed –&gt; this is also where we essentially select a single life stage that any prey could be, even though there are several occurrences of prey from different life stages being consumed in different areas of the world. There were 328 individual species and life stage combinations above, but we cannot account for all of these unless we treat these as different species. So 50 cases were simplified and merged. We can check in the file above which taxa this affected and their frequency of occurrence.</p>
-<pre class="r"><code>#Need to summarise prey life stages and attach trait data
-#unique(as.factor(alb_global_prob_metrics$prey_sp)) #there are 303 unique species
-#So we should obtain 300 species in the following code.
+<pre class="r"><code># Need to summarise prey life stages and attach trait data
+# unique(as.factor(alb_global_prob_metrics$prey_sp)) #there are 303 unique
+# species So we should obtain 300 species in the following code.
 
-#The most common life stage and species consumed!!
+# The most common life stage and species consumed!!
 alb_global_prob_metrics2 = alb_global_prob_metrics %&gt;%
-  group_by(prey_sp) %&gt;%
-  top_n(1, maxFO) %&gt;%
-  sample_n(1)
+    group_by(prey_sp) %&gt;%
+    top_n(1, maxFO) %&gt;%
+    sample_n(1)
 
-write.csv(alb_global_prob_metrics2, here(&quot;data/output_data/alb_global_prob_metrics.csv&quot;), row.names = FALSE)</code></pre>
+write.csv(alb_global_prob_metrics2, here(&quot;data/output_data/alb_global_prob_metrics.csv&quot;),
+    row.names = FALSE)</code></pre>
 <p>*Note: the maxFO, maxN or maxM are related to the study and differ between life stages if a study reported different prey life stages.</p>
 </div>
 <div id="albacore-prey-size-when-reported" class="section level3">
 <h3>Albacore prey size when reported</h3>
 <p>Here we include the raw prey size data from the trait database, including the maximum and minimum reported lengths for prey for adult, juvenile and larval life stages. Data collected from FishBase (2020), SeaLifeBase (2020) and from extensive literature searches on Google Scholar. This generated <strong>Table S8, for Appendix B, Supplementary Information</strong>.</p>
 <pre class="r"><code>alb_prey_raw_size = alb_global %&gt;%
-  filter(maxtl_use &gt; 0) %&gt;%
-  dplyr::select(StudyID, OceanBasin, LocatName, LocatLatitude, LocatLongitude, YearEnd, pred_life, pred_flmean, pred_flmin, pred_flmax, 
-                gape_lmax, prey_sp, maxl_use, maxl_type, standard_total, maxtl_use, pFOuse, pN, pM) %&gt;%
-  mutate(maxtl_use = maxtl_use/10,
-         maxl_use = maxl_use/10,
-         presence = 1)
+    filter(maxtl_use &gt; 0) %&gt;%
+    dplyr::select(StudyID, OceanBasin, LocatName, LocatLatitude, LocatLongitude,
+        YearEnd, pred_life, pred_flmean, pred_flmin, pred_flmax, gape_lmax, prey_sp,
+        maxl_use, maxl_type, standard_total, maxtl_use, pFOuse, pN, pM) %&gt;%
+    mutate(maxtl_use = maxtl_use/10, maxl_use = maxl_use/10, presence = 1)
 
 write.csv(alb_prey_raw_size, here(&quot;data/output_data/alb_prey_raw_size.csv&quot;), row.names = FALSE)</code></pre>
 </div>
@@ -359,17 +378,16 @@ write.csv(alb_prey_raw_size, here(&quot;data/output_data/alb_prey_raw_size.csv&q
 <h3>Traits</h3>
 <div id="prey-traits---adult-life-stage" class="section level4">
 <h4>Prey traits - adult life stage</h4>
-<pre class="r"><code>#Mixed categorical, and other traits
+<pre class="r"><code># Mixed categorical, and other traits
 
-prey_adults_merge = prey_trait_adult %&gt;% 
-  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) %&gt;% 
-  left_join(prey_qual_sum, by=&quot;prey_sp&quot;) %&gt;%
-  left_join(alb_global_ad_metrics, by=&quot;prey_sp&quot;) %&gt;%
-  dplyr::select(prey_class:season_cat, gregarious_primary, l_max, body_shape, 
-                b_shape_r:standard_total, phys_defense:countershade, 
-                energy_density:maxTL, trophic_level, fisheries_status)
+prey_adults_merge = prey_trait_adult %&gt;%
+    left_join(prey_morph_sum, by = &quot;prey_sp&quot;) %&gt;%
+    left_join(prey_qual_sum, by = &quot;prey_sp&quot;) %&gt;%
+    left_join(alb_global_ad_metrics, by = &quot;prey_sp&quot;) %&gt;%
+    dplyr::select(prey_class:season_cat, gregarious_primary, l_max, body_shape, b_shape_r:standard_total,
+        phys_defense:countershade, energy_density:maxTL, trophic_level, fisheries_status)
 
-#308 spp and ~31 traits
+# 308 spp and ~31 traits
 glimpse(prey_adults_merge)</code></pre>
 <pre><code>## Rows: 308
 ## Columns: 32
@@ -400,29 +418,29 @@ glimpse(prey_adults_merge)</code></pre>
 ## $ percent_protein    &lt;dbl&gt; NA, NA, 9.30000, 14.10000, 23.79125, 14.90000, 12.8…
 ## $ percent_lipid      &lt;dbl&gt; NA, 6.53750, 2.59000, 1.40000, 1.69875, 11.85000, N…
 ## $ maxFO              &lt;dbl&gt; 16.00000, 38.88889, 8.00000, 51.42857, 0.60000, 1.1…
-## $ maxN               &lt;dbl&gt; 0.000000, 0.000000, 0.000000, 0.000000, 0.273390, 0…
+## $ maxN               &lt;dbl&gt; 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0.27256…
 ## $ maxM               &lt;dbl&gt; 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0…
 ## $ maxTL              &lt;dbl&gt; 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 8.0…
 ## $ trophic_level      &lt;dbl&gt; NA, NA, 3.32, 3.46, 4.43, 3.63, 4.50, NA, 3.67, 3.8…
 ## $ fisheries_status   &lt;chr&gt; &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;highly commercial&quot;…</code></pre>
-<pre class="r"><code>#Save
+<pre class="r"><code># Save
 write.csv(prey_adults_merge, here(&quot;data/output_data/prey_traits_adults.csv&quot;), row.names = FALSE)
 
-#Reload
-#prey_adults_merge = read.csv(here(&quot;data/output_data/prey_adults_traits.csv&quot;))</code></pre>
+# Reload prey_adults_merge =
+# read.csv(here(&#39;data/output_data/prey_adults_traits.csv&#39;))</code></pre>
 </div>
 <div id="prey-traits---probable-life-stage---all-life-stages" class="section level4">
 <h4>Prey traits - probable life stage - all life stages</h4>
 <pre class="r"><code>prey_probable_merge = alb_global_prob_metrics %&gt;%
-  left_join(prey_trait_select, by=c(&quot;prey_sp&quot;, &quot;life_stage&quot;)) %&gt;% 
-  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) %&gt;% 
-  left_join(prey_qual_sum, by=&quot;prey_sp&quot;) %&gt;%
-  dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage, 
-                vert_habitat:season_cat, gregarious_primary, l_max, body_shape, 
-                b_shape_r:standard_total, phys_defense:countershade, 
-                energy_density:percent_lipid, maxFO:maxM, maxTL, trophic_level, fisheries_status)</code></pre>
+    left_join(prey_trait_select, by = c(&quot;prey_sp&quot;, &quot;life_stage&quot;)) %&gt;%
+    left_join(prey_morph_sum, by = &quot;prey_sp&quot;) %&gt;%
+    left_join(prey_qual_sum, by = &quot;prey_sp&quot;) %&gt;%
+    dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage,
+        vert_habitat:season_cat, gregarious_primary, l_max, body_shape, b_shape_r:standard_total,
+        phys_defense:countershade, energy_density:percent_lipid, maxFO:maxM, maxTL,
+        trophic_level, fisheries_status)</code></pre>
 <pre><code>## Adding missing grouping variables: `l_adult`, `larva_adult_use`</code></pre>
-<pre class="r"><code>#303 spp and ~28 traits
+<pre class="r"><code># 303 spp and ~28 traits
 glimpse(prey_probable_merge)</code></pre>
 <pre><code>## Rows: 363
 ## Columns: 36
@@ -463,24 +481,23 @@ glimpse(prey_probable_merge)</code></pre>
 ## $ maxTL               &lt;dbl&gt; 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.000…
 ## $ trophic_level       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ fisheries_status    &lt;chr&gt; &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;n…</code></pre>
-<pre class="r"><code>write.csv(prey_probable_merge, here(&quot;data/output_data/prey_trait_probable_all.csv&quot;), row.names = FALSE)
+<pre class="r"><code>write.csv(prey_probable_merge, here(&quot;data/output_data/prey_trait_probable_all.csv&quot;),
+    row.names = FALSE)
 
-#prey_probable_merge = read.csv(here(&quot;data/prey_probable_traits.csv&quot;))</code></pre>
+# prey_probable_merge = read.csv(here(&#39;data/prey_probable_traits.csv&#39;))</code></pre>
 </div>
 <div id="prey-traits---probable-life-stage---select-life-stages" class="section level4">
 <h4>Prey traits - probable life stage - select life stages</h4>
 <pre class="r"><code>prey_probable_merge2 = alb_global_prob_metrics2 %&gt;%
-  left_join(prey_trait_select, by=c(&quot;prey_sp&quot;, &quot;life_stage&quot;)) %&gt;% 
-  left_join(prey_morph_sum, by=&quot;prey_sp&quot;) %&gt;% 
-  left_join(prey_qual_sum, by=&quot;prey_sp&quot;) %&gt;%
-  dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage, 
-                vert_habitat:season_cat, gregarious_primary, l_max, body_shape, 
-                b_shape_r:standard_total, phys_defense:countershade, 
-                energy_density:percent_lipid, maxFO:maxM, maxTL, trophic_level, fisheries_status) #meanGAPE, meanLENGTH, meanFRAC,
+    left_join(prey_trait_select, by = c(&quot;prey_sp&quot;, &quot;life_stage&quot;)) %&gt;%
+    left_join(prey_morph_sum, by = &quot;prey_sp&quot;) %&gt;%
+    left_join(prey_qual_sum, by = &quot;prey_sp&quot;) %&gt;%
+    dplyr::select(prey_class:prey_family, prey_sp, prey_age_reported_1, life_stage,
+        vert_habitat:season_cat, gregarious_primary, l_max, body_shape, b_shape_r:standard_total,
+        phys_defense:countershade, energy_density:percent_lipid, maxFO:maxM, maxTL,
+        trophic_level, fisheries_status)  #meanGAPE, meanLENGTH, meanFRAC,
 
-
-
-#308 spp and ~28 traits
+# 308 spp and ~28 traits
 glimpse(prey_probable_merge2)</code></pre>
 <pre><code>## Rows: 308
 ## Columns: 34
@@ -519,16 +536,18 @@ glimpse(prey_probable_merge2)</code></pre>
 ## $ maxTL               &lt;dbl&gt; 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.000…
 ## $ trophic_level       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ fisheries_status    &lt;chr&gt; &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;none&quot;, &quot;n…</code></pre>
-<pre class="r"><code>write.csv(prey_probable_merge2, here(&quot;data/output_data/prey_trait_probable_select.csv&quot;), row.names = FALSE)
+<pre class="r"><code>write.csv(prey_probable_merge2, here(&quot;data/output_data/prey_trait_probable_select.csv&quot;),
+    row.names = FALSE)
 
-#prey_probable_merge = read.csv(here(&quot;data/prey_probable_traits.csv&quot;))</code></pre>
+# prey_probable_merge = read.csv(here(&#39;data/prey_probable_traits.csv&#39;))</code></pre>
 </div>
 </div>
 <div id="covariates" class="section level3">
 <h3>Covariates</h3>
 <pre class="r"><code>alb_covars = alb_global %&gt;%
   dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %&gt;% #, stomachs_used
-  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, LocatLongitude, YearEnd, MonthRange, stomachs_used, pred_life) %&gt;% 
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+           LocatLongitude, YearEnd, MonthRange, stomachs_used, pred_life) %&gt;% 
   #, stomachs_used
   mutate(lat_cat = if_else(abs(LocatLatitude) &gt; 23.43662, &quot;temperate&quot;, &quot;tropical&quot;),
          pred_life_adjust=case_when(pred_life == &quot;juvenile&quot; ~ &quot;juvenile&quot;,
@@ -549,15 +568,12 @@ alb_global_diet = alb_global %&gt;%
 <div id="extracting-co-variates" class="section level4">
 <h4>Extracting co-variates</h4>
 <p>Could edit the Longhurst doc to separate biomes and codes as per province definitions: <a href="https://en.wikipedia.org/wiki/Longhurst_code#" class="uri">https://en.wikipedia.org/wiki/Longhurst_code#</a>:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions Note that we are having issues with this code and need to re-run it / troubleshoot.</p>
-<pre class="r"><code>#Covars + Longhurst
+<pre class="r"><code># Covars + Longhurst
 
-alb_covars_geog &lt;- read.csv(here(&quot;data/output_data/alb_covars_longhurst.csv&quot;)) #%&gt;%
-#  dplyr::rename(MonthRange2 = `MonthRange`)
-#  dplyr::select(-MonthRange)
-#  dplyr::select(StudyID, lat_cat:code) #%&gt;%
-#  group_by(StudyID) %&gt;%
-#  sample_n(1)
-#names(alb_covars_geog)
+alb_covars_geog &lt;- read.csv(here(&quot;data/output_data/alb_covars_longhurst.csv&quot;))  #%&gt;%
+# dplyr::rename(MonthRange2 = `MonthRange`) dplyr::select(-MonthRange)
+# dplyr::select(StudyID, lat_cat:code) #%&gt;% group_by(StudyID) %&gt;% sample_n(1)
+# names(alb_covars_geog)
 
 str(alb_covars_geog)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    75 obs. of  17 variables:
@@ -569,7 +585,7 @@ str(alb_covars_geog)</code></pre>
 ##  $ LocatLatitude   : num  44.6 41.1 41.2 35.4 48 ...
 ##  $ LocatLongitude  : num  -5.5 17.5 17.5 -121.9 -11.7 ...
 ##  $ MonthRange      : chr  &quot;May–Sep&quot; &quot;Sep–Oct&quot; &quot;Sep–Oct&quot; &quot;Aug–Sep&quot; ...
-##  $ YearEnd         : int  1971 1992 1994 1983 1929 1930 1930 1931 1932 1932 ...
+##  $ YearEnd         : int  1971 1992 1994 1983 1930 1931 1932 1933 1929 1930 ...
 ##  $ stomachs_used   : chr  &quot;1754&quot; &quot;35&quot; &quot;21&quot; &quot;94&quot; ...
 ##  $ pred_life       : chr  &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
 ##  $ lat_cat         : chr  &quot;temperate&quot; &quot;temperate&quot; &quot;temperate&quot; &quot;temperate&quot; ...
@@ -588,72 +604,78 @@ str(alb_covars_geog)</code></pre>
 ##  $ LocatLatitude   : num  44.6 41.1 41.2 35.4 48 ...
 ##  $ LocatLongitude  : num  -5.5 17.5 17.5 -121.9 -11.7 ...
 ##  $ MonthRange      : chr  &quot;May–Sep&quot; &quot;Sep–Oct&quot; &quot;Sep–Oct&quot; &quot;Aug–Sep&quot; ...
-##  $ YearEnd         : int  1971 1992 1994 1983 1929 1930 1930 1931 1932 1932 ...
+##  $ YearEnd         : int  1971 1992 1994 1983 1930 1931 1932 1933 1929 1930 ...
 ##  $ stomachs_used   : chr  &quot;1754&quot; &quot;35&quot; &quot;21&quot; &quot;94&quot; ...
 ##  $ pred_life       : chr  &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
 ##  $ lat_cat         : chr  &quot;temperate&quot; &quot;temperate&quot; &quot;temperate&quot; &quot;temperate&quot; ...
 ##  $ pred_life_adjust: chr  &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
 ##  $ rep_ID          : chr  &quot;Aloncle1973_1&quot; &quot;Bello1999_2&quot; &quot;Bello1999_3&quot; &quot;Bernard1985_4&quot; ...</code></pre>
-<pre class="r"><code>#Need to merge this with diet data first overall data then probable prey consumed
+<pre class="r"><code># Need to merge this with diet data first overall data then probable prey
+# consumed
 unique(alb_covars_geog$code)</code></pre>
 <pre><code>##  [1] &quot;NADR&quot; &quot;MEDI&quot; &quot;CCAL&quot; &quot;SATL&quot; &quot;CNRY&quot; &quot;NPTG&quot; &quot;NASW&quot; &quot;NECS&quot; &quot;MONS&quot; &quot;ISSG&quot;
-## [11] &quot;EAFR&quot; &quot;NPPF&quot; &quot;ARCH&quot; &quot;SANT&quot; &quot;NEWZ&quot; &quot;SPSG&quot;</code></pre>
-<pre class="r"><code>#check names match
-#unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_global$StudyID)) #they do
-#unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_global$CiteYear)) #they do
-#unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_global$YearEnd)) #they do
-#unique(sort(alb_covars_geog$code))
+## [11] &quot;EAFR&quot; &quot;NPPF&quot; &quot;ARCH&quot; &quot;SPSG&quot; &quot;SANT&quot; &quot;NEWZ&quot;</code></pre>
+<pre class="r"><code># check names match unique(sort(alb_covars_geog$StudyID)) ==
+# unique(sort(alb_global$StudyID)) #they do
+# unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_global$CiteYear))
+# #they do unique(sort(alb_covars_geog$YearEnd)) ==
+# unique(sort(alb_global$YearEnd)) #they do unique(sort(alb_covars_geog$code))
 
-#check names match
-unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they do</code></pre>
+# check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID))  #they do</code></pre>
 <pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<pre class="r"><code>unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do</code></pre>
+<pre class="r"><code>unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear))  #they do</code></pre>
 <pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<pre class="r"><code>unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do</code></pre>
+<pre class="r"><code>unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd))  #they do</code></pre>
 <pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [31] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<pre class="r"><code>unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do NOT</code></pre>
+<pre class="r"><code>unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange))  #they do NOT</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ## [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
 ## [25] FALSE FALSE FALSE FALSE FALSE</code></pre>
 <pre class="r"><code># Potential problem with MonthRange
 
 alb_covars_use = alb_covars_geog %&gt;%
-  dplyr::select(-optional, -MonthRange)</code></pre>
+    dplyr::select(-optional, -MonthRange)</code></pre>
 <pre class="r"><code>alb_global_diet = alb_global_prob %&gt;%
   left_join(alb_covars_use) %&gt;% #looks good #, by = &quot;StudyID&quot;
-  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxtl_use, prey_length:life_stage)</code></pre>
+  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust,
+                stomachs_used:est_ref, prey_class:maxtl_use, prey_length:life_stage)</code></pre>
 <pre><code>## Joining, by = c(&quot;StudyID&quot;, &quot;CiteYear&quot;, &quot;OceanBasin&quot;, &quot;OceanBasinQ&quot;, &quot;LocatName&quot;, &quot;LocatLatitude&quot;, &quot;LocatLongitude&quot;, &quot;YearEnd&quot;, &quot;stomachs_used&quot;, &quot;pred_life&quot;)</code></pre>
 <pre class="r"><code>#Write over previous output from first data chunk
-write.csv(alb_global_diet, here(&quot;data/output_data/alb_global_diet_total.csv&quot;), row.names = FALSE)</code></pre>
+write.csv(alb_global_diet, here(&quot;data/output_data/alb_global_diet_total.csv&quot;), 
+          row.names = FALSE)</code></pre>
 <p><strong>NOTE</strong> Below we include the adult cluster number but need to use the cluster number from probable life stage if we stick to this for final analysis.</p>
 </div>
 </div>
 <div id="diet-datasets" class="section level3">
 <h3>Diet datasets</h3>
 <p>Note that there are a handful of cases where the same prey species was consumed and reported for two different life stages. Because this affects three species and for only one study, the simplest solution to be able to move forward, we need to just select the most commonly consumed species/life stage combination.</p>
-<pre class="r"><code>#Previous problem rows
-#View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
-#select 192, 111, 247, 99, 248
-#alb_global_diet_use = alb_global_diet %&gt;%
-#  slice(., -c(226, 118, 117, 204, 227))
+<pre class="r"><code># Previous problem rows View(alb_global_diet[c(192, 226, 111, 118, 204, 247,
+# 99, 117, 227, 248),]) select 192, 111, 247, 99, 248 alb_global_diet_use =
+# alb_global_diet %&gt;% slice(., -c(226, 118, 117, 204, 227))
 
-#Updated data was downloaded with different order of the data so these rows have moved
-View(alb_global_diet[c(58, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
+# Updated data was downloaded with different order of the data so these rows
+# have moved
+View(alb_global_diet[c(59, 71, 70, 77, 64, 81, 69, 76, 72, 82), ])
 
-#We select to keep the most common one (typically these were the same species appearing in the same study for two different life stages and this only affected the Bouxin &amp; Legendre papers)
+# We select to keep the most common one (typically these were the same species
+# appearing in the same study for two different life stages and this only
+# affected the Bouxin &amp; Legendre papers)
 alb_global_diet_use = alb_global_diet %&gt;%
-  slice(., -c(71, 77, 64, 76, 72))</code></pre>
+    slice(., -c(71, 77, 64, 76, 72))</code></pre>
 <div id="presenceabsence" class="section level4">
 <h4>Presence/absence</h4>
 <p>Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for species’ presence absence (PA). These data will be used for traitglms.</p>
-<pre class="r"><code>#Extract %FO data --&gt; filter for only species that we have adult traits + cluster info for --&gt; transform to wide data for MV GLMs + trait GLMs
+<pre class="r"><code>#Extract data --&gt; filter for only species that we have adult traits + cluster info for 
+# --&gt; transform to wide data for MV GLMs + trait GLMs
 alb_global_dietpa = alb_global_diet_use %&gt;% #_use
   dplyr::select(#StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp
-    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp) %&gt;%
+    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, 
+    pred_life_adjust, prey_sp) %&gt;%
   mutate(pa=&quot;1&quot;) %&gt;%
   group_by(prey_sp) %&gt;%
   #dplyr::mutate(grouped_id = row_number()) %&gt;%
@@ -676,14 +698,18 @@ summary(as.factor(alb_global_dietpa$lat_cat))</code></pre>
 ##             9            24            25             1             1 
 ##    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific 
 ##             3             1             1             2             8</code></pre>
-<pre class="r"><code>write.csv(alb_global_dietpa, here(&quot;data/output_data/alb_global_wide_dietpa.csv&quot;), row.names = FALSE)</code></pre>
+<pre class="r"><code>write.csv(alb_global_dietpa, here(&quot;data/output_data/alb_global_wide_dietpa.csv&quot;), 
+          row.names = FALSE)</code></pre>
 </div>
 <div id="diet-data---frequency-of-occurrence" class="section level4">
 <h4>Diet data - frequency of occurrence</h4>
 <p>Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for reported frequency of occurrence (FO). Because these data may be used for traitglms and converted to presence/absence, we filter for very low occurrence species (&lt; 1%).</p>
-<pre class="r"><code>#Extract %FO data --&gt; filter for only species that we have adult traits + cluster info for --&gt; transform to wide data for MV GLMs + trait GLMs
+<pre class="r"><code>#Extract %FO data --&gt; filter for only species that we have adult traits + 
+# cluster info for --&gt; transform to wide data for MV GLMs + trait GLMs
+
 alb_global_dietfo = alb_global_diet_use %&gt;%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pFOuse) %&gt;%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, 
+                lat_cat, pred_life_adjust, prey_sp, pFOuse) %&gt;%
   filter(pFOuse &gt;= 1) %&gt;% #set this value to include or exclude species #goes down to 62 observations
   group_by(prey_sp) %&gt;%
   #dplyr::mutate(grouped_id = row_number()) %&gt;%
@@ -712,19 +738,21 @@ summary(as.factor(alb_global_dietfo$lat_cat))</code></pre>
 ##             7            23            15             1             1 
 ##    NW Pacific   SE Atlantic   SW Atlantic     SW Indian    SW Pacific 
 ##             3             1             1             2             8</code></pre>
-<pre class="r"><code>write.csv(alb_global_dietfo, here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;), row.names = FALSE)</code></pre>
+<pre class="r"><code>write.csv(alb_global_dietfo, here(&quot;data/output_data/alb_global_wide_dietfo.csv&quot;), 
+          row.names = FALSE)</code></pre>
 </div>
 <div id="diet-data---abundance" class="section level4">
 <h4>Diet data - abundance</h4>
-<pre class="r"><code>#Extract for %N data
+<pre class="r"><code># Extract for %N data
 alb_global_dietn = alb_global_diet_use %&gt;%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pN) %&gt;%
-  filter(pN &gt; 0) %&gt;%
-  #filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
-  group_by(prey_sp) %&gt;%
-  spread(prey_sp, pN, fill = 0, convert = FALSE)
+    dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code,
+        lat_cat, pred_life_adjust, prey_sp, pN) %&gt;%
+    filter(pN &gt; 0) %&gt;%
+    # filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
+group_by(prey_sp) %&gt;%
+    spread(prey_sp, pN, fill = 0, convert = FALSE)
 
-#Check covariate representation
+# Check covariate representation
 summary(as.factor(alb_global_dietn$lat_cat))</code></pre>
 <pre><code>## temperate  tropical 
 ##        19         4</code></pre>
@@ -743,17 +771,18 @@ summary(as.factor(alb_global_dietn$lat_cat))</code></pre>
 </div>
 <div id="diet-data---biomass" class="section level4">
 <h4>Diet data - biomass</h4>
-<pre class="r"><code>#Extract for %M data
-#range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
+<pre class="r"><code># Extract for %M data range(alb_global_dietm$pM) #0 to 95.2, need to exclude
+# zeros as not true zeros
 
 alb_global_dietm = alb_global_diet %&gt;%
-  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pM) %&gt;%
-  filter(pM &gt; 0) %&gt;%
-#  filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
-  group_by(prey_sp) %&gt;%
-  spread(prey_sp, pM, fill = 0, convert = FALSE)
+    dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code,
+        lat_cat, pred_life_adjust, prey_sp, pM) %&gt;%
+    filter(pM &gt; 0) %&gt;%
+    # filter(prey_sp %in% alb_adult_traits$prey_sp) %&gt;%
+group_by(prey_sp) %&gt;%
+    spread(prey_sp, pM, fill = 0, convert = FALSE)
 
-#Check covariate representation
+# Check covariate representation
 summary(as.factor(alb_global_dietm$lat_cat))</code></pre>
 <pre><code>## temperate  tropical 
 ##        28         5</code></pre>

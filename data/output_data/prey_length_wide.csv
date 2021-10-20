@@ -47,8 +47,8 @@
 "Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","l_min",NA,7.52345223414224,0.685961821348263,NA,NA
 "Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","l_max",44.7516792857244,25.3965779946486,4.47516792857244,10,56.75
 "Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","l_min",25.3965779946486,4.47516792857244,0.559395991071554,2.20264317180616,17.6211453744493
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","l_max",55.7063187335586,11.1412637467117,2.78531593667793,5,20
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","l_min",11.1412637467117,2.78531593667793,0.668475824802703,6.00000000000001,25
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","l_max",55.7063187335586,11.1412637467117,2.78531593667793,5,20
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","l_min",11.1412637467117,2.78531593667793,0.668475824802703,6.00000000000001,25
 "Actinopterygii","Beryciformes","Berycidae","Beryx splendens","l_max",70,33.2,1.90615071157445,2.72307244510636,47.4285714285714
 "Actinopterygii","Beryciformes","Berycidae","Beryx splendens","l_min",33.2,1.90615071157445,0.190615071157445,0.574141780594714,5.74141780594714
 "Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","l_max",27.6,NA,2.00412035591945,7.26130563738931,NA
@@ -493,8 +493,8 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","l_min",NA,NA,0.461942817237391,NA,NA
 "Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","l_max",165.016659790511,99.0099958743068,NA,NA,60.0000000000001
 "Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","l_min",99.0099958743068,NA,0.247524989685767,0.25,NA
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","l_max",4.21094973026624,1.76859888671182,NA,NA,42
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","l_min",1.76859888671182,NA,NA,NA,NA
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","l_max",4.21094973026624,1.76859888671182,NA,NA,42
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","l_min",1.76859888671182,NA,NA,NA,NA
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","l_max",11.0145231878667,4.84639020266133,NA,NA,43.9999999999998
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","l_min",4.84639020266133,NA,NA,NA,NA
 "Cephalopoda","Spirulida","Spirulidae","Spirula spirula","l_max",7.7391532117755,NA,NA,NA,NA
@@ -507,6 +507,12 @@
 "Gastropoda","Littorinimorpha","Atlantidae","Atlanta peronii","l_min",NA,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","l_max",11.5,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","l_min",NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","l_max",2,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","l_min",NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","l_max",NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","l_min",NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","l_max",NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","l_min",NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","l_max",0.4,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","l_min",NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","Cosmocalanus darwinii darwinii","l_max",0.258,NA,NA,NA,NA
@@ -615,5 +621,9 @@
 "Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","l_min",NA,NA,NA,NA,NA
 "Malacostraca","Stromatopoda","Protosquillidae","Echinosquilla guerinii","l_max",8.1,NA,NA,NA,NA
 "Malacostraca","Stromatopoda","Protosquillidae","Echinosquilla guerinii","l_min",NA,NA,NA,NA,NA
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","l_max",NA,NA,NA,NA,NA
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","l_min",NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","l_max",10,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","l_min",NA,NA,NA,NA,NA
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","l_max",NA,NA,NA,NA,NA
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","l_min",NA,NA,NA,NA,NA

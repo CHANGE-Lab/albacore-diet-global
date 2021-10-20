@@ -161,6 +161,7 @@ write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
 ```{r Load in saved tree, warning=FALSE, message=FALSE}
 
 my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
+#306 species
 
 ```
 
@@ -184,11 +185,12 @@ length(my_tree_prob$tip.label) #298 #now 306
 #my_prey_prob$prey_sp <- gsub(" ", "_", my_prey_prob$prey_sp) #for ease of plotting take away " "
 
 tree_names_prob = data.frame(sort(my_tree_prob$tip.label)) #sort the species names from the phylo tree
-#Still 301 spp #now 306
+#There are 306
 ## sort brings tree_names_prob from 301 to 300 because of an NA in the tip labels
 prey_names_prob = data.frame(sort(my_prey_prob$prey_sp)) #sort the species names from the original list
 
-nrow(tree_names_prob); nrow(prey_names_prob) #one species didn't make it to the tree
+nrow(tree_names_prob); nrow(prey_names_prob) #Needs to be 306 -- 306
+#Sometimes one species didn't make it to the tree
 
 ## here we check the names that are in the prey data but not on the tip labels of the tree
 names_not_in_tree_prob = prey_names_prob %>%
@@ -213,6 +215,9 @@ my_prey_fix_prob$prey_sp <- as.character(my_prey_fix_prob$prey_sp)
 x2 = my_prey_fix_prob
 y2 = as.vector(names_not_in_prey_prob$sort.my_tree_prob.tip.label.)
 
+unique(x2$prey_sp)
+y2
+
 #here we look at the names in both of the lists and see if there are misspellings/synonyms in the names that caused the discrepancy between the name lists. As you can see this is true for all of the species in these lists expect one. 'Diplodus sargus' does not have a match in the tree, since the only other tip labels left in the tree is an NA after the rest of the reassignments.
 # if you want to see how this works you can run individual pieces of this before running the whole thing. For example x2[4,1] is "Leuroglossus stilbius", and y2[1] is "Bathylagus stilbius". Then after running this code we match the name in the prey data (x2) to the names in the tree (y2), so "Leuroglossus stilbius" becomes "Bathylagus stilbius".
 
@@ -220,26 +225,26 @@ y2 = as.vector(names_not_in_prey_prob$sort.my_tree_prob.tip.label.)
 #x2[1,1] = y2[4]; x2[2,1] = y2[1]; x2[3,1] = y2[2]; x2[4,1] = y2[3]; 
 #x2[5,1] = y2[5]; x2[6,1] = y2[7]; x2[7,1] = y2[6];
 
-x2[1,1] = y2[8]; 
-x2[2,1] = y2[2]; 
-x2[3,1] = y2[1]; 
-x2[4,1] = y2[3]; 
-x2[5,1] = y2[4]; 
-x2[6,1] = y2[6]; 
-x2[7,1] = y2[8];
-x2[8,1] = y2[7];
+x2[1,1] = y2[4]; #--> Diplodus sargus
+x2[2,1] = y2[1]; #--> Leuroglossus stilbius
+x2[3,1] = y2[2]; #--> Liocranchia reinhardtii
+x2[4,1] = y2[3]; #--> Mullus barbatus barbatus
+x2[5,1] = y2[5]; #--> Notoscopelus kroyeri
+x2[6,1] = y2[6]; #--> Robustosergia robusta
+
 
 # we need to do the opposite for one of the names here "Diplodus sargus", which is in the prey data but not in the tip labels. So, we are replacing the NA in the tip labels
 tip_labels_prob <- as.vector(my_tree_prob$tip.label)
 tip_labels_prob[28] ##this is the NA we want to replace
 tip_labels_prob[28] = "Diplodus sargus"
 ## replacing the tip labels with the additional name
-my_tree_prob$tip.label <- tip_labels_prob
+my_tree_prob$tip.label <- tip_labels_prob #Still have 306 tip labels
 
 # here we bind the fixed names to the names that didnt need to be fixed
 my_prey_prob = rbind(my_prey_keep_prob, x2)
+
 #here we get rid of any of the names in the data that didn't have a match in the tree tip labels, which was only 'Diplodus sargus'
-my_prey_prob = my_prey_prob %>%
+my_prey_prob = my_prey_prob %>% #This is where one species drops out!
   filter(prey_sp %in% my_tree_prob$tip.label)
 nrow(my_prey_prob);length(my_tree_prob$tip.label) ## one of those tip labels is an NA
 

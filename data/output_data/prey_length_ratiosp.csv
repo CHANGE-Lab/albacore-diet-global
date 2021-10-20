@@ -23,7 +23,7 @@
 "Actinopterygii","Beloniformes","Belonidae","Belone belone","l_max",103.5,28.5,2.23,2.15458937198068,27.536231884058,5.21105964980475,27.536231884058,2.15458937198068,27.536231884058
 "Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","l_max",91,NA,7.52345223414224,8.26752992762883,NA,5.21105964980475,27.536231884058,8.26752992762883,27.536231884058
 "Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","l_max",44.7516792857244,25.3965779946486,4.47516792857244,10,56.75,7.5,38.375,10,56.75
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus saurus","l_max",55.7063187335586,11.1412637467117,2.78531593667793,5,20,7.5,38.375,5,20
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","l_max",55.7063187335586,11.1412637467117,2.78531593667793,5,20,7.5,38.375,5,20
 "Actinopterygii","Beryciformes","Berycidae","Beryx splendens","l_max",70,33.2,1.90615071157445,2.72307244510636,47.4285714285714,2.72307244510636,47.4285714285714,2.72307244510636,47.4285714285714
 "Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","l_max",27.6,NA,2.00412035591945,7.26130563738931,NA,7.26130563738931,47.4285714285714,7.26130563738931,47.4285714285714
 "Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","l_max",46,21.4,3.15104701063738,6.85010219703778,46.5217391304348,6.86099776355224,40.2357282233451,6.85010219703778,46.5217391304348
@@ -246,13 +246,16 @@
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","l_max",9.41149507777527,3.19990832644359,NA,NA,34,12.5,35.75,12.5,34
 "Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","l_max",11.5485704309348,NA,NA,NA,NA,12.5,35.75,12.5,35.75
 "Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","l_max",165.016659790511,99.0099958743068,NA,NA,60.0000000000001,7.21716900528456,60.0000000000001,7.21716900528456,60.0000000000001
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis (Heteroteuthis) dispar","l_max",4.21094973026624,1.76859888671182,NA,NA,42,7.99055640964786,42.9999999999999,7.99055640964786,42
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","l_max",4.21094973026624,1.76859888671182,NA,NA,42,7.99055640964786,42.9999999999999,7.99055640964786,42
 "Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","l_max",11.0145231878667,4.84639020266133,NA,NA,43.9999999999998,7.99055640964786,42.9999999999999,7.99055640964786,43.9999999999998
 "Cephalopoda","Spirulida","Spirulidae","Spirula spirula","l_max",7.7391532117755,NA,NA,NA,NA,7.99055640964786,43.519846336253,7.99055640964786,43.519846336253
 "Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","l_max",30,NA,6.02497159381358,20.0832386460453,NA,20.0832386460453,43.519846336253,20.0832386460453,43.519846336253
 "Gastropoda","Caenogastropoda","Epitoniodea","Janthina exigua","l_max",1.53,NA,NA,NA,NA,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Atlantidae","Atlanta peronii","l_max",1.1,NA,NA,NA,NA,NA,NA,NA,NA
 "Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","l_max",11.5,NA,NA,NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","l_max",2,NA,NA,NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","l_max",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","l_max",NA,NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","l_max",0.4,NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Calanidae","Cosmocalanus darwinii darwinii","l_max",0.258,NA,NA,NA,NA,NA,NA,NA,NA
 "Hexanauplia","Calanoida","Clausocalanidae","Clausocalanus furcatus","l_max",0.16,NA,NA,NA,NA,NA,NA,NA,NA
@@ -307,4 +310,6 @@
 "Malacostraca","Stomatopoda","Squillidae","Natosquilla investigatoris","l_max",6.3,NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
 "Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","l_max",7.4,NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
 "Malacostraca","Stromatopoda","Protosquillidae","Echinosquilla guerinii","l_max",8.1,NA,NA,NA,NA,13.2277038321486,35.9384836382273,13.2277038321486,35.9384836382273
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","l_max",NA,NA,NA,NA,NA,NA,NA,NA,NA
 "Thaliacea","Salpida","Salpidae","Salpa maxima","l_max",10,NA,NA,NA,NA,NA,NA,NA,NA
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","l_max",NA,NA,NA,NA,NA,NA,NA,NA,NA
