@@ -25,6 +25,7 @@ library(devtools)
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
+# RE-INSTALLED THESE
 
 #Graphics
 library(ggplot2)
@@ -44,10 +45,10 @@ library(BiodiversityR)
 
 library(vegan)
 # From GitHub
-#install_github("MoBiodiv/mobr")
+install_github("MoBiodiv/mobr")
 library(mobr)
-#devtools::install_github('bbc/bbplot')
-#library(bbplot)
+devtools::install_github('bbc/bbplot')
+library(bbplot)
 ```
 
 ## Rarefaction data

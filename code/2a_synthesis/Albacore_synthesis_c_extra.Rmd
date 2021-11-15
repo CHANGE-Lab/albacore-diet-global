@@ -373,7 +373,9 @@ nMDS for Ocean Basin
 #nMDS plot for the assessmenet of global change (yes/no) and the drivers.
 #unique(treatment.scores$OceanBasin)
 
-nMDS_prob_ocean <- ggplot() + 
+nMDS_prob_ocean <- hull.data.ocean %>%
+  slice(-c(..., ...)) 
+  %>% ggplot() + 
   geom_polygon(data = hull.data.ocean, 
                aes(x = NMDS1, y = NMDS2, 
                    fill = OceanBasin, 
