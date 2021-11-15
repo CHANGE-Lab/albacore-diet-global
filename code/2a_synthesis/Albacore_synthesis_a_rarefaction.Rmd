@@ -43,17 +43,18 @@ library(BiodiversityR)
 #  Package ‘lattice’ version 0.20.44 cannot be unloaded:
 # Error in unloadNamespace(package) : namespace ‘lattice’ is imported by ‘ape’, ‘sp’, ‘nlme’ so cannot be unloaded
 
+####This is now fixed
+
+
 library(vegan)
 # From GitHub
-install_github("MoBiodiv/mobr")
+#install_github("MoBiodiv/mobr")
 library(mobr)
-devtools::install_github('bbc/bbplot')
+#devtools::install_github('bbc/bbplot')
 library(bbplot)
 ```
 
 ## Rarefaction data
-
-## Rarefaction curves for known taxa:
 
 ```{r Rarefaction curves data}
 #Data -- using total diet data
@@ -83,6 +84,8 @@ write.csv(PreyPAsite, here("data/output_data/alb_global_rarefactiondata.csv"), r
 
 ```
 
+## Basic rarefaction curves for species-level taxa:
+
 ```{r Rarefaction specnumber and accumresult}
 
 # number of species and the factor that I want to group them by
@@ -93,39 +96,41 @@ SpO
 
 #Produces average species accumulation curve
 Alb.accum <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='exact', conditioned=TRUE)
-str(Alb.accum)
+#str(Alb.accum)
 accumplot(Alb.accum)
 
 #Produces cumulative species curves
 Alb.accum2 <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='collector', conditioned=TRUE)
-str(Alb.accum2)
+#str(Alb.accum2)
 accumplot(Alb.accum2)
 
 ```
 
-```{r Rarefaction by sites - accumulation}
+## Variable rarefaction by Ocean Basin
+
+```{r Rarefaction by sites - exact method}
 
 #Produces average species accumulation curve
 Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
                   method='exact', conditioned=TRUE, plotit=TRUE) #scale = 'YearEnd'
-str(Plot)
+#str(Plot)
 
 Plot.long <- accumcomp.long(Plot)
-str(Plot.long)
+#str(Plot.long)
 
 ```
 
 
-```{r}
+```{r Rarefaction by sites - collector method}
 #Plot.long.covar = Plot.long %>%
 #  rename(OceanBasin = Grouping) %>%
 #  left_join(PreyPAsite, by = "OceanBasin")
 
 #Produces cumulative species curves
 Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', scale = 'YearEnd', method='collector', conditioned=TRUE, plotit=TRUE)
-str(Plot2)
+#str(Plot2)
 Plot2.long <- accumcomp.long(Plot2)
-str(Plot2.long)
+#str(Plot2.long)
 # save and export the accumcomp data in order to add SW back in with just the one point
 
 # Did this for first and second Plot output for accumcomp function.
@@ -207,3 +212,33 @@ ggsave(here("outputs_figures/accum.plot2.jpeg"), plot=Accum.plot2, height = 8, w
 #Note no error bar for pure accumulation plot
 
 ```
+
+## Comms with Roeland Kindt
+
+Dear Natasha,
+ 
+Thank you very much for email and finding BiodiversityR useful.
+ 
+To answer briefly (on holiday in Mombasa right now)
+ 
+The accumcomp function does not include information on characteristics of sites. This is because typical methods randomize the sites. But indeed for the collector method, the first site is the first site that is encountered
+Therefore indeed this information needs to be added, maybe using a script similar to the following after getting data first in the accumcomp.long format
+ 
+accum.long1$Year <- NA
+groupings <- unique(accum.long1$Grouping)
+ 
+for (g in 1:length(groupings) {
+group <- groupings[g]
+Assuming Grouping was based on variable Region of the env.data
+accum.long1[accum.long1$Grouping == group, “Year”] <- env.data[env.data$Region == group, “Year”]
+}
+ 
+Then it should be possible to use ggplot as in your example, with year as x variable. It should be a numeric variable to generate the type of plot that you made earlier.
+ 
+Please come back to me in case I misunderstood something.
+ 
+Best regards – stay safe,
+ 
+Roeland
+ 
+Roeland KINDT, dr. ir.
