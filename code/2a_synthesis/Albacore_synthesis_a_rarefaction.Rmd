@@ -113,7 +113,6 @@ accumplot(Alb.accum2)
 #Produces average species accumulation curve
 Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
                   method='exact', conditioned=TRUE, plotit=TRUE) #scale = 'YearEnd'
-#str(Plot)
 
 Plot.long <- accumcomp.long(Plot)
 #str(Plot.long)
@@ -127,45 +126,59 @@ Plot.long <- accumcomp.long(Plot)
 #  left_join(PreyPAsite, by = "OceanBasin")
 
 #Produces cumulative species curves
-Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', scale = 'YearEnd', method='collector', conditioned=TRUE, plotit=TRUE)
-#str(Plot2)
+Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', 
+                   #scale = 'YearEnd', 
+                   method='collector', conditioned=TRUE, plotit=TRUE)
+
 Plot2.long <- accumcomp.long(Plot2)
 #str(Plot2.long)
 # save and export the accumcomp data in order to add SW back in with just the one point
 
 # Did this for first and second Plot output for accumcomp function.
-write.csv(Plot.long, here("data/output_data/accum_plot.csv"), row.names = FALSE)
-accum.data <- read.csv(here("data/output_data/accum_plot.csv"))
-View(accum.data)
+#write.csv(Plot.long, here("data/output_data/accum_plot.csv"), row.names = FALSE)
+#accum.data <- read.csv(here("data/output_data/accum_plot.csv"))
+#View(accum.data)
 
-write.csv(Plot2.long, here("data/output_data/accum2_plot.csv"), row.names = FALSE)
-accum2.data <- read.csv(here("data/output_data/accum2_plot.csv"))
-View(accum2.data)
+#write.csv(Plot2.long, here("data/output_data/accum2_plot.csv"), row.names = FALSE)
+#accum2.data <- read.csv(here("data/output_data/accum2_plot.csv"))
+#View(accum2.data)
 ```
 
+Problem: Still can't get the data for year to append to the rarefaction plot data.
+Solution: find a way to append the YearEnd values, seeing as those data were ordered and the fed to the rarefaction code routine...
 
-```{r}
+```{r Manipulate and extract year data}
 
-accum.long1$Year <- NA
-groupings <- unique(accum.long1$Grouping)
+prey_year = PreyPAsite %>%
+  arrange(desc(OceanBasin))
+
+plot2_data = cbind(prey_year, Plot2.long)
+
+```
+
+```{r Loop to extract year data for plot 1}
+
+Plot.long$Year <- NA
+groupings <- unique(Plot.long$Grouping)
  
-for (g in 1:length(groupings) {
-group <- groupings[g]
-# assuming Grouping was based on variable Region of the env.data
-accum.long1[accum.long1$Grouping == group, “Year”] <- env.data[env.data$Region == group, “Year”]
-}
+for(g in 1:length(groupings)) {
+  group <- groupings[g]
+  # assuming Grouping was based on variable Region of the env.data
+  Plot.long[Plot.long$Grouping == group, "Year"] <- PreyPAsite[PreyPAsite$OceanBasin == group, "YearEnd"]
+  }
 
 ```
 
-```{r rarefaction graphs}
 
-levels(as.factor(accum.data$Grouping))
+```{r rarefaction graphs - curve, eval=FALSE}
 
-accum.data$Grouping <- factor(accum.data$Grouping, levels = c("Mediterranean", "N Atlantic",
+levels(as.factor(Plot.long$Grouping))
+
+Plot.long$Grouping <- factor(Plot.long$Grouping, levels = c("Mediterranean", "N Atlantic",
                                                         "S Atlantic", "Indian",
                                                         "N Pacific", "S Pacific"))
 
-Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Sites, colour=Grouping)) +
+Accum.plot <- ggplot(data = Plot.long, aes(y=Richness, x=Sites, colour=Grouping)) +
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
@@ -177,19 +190,37 @@ Accum.plot <- ggplot(data = accum.data, aes(y=Richness, x=Sites, colour=Grouping
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
   scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")+
-  geom_errorbar(data = accum.data, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
+  geom_errorbar(data = Plot.long, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
 Accum.plot
 
 ggsave(here("outputs_figures/accum.plot1.jpeg"), plot=Accum.plot, height = 8, width = 12, dpi = 300)
+```
 
+
+```{r Loop from Roeland for plot 2}
+
+Plot2.long$Year <- NA
+groupings <- unique(Plot2.long$Grouping)
+ 
+for(g in 1:length(groupings)) {
+  group <- groupings[g]
+  # assuming Grouping was based on variable Region of the env.data
+  Plot2.long[Plot2.long$Grouping == group, "Year"] <- PreyPAsite[PreyPAsite$OceanBasin == group, "YearEnd"]
+  }
+
+```
+
+```{r rarefaction graphs - cumulative}
 ##Second plot
-str(accum2.data)
-levels(as.factor(accum2.data$Grouping))
-accum2.data$Grouping <- factor(accum2.data$Grouping, levels = c("Mediterranean", "N Atlantic",
+str(Plot2.long)
+
+levels(as.factor(Plot2.long$Grouping))
+
+Plot2.long$Grouping <- factor(Plot2.long$Grouping, levels = c("Mediterranean", "N Atlantic",
                                                         "S Atlantic", "Indian",
                                                         "N Pacific", "S Pacific"))
 
-Accum.plot2 <- ggplot(data = accum2.data, aes(y=Richness, x=Sites, colour=Grouping)) +
+Accum.plot2 <- ggplot(data = Plot2.long, aes(y=Richness, x=Year, colour=Grouping)) +
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
@@ -203,7 +234,8 @@ Accum.plot2 <- ggplot(data = accum2.data, aes(y=Richness, x=Sites, colour=Groupi
   theme(legend.text=element_text(size=18)) +
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
-  scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
+  #scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
+  scale_colour_manual(values=pnq_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
 Accum.plot2
 
 ggsave(here("outputs_figures/accum.plot2.jpeg"), plot=Accum.plot2, height = 8, width = 12, dpi = 300)
