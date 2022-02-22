@@ -71,10 +71,6 @@ source("/Users/tashhardy/Documents/GitHub/albacore-diet-global/code/synthesis/ge
 
 This document contains code for data manipulation, refinement and conversion to presence absence, as well as conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
 
-**Issues**
-
-- 
-
 ## Data (L)
 
 Load frequency of occurrence data.
