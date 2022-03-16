@@ -11,6 +11,9 @@ library(dplyr)
 library(rgeos)
 library(sp)
 library(rgdal)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
 
 #### Map base ----
 
