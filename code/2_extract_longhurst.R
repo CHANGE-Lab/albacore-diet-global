@@ -11,7 +11,9 @@ library(dplyr)
 library(rgeos)
 library(sp)
 library(rgdal)
-
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
 #### Map base ----
 
 # Base map
@@ -22,13 +24,14 @@ baseMap <- ggplot() +
 baseMap
 
 # Add longhurst regions information:
-longhurst <- sf::read_sf(here("code/1b_longhurst/longhurst/Longhurst_world_v4_2010.shp")) 
+longhurst <- sf::read_sf(here::here("code/longhurst/Longhurst_world_v4_2010.shp")) 
 # or wherever you have it stored
 names(longhurst)
 head(longhurst)
 
 # simplify the object to make it 'usable'
 # Gives a warning, one/some of the regions may be off?
+sf::sf_use_s2(FALSE)
 longhurst <- longhurst %>% 
   sf::st_simplify(dTolerance = 0.01) %>% 
   dplyr::group_by(ProvCode,ProvDescr) %>% 
@@ -100,4 +103,4 @@ albMap <- longMap +
   geom_point(data = as.data.frame(alb), aes(x = LocatLongitude, y = LocatLatitude))
 albMap
 
-ggsave("outputs_figures/maps/alb_global_map.pdf", plot = albMap, dpi = 300)
+ggsave("outputs_figures/maps/alb_global_map2.pdf", plot = albMap, dpi = 300)

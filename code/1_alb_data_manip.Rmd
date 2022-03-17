@@ -1,0 +1,216 @@
+---
+title: "Step 1 Data Manip"
+author: "Natasha Hardy"
+date: "October 10, 2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## About
+
+This document contains code for manipulating trait information for 5 prey traits, and life history estimation, for albacore prey species from our global meta-analysis of albacore diet composition.
+
+From the MS:
+
+"2.2 Prey trait information
+
+For each prey species and main life stage distinctions (i.e., larva, juvenile, adult), we collected trait information for four habitat use traits and one behavioural trait known to affect the likelihood of a pelagic predator encountering, attacking and capturing prey (Green et al., 2019). These were: (i) vertical and (ii) horizontal habitat association, (iii) presence of diel vertical migration, (iv) presence of seasonal migration and (v) aggregation behaviour (Supplementary Data, Table S4 & S5). For analyses, we include the phylogenetic Order verified using Open Tree of Life Data (OpenTree et al, 2020). Trait data were compiled for a broader database construction effort of traits that inform predator-prey interactions for albacore (Gleiber et al. in prep). We further describe how prey species’ trait values were collected in Appendix B (Supporting Information)."
+
+## Workpsace
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r Load Workspace, message=FALSE}
+
+#R documentation
+library(pander)
+# general
+library(tidyverse)
+library(readxl)
+library(readr)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+
+```
+
+## Outputs
+
+List of outputs created for analyses:
+
+- Prey species' coarse trait information *data/output_data/prey_trait_select.csv*
+
+- Albacore diet data *data/output_data/alb_global_diet_total.csv*
+
+- Albacore diet sampling covariates *alb_covars.csv*
+
+
+## Dataframes
+
+### Prey trait db
+
+Loading in and selecting key species coarse traits: for habitat association, seasonal, vertical migration and aggregation behaviour. Note that NH overhauled our prey life stage estimation protocol in December 2021 through early 2022, and we have thoroughly curated this step.
+
+```{r Prey trait data load, message=FALSE, results='hide', tidy=TRUE}
+
+#Load prey trait db
+prey_trait <- as.data.frame(read_xlsx(here::here("data/input_data/prey_trait_db.xlsx"),
+                                           sheet = "prey_trait_db"))
+
+```
+
+Key traits selection:
+
+```{r Prey traits selection, tidy=TRUE}
+
+prey_trait_select = prey_trait %>%
+  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, refuge_cat, season_cat)
+
+str(prey_trait_select)
+
+write.csv(prey_trait_select, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
+
+```
+
+### Diet raw data
+
+Load diet data and merge with prey size trait information, and undertake necessary data selection and manipulation of variables.
+
+```{r Albacore diet data load & manipulation, tidy=TRUE}
+
+#Load diet data spreadsheet
+alb_global = as.data.frame(read_xlsx(here::here("data/input_data/albacore_diet_global.xlsx"),
+                      sheet = "albacore_diet_global")) %>% #2134 rows and 77 vars
+  dplyr::filter(TaxLev == "species") %>% #1107 rows and 77 vars
+  #There are ~1105 observations when we filter by species
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1028 rows
+  #1028 when we remove larval albacore diet studies (there are 3)
+  #dplyr::rename() %>%
+  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
+                LocatLatitude:LocatLongitude, MonthRange, YearEnd, stomachs_used,
+                pred_life:est_ref, stomachs_used, prey_class:prey_sp,
+                prey_age_reported_1:prey_age_use, Include, FO, 
+                pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
+  mutate(gape_lmax = pred_flmean*0.0823+1.758, 
+         gape_height_limit = pred_flmean*0.0246+4.603,
+         prey_age_reported_1=case_when(
+                             #prey_age_reported_1 == "NA" ~ "none",
+                             prey_age_reported_1 == "larvae" ~ "larva",
+                             prey_age_reported_1 == "juvenile" ~ "juvenile",
+                             prey_age_reported_1 == "adult" ~ "adult"))
+  #1028 obsm 44 vars
+  #calculates the gape length and height limits
+  #Reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
+
+#Correct data type
+alb_global$maxl_use <- as.numeric(alb_global$maxl_use)
+#The NA's in the reported age for prey column cause problems later and need 
+#to be assigned a categorical value
+alb_global$prey_age_reported_1 <- as.character(alb_global$prey_age_reported_1)
+alb_global$prey_age_reported_1 <- replace_na(alb_global$prey_age_reported_1, "none")
+#check this
+unique(as.factor(alb_global$prey_age_reported_1))
+
+#Change vector type for YearEnd variable
+alb_global$YearEnd <- as.integer(alb_global$YearEnd)
+
+#Deal with NA's in stomachs used column
+alb_global$stomachs_used <- as.integer(alb_global$stomachs_used)
+alb_global$stomachs_used <- as.character(alb_global$stomachs_used)
+alb_global$stomachs_used <- replace_na(alb_global$stomachs_used, "not reported")
+unique(alb_global$stomachs_used)
+
+#Save total df version
+write.csv(alb_global, here::here("data/output_data/alb_global_diet.csv"), 
+          row.names = FALSE) 
+#1028 observations and 41 variables
+
+```
+
+
+### Covariates
+
+```{r Covariates, tidy = TRUE}
+
+alb_covars = alb_global %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %>% #, stomachs_used
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+           LocatLongitude, YearEnd, MonthRange, stomachs_used, pred_life) %>% 
+  #, stomachs_used
+  mutate(lat_cat = if_else(abs(LocatLatitude) > 23.43662, "temperate", "tropical"),
+         pred_life_adjust=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "none" ~ "mixed",
+                             pred_life == "adult" ~ "adult"))
+
+alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
+
+#Merge these back to the diet df
+alb_global_diet = alb_global %>%
+  left_join(alb_covars)
+
+write.csv(alb_covars, here::here("data/output_data/alb_covars.csv"), row.names = FALSE)
+
+```
+
+## Data checks
+
+### Prey length info reported
+
+```{r Reported prey length information, tidy = TRUE}
+
+alb_global_prey_lengths = alb_global %>%
+  filter(maxl_use > 0) %>%
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  group_by(prey_sp, maxl_type) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE), 
+                   maxL = max(maxl_use, na.rm=TRUE)) 
+
+write.csv(alb_global_prey_lengths, here::here("data/output_supp/alb_global_prey_lengths.csv"), row.names = FALSE)
+
+```
+
+### Prey life stage reported
+
+```{r Reported prey lifestage information, tidy = TRUE}
+
+alb_global_prey_life = alb_global %>%
+  filter(prey_age_reported_1 != "none",) %>%
+  dplyr::select(prey_class:prey_sp, prey_age_reported_1, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  group_by(prey_sp, prey_age_reported_1, maxl_type) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE), 
+                   maxL = max(maxl_use, na.rm=TRUE)) 
+
+write.csv(alb_global_prey_life, here::here("data/output_supp/alb_global_prey_life.csv"), row.names = FALSE)
+
+```
+
+### Prey prevalence data reported
+
+```{r Reported diet metrics summary, tidy = TRUE}
+
+alb_global_metrics = alb_global %>%
+  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
+  dplyr::select(prey_class:prey_sp, prey_age_reported_1, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  group_by(prey_sp, prey_age_reported_1, maxl_type) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE), 
+                   maxL = max(maxl_use, na.rm=TRUE)) 
+
+write.csv(alb_global_metrics, here::here("data/output_supp/alb_global_metrics.csv"), row.names = FALSE)
+
+```
+
+
+## GO TO 2_extract_longhurst work then to document 3_alb_data_manip.Rmd

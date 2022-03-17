@@ -1,0 +1,383 @@
+---
+title: "Step 3 Data Manips"
+author: "Natasha Hardy"
+date: "17/03/2022"
+output: html_document
+---
+
+## Workpsace
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r Load Workspace, message=FALSE}
+
+#R documentation
+library(pander)
+# general
+library(tidyverse)
+library(readxl)
+library(readr)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(lattice)
+
+```
+
+## Load key dataframes
+
+Prey traits, albacore diet and covariates:
+
+```{r Load prey traits selection back in}
+
+prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
+
+alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) 
+
+alb_covars = read.csv(here::here("data/output_data/alb_covars.csv"), check.names = FALSE)
+
+alb_covars_geog = read.csv(here::here("data/output_data/alb_covars_longhurst.csv"), check.names = FALSE)
+
+```
+
+### Extracting co-variates
+
+Could edit the Longhurst doc to separate biomes and codes as per province definitions:
+https://en.wikipedia.org/wiki/Longhurst_code#:~:text=Longhurst%20code%20refers%20to%20a,unique%20set%20of%20environmental%20conditions 
+
+```{r Covars + Longhurst, tidy = TRUE}
+
+str(alb_covars_geog)
+str(alb_covars)
+
+#Need to merge this with diet data first overall data then probable prey consumed
+unique(alb_covars_geog$code)
+
+#check names match
+unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they do
+unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
+unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
+unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
+
+alb_covars_use = alb_covars_geog %>%
+  dplyr::select(-optional, -MonthRange)
+
+```
+
+```{r Covars + Longhurst + Diet data, tidy = TRUE}
+
+alb_global_diet = alb_global %>%
+  left_join(alb_covars_geog) %>% #looks good #, by = "StudyID"
+  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust,
+                stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit)
+
+unique(alb_global_diet$code)
+#Write over previous output from first data chunk
+write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total.csv"), 
+          row.names = FALSE)
+```
+
+## Coavariate data exploration
+
+Supplementary figures S1a/b:
+
+```{r supplementary data for figures S1a/b}
+
+alb_covars_esti = alb_global_diet %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+           LocatLongitude, YearEnd, MonthRange, stomachs_used, 
+           pred_life, pred_flmean, pred_flmin, pred_flmax, pred_flmean_est, pred_flest) %>%
+  pivot_longer(cols = c(pred_flmin, pred_flmean, pred_flmax), names_to = "measurement", values_to = "FL") %>%
+  mutate(pred_flest = case_when(pred_flest == "Estimated: by meta-analysis" ~ "Estimated",
+                                pred_flest == "Measured: study reported" ~ "Measured"
+                                )
+         )
+
+unique(alb_covars_esti$measurement)
+alb_covars_esti$measurement = factor(alb_covars_esti$measurement,
+                                     levels = c("pred_flmin", "pred_flmean", "pred_flmax"),
+                                     labels = c("min", "mean", "max"))
+levels(alb_covars_esti$measurement)
+
+unique(alb_covars_esti$pred_flmean_est)
+
+unique(alb_covars_esti$pred_flest) #use this one
+
+unique(alb_covars_esti$StudyID)
+
+levels(as.factor(alb_covars_esti$StudyID))
+
+alb_covars_esti$StudyID = factor(alb_covars_esti$StudyID,
+                                 levels = c("Aloncle1973", "Bello1999", "Bernard1985", "Bouxin&Legendre",
+                                            "Clemens&Iselin1963", "Consoli2008", "DosSantos&Haimovici2002", "Glaser2015",
+                                            "Goni2011", "Hart1948", "Iversen1962", "Jordan1880",
+                                            "Joubin1918", "Madigan2015", "Matthews1977", "McHugh1952",
+                                            "Monaco1888", "OrtizZarate1987", "Pinkas1971", "Pusineri2005",
+                                            "Romanov2020", "Romeo2012", "Salman&Karakulak2009", "Watanabe2004",
+                                            "Williams2015", "Young2010"),
+                                 labels = c("Aloncle (1973)", "Bello (1999)", "Bernard (1985)", "Bouxin (1934-40)",
+                                            "Clemens (1963)", "Consoli (2008)", "Dos Santos (2002)", "Glaser (2015)",
+                                            "Goni (2011)", "Hart (1948)", "Iversen (1962)", "Jordan (1880)",
+                                            "Joubin (1918)", "Madigan (2015)", "Matthews (1977)", "McHugh (1952)",
+                                            "Monaco (1888)", "Ortiz de Zarate (1987)", "Pinkas (1971)", "Pusineri (2005)",
+                                            "Romanov (2020)", "Romeo (2012)", "Salman (2009)", "Watanabe (2004)",
+                                            "Williams (2015)", "Young (2010)")
+                                 )
+
+levels(as.factor(alb_covars_esti$pred_life))
+
+alb_covars_esti$pred_life = factor(alb_covars_esti$pred_life,
+                                   levels = c("adult", "juvenile, adult", "juvenile"),
+                                   labels = c("adult", "mixed cohort", "juvenile"))
+levels(alb_covars_esti$pred_life)
+```
+
+```{r supplementary plot for figures S1ab}
+
+alb_covars_esti_plot <- alb_covars_esti %>%
+  mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>%
+  ggplot(aes(x=StudyID, y=FL, fill=measurement)) + 
+  geom_bar(stat="identity", position="dodge")+
+  #geom_errorbar(data = fish_plot_data_troph, position=position_dodge(0.8), 
+  #              aes(ymin=mean.abun-SE.abun, ymax=mean.abun+SE.abun), width=.2) +
+  scale_fill_viridis_d(name = "", 
+                       direction = 1,
+                       begin = 0.1,
+                       end = 0.9,
+                       option = 'D', 
+                       na.value = 'grey')+
+  theme_bw()+
+  coord_flip()+
+  theme(panel.grid.major = element_blank(), 
+        #axis.ticks = element_blank(),
+        #axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.y=element_blank(),
+        axis.title.x=element_text(size=20),
+        axis.text=element_text(size=20),
+        axis.text.x=element_text(size=20),
+        axis.text.y=element_text(size=20),
+        legend.text=element_text(size=20), 
+        legend.title=element_text(size=20),
+        legend.position="top" #"none"
+        ) + 
+  labs(y = "Fork length (cm)") +
+  facet_grid(pred_flest ~ ., space='free', scales="free")+
+  theme(strip.text = element_text(size=rel(1.75)), #face="bold", 
+        strip.background = element_rect(fill="lightgrey", #colour="black",
+                                        size=1.75))
+alb_covars_esti_plot
+
+ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot.jpeg"), 
+       plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
+
+```
+
+```{r albacore size estimation regression}
+
+#Check on the spread of the data by mean FL
+data = alb_covars_esti %>% filter(measurement == "mean")
+#formula = pred_flmean ~ pred_flest
+histogram(~ FL | pred_flest, data = data)
+
+#Check on the spread of the data by max FL
+data_max = alb_covars_esti %>% filter(measurement == "max")
+#formula = pred_flmean ~ pred_flest
+histogram(~ FL | pred_flest, data = data_max)
+
+#Run linear regression on FL mean length data in relation to estimated vs. measured data
+test_alb_size = lm(FL ~ pred_flest, data = data)
+
+anova(test_alb_size)
+
+summary(test_alb_size)
+
+#Not significant
+```
+
+```{r supplementary plot for figures S1ab, eval=FALSE}
+
+#We need to do this on the replicate level and not the study level
+alb_covars_esti_life_plot <- alb_covars_esti %>%
+  mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>%
+  ggplot(aes(x=StudyID, y=FL, fill=measurement)) + 
+  geom_bar(stat="identity", position="dodge")+
+  #geom_errorbar(data = fish_plot_data_troph, position=position_dodge(0.8), 
+  #              aes(ymin=mean.abun-SE.abun, ymax=mean.abun+SE.abun), width=.2) +
+  scale_fill_viridis_d(name = "", 
+                       direction = 1,
+                       begin = 0.1,
+                       end = 0.9,
+                       option = 'D', 
+                       na.value = 'grey')+
+  theme_bw()+
+  coord_flip()+
+  theme(panel.grid.major = element_blank(), 
+        #axis.ticks = element_blank(),
+        #axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.y=element_blank(),
+        axis.title.x=element_text(size=20),
+        axis.text=element_text(size=20),
+        axis.text.x=element_text(size=20),
+        axis.text.y=element_text(size=20),
+        legend.text=element_text(size=20), 
+        legend.title=element_text(size=20),
+        legend.position="top" #"none"
+        ) + 
+  labs(y = "Fork length (cm)") +
+  facet_grid(pred_flest ~ pred_life, space='free', scales="free")+
+  theme(strip.text = element_text(size=rel(1.75)), #face="bold", 
+        strip.background = element_rect(fill="lightgrey", #colour="black",
+                                        size=1.75))
+alb_covars_esti_life_plot
+
+ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot2.jpeg"), 
+       plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
+```
+
+
+### Diet datasets
+
+Note that there are a handful of cases where the same prey species was consumed and reported for two different life stages. Because this affects three species and for only one study, the simplest solution to be able to move forward, we need to just select the most commonly consumed species/life stage combination.
+
+```{r Check on duplicates for prey by life stage, tidy = TRUE}
+
+#Previous problem rows
+#View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
+#select 192, 111, 247, 99, 248
+#alb_global_diet_use = alb_global_diet %>%
+#  slice(., -c(226, 118, 117, 204, 227))
+
+#Updated data was downloaded with different order of the data so these rows have moved
+View(alb_global_diet[c(59, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
+
+#We select to keep the most common one (typically these were the same species appearing in the same study for two different life stages and this only affected the Bouxin & Legendre papers)
+alb_global_diet_use = alb_global_diet %>%
+  slice(., -c(71, 77, 64, 76, 72))
+
+```
+
+#### Presence/absence
+
+Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for species' presence absence (PA). These data will be used for traitglms.
+
+```{r Covars + Longhurst + Diet data PA, tidy = TRUE}
+#Extract data --> filter for only species that we have adult traits + cluster info for 
+# --> transform to wide data for MV GLMs + trait GLMs
+alb_global_dietpa = alb_global_diet_use %>% #_use
+  dplyr::select(#StudyID:stomachs_used, lat_cat:code, pred_life_adjust, pred_flmean, prey_age_reported_1, prey_sp
+    StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, 
+    pred_life_adjust, prey_sp) %>%
+  mutate(pa="1") %>%
+  group_by(prey_sp) %>%
+  #dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pa, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietpa$lat_cat))
+summary(as.factor(alb_global_dietpa$code))
+summary(as.factor(alb_global_dietpa$OceanBasin))
+summary(as.factor(alb_global_dietpa$OceanBasinQ))
+
+write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"), 
+          row.names = FALSE)
+```
+
+#### Diet data - frequency of occurrence
+
+Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for reported frequency of occurrence (FO). Because these data may be used for traitglms and converted to presence/absence, we filter for very low occurrence species (< 1%).
+
+```{r Covars + Longhurst + Diet data FO, tidy = TRUE}
+
+#Extract %FO data --> filter for only species that we have adult traits + 
+# cluster info for --> transform to wide data for MV GLMs + trait GLMs
+
+alb_global_dietfo = alb_global_diet_use %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, 
+                lat_cat, pred_life_adjust, prey_sp, pFOuse) %>%
+  filter(pFOuse >= 1) %>% #set this value to include or exclude species #goes down to 62 observations
+  group_by(prey_sp) %>%
+  #dplyr::mutate(grouped_id = row_number()) %>%
+  spread(prey_sp, pFOuse, fill = 0, convert = FALSE)
+
+#Check these data
+which(rowSums(alb_global_dietfo[,10:ncol(alb_global_dietfo)])<1)
+
+#Before spreading data - range(alb_global_dietfo$pFOuse) 
+#0 to 100 need to exclude zeros as they are not true zeros --> 0.1 to 100%
+
+#Check covariate representation
+summary(as.factor(alb_global_dietfo$lat_cat))
+summary(as.factor(alb_global_dietfo$code))
+summary(as.factor(alb_global_dietfo$OceanBasin))
+summary(as.factor(alb_global_dietfo$OceanBasinQ))
+
+write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"), 
+          row.names = FALSE)
+
+```
+
+
+#### Diet data - abundance
+
+```{r Covars + Longhurst + Diet data N, tidy = TRUE}
+#Extract for %N data
+alb_global_dietn = alb_global_diet_use %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pN) %>%
+  filter(pN > 0) %>%
+  #filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  spread(prey_sp, pN, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietn$lat_cat))
+summary(as.factor(alb_global_dietn$code))
+summary(as.factor(alb_global_dietn$OceanBasin))
+summary(as.factor(alb_global_dietn$OceanBasinQ))
+
+write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
+```
+
+#### Diet data - biomass
+
+```{r Covars + Longhurst + Diet data M, tidy = TRUE}
+#Extract for %M data
+#range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
+
+alb_global_dietm = alb_global_diet %>%
+  dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pM) %>%
+  filter(pM > 0) %>%
+#  filter(prey_sp %in% alb_adult_traits$prey_sp) %>%
+  group_by(prey_sp) %>%
+  spread(prey_sp, pM, fill = 0, convert = FALSE)
+
+#Check covariate representation
+summary(as.factor(alb_global_dietm$lat_cat))
+summary(as.factor(alb_global_dietm$code))
+summary(as.factor(alb_global_dietm$OceanBasin))
+summary(as.factor(alb_global_dietm$OceanBasinQ))
+
+write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
+
+```
+
+### Extra from older code
+
+```{r Adding morph info for checking reported prey lengths, eval=FALSE}
+
+#Can use prey_morph_sum for "standard_total" conversion info for SL to TL.
+  #left_join(prey_morph_sum, by="prey_sp") 
+  #added morph info --> 1028 obs, 44 vars
+ 
+#Cleaning metrics
+alb_global = alb_global %>% 
+  mutate(maxtl_use = if_else(alb_global$maxl_type %in% c("SL", "ML"), 
+                             maxl_use/standard_total, maxl_use)
+         ) #%>%
+
+```
