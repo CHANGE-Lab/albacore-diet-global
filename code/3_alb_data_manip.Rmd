@@ -33,7 +33,7 @@ library(lattice)
 
 Prey traits, albacore diet and covariates:
 
-```{r Load prey traits selection back in}
+```{r Load prey traits selection back in, tidy = TRUE}
 
 prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
 
@@ -86,7 +86,7 @@ write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total.cs
 
 Supplementary figures S1a/b:
 
-```{r supplementary data for figures S1a/b}
+```{r supplementary data for figures S1a/b, tidy = TRUE}
 
 alb_covars_esti = alb_global_diet %>%
   dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
@@ -138,7 +138,7 @@ alb_covars_esti$pred_life = factor(alb_covars_esti$pred_life,
 levels(alb_covars_esti$pred_life)
 ```
 
-```{r supplementary plot for figures S1ab}
+```{r supplementary plot for figures S1ab, tidy = TRUE}
 
 alb_covars_esti_plot <- alb_covars_esti %>%
   mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>%
@@ -178,7 +178,7 @@ ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot.jpeg"),
 
 ```
 
-```{r albacore size estimation regression}
+```{r albacore size estimation regression, tidy = TRUE}
 
 #Check on the spread of the data by mean FL
 data = alb_covars_esti %>% filter(measurement == "mean")
@@ -200,7 +200,7 @@ summary(test_alb_size)
 #Not significant
 ```
 
-```{r supplementary plot for figures S1ab, eval=FALSE}
+```{r supplementary plot, eval=FALSE}
 
 #We need to do this on the replicate level and not the study level
 alb_covars_esti_life_plot <- alb_covars_esti %>%
@@ -245,7 +245,7 @@ ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot2.jpeg"),
 
 Note that there are a handful of cases where the same prey species was consumed and reported for two different life stages. Because this affects three species and for only one study, the simplest solution to be able to move forward, we need to just select the most commonly consumed species/life stage combination.
 
-```{r Check on duplicates for prey by life stage, tidy = TRUE}
+```{r Check on duplicates for prey by life stage, tidy = TRUE, eval=FALSE}
 
 #Previous problem rows
 #View(alb_global_diet[c(192, 226, 111, 118, 204, 247, 99, 117, 227, 248),])
@@ -266,7 +266,7 @@ alb_global_diet_use = alb_global_diet %>%
 
 Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for species' presence absence (PA). These data will be used for traitglms.
 
-```{r Covars + Longhurst + Diet data PA, tidy = TRUE}
+```{r Covars + Longhurst + Diet data PA, tidy = TRUE, eval=FALSE}
 #Extract data --> filter for only species that we have adult traits + cluster info for 
 # --> transform to wide data for MV GLMs + trait GLMs
 alb_global_dietpa = alb_global_diet_use %>% #_use
@@ -292,7 +292,7 @@ write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv")
 
 Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for reported frequency of occurrence (FO). Because these data may be used for traitglms and converted to presence/absence, we filter for very low occurrence species (< 1%).
 
-```{r Covars + Longhurst + Diet data FO, tidy = TRUE}
+```{r Covars + Longhurst + Diet data FO, tidy = TRUE, eval=FALSE}
 
 #Extract %FO data --> filter for only species that we have adult traits + 
 # cluster info for --> transform to wide data for MV GLMs + trait GLMs
@@ -325,7 +325,7 @@ write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv")
 
 #### Diet data - abundance
 
-```{r Covars + Longhurst + Diet data N, tidy = TRUE}
+```{r Covars + Longhurst + Diet data N, tidy = TRUE, eval=FALSE}
 #Extract for %N data
 alb_global_dietn = alb_global_diet_use %>%
   dplyr::select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, province, code, lat_cat, pred_life_adjust, prey_sp, pN) %>%
@@ -345,7 +345,7 @@ write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"), 
 
 #### Diet data - biomass
 
-```{r Covars + Longhurst + Diet data M, tidy = TRUE}
+```{r Covars + Longhurst + Diet data M, tidy = TRUE, eval=FALSE}
 #Extract for %M data
 #range(alb_global_dietm$pM) #0 to 95.2, need to exclude zeros as not true zeros
 
