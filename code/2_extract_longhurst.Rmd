@@ -32,7 +32,7 @@ here::here()
 
 ### Base map
 
-```{r create base map, message=FALSE}
+```{r create base map, message=FALSE, tidy=TRUE}
 # Base map
 world_map <- rnaturalearth::ne_countries(scale = 'small', returnclass = c("sf"))
 baseMap <- ggplot() +
@@ -44,7 +44,7 @@ baseMap
 
 ### Add Longhurst Province Shp
 
-```{r Add Longhurst Province Shp, message=FALSE}
+```{r Add Longhurst Province Shp, message=FALSE, tidy=TRUE}
 # Add longhurst regions information:
 longhurst <- sf::read_sf(here::here("code/longhurst/Longhurst_world_v4_2010.shp")) 
 # or wherever you have it stored
@@ -77,7 +77,7 @@ The warnings are annoying but they appear harmless. It's not uncommon for R to n
 
 ### Plot provinces
 
-```{r plot provinces}
+```{r plot provinces, message=FALSE, tidy=TRUE}
 
 # Plot provinces
 longMap <- baseMap + 
@@ -94,15 +94,15 @@ longMap
 
 ```
 
-```{r Read in Longhurst shapefile}
+```{r Read in Longhurst shapefile, message=FALSE, tidy=TRUE}
 longs <- readOGR("code/longhurst/Longhurst_world_v4_2010.shp")
 
-list.files(path="code")
+list.files(path="code/longhurst")
 ```
 
 ### Albacore data
 
-```{r read in and manipulate albacore data}
+```{r read in and manipulate albacore data, message=FALSE, tidy=TRUE}
 
 alb <- read.csv("data/output_data/alb_covars.csv", head = TRUE, sep= ",")
 
@@ -121,7 +121,7 @@ write.csv(alb, "data/output_data/alb_covars_longhurst.csv", row.names = FALSE)
 
 ```
 
-```{r make albacore study data map}
+```{r make albacore study data map, message=FALSE, tidy=TRUE}
 
 # Map
 albMap <- longMap + 
