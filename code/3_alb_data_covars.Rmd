@@ -86,7 +86,7 @@ write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total.cs
 
 Supplementary figures S1a/b:
 
-```{r supplementary data for figures S1a/b, tidy = TRUE}
+```{r supplementary data for figures S1, tidy = TRUE}
 
 alb_covars_esti = alb_global_diet %>%
   dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
@@ -111,8 +111,6 @@ unique(alb_covars_esti$pred_flest) #use this one
 
 unique(alb_covars_esti$StudyID)
 
-levels(as.factor(alb_covars_esti$StudyID))
-
 alb_covars_esti$StudyID = factor(alb_covars_esti$StudyID,
                                  levels = c("Aloncle1973", "Bello1999", "Bernard1985", "Bouxin&Legendre",
                                             "Clemens&Iselin1963", "Consoli2008", "DosSantos&Haimovici2002", "Glaser2015",
@@ -121,14 +119,15 @@ alb_covars_esti$StudyID = factor(alb_covars_esti$StudyID,
                                             "Monaco1888", "OrtizZarate1987", "Pinkas1971", "Pusineri2005",
                                             "Romanov2020", "Romeo2012", "Salman&Karakulak2009", "Watanabe2004",
                                             "Williams2015", "Young2010"),
-                                 labels = c("Aloncle (1973)", "Bello (1999)", "Bernard (1985)", "Bouxin (1934-40)",
-                                            "Clemens (1963)", "Consoli (2008)", "Dos Santos (2002)", "Glaser (2015)",
+                                 labels = c("Aloncle (1973)•", "Bello (1999)", "Bernard (1985)•", "Bouxin (1934-40)",
+                                            "Clemens (1963)", "Consoli (2008)•", "Dos Santos (2002)", "Glaser (2015)",
                                             "Goni (2011)", "Hart (1948)", "Iversen (1962)", "Jordan (1880)",
                                             "Joubin (1918)", "Madigan (2015)", "Matthews (1977)", "McHugh (1952)",
-                                            "Monaco (1888)", "Ortiz de Zarate (1987)", "Pinkas (1971)", "Pusineri (2005)",
-                                            "Romanov (2020)", "Romeo (2012)", "Salman (2009)", "Watanabe (2004)",
-                                            "Williams (2015)", "Young (2010)")
+                                            "Monaco (1888)", "Ortiz de Zarate (1987)•", "Pinkas (1971)•", "Pusineri (2005)•",
+                                            "Romanov (2020)", "Romeo (2012)•", "Salman (2009)", "Watanabe (2004)•",
+                                            "Williams (2015)•", "Young (2010)")
                                  )
+
 
 levels(as.factor(alb_covars_esti$pred_life))
 
@@ -136,9 +135,12 @@ alb_covars_esti$pred_life = factor(alb_covars_esti$pred_life,
                                    levels = c("adult", "juvenile, adult", "juvenile"),
                                    labels = c("adult", "mixed cohort", "juvenile"))
 levels(alb_covars_esti$pred_life)
+
+#Save this df for Supplementary Information Section C
+
 ```
 
-```{r supplementary plot for figures S1ab, tidy = TRUE}
+```{r supplementary plot for figures S1, tidy = TRUE}
 
 alb_covars_esti_plot <- alb_covars_esti %>%
   mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>%
@@ -174,7 +176,25 @@ alb_covars_esti_plot <- alb_covars_esti %>%
 alb_covars_esti_plot
 
 ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot.jpeg"), 
-       plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
+       plot = alb_covars_esti_plot, width=8, height=8, dpi=300)
+
+```
+
+```{r supplementary data on estimation for SI}
+
+alb_covars_esti_SI = alb_global_diet %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+           LocatLongitude, YearEnd, MonthRange, stomachs_used, 
+           pred_life, pred_flmean, pred_flmin, pred_flmax, pred_flmean_est, pred_flest) #%>%
+  #pivot_longer(cols = c(pred_flmin, pred_flmean, pred_flmax), names_to = "measurement", values_to = "FL") %>%
+  #mutate(pred_flest = case_when(pred_flest == "Estimated: by meta-analysis" ~ "Estimated",
+  #                              pred_flest == "Measured: study reported" ~ "Measured"
+  #                              )
+  #       )
+#Write over previous output from first data chunk
+write.csv(alb_covars_esti_SI, here::here("data/output_data/alb_covars_estimates.csv"), 
+          row.names = FALSE)
 
 ```
 
@@ -254,11 +274,12 @@ Note that there are a handful of cases where the same prey species was consumed 
 #  slice(., -c(226, 118, 117, 204, 227))
 
 #Updated data was downloaded with different order of the data so these rows have moved
-View(alb_global_diet[c(59, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
+View(alb_global_diet[c(130, 131, 187, 196, 77, 80, 192, 198, 76, 79, 197, 199),])
+View(alb_global_diet[c(131, 187, 77, 198, 76, 199),])
 
 #We select to keep the most common one (typically these were the same species appearing in the same study for two different life stages and this only affected the Bouxin & Legendre papers)
 alb_global_diet_use = alb_global_diet %>%
-  slice(., -c(71, 77, 64, 76, 72))
+  slice(., -c(131, 187, 77, 198, 76, 199))
 
 ```
 
