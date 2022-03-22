@@ -1,0 +1,139 @@
+---
+title: "Step 5 Phylogenetic Trait Graph"
+author: "Natasha Hardy"
+date: "22/03/2022"
+output: html_document
+---
+
+## About
+
+## Workspace
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Load packages, results='hide', tidy=TRUE, message=FALSE}
+
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(tinytex)
+
+# graphics
+
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(ggnewscale)
+library(ggimage)
+library(reshape2)
+library(pander)
+library(gridExtra)
+library(captioner)
+library(unmarked)
+library(cowplot)
+library(gtable)
+library(viridis)
+library(PNWColors)
+library(RColorBrewer)
+
+# phylogenetic & other tools
+library(ape)
+library(Biostrings)
+library(raster)
+library(dismo)
+library(patchwork)
+library(ggtree)
+library(ggstance)
+library(geiger)
+library(rotl) #for phylogenetic analyses, get all the species? from Hinchliff et al. 2015 PNAS
+library(phylobase)
+library(phytools)
+library(phangorn)
+library(stringr)
+library(taxize)
+#library(treeio)
+
+```
+
+## Load Data
+
+Using combination of my trial code and Matt Savoca and company's code to build a phylo tree with associated trait and %FO data
+
+```{r load prey info data, tidy=TRUE, warning=FALSE, message=FALSE}
+
+#data contains sp list, class, order & family + traits.
+
+#Probable life stage data
+my_prey_prob = read.csv(here("./data/output_data/prey_trait_probable_select.csv"), header=TRUE) %>%
+  dplyr::select(prey_sp, prey_class:prey_family, life_stage, vert_habitat:maxM, trophic_level, fisheries_status) %>%
+  filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
+#298 species and 32 variables
+str(my_prey_prob)
+
+sapply(my_prey_prob, class)
+## these need to be factors to work on the trees properly
+my_prey_prob[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade", "fisheries_status")] <- lapply(my_prey_prob[,c("diel_migrant","refuge","season_migrant", "phys_defense", "transparent", "col_disrupt", "silver", "countershade", "fisheries_status")], factor)
+
+my_prey_prob$maxFO[my_prey_prob$maxFO == 0.00] <- NA
+my_prey_prob$maxN[my_prey_prob$maxN == 0.00] <- NA
+my_prey_prob$maxM[my_prey_prob$maxM == 0.00] <- NA
+
+```
+
+**NOTES:** A lot of troubleshooting later and I found that the species list needs to go on the far left side of the data, all other data/factors need to be added to the RHS of the species list
+
+## Tree Build
+
+Building the basic tree
+
+```{r Building basic tree, eval=FALSE, warning=FALSE, message=FALSE}
+
+# Tree build 1
+breaks <- c(seq(1,nrow(my_prey_prob),50),nrow(my_prey_prob)+1)  # why are we doing this?
+#looking up each of the species in dataset to a phylogeny, doing it by sets of 50
+#if there's an NA (species that didn't match a value in known phylogeny), breaks the whole chunk of 50 species
+
+for (i in 1:(length(breaks)-1)){
+  taxa <- as.character(my_prey_prob$prey_sp[breaks[i]:(breaks[i+1]-1)])
+  taxa <- taxa[taxa != "" & !is.na(taxa)]
+
+  resolved_namest <- tnrs_match_names(taxa)                          # I think this is where all the extra species fall out
+  resolved_namest <- resolved_namest[!is.na(resolved_namest$unique_name),]  # ignore an NA
+  if (i==1){
+    resolved_namess <- resolved_namest
+  } else {
+    resolved_namess <- rbind(resolved_namess, resolved_namest)
+  }
+}
+resolved_names <- resolved_namess
+resolved_names <- resolved_names[resolved_names$flags!="INCERTAE_SEDIS_INHERITED",]
+
+#original tree based on simple taxon datset
+my_tree_prob <- tol_induced_subtree(ott_ids = resolved_names$ott_id, label_format = "name")
+
+my_tree_prob$tip.label<-gsub("_"," ",my_tree_prob$tip.label) # removes underscore between genus and species names
+my_tree_prob$tip.label<-str_extract(my_tree_prob$tip.label, "[A-Z][a-z]+ [a-z]+")
+
+my_tree_prob <- compute.brlen(my_tree_prob, method = "Grafen", power = 1/2) #add branch lengths to my tree using the Grafen (1989) method
+my_tree_prob <- ladderize(my_tree_prob, right = TRUE)
+
+View(my_tree_prob)
+
+# SAVE TREE ----
+write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
+```
+
+```{r Load in saved tree, warning=FALSE, message=FALSE}
+
+my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
+#306 species
+
+```

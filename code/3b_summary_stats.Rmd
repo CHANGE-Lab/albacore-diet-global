@@ -7,7 +7,7 @@ output: html_document
 
 ## About
 
-Here we 
+Here we check on dataframe information and summary statistics for reporting in the methods, results and discussion of the paper.
 
 ## Workspace
 
@@ -15,9 +15,33 @@ Here we
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Summary stats from quantitative data
+```{r Load Workspace, message=FALSE}
 
-```{r Summary stats for quantitative diet data, tidy=TRUE, tidy=true, message=FALSE}
+#R documentation
+library(pander)
+# general
+library(tidyverse)
+library(readxl)
+library(readr)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(lattice)
+
+```
+
+## Summary stats - Methods
+
+### 2.1 Studies & covariate data
+
+### 2.1 Quantitative diet data obtained
+
+We obtain the following quantitative data:
+
+```{r Summary stats for quantitative diet data, tidy=TRUE, message=FALSE}
 
 # Presence/Absence data
 diet_pa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv")) 
@@ -41,3 +65,73 @@ print(paste0("(iv) percent numerical biomass data for ", ncol(diet_mass[,10:ncol
              " species and ", nrow(diet_mass), " observations"))
 
 ```
+
+
+
+### 2.2 Trait data information
+
+### 2.3 Albacore and prey size summary stats
+
+### 2.4 Species obtained and parsed to analyses
+
+## Summary stats - Results
+
+### 3.1 Biological and Trait Diversity
+
+**Results text** -- Through a historical and global synthesis of albacore tuna diets using reported stomach content data from the 1880’s–2010’s, we report a large biodiversity in the diets of albacore tunas. A total of 550 individual taxa identified in the diets of juvenile and adult albacore tuna across the world’s oceans, representing 203 families of prey taxa, mainly of ray-finned fishes (n = 108 families of prey), cephalopods (n = 29), and crustaceans (Malacostraca n = 45, Hexanauplia n = 6), but also several taxa of pelagic gastropods (n = 6), salps (n = 2) and hydrozoans (n = 1), and one elasmobranch (n = 1) (ESM data).
+
+```{r Summary stats for all diet taxa by class and family, tidy=TRUE, message=FALSE}
+
+diet_all = as.data.frame(read_xlsx(here("data/input_data/albacore_diet_global.xlsx"),
+                      sheet = "albacore_diet_global"))
+
+diet_class_sum = diet_all %>%
+  filter(prey_class != "NA") %>%
+  filter(Include != "No", prey_class != "Other") %>%
+  group_by(prey_class, prey_family, na.rm=TRUE) %>%
+  tally() 
+
+diet_fam_sum = diet_class_sum %>%
+  group_by(prey_class) %>%
+  tally()
+
+print(diet_fam_sum)
+```
+
+Of these, 312 taxa were reported to species level. In addition to consumption data, we obtained reliable trait information, at the appropriate life stage likely consumed by albacore tuna for 298 individual species. 
+
+```{r Summary stats for species level taxa consumed, tidy=TRUE, message=FALSE}
+
+diet_species_sum = diet_all %>%
+  filter(Include != "No") %>%
+  group_by(prey_class, prey_sp) %>% #, life_stage
+  tally() 
+
+diet_species_level = diet_all %>%
+  filter(Include != "No", TaxLev == "species") %>%
+  group_by(prey_class, prey_sp) %>% #, life_stage
+  tally() 
+
+print(nrow(diet_species_level))
+
+```
+
+```{r Summary stats for probable prey traits, tidy=TRUE, message=FALSE}
+
+prey_probable_traits = read.csv(here("data/output_data/prey_trait_probable_select.csv")) %>%
+  filter(prey_class != "NA")
+
+print(nrow(prey_probable_traits))
+
+```
+
+
+## Phylogenetic and Traits Final Graphs
+
+Of these, 298 species parsed to phylogenetic trees (Fig. 2a, will work on cleaning phylo code later). Notably, only a subset of species are frequently observed in their diets: 26 species occur in > 50% of samples within studies across the world’s oceans (+ESM), a further 44 species are relatively common, reported  in > 25% of samples (Fig. 2c). Uncommon prey species are often excluded from further analyses due to insufficient data and therefore difficulties in diet modelling. However, we posit that they contribute to diet variability in sharing consumable traits with more common prey species. # Report trait diversity observed and that recur in prey species, hotspots and traits that were most common - for habitat use, morphological and aggregation traits.
+
+## Discussion paragraphs
+
+(Discussion) We discuss the loss of information when we exclude species that are uncommonly consumed - these species share traits with more common species, and convey information about predator-prey interactions. → Trait-based analyses aim to capture information about predator-prey interactions as a result of generalisable traits shared by multiple prey species.
+
+(Discussion) Whilst, broad diets are expected of generalist predators, and cumulatively we would expect several hundred taxa to be represented in a global list of prey consumed, there was no published summary of the taxonomic diversity identified within albacore diets. Additionally, no data from the north Pacific were used in previous syntheses of albacore and other tunas (Young et al. 2015, Duffy et al. 2017, Pethybridge et al. 2018). 
