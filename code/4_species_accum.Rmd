@@ -13,7 +13,7 @@ output: html_document
 
 ## About
 
-Illustrating the biological diversity in diets of a highly migratory predator
+Illustrating the biological diversity in diets of a highly migratory predator, albacore tuna, across ocean basins and years sampled. We collected historical data on albacore tuna stomach contents, and plot the mean and cumulative species richness obtained with each additional data collection effort.
 
 ## Workspace
 
@@ -24,7 +24,8 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```{r Load Workspace, message=FALSE}
 
 #R documentation
-#library(pander)
+library(pander)
+library(formatR)
 # general
 library(tidyverse)
 library(readxl)
@@ -50,9 +51,9 @@ library(BiodiversityR)
 
 ```
 
-## Rarefaction data
+## Species community data
 
-```{r Rarefaction curves data}
+```{r Load in species community data, tidy=TRUE}
 #Data -- using total diet data
 alb_global_dietpa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv"), 
           check.names = FALSE) %>%
@@ -64,18 +65,20 @@ alb_global_dietpa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv")
 PreyPAdata = as.data.frame(alb_global_dietpa[,10:ncol(alb_global_dietpa)])
 PreyPAsite = as.data.frame(alb_global_dietpa[,c(1:5)])
 
-str(PreyPAdata)
+#str(PreyPAdata)
 str(PreyPAsite)
 
 rownames(PreyPAsite) = rownames(PreyPAdata)
-#check.datasets(PreyPAdata, PreyPAsite) #ensure that the sites of the community dataset are the same sites as those from the environmental dataset --> something that is assumed to be the case for the BiodiversityR and vegan packages.
 
+#check.datasets(PreyPAdata, PreyPAsite) 
+#ensure that the sites of the community dataset are the same sites as those from the environmental dataset --> something that is assumed to be the case for the BiodiversityR and vegan packages.
 
+#Save data if needed
 #write.csv(PreyPAsite, here("data/output_data/alb_global_rarefactiondata.csv"), row.names = FALSE)
 
 ```
 
-```{r Reload prey pa sites data}
+```{r Reload prey pa sites data, tidy=TRUE}
 
 #PreyPAsite = read.csv(here("data/output_data/alb_global_rarefactiondata.csv"), check.names = FALSE)
 
@@ -85,12 +88,9 @@ PreyPAsite$OceanBasin = as.factor(PreyPAsite$OceanBasin)
 
 ```
 
-
-## Basic rarefaction curves for species-level taxa:
-
 Species richness per ocean basin:
 
-```{r Summary species specnumber}
+```{r Summary species specnumber, tidy=TRUE}
 
 # number of species and the factor that I want to group them by
 SpO <- specnumber(PreyPAdata, PreyPAsite$OceanBasin)
@@ -98,104 +98,233 @@ SpO
 
 ```
 
-Species mean species accumulation and step-wise accumulation in relation to collection sites:
 
-```{r Summary rarefaction and accum result}
+## Mean Cumulative Richness
 
-# Acummresult function
+Species mean species accumulation overall:
 
-#Produces average species accumulation curve
-Alb.accum <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='exact', conditioned=TRUE)
-accumplot(Alb.accum)
-#Makes a dataset with species richness in relation to sites using the 'exact' method.
-#This adds sites randomly, and finds the expected mean number of sites that contribute to 
-#a certain increase in species richness.
-str(Alb.accum)
+Makes a dataset with species richness in relation to sites using the 'exact' method. This adds sites randomly, and finds the expected mean number of sites that contribute to a certain increase in species richness.
 
-#Produces cumulative species curves
-Alb.accum2 <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='collector', conditioned=TRUE)
-#str(Alb.accum2)
-accumplot(Alb.accum2)
-#Makes a dataset with species richness in relation to sites using the 'collector' method.
-#This adds sites in the order they are collected, and finds the expected mean number of sites that contribute to 
-#a certain increase in species richness.
-str(Alb.accum2)
+```{r Summary mean spec accum, tidy=TRUE}
+
+Alb.mean.1 <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='exact', conditioned=TRUE)
+glimpse(Alb.mean.1)
+accumplot(Alb.mean.1)
 
 ```
 
-## Variable rarefaction by Ocean Basin
+Mean cumulative richness in relation to Ocean Basin sampled:
 
-```{r Rarefaction by sites - exact method, eval=FALSE}
+```{r Site level mean spec accum, tidy=TRUE}
+#With automatic plotting
+Alb.mean.2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='exact',
+                        legend=FALSE, conditioned=TRUE) #, scale='YearEnd'
+#Withhold on plotting so as to do so in ggplot
+Alb.mean.3 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
+                     method='exact', conditioned=F, plotit=F)
 
-#Produces average species accumulation curve
-Plot <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
-                  method='exact', conditioned=TRUE, plotit=TRUE) #scale = 'YearEnd'
+Alb.mean.long3 <- accumcomp.long(Alb.mean.3, ci=NA, label.freq=5)
 
-#Plot.long <- accumcomp.long(Plot)
-#str(Plot.long)
+```
+
+```{r Biodiversity R plotting theme by Roeland Kindt, tidy=TRUE}
+
+# possibly need for extrafont::loadfonts(device="win") to have Arial
+# as alternative, use library(ggThemeAssist)
+
+BioR.theme <- theme(
+  panel.background = element_blank(),
+  #panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.line = element_line("gray25"),
+  text = element_text(size = 24, family="Arial"),
+  axis.text = element_text(size = 24, colour = "gray25"),
+  axis.title = element_text(size = 24, colour = "gray25"),
+  legend.title = element_text(size = 24),
+  legend.text = element_text(size = 24),
+  legend.key = element_blank(),
+  legend.position = c(0.8, 0.3)
+  )
+
+```
+
+```{r Site level mean spec accum plot, tidy=TRUE}
+
+plotgg1 <- ggplot(data=Alb.mean.long3, aes(x = Sites, y = Richness, ymax =  UPR, ymin= LWR)) + 
+  scale_x_continuous(expand=c(0, 1), sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  scale_y_continuous(sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  geom_line(aes(colour=Grouping), size=2) +
+  geom_point(data=subset(Alb.mean.long3, labelit==TRUE), 
+             aes(colour=Grouping, shape=Grouping), size=5) +
+  geom_ribbon(aes(colour=Grouping), alpha=0.2, show.legend=FALSE) + 
+  BioR.theme +
+  scale_color_brewer(palette = "Set1") +
+  labs(x = "Cumulative sampling seasons", y = "Mean cumulative species richness", 
+       colour = "Ocean Basin", shape = "Ocean Basin")
+
+plotgg1
+
+ggsave(here("outputs_figures/alb_mean_accum_legend.jpeg"), plot=plotgg1, height = 8, width = 12, dpi = 300)
+
+```
+
+## Step-wise accumulation by Ocean Basin
+
+Makes a dataset with species richness in relation to sites using the 'exact' method. This adds sites randomly, and finds the expected mean number of sites that contribute to a certain increase in species richness.
+
+```{r Summary step-wise spec accum, tidy=TRUE}
+
+Alb.acc.1 <- accumresult(PreyPAdata, y=PreyPAsite$OceanBasin, method='collector', conditioned=TRUE)
+Alb.acc.1
+accumplot(Alb.acc.1)
+str(Alb.acc.1)
+
+```
+
+```{r Site level step-wise spec accum, tidy=TRUE}
+#With automatic plotting
+Alb.acc.2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', method='collector',
+                        legend=FALSE, conditioned=TRUE) #, scale='YearEnd'
+#Withhold on plotting so as to do so in ggplot
+Alb.acc.3 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin',
+                     method='collector', conditioned=F, plotit=F)
+
+Alb.acc.long3 <- accumcomp.long(Alb.acc.3, ci=NA, label.freq=5)
+
+```
+
+```{r Biodiversity R plotting theme by Roeland Kindt 2nd theme, eval=FALSE, include=FALSE}
+#One need to change this if necessary
+# possibly need for extrafont::loadfonts(device="win") to have Arial
+# as alternative, use library(ggThemeAssist)
+
+BioR.theme2 <- theme(
+  panel.background = element_blank(),
+  #panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.line = element_line("gray25"),
+  text = element_text(size = 20, family="Arial"),
+  axis.text = element_text(size = 20, colour = "gray25"),
+  axis.title = element_text(size = 20, colour = "gray25"),
+  legend.title = element_text(size = 20),
+  legend.text = element_text(size = 20),
+  legend.key = element_blank(),
+  legend.position = c(0.8, 0.3))
+
+```
+
+```{r Site level step-wise spec accum plot, tidy=TRUE}
+
+plotgg2 <- ggplot(data=Alb.acc.long3, aes(x = Sites, y = Richness, ymax =  UPR, ymin= LWR)) + 
+  scale_x_continuous(expand=c(0, 1), sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  scale_y_continuous(sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  geom_line(aes(colour=Grouping), size=2) +
+  geom_point(data=subset(Alb.acc.long3, labelit==TRUE), 
+             aes(colour=Grouping, shape=Grouping), size=5) +
+  BioR.theme +
+  scale_color_brewer(palette = "Set1") +
+  labs(x = "Cumulative sampling seasons", y = "Cumulative species richness", 
+       colour = "Ocean Basin", shape = "Ocean Basin")
+
+plotgg2
+
+ggsave(here("outputs_figures/alb_step_accum_simple.jpeg"), 
+       plot=plotgg2, height = 8, width = 10, dpi = 300)
 
 ```
 
 
-```{r Rarefaction by sites - collector method}
-#Plot.long.covar = Plot.long %>%
-#  rename(OceanBasin = Grouping) %>%
-#  left_join(PreyPAsite, by = "OceanBasin")
+## Step-wise accumulation by Ocean Basin & Year sampled
 
-#Produces cumulative species curves
-Plot2 <- accumcomp(PreyPAdata, y=PreyPAsite, factor='OceanBasin', 
-                   #scale = 'YearEnd', 
-                   method='collector', conditioned=TRUE, plotit=TRUE)
-
-#Plot2.long <- accumcomp.long(Plot2)
-#str(Plot2.long)
-# save and export the accumcomp data in order to add SW back in with just the one point
-
-# Did this for first and second Plot output for accumcomp function.
-#write.csv(Plot.long, here("data/output_data/accum_plot.csv"), row.names = FALSE)
-#accum.data <- read.csv(here("data/output_data/accum_plot.csv"))
-#View(accum.data)
-
-#write.csv(Plot2.long, here("data/output_data/accum2_plot.csv"), row.names = FALSE)
-#accum2.data <- read.csv(here("data/output_data/accum2_plot.csv"))
-#View(accum2.data)
-```
-
-Problem: Still can't get the data for year to append to the rarefaction plot data.
-Solution: find a way to append the YearEnd values, seeing as those data were ordered and the fed to the rarefaction code routine...
-
-```{r Manipulate and extract year data}
+```{r Manipulate and extract year data, eval=FALSE}
 
 prey_year = PreyPAsite %>%
   arrange(desc(OceanBasin))
 
-plot2_data = cbind(prey_year, Plot2.long)
+plot2_data = cbind(prey_year, Alb.acc.long3)
 
 ```
 
-```{r Loop to extract year data for plot 1}
+We need to retroactively append 'YearEnd' data to the species accumulation data obtained through Biodiversity R workflow. This code solution was suggest by Roeland Kindt. Both the above and this solution work, as the 'collector' method reads in the sites in the order they are sampled, in our case that is chronologically and nested within Ocean Basins.
 
-Plot.long$Year <- NA
-groupings <- unique(Plot.long$Grouping)
+```{r Alternative loop to extract year data for plot 3, tidy=TRUE}
+
+Alb.acc.long3$Year <- NA
+groupings <- unique(Alb.acc.long3$Grouping)
  
 for(g in 1:length(groupings)) {
   group <- groupings[g]
   # assuming Grouping was based on variable Region of the env.data
-  Plot.long[Plot.long$Grouping == group, "Year"] <- PreyPAsite[PreyPAsite$OceanBasin == group, "YearEnd"]
+  Alb.acc.long3[Alb.acc.long3$Grouping == group, "Year"] <- PreyPAsite[PreyPAsite$OceanBasin == group, "YearEnd"]
   }
 
 ```
 
+```{r Species accum data manip if needed, eval=FALSE, include=FALSE}
+
+#levels(as.factor(Alb.acc.long3$Grouping))
+
+#Alb.acc.long3$Grouping <- factor(Alb.acc.long3$Grouping, levels = c("Mediterranean", "N Atlantic",
+#                                                        "S Atlantic", "Indian",
+#                                                        "N Pacific", "S Pacific"))
+
+```
+
+```{r Biodiversity R plotting theme by Roeland Kindt 3nd theme, tidy=TRUE}
+#One need to change this if necessary
+# possibly need for extrafont::loadfonts(device="win") to have Arial
+# as alternative, use library(ggThemeAssist)
+
+BioR.theme3 <- theme(
+  panel.background = element_blank(),
+  #panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.line = element_line("gray25"),
+  text = element_text(size = 24, family="Arial"),
+  axis.text = element_text(size = 24, colour = "gray25"),
+  axis.title = element_text(size = 24, colour = "gray25"),
+  legend.title = element_text(size = 24),
+  legend.text = element_text(size = 24),
+  legend.key = element_blank(),
+  legend.position ="none",
+  #legend.position = c(0.2, 0.7)
+  )
+
+```
+
+```{r Site level step-wise spec accum plot by year, tidy=TRUE}
+
+plotgg3 <- ggplot(data=Alb.acc.long3, aes(x = Year, y = Richness, ymax =  UPR, ymin= LWR)) + 
+  scale_x_continuous(expand=c(0, 1), sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  scale_y_continuous(sec.axis = dup_axis(labels=NULL, name=NULL)) +
+  geom_line(aes(colour=Grouping), size=2) +
+  geom_point(data=subset(Alb.acc.long3, labelit==TRUE), 
+             aes(colour=Grouping, shape=Grouping), size=5) +
+  BioR.theme3 +
+  scale_color_brewer(palette = "Set1") +
+  labs(x = "Years sampled", y = "Cumulative species richness", 
+       colour = "Ocean Basin", shape = "Ocean Basin")
+
+plotgg3
+
+ggsave(here("outputs_figures/alb_step_accum_year_nl.jpeg"), plot=plotgg3, height = 8, width = 12, dpi = 300)
+
+```
+
+
+## Extra code
+
+If we want to relevel factors and make our own colour palettes. 
 
 ```{r rarefaction graphs - curve, eval=FALSE}
 
-levels(as.factor(Plot.long$Grouping))
+levels(as.factor(Alb.acc.long3$Grouping))
 
-Plot.long$Grouping <- factor(Plot.long$Grouping, levels = c("Mediterranean", "N Atlantic",
+Alb.acc.long3$Grouping <- factor(Alb.acc.long3$Grouping, levels = c("Mediterranean", "N Atlantic",
                                                         "S Atlantic", "Indian",
                                                         "N Pacific", "S Pacific"))
 
-Accum.plot <- ggplot(data = Plot.long, aes(y=Richness, x=Sites, colour=Grouping)) +
+Accum.plot.1 <- ggplot(data = Alb.acc.long3, aes(y=Richness, x=Year, colour=Grouping)) + #x=Sites
   geom_point(size=2) +
   geom_line(size=1.5) + 
   theme_classic() +
@@ -207,59 +336,10 @@ Accum.plot <- ggplot(data = Plot.long, aes(y=Richness, x=Sites, colour=Grouping)
   theme(legend.title=element_text(size=18)) +
   labs(x="Years sampled", y="Species cumulative richness")+
   scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")+
-  geom_errorbar(data = Plot.long, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
-Accum.plot
+  geom_errorbar(data = Alb.acc.long3, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
+Accum.plot.1
 
 ggsave(here("outputs_figures/accum.plot1.jpeg"), plot=Accum.plot, height = 8, width = 12, dpi = 300)
-```
-
-
-```{r Loop from Roeland for plot 2}
-
-Plot2.long$Year <- NA
-groupings <- unique(Plot2.long$Grouping)
- 
-for(g in 1:length(groupings)) {
-  group <- groupings[g]
-  # assuming Grouping was based on variable Region of the env.data
-  Plot2.long[Plot2.long$Grouping == group, "Year"] <- PreyPAsite[PreyPAsite$OceanBasin == group, "YearEnd"]
-  }
-
-```
-
-```{r rarefaction graphs - cumulative}
-##Second plot
-str(Plot2.long)
-
-levels(as.factor(Plot2.long$Grouping))
-
-Plot2.long$Grouping <- factor(Plot2.long$Grouping, levels = c("Mediterranean", "N Atlantic",
-                                                        "S Atlantic", "Indian",
-                                                        "N Pacific", "S Pacific"))
-
-Accum.plot2 <- ggplot(data = Plot2.long, aes(y=Richness, x=Year, colour=Grouping)) +
-  geom_point(size=2) +
-  geom_line(size=1.5) + 
-  theme_classic() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  #scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))+
-  #geom_text(aes(x=Year, label=Stomachs), size=4, hjust=0.5, col="black") +
-  #geom_text_repel(data = accum.data2, aes(x=Year, label=Stomachs),
-  #                nudge_x = -10, nudge_y = 10) +
-  theme(axis.title=element_text(size=18)) +
-  theme(axis.text=element_text(size=18)) +
-  theme(legend.text=element_text(size=18)) +
-  theme(legend.title=element_text(size=18)) +
-  labs(x="Years sampled", y="Species cumulative richness")+
-  #scale_colour_manual(values=wes_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
-  scale_colour_manual(values=pnq_palette("Zissou1", 7, type="continuous"), name="Ocean Basin")
-Accum.plot2
-
-ggsave(here("outputs_figures/accum.plot2.jpeg"), plot=Accum.plot2, height = 8, width = 12, dpi = 300)
-
-
-#Note no error bar for pure accumulation plot
-
 ```
 
 ## Comms with Roeland Kindt

@@ -1,0 +1,43 @@
+---
+title: "Step 3b Summary Stats & Dataframe Info"
+author: "Natasha Hardy"
+date: "22/03/2022"
+output: html_document
+---
+
+## About
+
+Here we 
+
+## Workspace
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Summary stats from quantitative data
+
+```{r Summary stats for quantitative diet data, tidy=TRUE, tidy=true, message=FALSE}
+
+# Presence/Absence data
+diet_pa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv")) 
+print(paste0("(i) presence/absence data for ", ncol(diet_pa[,10:ncol(diet_pa)]), 
+             " species and ", nrow(diet_pa), " observations"))
+
+# % FO data
+diet_fo = read.csv(here("data/output_data/alb_global_wide_dietfo.csv")) 
+print(paste0("(ii) percent frequency of occurrence for ", ncol(diet_fo[,10:ncol(diet_fo)]),
+             " species and ", nrow(diet_fo), " observations"))
+
+# % Numerical data
+
+diet_num = read.csv(here("data/output_data/alb_global_wide_dietn.csv"))
+print(paste0("(iii) percent numerical abundance data for ", ncol(diet_num[,10:ncol(diet_num)]),
+             " species and ", nrow(diet_num), " observations"))
+
+# % Biomass data
+diet_mass = read.csv(here("data/output_data/alb_global_wide_dietm.csv"))
+print(paste0("(iv) percent numerical biomass data for ", ncol(diet_mass[,10:ncol(diet_mass)]),
+             " species and ", nrow(diet_mass), " observations"))
+
+```

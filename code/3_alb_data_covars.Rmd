@@ -5,6 +5,10 @@ date: "17/03/2022"
 output: html_document
 ---
 
+## About
+
+Here we create the key dataframes for analyses, including appending geographic information data back onto our covariate and total diet matrices, then producing subsets of the data for a presence/absence, frequency of occurrence, % abundance and % biomass species community dataframes. Note that the latter datasets do not have enough replication to use in analyses.
+
 ## Workpsace
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE}
@@ -77,6 +81,9 @@ alb_global_diet = alb_global %>%
                 stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit)
 
 unique(alb_global_diet$code)
+summary(as.factor(alb_global_diet$code))
+table(alb_global_diet$code)
+
 #Write over previous output from first data chunk
 write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total.csv"), 
           row.names = FALSE)
@@ -299,14 +306,18 @@ alb_global_dietpa = alb_global_diet_use %>% #_use
   #dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pa, fill = 0, convert = FALSE)
 
+write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"), 
+          row.names = FALSE)
+```
+
+```{r Summary stats PA data}
 #Check covariate representation
 summary(as.factor(alb_global_dietpa$lat_cat))
 summary(as.factor(alb_global_dietpa$code))
 summary(as.factor(alb_global_dietpa$OceanBasin))
 summary(as.factor(alb_global_dietpa$OceanBasinQ))
 
-write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"), 
-          row.names = FALSE)
+dim(alb_global_dietpa)
 ```
 
 #### Diet data - frequency of occurrence
@@ -384,21 +395,5 @@ summary(as.factor(alb_global_dietm$OceanBasin))
 summary(as.factor(alb_global_dietm$OceanBasinQ))
 
 write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
-
-```
-
-### Extra from older code
-
-```{r Adding morph info for checking reported prey lengths, eval=FALSE}
-
-#Can use prey_morph_sum for "standard_total" conversion info for SL to TL.
-  #left_join(prey_morph_sum, by="prey_sp") 
-  #added morph info --> 1028 obs, 44 vars
- 
-#Cleaning metrics
-alb_global = alb_global %>% 
-  mutate(maxtl_use = if_else(alb_global$maxl_type %in% c("SL", "ML"), 
-                             maxl_use/standard_total, maxl_use)
-         ) #%>%
 
 ```

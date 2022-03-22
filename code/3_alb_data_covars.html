@@ -61,6 +61,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -81,6 +82,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -173,6 +177,7 @@ pre code {
 
 <div id="workpsace" class="section level2">
 <h2>Workpsace</h2>
+<p>TEXT</p>
 <pre class="r"><code>#R documentation
 library(pander)
 # general
@@ -266,6 +271,13 @@ unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they 
 <pre class="r"><code>unique(alb_global_diet$code)</code></pre>
 <pre><code>##  [1] &quot;NADR&quot; &quot;MEDI&quot; &quot;CCAL&quot; &quot;SATL&quot; &quot;CNRY&quot; &quot;NPTG&quot; &quot;NASW&quot; &quot;NECS&quot; &quot;ISSG&quot; &quot;EAFR&quot;
 ## [11] &quot;MONS&quot; &quot;NPPF&quot; &quot;ARCH&quot; &quot;SANT&quot; &quot;NEWZ&quot; &quot;SPSG&quot;</code></pre>
+<pre class="r"><code>summary(as.factor(alb_global_diet$code))</code></pre>
+<pre><code>## ARCH CCAL CNRY EAFR ISSG MEDI MONS NADR NASW NECS NEWZ NPPF NPTG SANT SATL SPSG 
+##   19  312   39   82   71   77   19  332   12    6    1   28   10    2   12    5</code></pre>
+<pre class="r"><code>table(alb_global_diet$code)</code></pre>
+<pre><code>## 
+## ARCH CCAL CNRY EAFR ISSG MEDI MONS NADR NASW NECS NEWZ NPPF NPTG SANT SATL SPSG 
+##   19  312   39   82   71   77   19  332   12    6    1   28   10    2   12    5</code></pre>
 <pre class="r"><code>#Write over previous output from first data chunk
 write.csv(alb_global_diet, here::here(&quot;data/output_data/alb_global_diet_total.csv&quot;), 
           row.names = FALSE)</code></pre>
@@ -470,11 +482,12 @@ ggsave(here::here(&quot;outputs_figures/ms_figures/alb_covars_size_esti_plot2.jp
 #  slice(., -c(226, 118, 117, 204, 227))
 
 #Updated data was downloaded with different order of the data so these rows have moved
-View(alb_global_diet[c(59, 71, 70, 77, 64, 81, 69, 76, 72, 82),])
+View(alb_global_diet[c(130, 131, 187, 196, 77, 80, 192, 198, 76, 79, 197, 199),])
+View(alb_global_diet[c(131, 187, 77, 198, 76, 199),])
 
 #We select to keep the most common one (typically these were the same species appearing in the same study for two different life stages and this only affected the Bouxin &amp; Legendre papers)
 alb_global_diet_use = alb_global_diet %&gt;%
-  slice(., -c(71, 77, 64, 76, 72))</code></pre>
+  slice(., -c(131, 187, 77, 198, 76, 199))</code></pre>
 <div id="presenceabsence" class="section level4">
 <h4>Presence/absence</h4>
 <p>Here we will join our additional covariates (inc. Longhurst province data) with the diet data, and generate a wide format df with species as columns and values for species’ presence absence (PA). These data will be used for traitglms.</p>
