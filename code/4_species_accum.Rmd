@@ -26,28 +26,30 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 #R documentation
 library(pander)
 library(formatR)
+
 # general
 library(tidyverse)
 library(readxl)
 library(readr)
 library(plyr)
 library(dplyr)
-library(devtools)
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
+
+# Graphics
+library(ggplot2)
+
+# Biodiversity & analyses
+library(BiodiversityR)
 library(vegan)
 library(tcltk)
-# RE-INSTALLED THESE
 
-#Graphics
-library(ggplot2)
-library(viridis)
-library(RColorBrewer)
-library(wesanderson)
-
-#Biodiversity
-library(BiodiversityR)
+#How many of these packages do we really need?
+#library(viridis)
+#library(RColorBrewer)
+#library(wesanderson)
+#library(devtools)
 
 ```
 

@@ -53,31 +53,6 @@ List of outputs created for analyses:
 
 ## Dataframes
 
-### Prey trait db
-
-Loading in and selecting key species coarse traits: for habitat association, seasonal, vertical migration and aggregation behaviour. Note that NH overhauled our prey life stage estimation protocol in December 2021 through early 2022, and we have thoroughly curated this step.
-
-```{r Prey trait data load, message=FALSE, results='hide', tidy=TRUE}
-
-#Load prey trait db
-prey_trait <- as.data.frame(read_xlsx(here::here("data/input_data/prey_trait_db.xlsx"),
-                                           sheet = "prey_trait_db"))
-
-```
-
-Key traits selection:
-
-```{r Prey traits selection, tidy=TRUE}
-
-prey_trait_select = prey_trait %>%
-  dplyr::select(prey_class:prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, refuge_cat, season_cat)
-
-str(prey_trait_select)
-
-write.csv(prey_trait_select, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
-
-```
-
 ### Diet raw data
 
 Load diet data and merge with prey size trait information, and undertake necessary data selection and manipulation of variables.
@@ -159,7 +134,7 @@ write.csv(alb_covars, here::here("data/output_data/alb_covars.csv"), row.names =
 
 ```
 
-## Data checks
+## Data checks & additional info
 
 ### Prey length info reported
 
@@ -197,7 +172,7 @@ write.csv(alb_global_prey_life, here::here("data/output_supp/alb_global_prey_lif
 
 ### Prey prevalence data reported
 
-```{r Reported diet metrics summary, tidy = TRUE}
+```{r Reported diet metrics summary v1, tidy = TRUE}
 
 alb_global_metrics = alb_global %>%
   #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
@@ -212,5 +187,71 @@ write.csv(alb_global_metrics, here::here("data/output_supp/alb_global_metrics.cs
 
 ```
 
+```{r Reported diet metrics summary v2, tidy = TRUE}
 
-## GO TO 2_extract_longhurst work then to document 3_alb_data_manip.Rmd
+alb_global_metrics_basic = alb_global %>%
+  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %>%
+  group_by(prey_sp) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE)) 
+
+write.csv(alb_global_metrics_basic, here::here("data/output_supp/alb_global_metrics_basic.csv"), row.names = FALSE)
+
+```
+
+
+
+## Prey trait db
+
+### Load and select traits for analyses
+
+Loading in and selecting key species coarse traits: for habitat association, seasonal, vertical migration and aggregation behaviour. Note that NH overhauled our prey life stage estimation protocol in December 2021 through early 2022, and we have thoroughly curated this step.
+
+```{r Prey trait data load, message=FALSE, results='hide', tidy=TRUE}
+
+#Load prey trait db
+prey_trait <- as.data.frame(read_xlsx(here::here("data/input_data/prey_trait_db.xlsx"),
+                                           sheet = "prey_trait_db"))
+
+```
+
+Key traits selection:
+
+```{r Prey traits selection, tidy=TRUE}
+
+prey_trait_select = prey_trait %>%
+  dplyr::select(prey_class:prey_sp, life_stage, diet_likely, life_note, 
+                vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge_cat, season_migrant, season_cat, gregarious_primary) %>%
+  filter(life_stage == diet_likely)
+
+prey_trait_select$prey_sp[duplicated(prey_trait_select$prey_sp)]
+
+str(prey_trait_select)
+
+```
+
+Note that there are 308 spp remaining in the global diet db. Why the difference in 5 species from the trait db? These were the prey taxa found in the larval albacore tuna diets and were thus previously removed.
+
+```{r check why some species drop out}
+
+check_spp = prey_trait_select %>%
+  anti_join(alb_global_metrics_basic, by="prey_sp")
+
+```
+
+```{r filter prey trait df by species remaining in diet df}
+
+prey_trait_select_use = prey_trait_select %>%
+  filter(prey_sp %in% unique(alb_global_metrics_basic$prey_sp)) %>%
+  left_join(alb_global_metrics_basic)
+
+write.csv(prey_trait_select_use, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
+
+```
+
+## GO TO 2_extract_longhurst to work on Figure 1a
+## THEN TO document 3a_alb_data_covars to work on covariate info
+## THEN TO 4_species_accum doc to work on Figure 1b and c
+## THEN TO 5_trait_phylo_graph for species and trait phylogenetic graphs

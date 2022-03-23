@@ -1,868 +1,309 @@
-"prey_class","prey_order","prey_family","prey_sp","life_stage","vert_habitat","horz_habitat","diel_migrant_cat","refuge_cat","season_cat"
-"Actinopterygii","Argentiniformes","Bathylagidae","Bathylagoides wesethi","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Argentiniformes","Bathylagidae","Bathylagoides wesethi","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Argentiniformes","Bathylagidae","Bathylagoides wesethi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Argentiniformes","Bathylagidae","Leuroglossus stilbius","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Argentiniformes","Bathylagidae","Leuroglossus stilbius","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Argentiniformes","Bathylagidae","Leuroglossus stilbius","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Ateleopodiformes","Ateleopodidae","Ateleopus natalensis","adult","benthic","continental shelf","diel_UN","refuge_NA","season_NA"
-"Actinopterygii","Ateleopodiformes","Ateleopodidae","Ateleopus natalensis","juvenile","demersal","continental shelf","diel_UN","refuge_NA","season_NA"
-"Actinopterygii","Ateleopodiformes","Ateleopodidae","Ateleopus natalensis","larva","epipelagic","continental shelf","diel_UN","refuge_NA","season_NA"
-"Actinopterygii","Atheriniformes","Atherinidae","Atherinopsis californiensis","adult","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Atheriniformes","Atherinidae","Atherinopsis californiensis","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Atheriniformes","Atherinidae","Atherinopsis californiensis","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Alepisauridae","Alepisaurus ferox","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Alepisauridae","Alepisaurus ferox","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Alepisauridae","Alepisaurus ferox","larva","epipelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus nikparini","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus nikparini","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus nikparini","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus pharao","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus pharao","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus pharao","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Chlorothalmidae","Chlorophthalmus agassizi","adult","demersal","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Chlorothalmidae","Chlorophthalmus agassizi","juvenile","demersal","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Chlorothalmidae","Chlorophthalmus agassizi","larva","epipelagic","continental shelf","diel_UN","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Notosudidae","Scopelosaurus hoedti","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Notosudidae","Scopelosaurus hoedti","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Notosudidae","Scopelosaurus hoedti","larva","epipelagic","oceanic","diel_UN","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Omosudidae","Omosudis lowii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Omosudidae","Omosudis lowii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Omosudidae","Omosudis lowii","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Aulopiformes","Paralepididae","Arctozenus risso","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Arctozenus risso","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Arctozenus risso","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops ringens","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops ringens","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops ringens","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops similis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops similis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops similis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops sphyrenoides","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops sphyrenoides","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops sphyrenoides","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestrolepis intermedia","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestrolepis intermedia","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Lestrolepis intermedia","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Macroparalepis affinis","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Macroparalepis affinis","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Macroparalepis affinis","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Magnisudis atlantica","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Magnisudis atlantica","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Magnisudis atlantica","larva","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis coregonoides","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis coregonoides","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis coregonoides","larva","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis speciosa","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis speciosa","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Paralepis speciosa","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Sudis hyalina","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Sudis hyalina","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Paralepididae","Sudis hyalina","larva","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Beloniformes","Belonidae","Belone belone","adult","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Belonidae","Belone belone","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Belonidae","Belone belone","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","adult","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","larva","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Beryciformes","Berycidae","Beryx splendens","adult","demersal","continental slope","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Beryciformes","Berycidae","Beryx splendens","juvenile","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Beryciformes","Berycidae","Beryx splendens","larva","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","adult","demersal","continental slope","diel_yes","refuge_NA","season_NA"
-"Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardina pilchardus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardina pilchardus","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardina pilchardus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinella aurita","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinella aurita","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinella aurita","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis capensis","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis capensis","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis capensis","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis encrasicolus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis encrasicolus","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis encrasicolus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","juvenile","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","juvenile","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","adult","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","larva","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Moridae","Antimora rostrata","adult","benthic","continental slope","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Gadiformes","Moridae","Antimora rostrata","juvenile","bathypelagic","continental slope","diel_no","refuge_no","season_yes"
-"Actinopterygii","Gadiformes","Moridae","Antimora rostrata","larva","bathypelagic","continental slope","diel_UN","refuge_no","season_yes"
-"Actinopterygii","Lampriformes","Trachipteridae","Desmodema polystictum","adult","mesopelagic","oceanic","diel_UN","refuge_no","season_NA"
-"Actinopterygii","Lampriformes","Trachipteridae","Desmodema polystictum","juvenile","mesopelagic","oceanic","diel_UN","refuge_no","season_NA"
-"Actinopterygii","Lampriformes","Trachipteridae","Desmodema polystictum","larva","mesopelagic","oceanic","diel_UN","refuge_no","season_NA"
-"Actinopterygii","Lampriformes","Trachipteridae","Trachipterus trachypterus","adult","mesopelagic","oceanic","diel_UN","refuge_no","season_yes"
-"Actinopterygii","Lampriformes","Trachipteridae","Trachipterus trachypterus","juvenile","mesopelagic","oceanic","diel_UN","refuge_no","season_yes"
-"Actinopterygii","Lampriformes","Trachipteridae","Trachipterus trachypterus","larva","mesopelagic","oceanic","diel_UN","refuge_no","season_yes"
-"Actinopterygii","Lophiiformes","Ceratiidae","Ceratias tentaculatus","adult","demersal","continental shelf","diel_no","refuge_no","season_NA"
-"Actinopterygii","Lophiiformes","Ceratiidae","Ceratias tentaculatus","juvenile","demersal","continental shelf","diel_no","refuge_no","season_NA"
-"Actinopterygii","Lophiiformes","Ceratiidae","Ceratias tentaculatus","larva","NA","NA","diel_no","refuge_no","season_NA"
-"Actinopterygii","Myctophiformes","Myctophidae","Benthosema glaciale","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Benthosema glaciale","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Benthosema glaciale","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus maderensis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus maderensis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus maderensis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus townsendi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus townsendi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus townsendi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus warmingii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus warmingii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus warmingii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus effulgens","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus effulgens","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus effulgens","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus lucidus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus lucidus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus lucidus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus luetkeni","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus luetkeni","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus luetkeni","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus ostenfeldi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus ostenfeldi","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus ostenfeldi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus perspicillatus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus perspicillatus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus perspicillatus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus theta","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus theta","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Diaphus theta","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Electrona risso","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Electrona risso","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Electrona risso","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Hygophum hygomii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Hygophum hygomii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Hygophum hygomii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampadena luminosa","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampadena luminosa","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampadena luminosa","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctodes hectoris","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctodes hectoris","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctodes hectoris","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus alatus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus alatus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus alatus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus crocodilus","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus crocodilus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus crocodilus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus intricarius","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus intricarius","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus intricarius","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus mexicanus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus mexicanus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus mexicanus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lobianchia gemellarii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lobianchia gemellarii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Lobianchia gemellarii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum asperum","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum asperum","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum asperum","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum punctatum","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum punctatum","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Myctophum punctatum","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium regale","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium regale","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium regale","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium ritteri","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium ritteri","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium ritteri","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Notoscopelus kroyeri","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Notoscopelus kroyeri","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Notoscopelus kroyeri","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Protomyctophum crockeri","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Protomyctophum crockeri","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Protomyctophum crockeri","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Stenobrachius leucopsarus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Stenobrachius leucopsarus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Stenobrachius leucopsarus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus barnardi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus barnardi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus barnardi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus evermanni","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus evermanni","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus evermanni","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","juvenile","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","larva","NA","NA","diel_yes","refuge_no","season_no"
-"Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","adult","demersal","continental shelf","diel_yes","refuge_yes","season_no"
-"Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Ammodytidae","Ammodytes tobianus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Ammodytidae","Ammodytes tobianus","juvenile","epipelagic","continental shelf","diel_yes","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Ammodytidae","Ammodytes tobianus","larva","epipelagic","continental shelf","diel_yes","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","adult","benthic","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","adult","benthic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama brama","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama brama","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama brama","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama orcini","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama orcini","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Brama orcini","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Taractes asper","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Taractes asper","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Bramidae","Taractes asper","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Caproidae","Antigonia capros","adult","demersal","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Caproidae","Antigonia capros","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Caproidae","Antigonia capros","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Caproidae","Capros aper","adult","demersal","continental shelf","diel_yes","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Caproidae","Capros aper","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Caproidae","Capros aper","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macarellus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macarellus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macarellus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macrosoma","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macrosoma","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Decapterus macrosoma","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Selene setapinnis","adult","demersal","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Carangidae","Selene setapinnis","juvenile","demersal","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Carangidae","Selene setapinnis","larva","epipelagic","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Carangidae","Trachinotus ovatus","adult","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachinotus ovatus","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachinotus ovatus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus japonicus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus japonicus","juvenile","epipelagic","coastal","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus japonicus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus symmetricus","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus symmetricus","juvenile","epipelagic","oceanic","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus symmetricus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","juvenile","epipelagic","coastal","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","juvenile","epipelagic","oceanic","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Embiotocidae","Cymatogaster aggregata","adult","demersal","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Embiotocidae","Cymatogaster aggregata","juvenile","demersal","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","adult","mesopelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","juvenile","mesopelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","adult","mesopelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Rexea prometheoides","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Rexea prometheoides","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Rexea prometheoides","larva","epipelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Thyrsitoides marleyi","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Thyrsitoides marleyi","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gempylidae","Thyrsitoides marleyi","larva","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","adult","benthic","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Istiophoridae","Makaira mazara","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Istiophoridae","Makaira mazara","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Istiophoridae","Makaira mazara","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Kyphosidae","Medialuna californiensis","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Kyphosidae","Medialuna californiensis","juvenile","epipelagic","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Kyphosidae","Medialuna californiensis","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Labridae","Halichoeres nicholsi","adult","demersal","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Labridae","Halichoeres nicholsi","juvenile","demersal","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Labridae","Halichoeres nicholsi","larva","epipelagic","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Mugilidae","Mugil cephalus","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Mugilidae","Mugil cephalus","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Mugilidae","Mugil cephalus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Mullidae","Mullus barbatus barbatus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Mullidae","Mullus barbatus barbatus","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Mullidae","Mullus barbatus barbatus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps capensis","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps capensis","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps capensis","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps gracilis","adult","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps gracilis","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps gracilis","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps pauciradiatus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps pauciradiatus","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Cubiceps pauciradiatus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","adult","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","adult","demersal","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","juvenile","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","juvenile","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber japonicus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber japonicus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber japonicus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber scombrus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber scombrus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombridae","Scomber scombrus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","adult","mesopelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Sparidae","Boops boops","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Boops boops","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Sparidae","Boops boops","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Diplodus sargus","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Diplodus sargus","juvenile","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Diplodus sargus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","adult","demersal","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","juvenile","epipelagic","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","adult","demersal","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","juvenile","epipelagic","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_no"
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","adult","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","juvenile","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","larva","epipelagic","coastal","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","juvenile","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","adult","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","larva","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","juvenile","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","adult","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","juvenile","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","juvenile","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","adult","benthic","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","juvenile","epipelagic","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","larva","epipelagic","coastal","diel_no","refuge_no","season_no"
-"Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","adult","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_no"
-"Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","larva","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes aleutianus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes aleutianus","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes aleutianus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes brevispinis","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes brevispinis","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes brevispinis","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes diploproa","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes diploproa","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes diploproa","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes helvomaculatus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes helvomaculatus","juvenile","epipelagic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes helvomaculatus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes maliger","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes maliger","juvenile","epipelagic","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes maliger","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes miniatus","adult","demersal","reef-associated","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes miniatus","juvenile","epipelagic","reef-associated","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes miniatus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes proriger","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes proriger","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes proriger","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes wilsoni","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes wilsoni","juvenile","epipelagic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes wilsoni","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes zacentrus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes zacentrus","juvenile","epipelagic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes zacentrus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Scorpaeniformes","Triglidae","Eutrigla gurnardus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Triglidae","Eutrigla gurnardus","juvenile","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Scorpaeniformes","Triglidae","Eutrigla gurnardus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Melamphaes lugubris","adult","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Melamphaes lugubris","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Melamphaes lugubris","larva","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Scopelogadus bispinosus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Scopelogadus bispinosus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stephanoberyciformes","Melamphaidae","Scopelogadus mizolepis bispinosus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Phosichthyidae","Vinciguerria lucetia","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Phosichthyidae","Vinciguerria lucetia","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Phosichthyidae","Vinciguerria lucetia","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus aculeatus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus aculeatus","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus aculeatus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus olfersii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus olfersii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus olfersii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus imperatorius","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus imperatorius","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus imperatorius","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus muelleri","adult","mesopelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus muelleri","juvenile","mesopelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus muelleri","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx diaphana","adult","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx diaphana","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx diaphana","larva","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx obscura","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx obscura","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx obscura","larva","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Bathophilus flemingi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Bathophilus flemingi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Bathophilus flemingi","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Melanostomias valdiviae","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Melanostomias valdiviae","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Melanostomias valdiviae","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Photonectes margarita","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Photonectes margarita","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Stomiiformes","Stomiidae","Photonectes margarita","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Sygnathiformes","Centriscidae","Macroramphosus scolopax","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Actinopterygii","Sygnathiformes","Centriscidae","Macroramphosus scolopax","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Sygnathiformes","Centriscidae","Macroramphosus scolopax","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Entelurus aequoreus","adult","demersal","continental shelf","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Entelurus aequoreus","juvenile","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Entelurus aequoreus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Syngnathus californiensis","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Syngnathus californiensis","juvenile","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Syngnathiformes","Syngnathidae","Syngnathus californiensis","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Balistidae","Balistes punctatus","adult","demersal","coastal","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Balistidae","Balistes punctatus","juvenile","demersal","coastal","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Balistidae","Balistes punctatus","larva","epipelagic","coastal","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","adult","epipelagic","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","juvenile","epipelagic","coastal","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","larva","epipelagic","coastal","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","adult","demersal","reef-associated","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","adult","demersal","reef-associated","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","juvenile","epipelagic","oceanic","diel_no","refuge_yes","season_no"
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","adult","epipelagic","coastal","diel_no","refuge_yes","season_yes"
-"Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Branchiopoda","Onychopoda","Podonidae","Pseudevadne tergestina","adult","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Alloteuthis subulata","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Alloteuthis subulata","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Alloteuthis subulata","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Doryteuthis opalescens","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Doryteuthis opalescens","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Myopsida","Loliginidae","Doryteuthis opalescens","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Alloposidae","Haliphron atlanticus","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Alloposidae","Haliphron atlanticus","juvenile","epipelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Alloposidae","Haliphron atlanticus","larva","epipelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella diaphana","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella diaphana","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella diaphana","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella heathi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella heathi","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Amphitretidae","Japetella heathi","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_NA"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta argo","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta argo","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta argo","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nodosus","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nodosus","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nodosus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nouryi","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nouryi","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Argonautidae","Argonauta nouryi","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Eledonidae","Eledone cirrhosa","adult","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Eledonidae","Eledone cirrhosa","juvenile","benthic","continental shelf","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Octopoda","Eledonidae","Eledone cirrhosa","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Octopodidae","Octopus bimaculatus","adult","benthic","reef-associated","diel_no","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Octopus bimaculatus","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Octopus bimaculatus","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Octopus vulgaris","adult","benthic","reef-associated","diel_no","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Octopus vulgaris","juvenile","epipelagic","coastal","diel_no","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Octopus vulgaris","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","adult","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","adult","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","adult","benthic","continental slope","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","larva","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus violaceus","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus violaceus","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus violaceus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ancistrocheiridae","Ancistrocheirus lesueurii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ancistrocheiridae","Ancistrocheirus lesueurii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ancistrocheiridae","Ancistrocheirus lesueurii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Brachioteuthidae","Brachioteuthis riisei","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Brachioteuthidae","Brachioteuthis riisei","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Brachioteuthidae","Brachioteuthis riisei","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","adult","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","adult","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Helicocranchia pfefferi","adult","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Helicocranchia pfefferi","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Helicocranchia pfefferi","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Liocranchia reinhardtii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Liocranchia reinhardtii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Liocranchia reinhardtii","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Teuthowenia megalops","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Teuthowenia megalops","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Cranchiidae","Teuthowenia megalops","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abralia redfieldi","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abralia redfieldi","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abralia redfieldi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis affinis","adult","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis affinis","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis affinis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis felis","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis felis","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis felis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis gilchristi","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis gilchristi","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis gilchristi","larva","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis morisii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis morisii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis morisii","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Berryteuthis anonychus","adult","mesopelagic","oceanic","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Berryteuthis anonychus","juvenile","mesopelagic","oceanic","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Berryteuthis anonychus","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatopsis borealis","adult","mesopelagic","oceanic","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatopsis borealis","juvenile","mesopelagic","oceanic","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatopsis borealis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus berryi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus berryi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus berryi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus californiensis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus californiensis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus californiensis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus onyx","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus onyx","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus onyx","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus pyros","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus pyros","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus pyros","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus steenstrupi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus steenstrupi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Gonatidae","Gonatus steenstrupi","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis bonnellii","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis bonnellii","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis bonnellii","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis heteropsis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis heteropsis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis heteropsis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis meleagroteuthis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis meleagroteuthis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis meleagroteuthis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis reversa","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis reversa","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis reversa","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis dofleini","adult","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis dofleini","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis dofleini","larva","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis hoylei","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis hoylei","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis hoylei","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Lycoteuthidae","Lycoteuthis lorigera","adult","mesopelagic","oceanic","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Oegopsida","Lycoteuthidae","Lycoteuthis lorigera","juvenile","mesopelagic","oceanic","diel_yes","refuge_yes","season_no"
-"Cephalopoda","Oegopsida","Lycoteuthidae","Lycoteuthis lorigera","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Mastigoteuthidae","Mastigoteuthis dentata","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Mastigoteuthidae","Mastigoteuthis dentata","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Mastigoteuthidae","Mastigoteuthis dentata","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis nielseni","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis nielseni","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis nielseni","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis rugosa","adult","demersal","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis rugosa","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis rugosa","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis sicula","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis sicula","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis sicula","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Taningia danae","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Taningia danae","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Octopoteuthidae","Taningia danae","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ocythoidae","Ocythoe tuberculata","adult","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ocythoidae","Ocythoe tuberculata","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ocythoidae","Ocythoe tuberculata","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Dosidicus gigas","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Dosidicus gigas","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Dosidicus gigas","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Eucleoteuthis luminosa","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Eucleoteuthis luminosa","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Eucleoteuthis luminosa","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Hyaloteuthis pelagica","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Hyaloteuthis pelagica","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Hyaloteuthis pelagica","larva","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex argentinus","adult","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex argentinus","juvenile","epipelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex argentinus","larva","epipelagic","continental slope","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex coindetii","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex coindetii","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Illex coindetii","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ommastrephes bartramii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ommastrephes bartramii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ommastrephes bartramii","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis antillarum","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis antillarum","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis antillarum","larva","epipelagic","continental slope","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis volatilis","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis volatilis","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis volatilis","larva","epipelagic","continental slope","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Sthenoteuthis oualaniensis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Sthenoteuthis oualaniensis","juvenile","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Sthenoteuthis oualaniensis","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes pacificus","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes pacificus","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes pacificus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes sagittatus","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes sagittatus","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes sagittatus","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todaropsis eblanae","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todaropsis eblanae","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Ommastrephidae","Todaropsis eblanae","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Ancistroteuthis lichtensteinii","adult","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Ancistroteuthis lichtensteinii","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Ancistroteuthis lichtensteinii","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis banksii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis banksii","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis banksii","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis borealijaponica","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis borealijaponica","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis borealijaponica","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia loennbergii","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia loennbergii","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia loennbergii","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia robusta","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia robusta","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia robusta","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Walvisteuthis rancureli","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Walvisteuthis rancureli","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Onychoteuthidae","Walvisteuthis rancureli","larva","mesopelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis giardi","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis giardi","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis giardi","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","larva","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","juvenile","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","larva","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","adult","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","juvenile","benthic","continental shelf","diel_yes","refuge_yes","season_yes"
-"Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Cephalopoda","Spirulida","Spirulidae","Spirula spirula","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Spirulida","Spirulidae","Spirula spirula","juvenile","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Cephalopoda","Spirulida","Spirulidae","Spirula spirula","larva","bathypelagic","continental slope","diel_UN","refuge_no","season_no"
-"Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Gastropoda","Caenogastropoda","Epitoniodea","Janthina exigua","adult","epipelagic","oceanic","diel_no","refuge_no","season_no"
-"Gastropoda","Littorinimorpha","Atlantidae","Atlanta peronii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","adult","epipelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Hexanauplia","Calanoida","Calanidae","Cosmocalanus darwinii darwinii","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Hexanauplia","Calanoida","Clausocalanidae","Clausocalanus furcatus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Hexanauplia","Cyclopoida","Corycaeidae","Farranula gibbula","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Hydrozoa","Siphonophorae","Diphyidae","Chelophyes appendiculata","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Brachyscelidae","Brachyscelus crusculum","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Brachyscelidae","Brachyscelus macrocephalus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_NA"
-"Malacostraca","Amphipoda","Cyphocarididae","Cyphocaris faurei","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Eupronoidae","Parapronoe crustulum","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Hyperiidae","Hyperia galba","adult","epipelagic","oceanic","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Amphipoda","Hyperiidae","Themisto gaudichaudii","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Lanceolidae","Lanceola sayana","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Oxyccephalidae","Leptocotis tenuirostris","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Oxyccephalidae","Streetsia challengeri","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Phrosinidae","Anchylomera blossevillei","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Phrosinidae","Phrosina semilunata","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Phrosinidae","Primno macropa","adult","epipelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Platyscelidae","Platyscelus armatus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Platyscelidae","Platyscelus ovoides","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Amphipoda","Platyscelidae","Platyscelus serratulus","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Amphipoda","Vibiliidae","Vibilia gibbosa","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Alpheidae","Alpheus glaber","adult","benthic","coastal","diel_yes","refuge_yes","season_no"
-"Malacostraca","Decapoda","Alpheidae","Alpheus glaber","juvenile","benthic","coastal","diel_yes","refuge_yes","season_no"
-"Malacostraca","Decapoda","Alpheidae","Alpheus glaber","larva","epipelagic","coastal","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Axiidae","Axius stirhynchus","adult","benthic","coastal","diel_no","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Axiidae","Axius stirhynchus","juvenile","epipelagic","coastal","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Axiidae","Axius stirhynchus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Benthesicymidae","Gennadas elegans","adult","demersal","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Benthesicymidae","Gennadas elegans","juvenile","demersal","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Benthesicymidae","Gennadas elegans","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Munididae","Pleuroncodes planipes","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Munididae","Pleuroncodes planipes","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Munididae","Pleuroncodes planipes","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Malacostraca","Decapoda","Oplophoroidae","Janicella spinicauda","adult","bathypelagic","continental slope","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Oplophoroidae","Oplophorus typus","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Oplophpridae","Systellaspis debilis","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Oplophpridae","Systellaspis debilis","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Oplophpridae","Systellaspis debilis","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Palinuridae","Palinurus mauritanicus","adult","benthic","continental shelf","diel_no","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Palinuridae","Palinurus mauritanicus","juvenile","benthic","continental shelf","diel_no","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Palinuridae","Palinurus mauritanicus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Pandalidae","Heterocarpus laevigatus","adult","benthic","continental slope","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Pandalidae","Heterocarpus laevigatus","juvenile","demersal","continental slope","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Pasiphaeidae","Parapasiphae sulcatifrons","adult","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Pasiphaeidae","Parapasiphae sulcatifrons","juvenile","mesopelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Pasiphaeidae","Parapasiphae sulcatifrons","larva","mesopelagic","oceanic","diel_no","refuge_no","season_no"
-"Malacostraca","Decapoda","Penaeidae","Funchalia taaningi","adult","mesopelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Penaeidae","Funchalia woodwardi","adult","mesopelagic","continental slope","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Polybiidae","Polybius henslowii","adult","epipelagic","continental shelf","diel_no","refuge_yes","season_no"
-"Malacostraca","Decapoda","Polybiidae","Polybius henslowii","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_no"
-"Malacostraca","Decapoda","Polybiidae","Polybius henslowii","larva","epipelagic","continental shelf","diel_no","refuge_no","season_no"
-"Malacostraca","Decapoda","Scyllaridae","Parribacus antarcticus","adult","benthic","reef-associated","diel_no","refuge_yes","season_no"
-"Malacostraca","Decapoda","Scyllaridae","Parribacus antarcticus","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Scyllaridae","Parribacus antarcticus","larva","epipelagic","coastal","diel_yes","refuge_no","season_no"
-"Malacostraca","Decapoda","Scyllaridae","Scyllarus arctus","adult","benthic","reef-associated","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Scyllaridae","Scyllarus arctus","juvenile","epipelagic","coastal","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Scyllaridae","Scyllarus arctus","larva","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes arcticus","adult","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes arcticus","juvenile","demersal","continental shelf","diel_yes","refuge_yes","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes arcticus","larva","mesopelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes similis","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes similis","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Eusergestes similis","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Robustosergia robusta","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Robustosergia robusta","juvenile","bathypelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Decapoda","Sergestidae","Robustosergia robusta","larva","mesopelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Euphausia pacifica","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Euphausia pacifica","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Euphausia pacifica","larva","epipelagic","oceanic","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Meganyctiphanes norvegica","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Meganyctiphanes norvegica","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Meganyctiphanes norvegica","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nematoscelis megalops","adult","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nematoscelis megalops","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nematoscelis megalops","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nyctiphanes australis","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nyctiphanes australis","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Nyctiphanes australis","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Stylocheiron abbreviatum","adult","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Stylocheiron abbreviatum","juvenile","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Malacostraca","Euphausiacea","Euphausiidae","Stylocheiron abbreviatum","larva","epipelagic","coastal","diel_no","refuge_no","season_yes"
-"Malacostraca","Isopoda","Idoteidae","Idotea metallica","adult","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Malacostraca","Isopoda","Idoteidae","Idotea metallica","juvenile","epipelagic","continental shelf","diel_no","refuge_yes","season_yes"
-"Malacostraca","Isopoda","Idoteidae","Idotea metallica","larva","epipelagic","continental shelf","diel_no","refuge_no","season_yes"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","juvenile","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","larva","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","adult","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","juvenile","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","larva","bathypelagic","oceanic","diel_yes","refuge_no","season_no"
-"Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","adult","benthic","coastal","diel_no","refuge_yes","season_no"
-"Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_no"
-"Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","larva","epipelagic","coastal","diel_yes","refuge_no","season_no"
-"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","adult","benthic","coastal","diel_no","refuge_yes","season_NA"
-"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","juvenile","epipelagic","coastal","diel_no","refuge_yes","season_NA"
-"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","larva","epipelagic","coastal","diel_yes","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","adult","benthic","reef-associated","diel_no","refuge_yes","season_no"
-"Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_no"
-"Malacostraca","Stomatopoda","Squillidae","Natosquilla investigatoris","adult","epipelagic","oceanic","diel_no","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Squillidae","Natosquilla investigatoris","adult","epipelagic","oceanic","diel_no","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","adult","benthic","continental shelf","diel_no","refuge_yes","season_NA"
-"Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","juvenile","epipelagic","continental shelf","diel_yes","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","larva","epipelagic","continental shelf","diel_yes","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","adult","benthic","reef-associated","diel_no","refuge_yes","season_NA"
-"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","juvenile","epipelagic","coastal","diel_yes","refuge_no","season_NA"
-"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","larva","epipelagic","coastal","diel_yes","refuge_no","season_NA"
-"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","adult","epipelagic","oceanic","diel_yes","refuge_no","season_NA"
-"Thaliacea","Salpida","Salpidae","Salpa maxima","adult","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Thaliacea","Salpida","Salpidae","Salpa maxima","juvenile","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Thaliacea","Salpida","Salpidae","Salpa maxima","larva","epipelagic","oceanic","diel_yes","refuge_no","season_yes"
-"Thaliacea","Salpida","Salpidae","Soestia zonaria","adult","epipelagic","coastal","diel_yes","refuge_no","season_yes"
+"prey_class","prey_order","prey_family","prey_sp","life_stage","diet_likely","life_note","vert_habitat","horz_habitat","diel_migrant","diel_migrant_cat","refuge_cat","season_migrant","season_cat","gregarious_primary","maxFO","maxN","maxM"
+"Actinopterygii","Argentiniformes","Bathylagidae","Bathylagoides wesethi","juvenile","juvenile",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Argentiniformes","Bathylagidae","Leuroglossus stilbius","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.4,0.1,0
+"Actinopterygii","Ateleopodiformes","Ateleopodidae","Ateleopus natalensis","juvenile","juvenile",NA,"demersal","continental shelf","NA","diel_UN","refuge_NA","NA","season_NA","shoaling",0.5,0.3,0.5
+"Actinopterygii","Atheriniformes","Atherinidae","Atherinopsis californiensis","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Aulopiformes","Alepisauridae","Alepisaurus ferox","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",2.7,0.3,1
+"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus nikparini","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1,0,0
+"Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus pharao","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",11.1111111111111,0,0
+"Actinopterygii","Aulopiformes","Chlorothalmidae","Chlorophthalmus agassizi","juvenile","juvenile",NA,"demersal","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","schooling",2.85714285714286,0,0
+"Actinopterygii","Aulopiformes","Notosudidae","Scopelosaurus hoedti","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","NA",0.5,0,0.2
+"Actinopterygii","Aulopiformes","Omosudidae","Omosudis lowii","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","solitary",16.7,0.7,1.2
+"Actinopterygii","Aulopiformes","Paralepididae","Arctozenus risso","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",52,4,0.5
+"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops ringens","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4,0,0
+"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops similis","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.6,0.2,0.1
+"Actinopterygii","Aulopiformes","Paralepididae","Lestidiops sphyrenoides","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",31.4814814814815,0,0
+"Actinopterygii","Aulopiformes","Paralepididae","Lestrolepis intermedia","juvenile","juvenile",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",16.3,4.4,4.9
+"Actinopterygii","Aulopiformes","Paralepididae","Macroparalepis affinis","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",4,0,0
+"Actinopterygii","Aulopiformes","Paralepididae","Magnisudis atlantica","juvenile","juvenile",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",8.2,2,2.4
+"Actinopterygii","Aulopiformes","Paralepididae","Paralepis coregonoides","juvenile","juvenile","Consoli et al. (2008) reported","mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",81.4814814814815,20.38,26.89
+"Actinopterygii","Aulopiformes","Paralepididae","Paralepis speciosa","juvenile","juvenile","Consoli et al. (2008) reported","mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.8620689655,17.1,23.04
+"Actinopterygii","Aulopiformes","Paralepididae","Sudis hyalina","juvenile","juvenile","Consoli et al. (2008) reported","mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.8620689655,0.43,0.82
+"Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",6,1,0.9
+"Actinopterygii","Beloniformes","Belonidae","Belone belone","juvenile","juvenile","Can eat larvae based on size","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",8.7,0,7.1
+"Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","juvenile","juvenile","Can eat larvae based on size","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.996677740863787,0,0
+"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","juvenile","juvenile","Can eat larvae based on size","epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",54.35,11.1,23.3
+"Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","juvenile","Can be adult or juvenile life stage based on reported length","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",64.8148148148148,2.1,26.3
+"Actinopterygii","Beryciformes","Berycidae","Beryx splendens","juvenile","juvenile",NA,"epipelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.6,0.2,0.4
+"Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","NA",11.4,2.6,4.6
+"Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Clupeiformes","Clupeidae","Sardina pilchardus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3.4,5.8,7.68
+"Actinopterygii","Clupeiformes","Clupeidae","Sardinella aurita","juvenile","juvenile","Reported multiple life stages","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.8620689655,0.86,0.86
+"Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","juvenile","juvenile","Glaser (2010), Madigan et al. (2015) reported juvenile and y-o-y life stages consumed","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",29.0697674418605,3.90206579954093,7.4327699862311
+"Actinopterygii","Clupeiformes","Engraulidae","Engraulis capensis","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",10,3.8,4.4
+"Actinopterygii","Clupeiformes","Engraulidae","Engraulis encrasicolus","juvenile","juvenile","Goni et al. (2011) reported juvenile life stage","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",29.2,1.5,20
+"Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","juvenile","juvenile","Watanabe et al. (2004) repoted juvenile primarily consumed, secondary was the adult life stage.","epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","schooling",85.4,52.8,95.2
+"Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","juvenile","juvenile","McHugh (1952), Pinkas et al. (1971), Glaser (2010) and Bernard et al. (1985) all reported juvenile life stage consumed","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",69.7,40.4,23
+"Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",2.1,0.3,0.2
+"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",33.33333333,0.5,0
+"Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",72.4,4.5,68.5
+"Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","juvenile","juvenile","Could be larva based on trait information","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","solitary",8,0,0
+"Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","juvenile","juvenile","Glaser (2010) reported juvenile life stage, McHugh (1952) reported larvae / postlarvae","demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",100,19,30
+"Actinopterygii","Gadiformes","Moridae","Antimora rostrata","juvenile","juvenile","More likely y-o-y based on size and trait information","bathypelagic","continental slope","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",0.7,0,0.5
+"Actinopterygii","Lampriformes","Trachipteridae","Desmodema polystictum","juvenile","juvenile",NA,"mesopelagic","oceanic","NA","diel_UN","refuge_no","NA","season_NA","shoaling",0,0,0
+"Actinopterygii","Lampriformes","Trachipteridae","Trachipterus trachypterus","juvenile","juvenile",NA,"mesopelagic","oceanic","NA","diel_UN","refuge_no","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Lophiiformes","Ceratiidae","Ceratias tentaculatus","juvenile","juvenile","A weird species, 'free-living' at juvenile life stage and we know almost nothing of the larval stage","demersal","continental shelf","0.0","diel_no","refuge_no","NA","season_NA","NA",0.5,0.1,0.3
+"Actinopterygii","Myctophiformes","Myctophidae","Benthosema glaciale","juvenile","juvenile","Reported by Pusineri at 3.5 cm TL. Both adult & juvenile life stage possible based on Lmax","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",10.3,0.1,0.7
+"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus maderensis","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",29.6296296296296,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus townsendi","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",7.7,0.6,0
+"Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus warmingii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5.6,0.8,0.2
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus effulgens","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",2.1,0.2,0.2
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus lucidus","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",7.9,5.8,4.4
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus luetkeni","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",2.85714285714286,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus ostenfeldi","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.7,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus perspicillatus","adult","adult","Based on diel migration, could be juvenile.","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",7.9,5.8,5
+"Actinopterygii","Myctophiformes","Myctophidae","Diaphus theta","adult","adult","Glaser (2010) reported, Based on diel migration, could be juvenile.","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5.6,9.8,0.2
+"Actinopterygii","Myctophiformes","Myctophidae","Electrona risso","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5.71428571428571,0.1,0.1
+"Actinopterygii","Myctophiformes","Myctophidae","Hygophum hygomii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.7,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Lampadena luminosa","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",0.5,0.3,0.5
+"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctodes hectoris","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",23.4,11.7,10.8
+"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus alatus","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5.55555555555556,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus crocodilus","juvenile","juvenile","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",48.5714285714286,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus intricarius","juvenile","juvenile","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",37.037037037037,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus mexicanus","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.996677740863787,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Lobianchia gemellarii","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4,0.1,0
+"Actinopterygii","Myctophiformes","Myctophidae","Myctophum asperum","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",2.2,0.9,0.6
+"Actinopterygii","Myctophiformes","Myctophidae","Myctophum punctatum","adult","adult","Bouxin & Legendre reported age","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",68.5185185185185,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium regale","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.996677740863787,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium ritteri","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.8,0.1,0
+"Actinopterygii","Myctophiformes","Myctophidae","Notoscopelus kroyeri","adult","adult","Bouxin & Legendre reported age, but based on gape length more likely juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",15.8,0,6.3
+"Actinopterygii","Myctophiformes","Myctophidae","Protomyctophum crockeri","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",2.7,0.2,0
+"Actinopterygii","Myctophiformes","Myctophidae","Stenobrachius leucopsarus","adult","adult","Glaser (2010) reported age, length info","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",7.6,0.2,0.2
+"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus barnardi","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",9,3.7,4.7
+"Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus evermanni","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",0.3,0,0
+"Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","adult","adult","Glaser (2010) reported adults, McHugh (1952) - post-larvae","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",100,5.4,0
+"Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",6.97674418604651,0.459066564651875,0.000609243441494352
+"Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","adult","adult",NA,"bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",1.85185185185185,0,0
+"Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",0,0,0
+"Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",13.6,5,4.2
+"Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0,0
+"Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",33.33333333,0,0
+"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",33.33333333,0,0
+"Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",5.55555555555556,0,0
+"Actinopterygii","Perciformes","Bramidae","Brama brama","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Perciformes","Bramidae","Brama orcini","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3,0.1593117731,0
+"Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.7,0.1,2.2
+"Actinopterygii","Perciformes","Bramidae","Taractes asper","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Perciformes","Caproidae","Antigonia capros","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",3,0,0
+"Actinopterygii","Perciformes","Caproidae","Capros aper","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",14.2857142857143,0.22,0.06
+"Actinopterygii","Perciformes","Carangidae","Decapterus macarellus","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.5,0.1,0
+"Actinopterygii","Perciformes","Carangidae","Decapterus macrosoma","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.5,0,0.1
+"Actinopterygii","Perciformes","Carangidae","Selene setapinnis","juvenile","juvenile",NA,"demersal","coastal","0.0","diel_no","refuge_no","0.0","season_no","schooling",3,0,0
+"Actinopterygii","Perciformes","Carangidae","Trachinotus ovatus","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",1.85185185185185,0,0
+"Actinopterygii","Perciformes","Carangidae","Trachurus japonicus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",5.6,0.8,13.9
+"Actinopterygii","Perciformes","Carangidae","Trachurus symmetricus","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",40.6976744186046,13.6954858454476,27.5378035555447
+"Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",43,28.1,42.4
+"Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",1.85185185185185,0,0
+"Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",1,0,0
+"Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",9.5,1.7,1.6
+"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.3,0.01593117731,0
+"Actinopterygii","Perciformes","Embiotocidae","Cymatogaster aggregata","adult","adult",NA,"demersal","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",0.5,0.1,0
+"Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","juvenile","juvenile","We've noted that there are pelagic eggs and larvae","mesopelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","solitary",8,0,0
+"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",5.2,0.7487653338,0.5
+"Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","juvenile","juvenile",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",1.6,0,0
+"Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","juvenile","juvenile","Based on traits","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",3,0,0.1
+"Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","juvenile","juvenile","Based on traits","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",3,0,0
+"Actinopterygii","Perciformes","Gempylidae","Rexea prometheoides","juvenile","juvenile","Based on traits","mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",2.2,0.1,0.7
+"Actinopterygii","Perciformes","Gempylidae","Thyrsitoides marleyi","juvenile","juvenile","Based on size and other traits","mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",2.7,0.4,0.9
+"Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","juvenile","juvenile","Based on traits","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Perciformes","Istiophoridae","Makaira mazara","juvenile","juvenile","Based on size and other traits","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",0.5,0.5,0.5
+"Actinopterygii","Perciformes","Kyphosidae","Medialuna californiensis","juvenile","juvenile",NA,"epipelagic","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",1.16279069767442,0.0765110941086457,0.000609243441494352
+"Actinopterygii","Perciformes","Labridae","Halichoeres nicholsi","juvenile","juvenile","Based on traits","demersal","reef-associated","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",0,0,0
+"Actinopterygii","Perciformes","Mugilidae","Mugil cephalus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Perciformes","Mullidae","Mullus barbatus barbatus","juvenile","juvenile",NA,"demersal","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",1.85185185185185,0,0
+"Actinopterygii","Perciformes","Nomeidae","Cubiceps capensis","juvenile","juvenile","Equally likely to be larvae, based on size ratios","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.7,0.1,0.5
+"Actinopterygii","Perciformes","Nomeidae","Cubiceps gracilis","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",10,0,0
+"Actinopterygii","Perciformes","Nomeidae","Cubiceps pauciradiatus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",70.7,69.4,69.4
+"Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",3,0,0
+"Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","juvenile","juvenile",NA,"demersal","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",0,0,0
+"Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",0.5,0.2,0
+"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.6,0.1433805958,0
+"Actinopterygii","Perciformes","Scombridae","Scomber japonicus","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3,0.306044376434583,0.00609243441494352
+"Actinopterygii","Perciformes","Scombridae","Scomber scombrus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.1,0.4,0.2
+"Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.5,0,0
+"Actinopterygii","Perciformes","Sparidae","Boops boops","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",11.1111111111111,0,0
+"Actinopterygii","Perciformes","Sparidae","Diplodus sargus","juvenile","juvenile",NA,"demersal","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",2.85714285714286,0,0
+"Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",1.85185185185185,0,0
+"Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",0.5,0.1,0
+"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","juvenile","juvenile","Could explain tunicates in albacore diets?","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",14.2857142857143,0,0
+"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","juvenile","juvenile","Could explain tunicates in albacore diets?","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",0.6,0.04779353194,0
+"Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","juvenile","juvenile","Potentially even larva","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",24.0740740740741,0,0
+"Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","juvenile","juvenile","Potentially even larva","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",33.33333333,0,0
+"Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",0,0,0
+"Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","juvenile","juvenile","Based on traits","epipelagic","continental shelf","0.0","diel_no","refuge_no","0.0","season_no","solitary",0,0,0
+"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",33.33333333,0,0
+"Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","0.0","season_no","shoaling",1.1,0.1,0
+"Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",16,0,0
+"Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","juvenile","juvenile","Probably larva","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",3,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes aleutianus","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes brevispinis","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",1,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes diploproa","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",1,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes helvomaculatus","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes maliger","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",0,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes miniatus","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","reef-associated","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes proriger","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",1,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes wilsoni","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",1,0,0
+"Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes zacentrus","juvenile","juvenile","Based on life stage reported by Glaser (2010), but could also be larvae","epipelagic","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
+"Actinopterygii","Scorpaeniformes","Triglidae","Eutrigla gurnardus","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",4,0,0
+"Actinopterygii","Stephanoberyciformes","Melamphaidae","Melamphaes lugubris","adult","adult",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","solitary",5.9,1.1,0
+"Actinopterygii","Stephanoberyciformes","Melamphaidae","Scopelogadus bispinosus","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",2.7,0.4,0
+"Actinopterygii","Stomiiformes","Phosichthyidae","Vinciguerria lucetia","juvenile","juvenile","McHugh (1952) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",20.1,0.1,4.95
+"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus aculeatus","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0,0
+"Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus olfersii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",100,0,0
+"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus imperatorius","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.2,0.2,0.1
+"Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus muelleri","adult","adult","Several of the oldest papers in the review reported lengths ~6 cm (SL)","mesopelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",85.7142857142857,78.5,24.6
+"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx diaphana","adult","adult",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","solitary",44.4444444444444,0.1,0
+"Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx obscura","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.996677740863787,0,0
+"Actinopterygii","Stomiiformes","Stomiidae","Bathophilus flemingi","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0.1,0
+"Actinopterygii","Stomiiformes","Stomiidae","Melanostomias valdiviae","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0,0,0
+"Actinopterygii","Stomiiformes","Stomiidae","Photonectes margarita","juvenile","juvenile","Most likely juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",0,0,0
+"Actinopterygii","Sygnathiformes","Centriscidae","Macroramphosus scolopax","adult","adult",NA,"demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",30,0,0.07
+"Actinopterygii","Syngnathiformes","Syngnathidae","Entelurus aequoreus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",41,0,35
+"Actinopterygii","Syngnathiformes","Syngnathidae","Syngnathus californiensis","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",1,0,0
+"Actinopterygii","Tetraodontiformes","Balistidae","Balistes punctatus","juvenile","juvenile","Could be larva based on vertical habitat trait","demersal","coastal","0.0","diel_no","refuge_yes","0.0","season_no","solitary",1.1,0.2,0.2
+"Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","0.0","season_no","schooling",1.6,0.1,0
+"Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0.1,0
+"Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",2.2,1.3,1.6
+"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","solitary",0.3,0.01593117731,0
+"Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","juvenile","juvenile","Could be larval but lacking size info","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","solitary",1.6,0.2,0
+"Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","juvenile","juvenile","Could be larval but lacking size info","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","solitary",1.6,0,0
+"Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",33.3333333333333,0,0
+"Cephalopoda","Myopsida","Loliginidae","Alloteuthis subulata","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1,0.43,0.08
+"Cephalopoda","Myopsida","Loliginidae","Doryteuthis opalescens","juvenile","juvenile","Glaser (2010)","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",13.4,6.04437643458301,22.6638560235899
+"Cephalopoda","Octopoda","Alloposidae","Haliphron atlanticus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","solitary",5,0,0
+"Cephalopoda","Octopoda","Amphitretidae","Japetella diaphana","juvenile","juvenile","Based on habitat traits","epipelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","solitary",4.8,1,2.1
+"Cephalopoda","Octopoda","Amphitretidae","Japetella heathi","juvenile","juvenile","Based on habitat traits","epipelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","solitary",7,0,0.6
+"Cephalopoda","Octopoda","Argonautidae","Argonauta argo","juvenile","juvenile","Likely adult or juvenile based on papers typically reporting unique larvae like these","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",13.11,2.37,1.6
+"Cephalopoda","Octopoda","Argonautidae","Argonauta nodosus","juvenile","juvenile","Likely adult or juvenile based on papers typically reporting unique larvae like these","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",5,0,0.1
+"Cephalopoda","Octopoda","Argonautidae","Argonauta nouryi","juvenile","juvenile","Likely adult or juvenile based on papers typically reporting unique larvae like these","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.5,0.1,0
+"Cephalopoda","Octopoda","Eledonidae","Eledone cirrhosa","juvenile","juvenile",NA,"benthic","continental shelf","1.0","diel_yes","refuge_yes","0.0","season_no","solitary",8,0.16,0
+"Cephalopoda","Octopoda","Octopodidae","Octopus bimaculatus","juvenile","juvenile","Pinkas et al. (1971) reported pelagic juvenile Octopus bimaculatus","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",15.9,1.8362662586075,0.182773032448306
+"Cephalopoda","Octopoda","Octopodidae","Octopus vulgaris","juvenile","juvenile","Based on O. bimaculatus","epipelagic","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",16.6666666666667,0,0
+"Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","juvenile","juvenile","Romeo et al. (2012) reported juveniles","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",24,3.4,0
+"Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","juvenile","juvenile","Romeo et al. (2012) reported juveniles","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5,1.6,0
+"Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","juvenile","juvenile","Likely the not-yet settled juvenile phase","mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0.1,0
+"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","solitary",3.2,0.1,1.5
+"Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus violaceus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","solitary",21.31,7.42,0
+"Cephalopoda","Oegopsida","Ancistrocheiridae","Ancistrocheirus lesueurii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",7,0.4,0.5
+"Cephalopoda","Oegopsida","Brachioteuthidae","Brachioteuthis riisei","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",29.6296296296296,0,0
+"Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","juvenile","juvenile","But equally likely to be larva consumed","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",36.06,8.69,0
+"Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",0.5,0,0
+"Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","solitary",1.1,0.1,0
+"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",54.2857142857143,0,0
+"Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","solitary",0,0,0
+"Cephalopoda","Oegopsida","Cranchiidae","Helicocranchia pfefferi","adult","adult","Very little info","mesopelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","solitary",7.40740740740741,0,0
+"Cephalopoda","Oegopsida","Cranchiidae","Liocranchia reinhardtii","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",1.85185185185185,0,0
+"Cephalopoda","Oegopsida","Cranchiidae","Teuthowenia megalops","juvenile","juvenile","Pusineri et al. (2005) reported 20 cm total lengths, and juvenile sizes","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",16.6666666666667,0.1,0
+"Cephalopoda","Oegopsida","Enoploteuthidae","Abralia redfieldi","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5,0,0
+"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis affinis","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.16279069767442,0.0765110941086457,0.00609243441494352
+"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis felis","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",36.4,11.3,2.13235204523023
+"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis gilchristi","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.7,0.2,0.1
+"Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis morisii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.9,3.4,3.4
+"Cephalopoda","Oegopsida","Gonatidae","Berryteuthis anonychus","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",38.5,9,0
+"Cephalopoda","Oegopsida","Gonatidae","Gonatopsis borealis","juvenile","juvenile","Glaser (2010) and Watanabe et al. (2004) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_yes","0.0","season_no","schooling",28.8,15.8,10.8
+"Cephalopoda","Oegopsida","Gonatidae","Gonatus berryi","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.5,0.1,0.1
+"Cephalopoda","Oegopsida","Gonatidae","Gonatus californiensis","juvenile","juvenile","Glaser (2010) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0
+"Cephalopoda","Oegopsida","Gonatidae","Gonatus onyx","juvenile","juvenile","Glaser (2010) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1,0,0
+"Cephalopoda","Oegopsida","Gonatidae","Gonatus pyros","juvenile","juvenile","Glaser (2010) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0.1
+"Cephalopoda","Oegopsida","Gonatidae","Gonatus steenstrupi","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",23.5,3.5,0.3
+"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis bonnellii","juvenile","juvenile","Bello et al. (1999)","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",63.2,38.4,0
+"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis heteropsis","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.5,0.1,0
+"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis meleagroteuthis","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.5,0,0
+"Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis reversa","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",28,2.05,0.86
+"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis dofleini","juvenile","juvenile",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","schooling",2.2,0.6,0.5
+"Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis hoylei","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.6,0.6,1.1
+"Cephalopoda","Oegopsida","Lycoteuthidae","Lycoteuthis lorigera","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_yes","0.0","season_no","schooling",32.8,17.3,25.8
+"Cephalopoda","Oegopsida","Mastigoteuthidae","Mastigoteuthis dentata","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",22.5,1.8,0.2
+"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis nielseni","juvenile","juvenile","McHugh (1952) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.332225913621262,0,0
+"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis rugosa","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",1,0.1,0.2
+"Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis sicula","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",32.7,2.37,0.609243441494352
+"Cephalopoda","Oegopsida","Octopoteuthidae","Taningia danae","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",3.3,0.2,0
+"Cephalopoda","Oegopsida","Ocythoidae","Ocythoe tuberculata","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","solitary",17.2,0.7,0.6
+"Cephalopoda","Oegopsida","Ommastrephidae","Dosidicus gigas","juvenile","juvenile","Most likely juvenile / young-of-year","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.16279069767442,0.1,3.35083892821894
+"Cephalopoda","Oegopsida","Ommastrephidae","Eucleoteuthis luminosa","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.9,1.3,1.9
+"Cephalopoda","Oegopsida","Ommastrephidae","Hyaloteuthis pelagica","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",2.9,0,0.5
+"Cephalopoda","Oegopsida","Ommastrephidae","Illex argentinus","juvenile","juvenile",NA,"epipelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",12,0,0
+"Cephalopoda","Oegopsida","Ommastrephidae","Illex coindetii","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",10.3,2.13,3.3
+"Cephalopoda","Oegopsida","Ommastrephidae","Ommastrephes bartramii","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",5,1.6,6.2
+"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis antillarum","juvenile","juvenile","DosSantos reported juveniles","mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","schooling",12,0,0
+"Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis volatilis","juvenile","juvenile",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",20.7,3.3,2.8
+"Cephalopoda","Oegopsida","Ommastrephidae","Sthenoteuthis oualaniensis","juvenile","juvenile",NA,"mesopelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",17.9,7,8.5
+"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes pacificus","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.5,0.2,0.4
+"Cephalopoda","Oegopsida","Ommastrephidae","Todarodes sagittatus","juvenile","juvenile","Bello et al. (1999) reported juveniles","demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",73.7,39.5,0.3
+"Cephalopoda","Oegopsida","Ommastrephidae","Todaropsis eblanae","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",2.777777778,0,13.64
+"Cephalopoda","Oegopsida","Onychoteuthidae","Ancistroteuthis lichtensteinii","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",33,4.9,0.71
+"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis banksii","juvenile","juvenile","McHugh (1952) reported juveniles","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",83.3333333333333,12.32,5.5
+"Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis borealijaponica","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",58.5,13.4,3.3
+"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia loennbergii","juvenile","juvenile",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",0.5,0,0.3
+"Cephalopoda","Oegopsida","Onychoteuthidae","Onykia robusta","juvenile","juvenile","Most likely juvenile / young-of-year","mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",6,0.5,0.3
+"Cephalopoda","Oegopsida","Onychoteuthidae","Walvisteuthis rancureli","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",26.6,8.6,11.3
+"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis giardi","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",1.63,0.16,0
+"Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","juvenile","juvenile","McHugh (1952) reported juveniles","mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",0.332225913621262,0,0
+"Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",1.63,0.16,0
+"Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","solitary",1.6,0,0.6
+"Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","solitary",66,88.2,3.68
+"Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","adult","adult",NA,"benthic","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",2.85714285714286,0,0
+"Cephalopoda","Spirulida","Spirulidae","Spirula spirula","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",0.7,0.1,0
+"Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0.1,0
+"Gastropoda","Caenogastropoda","Epitoniodea","Janthina exigua","adult","adult",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","0.0","season_no","solitary",5.71428571428571,0,0
+"Gastropoda","Littorinimorpha","Atlantidae","Atlanta peronii","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",1.85185185185185,0,0
+"Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",34.2857142857143,0,0
+"Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",10,0,0.1
+"Gastropoda","Pteropoda","Cavoliniidae","Diacria trispinosa","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","shoaling",5.71428571428571,0.3,0.1
+"Gastropoda","Pteropoda","Cliidae","Clio pyramidata","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",11.1111111111111,0,0
+"Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3.7037037037037,0,0
+"Hydrozoa","Siphonophorae","Diphyidae","Chelophyes appendiculata","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",16,0,0
+"Malacostraca","Amphipoda","Brachyscelidae","Brachyscelus crusculum","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",92.5925925925926,6.2,2.2
+"Malacostraca","Amphipoda","Brachyscelidae","Brachyscelus macrocephalus","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","NA","season_NA","schooling",0,0,0
+"Malacostraca","Amphipoda","Cyphocarididae","Cyphocaris faurei","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.6,0.1,0
+"Malacostraca","Amphipoda","Eupronoidae","Parapronoe crustulum","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.5,0.2,0.1
+"Malacostraca","Amphipoda","Hyperiidae","Hyperia galba","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",5.71428571428571,0,0
+"Malacostraca","Amphipoda","Hyperiidae","Themisto gaudichaudii","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",54.3,5.1,27.3
+"Malacostraca","Amphipoda","Lanceolidae","Lanceola sayana","adult","adult",NA,"bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.85185185185185,0,0
+"Malacostraca","Amphipoda","Oxyccephalidae","Leptocotis tenuirostris","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",2.1,0.1,0.1
+"Malacostraca","Amphipoda","Oxyccephalidae","Streetsia challengeri","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",40,0.19,0.05
+"Malacostraca","Amphipoda","Phrosinidae","Anchylomera blossevillei","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.2,1.65,3.3
+"Malacostraca","Amphipoda","Phrosinidae","Phrosina semilunata","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",65,4.2,6.5
+"Malacostraca","Amphipoda","Phrosinidae","Primno macropa","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",2.85714285714286,0.49,0.24
+"Malacostraca","Amphipoda","Platyscelidae","Platyscelus armatus","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0,0,0
+"Malacostraca","Amphipoda","Platyscelidae","Platyscelus ovoides","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",9.25925925925926,1.1,1.3
+"Malacostraca","Amphipoda","Platyscelidae","Platyscelus serratulus","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.85185185185185,0.06,0.08
+"Malacostraca","Amphipoda","Vibiliidae","Vibilia gibbosa","adult","adult",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.8620689655,0.24,0.05
+"Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",38.8888888888889,0,0
+"Malacostraca","Decapoda","Alpheidae","Alpheus glaber","larva","larva","May have eaten larvae or post-larvae; Bouxin & Legendre reported mostly larvae","epipelagic","coastal","1.0","diel_yes","refuge_no","0.0","season_no","schooling",11.1111111111111,0,0
+"Malacostraca","Decapoda","Axiidae","Axius stirhynchus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",4,0,0
+"Malacostraca","Decapoda","Benthesicymidae","Gennadas elegans","juvenile","juvenile","Bouxin & Legendre reported juveniles","demersal","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",4,0,0
+"Malacostraca","Decapoda","Munididae","Pleuroncodes planipes","juvenile","juvenile","Likely to eat juveniles (see season note)","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",27.75,1.3,23.3
+"Malacostraca","Decapoda","Oplophoroidae","Janicella spinicauda","adult","adult",NA,"bathypelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","schooling",2.2,0.5,0.1
+"Malacostraca","Decapoda","Oplophoroidae","Oplophorus typus","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","schooling",3.2,0.5,0.3
+"Malacostraca","Decapoda","Oplophpridae","Systellaspis debilis","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",8,0,0
+"Malacostraca","Decapoda","Palinuridae","Palinurus mauritanicus","larva","larva","Bouxin & Legendre reported larvae and an occurence of juveniles, extremely unlilely to eat adults.","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",8,0,0
+"Malacostraca","Decapoda","Pandalidae","Heterocarpus laevigatus","juvenile","juvenile",NA,"demersal","continental slope","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",3.2,0.3,0.1
+"Malacostraca","Decapoda","Pasiphaeidae","Parapasiphae sulcatifrons","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",4,0,0
+"Malacostraca","Decapoda","Penaeidae","Funchalia taaningi","adult","adult",NA,"mesopelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",1.6,0.2,0.3
+"Malacostraca","Decapoda","Penaeidae","Funchalia woodwardi","adult","adult",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.7,0.1,0.1
+"Malacostraca","Decapoda","Polybiidae","Polybius henslowii","larva","larva","Bouxin & Legendre reported larvae and an occurence of adults","epipelagic","continental shelf","0.0","diel_no","refuge_no","0.0","season_no","schooling",51.4285714285714,0,1
+"Malacostraca","Decapoda","Scyllaridae","Parribacus antarcticus","larva","larva","Most likely consumed larvae / y-o-y as indicated by similar species consumed in Bouxin & Legendre study","epipelagic","coastal","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.5,0.1,0
+"Malacostraca","Decapoda","Scyllaridae","Scyllarus arctus","larva","larva","Bouxin & Legendre reported larvae and an occurence of juveniles and adults","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",20.7,0,4.1
+"Malacostraca","Decapoda","Sergestidae","Eusergestes arcticus","adult","adult","Bouxin & Legendre","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",52,0,0
+"Malacostraca","Decapoda","Sergestidae","Eusergestes similis","adult","adult","Pinkas et al. (1971)","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",45,76.5,0
+"Malacostraca","Decapoda","Sergestidae","Robustosergia robusta","adult","adult",NA,"bathypelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",2.85714285714286,0,0
+"Malacostraca","Euphausiacea","Euphausiidae","Euphausia pacifica","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",38.9,43.1,0
+"Malacostraca","Euphausiacea","Euphausiidae","Meganyctiphanes norvegica","adult","adult","Bouxin & Legendre reported adults, Joubin (1918) and Pusineri et al. (2005) reported 33-40 mm individuals in guts","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",89.7,7.3,84.3
+"Malacostraca","Euphausiacea","Euphausiidae","Nematoscelis megalops","adult","adult","Bouxin & Legendre reported adults","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",80,0.61,4.2
+"Malacostraca","Euphausiacea","Euphausiidae","Nyctiphanes australis","adult","adult",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",27.9,0,20.4
+"Malacostraca","Euphausiacea","Euphausiidae","Stylocheiron abbreviatum","adult","adult",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",16.6666666666667,0,0
+"Malacostraca","Isopoda","Idoteidae","Idotea metallica","adult","adult","unlikely to have eaten larva","epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",3.7037037037037,0,0
+"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","adult","adult",NA,"bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.7,0.1,0
+"Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","juvenile","juvenile","Large - giant red mysid shrimp","bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",11.1111111111111,0,0
+"Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","juvenile","juvenile","Based on trait","epipelagic","coastal","1.0","diel_yes","refuge_no","0.0","season_no","schooling",7.9,0.9,0.7
+"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","0.0","diel_no","refuge_yes","NA","season_NA","solitary",0.3,0.04779353194,0
+"Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",27,5.1,2.4
+"Malacostraca","Stomatopoda","Squillidae","Natosquilla investigatoris","adult","adult","Based on trait","epipelagic","oceanic","0.0","diel_no","refuge_no","NA","season_NA","schooling",2,1.8,1.5
+"Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","NA","season_NA","schooling",9.5,1.1,0.4
+"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","1.0","diel_yes","refuge_no","NA","season_NA","shoaling",0.6,0.03186235463,0
+"Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","schooling",2.85714285714286,0,0
+"Thaliacea","Salpida","Salpidae","Salpa maxima","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.8,1.9,1.3
+"Thaliacea","Salpida","Salpidae","Soestia zonaria","adult","adult",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",8.57142857142857,0,0

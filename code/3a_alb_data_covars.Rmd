@@ -25,11 +25,13 @@ library(readxl)
 library(readr)
 library(plyr)
 library(dplyr)
-library(devtools)
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
 library(lattice)
+
+#extras?
+#library(devtools)
 
 ```
 
@@ -39,7 +41,7 @@ Prey traits, albacore diet and covariates:
 
 ```{r Load prey traits selection back in, tidy = TRUE}
 
-prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
+#prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
 
 alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) 
 
