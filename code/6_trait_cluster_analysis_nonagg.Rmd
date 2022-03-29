@@ -111,7 +111,7 @@ prey_species = prey_traits$prey_sp
 #probable_traits --> use_traits
 
 use_traits = prey_traits %>%
-  dplyr::select(life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat, gregarious) #
+  dplyr::select(life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat) #, gregarious
 use_traits[,1:6] = lapply(use_traits[,1:6], as.factor)
 
 
@@ -251,7 +251,7 @@ write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob_cluster_mar202
 
 Currently not using the agglomerative output based on stats table output.
 
-```{r Cluster Selection - Agglomerative, warning=FALSE, message=FALSE}
+```{r Cluster Selection - Agglomerative, eval=FALSE, warning=FALSE, message=FALSE}
 
 ### Using "Elbow" and "Silhouette" methods to identify the best number of clusters
 
