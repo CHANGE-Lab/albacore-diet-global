@@ -1,0 +1,293 @@
+"","dendlabs","prey_class","prey_order","prey_family","prey_sp","life_stage","vert_habitat","horz_habitat","diel_migrant_cat","season_cat","gregarious","maxFO","maxN","maxM","prob.clust.num"
+"1","1","Actinopterygii","Argentiniformes","Bathylagidae","Bathylagoides wesethi","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",0,0,0,1
+"2","2","Actinopterygii","Argentiniformes","Bathylagidae","Leuroglossus stilbius","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.4,0.1,0,2
+"3","3","Actinopterygii","Atheriniformes","Atherinidae","Atherinopsis californiensis","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",0,0,0,1
+"4","4","Actinopterygii","Aulopiformes","Alepisauridae","Alepisaurus ferox","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.7,0.3,1,2
+"5","5","Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus nikparini","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1,0,0,2
+"6","6","Actinopterygii","Aulopiformes","Anotopteridae","Anotopterus pharao","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",11.1111111111111,0,0,2
+"7","7","Actinopterygii","Aulopiformes","Chlorothalmidae","Chlorophthalmus agassizi","juvenile","demersal","continental shelf","diel (no)","season (yes)","schooling",2.85714285714286,0,0,3
+"8","8","Actinopterygii","Aulopiformes","Paralepididae","Arctozenus risso","adult","mesopelagic","oceanic","diel (yes)","season (yes)","non-schooling",52,4,0.5,4
+"9","9","Actinopterygii","Aulopiformes","Paralepididae","Lestidiops ringens","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",4,0,0,2
+"10","10","Actinopterygii","Aulopiformes","Paralepididae","Lestidiops similis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1.6,0.2,0.1,2
+"11","11","Actinopterygii","Aulopiformes","Paralepididae","Lestidiops sphyrenoides","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",31.4814814814815,0,0,2
+"12","12","Actinopterygii","Aulopiformes","Paralepididae","Lestrolepis intermedia","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",16.3,4.4,4.9,1
+"13","13","Actinopterygii","Aulopiformes","Paralepididae","Macroparalepis affinis","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4,0,0,1
+"14","14","Actinopterygii","Aulopiformes","Paralepididae","Magnisudis atlantica","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",8.2,2,2.4,1
+"15","15","Actinopterygii","Aulopiformes","Paralepididae","Paralepis coregonoides","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",81.4814814814815,20.38,26.89,1
+"16","16","Actinopterygii","Aulopiformes","Paralepididae","Paralepis speciosa","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",0.8620689655,17.1,23.04,1
+"17","17","Actinopterygii","Aulopiformes","Paralepididae","Sudis hyalina","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",0.8620689655,0.43,0.82,1
+"18","18","Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",6,1,0.9,4
+"19","19","Actinopterygii","Beloniformes","Belonidae","Belone belone","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",8.7,0,7.1,1
+"20","20","Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",0.996677740863787,0,0,1
+"21","21","Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",54.35,11.1,23.3,1
+"22","22","Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",64.8148148148148,2.1,26.3,1
+"23","23","Actinopterygii","Beryciformes","Berycidae","Beryx splendens","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1.6,0.2,0.4,2
+"24","24","Actinopterygii","Clupeiformes","Clupeidae","Clupea pallasii","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",0,0,0,2
+"25","25","Actinopterygii","Clupeiformes","Clupeidae","Sardina pilchardus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",3.4,5.8,7.68,2
+"26","26","Actinopterygii","Clupeiformes","Clupeidae","Sardinella aurita","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",0.8620689655,0.86,0.86,2
+"27","27","Actinopterygii","Clupeiformes","Clupeidae","Sardinops sagax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",29.0697674418605,3.90206579954093,7.4327699862311,2
+"28","28","Actinopterygii","Clupeiformes","Engraulidae","Engraulis capensis","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",10,3.8,4.4,2
+"29","29","Actinopterygii","Clupeiformes","Engraulidae","Engraulis encrasicolus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",29.2,1.5,20,2
+"30","30","Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",85.4,52.8,95.2,1
+"31","31","Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",69.7,40.4,23,2
+"32","32","Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.1,0.3,0.2,2
+"33","33","Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",33.33333333,0.5,0,2
+"34","34","Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",72.4,4.5,68.5,2
+"35","35","Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","juvenile","demersal","continental shelf","diel (no)","season (no)","non-schooling",8,0,0,5
+"36","36","Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",100,19,30,2
+"37","37","Actinopterygii","Gadiformes","Moridae","Antimora rostrata","juvenile","mesopelagic","continental shelf","diel (no)","season (yes)","schooling",0.7,0,0.5,1
+"38","38","Actinopterygii","Myctophiformes","Myctophidae","Benthosema glaciale","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",10.3,0.1,0.7,2
+"39","39","Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus maderensis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",29.6296296296296,0,0,2
+"40","40","Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus townsendi","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",7.7,0.6,0,4
+"41","41","Actinopterygii","Myctophiformes","Myctophidae","Ceratoscopelus warmingii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",5.6,0.8,0.2,2
+"42","42","Actinopterygii","Myctophiformes","Myctophidae","Diaphus effulgens","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2.1,0.2,0.2,4
+"43","43","Actinopterygii","Myctophiformes","Myctophidae","Diaphus lucidus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",7.9,5.8,4.4,2
+"44","44","Actinopterygii","Myctophiformes","Myctophidae","Diaphus luetkeni","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.85714285714286,0,0,2
+"45","45","Actinopterygii","Myctophiformes","Myctophidae","Diaphus ostenfeldi","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.7,0,0,2
+"46","46","Actinopterygii","Myctophiformes","Myctophidae","Diaphus perspicillatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",7.9,5.8,5,2
+"47","47","Actinopterygii","Myctophiformes","Myctophidae","Diaphus theta","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",5.6,9.8,0.2,2
+"48","48","Actinopterygii","Myctophiformes","Myctophidae","Electrona risso","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",5.71428571428571,0.1,0.1,2
+"49","49","Actinopterygii","Myctophiformes","Myctophidae","Hygophum hygomii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.7,0,0,2
+"50","50","Actinopterygii","Myctophiformes","Myctophidae","Lampadena luminosa","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",0.5,0.3,0.5,4
+"51","51","Actinopterygii","Myctophiformes","Myctophidae","Lampanyctodes hectoris","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",23.4,11.7,10.8,2
+"52","52","Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus alatus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",5.55555555555556,0,0,2
+"53","53","Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus crocodilus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",48.5714285714286,0,0,2
+"54","54","Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus intricarius","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",37.037037037037,0,0,2
+"55","55","Actinopterygii","Myctophiformes","Myctophidae","Lampanyctus mexicanus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.996677740863787,0,0,2
+"56","56","Actinopterygii","Myctophiformes","Myctophidae","Lobianchia gemellarii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",4,0.1,0,2
+"57","57","Actinopterygii","Myctophiformes","Myctophidae","Myctophum asperum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.2,0.9,0.6,2
+"58","58","Actinopterygii","Myctophiformes","Myctophidae","Myctophum punctatum","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",68.5185185185185,0,0,2
+"59","59","Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium regale","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.996677740863787,0,0,2
+"60","60","Actinopterygii","Myctophiformes","Myctophidae","Nannobrachium ritteri","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1.8,0.1,0,2
+"61","61","Actinopterygii","Myctophiformes","Myctophidae","Notoscopelus kroyeri","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",15.8,0,6.3,2
+"62","62","Actinopterygii","Myctophiformes","Myctophidae","Protomyctophum crockeri","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.7,0.2,0,2
+"63","63","Actinopterygii","Myctophiformes","Myctophidae","Stenobrachius leucopsarus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",7.6,0.2,0.2,2
+"64","64","Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus barnardi","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",9,3.7,4.7,2
+"65","65","Actinopterygii","Myctophiformes","Myctophidae","Symbolophorus evermanni","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.3,0,0,2
+"66","66","Actinopterygii","Myctophiformes","Myctophidae","Tarletonbeania crenularis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",100,5.4,0,2
+"67","67","Actinopterygii","Myctophiformes","Myctophidae","Triphoturus mexicanus","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",6.97674418604651,0.459066564651875,0.000609243441494352,2
+"68","68","Actinopterygii","Ophidiiformes","Aphyonidae","Barathronus parfaiti","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",1.85185185185185,0,0,4
+"69","69","Actinopterygii","Ophidiiformes","Ophdiidae","Chilara taylori","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",0,0,0,4
+"70","70","Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",13.6,5,4.2,4
+"71","71","Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.5,0,0,4
+"72","72","Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",33.33333333,0,0,2
+"73","73","Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","juvenile","epipelagic","continental shelf","diel (no)","season (no)","schooling",33.33333333,0,0,1
+"74","74","Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","non-schooling",5.55555555555556,0,0,1
+"75","75","Actinopterygii","Perciformes","Bramidae","Brama brama","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",0,0,0,2
+"76","76","Actinopterygii","Perciformes","Bramidae","Brama orcini","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",3,0.1593117731,0,2
+"77","77","Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",4.7,0.1,2.2,2
+"78","78","Actinopterygii","Perciformes","Bramidae","Taractes asper","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",0,0,0,2
+"79","79","Actinopterygii","Perciformes","Caproidae","Antigonia capros","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3,0,0,4
+"80","80","Actinopterygii","Perciformes","Caproidae","Capros aper","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",14.2857142857143,0.22,0.06,4
+"81","81","Actinopterygii","Perciformes","Carangidae","Decapterus macarellus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",0.5,0.1,0,2
+"82","82","Actinopterygii","Perciformes","Carangidae","Decapterus macrosoma","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",0.5,0,0.1,2
+"83","83","Actinopterygii","Perciformes","Carangidae","Selene setapinnis","juvenile","demersal","coastal","diel (no)","season (no)","schooling",3,0,0,3
+"84","84","Actinopterygii","Perciformes","Carangidae","Trachinotus ovatus","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",1.85185185185185,0,0,1
+"85","85","Actinopterygii","Perciformes","Carangidae","Trachurus japonicus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5.6,0.8,13.9,2
+"86","86","Actinopterygii","Perciformes","Carangidae","Trachurus symmetricus","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",40.6976744186046,13.6954858454476,27.5378035555447,2
+"87","87","Actinopterygii","Perciformes","Carangidae","Trachurus trachurus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",43,28.1,42.4,2
+"88","88","Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",1.85185185185185,0,0,2
+"89","89","Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",1,0,0,2
+"90","90","Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",9.5,1.7,1.6,4
+"91","91","Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",0.3,0.01593117731,0,1
+"92","92","Actinopterygii","Perciformes","Embiotocidae","Cymatogaster aggregata","adult","demersal","coastal","diel (no)","season (yes)","schooling",0.5,0.1,0,3
+"93","93","Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","non-schooling",8,0,0,4
+"94","94","Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",5.2,0.7487653338,0.5,2
+"95","95","Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",1.6,0,0,2
+"96","96","Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",3,0,0.1,4
+"97","97","Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",3,0,0,4
+"98","98","Actinopterygii","Perciformes","Gempylidae","Rexea prometheoides","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",2.2,0.1,0.7,4
+"99","99","Actinopterygii","Perciformes","Gempylidae","Thyrsitoides marleyi","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",2.7,0.4,0.9,4
+"100","100","Actinopterygii","Perciformes","Gobiidae","Rhinogobiops nicholsii","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",0,0,0,1
+"101","101","Actinopterygii","Perciformes","Istiophoridae","Makaira mazara","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",0.5,0.5,0.5,2
+"102","102","Actinopterygii","Perciformes","Kyphosidae","Medialuna californiensis","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",1.16279069767442,0.0765110941086457,0.000609243441494352,1
+"103","103","Actinopterygii","Perciformes","Labridae","Halichoeres nicholsi","juvenile","demersal","coastal","diel (no)","season (no)","schooling",0,0,0,3
+"104","104","Actinopterygii","Perciformes","Mugilidae","Mugil cephalus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",0,0,0,2
+"105","105","Actinopterygii","Perciformes","Mullidae","Mullus barbatus barbatus","juvenile","demersal","continental shelf","diel (no)","season (yes)","schooling",1.85185185185185,0,0,3
+"106","106","Actinopterygii","Perciformes","Nomeidae","Cubiceps capensis","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",0.7,0.1,0.5,1
+"107","107","Actinopterygii","Perciformes","Nomeidae","Cubiceps gracilis","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",10,0,0,1
+"108","108","Actinopterygii","Perciformes","Nomeidae","Cubiceps pauciradiatus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",70.7,69.4,69.4,1
+"109","109","Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",3,0,0,1
+"110","110","Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","juvenile","demersal","coastal","diel (no)","season (yes)","schooling",0,0,0,3
+"111","111","Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",0.5,0.2,0,1
+"112","112","Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",0.6,0.1433805958,0,2
+"113","113","Actinopterygii","Perciformes","Scombridae","Scomber japonicus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",3,0.306044376434583,0.00609243441494352,2
+"114","114","Actinopterygii","Perciformes","Scombridae","Scomber scombrus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1.1,0.4,0.2,2
+"115","115","Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",0.5,0,0,4
+"116","116","Actinopterygii","Perciformes","Sparidae","Boops boops","juvenile","demersal","continental shelf","diel (yes)","season (no)","schooling",11.1111111111111,0,0,4
+"117","117","Actinopterygii","Perciformes","Sparidae","Diplodus sargus","juvenile","demersal","coastal","diel (no)","season (yes)","schooling",2.85714285714286,0,0,3
+"118","118","Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",1.85185185185185,0,0,1
+"119","119","Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",0.5,0.1,0,1
+"120","120","Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","juvenile","epipelagic","oceanic","diel (no)","season (no)","schooling",14.2857142857143,0,0,1
+"121","121","Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","juvenile","epipelagic","oceanic","diel (no)","season (no)","schooling",0.6,0.04779353194,0,1
+"122","122","Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",24.0740740740741,0,0,2
+"123","123","Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",0,0,0,2
+"124","124","Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","juvenile","demersal","continental shelf","diel (no)","season (no)","schooling",33.33333333,0,0,3
+"125","125","Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",0,0,0,2
+"126","126","Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","juvenile","demersal","continental shelf","diel (no)","season (yes)","non-schooling",0,0,0,5
+"127","127","Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","juvenile","epipelagic","continental shelf","diel (no)","season (no)","non-schooling",0,0,0,5
+"128","128","Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",33.33333333,0,0,1
+"129","129","Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","juvenile","epipelagic","coastal","diel (no)","season (no)","schooling",1.1,0.1,0,1
+"130","130","Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","non-schooling",16,0,0,1
+"131","131","Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","juvenile","demersal","continental shelf","diel (no)","season (no)","schooling",3,0,0,3
+"132","132","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes aleutianus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",0,0,0,1
+"133","133","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes brevispinis","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",1,0,0,1
+"134","134","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes diploproa","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",1,0,0,1
+"135","135","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes helvomaculatus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",0,0,0,2
+"136","136","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes maliger","juvenile","epipelagic","coastal","diel (no)","season (yes)","non-schooling",0,0,0,1
+"137","137","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes miniatus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",0,0,0,2
+"138","138","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes proriger","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",1,0,0,1
+"139","139","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes wilsoni","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1,0,0,2
+"140","140","Actinopterygii","Scorpaeniformes","Sebastidae","Sebastes zacentrus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",0,0,0,2
+"141","141","Actinopterygii","Scorpaeniformes","Triglidae","Eutrigla gurnardus","juvenile","demersal","continental shelf","diel (no)","season (yes)","schooling",4,0,0,3
+"142","142","Actinopterygii","Stephanoberyciformes","Melamphaidae","Melamphaes lugubris","adult","mesopelagic","oceanic","diel (no)","season (no)","non-schooling",5.9,1.1,0,6
+"143","143","Actinopterygii","Stephanoberyciformes","Melamphaidae","Scopelogadus bispinosus","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",2.7,0.4,0,4
+"144","144","Actinopterygii","Stomiiformes","Phosichthyidae","Vinciguerria lucetia","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",20.1,0.1,4.95,2
+"145","145","Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus aculeatus","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.5,0,0,4
+"146","146","Actinopterygii","Stomiiformes","Sternoptychidae","Argyropelecus olfersii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",100,0,0,2
+"147","147","Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus imperatorius","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",4.2,0.2,0.1,2
+"148","148","Actinopterygii","Stomiiformes","Sternoptychidae","Maurolicus muelleri","adult","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",85.7142857142857,78.5,24.6,2
+"149","149","Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx diaphana","adult","mesopelagic","oceanic","diel (no)","season (yes)","non-schooling",44.4444444444444,0.1,0,6
+"150","150","Actinopterygii","Stomiiformes","Sternoptychidae","Sternoptyx obscura","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.996677740863787,0,0,4
+"151","151","Actinopterygii","Stomiiformes","Stomiidae","Bathophilus flemingi","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.5,0.1,0,4
+"152","152","Actinopterygii","Stomiiformes","Stomiidae","Melanostomias valdiviae","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0,0,0,4
+"153","153","Actinopterygii","Stomiiformes","Stomiidae","Photonectes margarita","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",0,0,0,4
+"154","154","Actinopterygii","Sygnathiformes","Centriscidae","Macroramphosus scolopax","adult","demersal","continental shelf","diel (yes)","season (yes)","schooling",30,0,0.07,2
+"155","155","Actinopterygii","Syngnathiformes","Syngnathidae","Entelurus aequoreus","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",41,0,35,1
+"156","156","Actinopterygii","Syngnathiformes","Syngnathidae","Syngnathus californiensis","juvenile","demersal","coastal","diel (no)","season (yes)","non-schooling",1,0,0,3
+"157","157","Actinopterygii","Tetraodontiformes","Balistidae","Balistes punctatus","juvenile","demersal","coastal","diel (no)","season (no)","non-schooling",1.1,0.2,0.2,5
+"158","158","Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","juvenile","epipelagic","coastal","diel (no)","season (no)","schooling",1.6,0.1,0,1
+"159","159","Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",0.5,0.1,0,4
+"160","160","Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","non-schooling",2.2,1.3,1.6,4
+"161","161","Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","juvenile","epipelagic","coastal","diel (no)","season (yes)","non-schooling",0.3,0.01593117731,0,1
+"162","162","Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","juvenile","epipelagic","oceanic","diel (no)","season (no)","non-schooling",1.6,0.2,0,6
+"163","163","Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","juvenile","epipelagic","coastal","diel (no)","season (yes)","non-schooling",1.6,0,0,1
+"164","164","Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",33.3333333333333,0,0,2
+"165","165","Cephalopoda","Myopsida","Loliginidae","Alloteuthis subulata","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1,0.43,0.08,2
+"166","166","Cephalopoda","Myopsida","Loliginidae","Doryteuthis opalescens","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",13.4,6.04437643458301,22.6638560235899,2
+"167","167","Cephalopoda","Octopoda","Alloposidae","Haliphron atlanticus","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","non-schooling",5,0,0,4
+"168","168","Cephalopoda","Octopoda","Argonautidae","Argonauta argo","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",13.11,2.37,1.6,1
+"169","169","Cephalopoda","Octopoda","Argonautidae","Argonauta nodosus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",5,0,0.1,1
+"170","170","Cephalopoda","Octopoda","Argonautidae","Argonauta nouryi","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",0.5,0.1,0,1
+"171","171","Cephalopoda","Octopoda","Eledonidae","Eledone cirrhosa","juvenile","demersal","continental shelf","diel (yes)","season (no)","non-schooling",8,0.16,0,5
+"172","172","Cephalopoda","Octopoda","Octopodidae","Octopus bimaculatus","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",15.9,1.8362662586075,0.182773032448306,1
+"173","173","Cephalopoda","Octopoda","Octopodidae","Octopus vulgaris","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",16.6666666666667,0,0,1
+"174","174","Cephalopoda","Octopoda","Octopodidae","Pteroctopus tetracirrhus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",24,3.4,0,2
+"175","175","Cephalopoda","Octopoda","Octopodidae","Scaeurgus unicirrhus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",5,1.6,0,2
+"176","176","Cephalopoda","Octopoda","Opisthoteuthidae","Opisthoteuthis californiana","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","non-schooling",0.5,0.1,0,4
+"177","177","Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus gracilis","juvenile","epipelagic","oceanic","diel (no)","season (yes)","non-schooling",3.2,0.1,1.5,1
+"178","178","Cephalopoda","Octopoda","Tremoctopodidae","Tremoctopus violaceus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","non-schooling",21.31,7.42,0,1
+"179","179","Cephalopoda","Oegopsida","Ancistrocheiridae","Ancistrocheirus lesueurii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",7,0.4,0.5,2
+"180","180","Cephalopoda","Oegopsida","Brachioteuthidae","Brachioteuthis riisei","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",29.6296296296296,0,0,2
+"181","181","Cephalopoda","Oegopsida","Chiroteuthidae","Chiroteuthis veranii","juvenile","epipelagic","oceanic","diel (yes)","season (no)","schooling",36.06,8.69,0,4
+"182","182","Cephalopoda","Oegopsida","Chiroteuthidae","Grimalditeuthis bonplandi","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",0.5,0,0,4
+"183","183","Cephalopoda","Oegopsida","Cranchiidae","Cranchia scabra","juvenile","epipelagic","oceanic","diel (no)","season (no)","non-schooling",1.1,0.1,0,6
+"184","184","Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis armata","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",54.2857142857143,0,0,4
+"185","185","Cephalopoda","Oegopsida","Cranchiidae","Galiteuthis phyllura","juvenile","epipelagic","oceanic","diel (no)","season (no)","non-schooling",0,0,0,6
+"186","186","Cephalopoda","Oegopsida","Cranchiidae","Helicocranchia pfefferi","adult","mesopelagic","oceanic","diel (no)","season (no)","non-schooling",7.40740740740741,0,0,6
+"187","187","Cephalopoda","Oegopsida","Cranchiidae","Liocranchia reinhardtii","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",1.85185185185185,0,0,4
+"188","188","Cephalopoda","Oegopsida","Cranchiidae","Teuthowenia megalops","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",16.6666666666667,0.1,0,4
+"189","189","Cephalopoda","Oegopsida","Enoploteuthidae","Abralia redfieldi","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5,0,0,2
+"190","190","Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis affinis","adult","epipelagic","oceanic","diel (yes)","season (no)","schooling",1.16279069767442,0.0765110941086457,0.00609243441494352,4
+"191","191","Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis felis","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",36.4,11.3,2.13235204523023,2
+"192","192","Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis gilchristi","adult","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",0.7,0.2,0.1,2
+"193","193","Cephalopoda","Oegopsida","Enoploteuthidae","Abraliopsis morisii","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",4.9,3.4,3.4,2
+"194","194","Cephalopoda","Oegopsida","Gonatidae","Berryteuthis anonychus","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",38.5,9,0,2
+"195","195","Cephalopoda","Oegopsida","Gonatidae","Gonatopsis borealis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",28.8,15.8,10.8,4
+"196","196","Cephalopoda","Oegopsida","Gonatidae","Gonatus berryi","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1.5,0.1,0.1,2
+"197","197","Cephalopoda","Oegopsida","Gonatidae","Gonatus californiensis","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0,0,0,2
+"198","198","Cephalopoda","Oegopsida","Gonatidae","Gonatus onyx","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1,0,0,2
+"199","199","Cephalopoda","Oegopsida","Gonatidae","Gonatus pyros","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0,0,0.1,2
+"200","200","Cephalopoda","Oegopsida","Gonatidae","Gonatus steenstrupi","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",23.5,3.5,0.3,2
+"201","201","Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis bonnellii","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",63.2,38.4,0,4
+"202","202","Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis heteropsis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",1.5,0.1,0,4
+"203","203","Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis meleagroteuthis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",0.5,0,0,4
+"204","204","Cephalopoda","Oegopsida","Histioteuthidae","Histioteuthis reversa","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",28,2.05,0.86,4
+"205","205","Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis dofleini","juvenile","mesopelagic","oceanic","diel (no)","season (no)","schooling",2.2,0.6,0.5,6
+"206","206","Cephalopoda","Oegopsida","Histioteuthidae","Stigmatoteuthis hoylei","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",1.6,0.6,1.1,4
+"207","207","Cephalopoda","Oegopsida","Lycoteuthidae","Lycoteuthis lorigera","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",32.8,17.3,25.8,4
+"208","208","Cephalopoda","Oegopsida","Mastigoteuthidae","Mastigoteuthis dentata","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",22.5,1.8,0.2,4
+"209","209","Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis nielseni","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.332225913621262,0,0,4
+"210","210","Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis rugosa","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",1,0.1,0.2,4
+"211","211","Cephalopoda","Oegopsida","Octopoteuthidae","Octopoteuthis sicula","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",32.7,2.37,0.609243441494352,4
+"212","212","Cephalopoda","Oegopsida","Octopoteuthidae","Taningia danae","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",3.3,0.2,0,4
+"213","213","Cephalopoda","Oegopsida","Ocythoidae","Ocythoe tuberculata","juvenile","epipelagic","oceanic","diel (no)","season (yes)","non-schooling",17.2,0.7,0.6,1
+"214","214","Cephalopoda","Oegopsida","Ommastrephidae","Dosidicus gigas","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1.16279069767442,0.1,3.35083892821894,2
+"215","215","Cephalopoda","Oegopsida","Ommastrephidae","Eucleoteuthis luminosa","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",4.9,1.3,1.9,2
+"216","216","Cephalopoda","Oegopsida","Ommastrephidae","Hyaloteuthis pelagica","juvenile","epipelagic","oceanic","diel (yes)","season (no)","schooling",2.9,0,0.5,4
+"217","217","Cephalopoda","Oegopsida","Ommastrephidae","Illex argentinus","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",12,0,0,2
+"218","218","Cephalopoda","Oegopsida","Ommastrephidae","Illex coindetii","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",10.3,2.13,3.3,2
+"219","219","Cephalopoda","Oegopsida","Ommastrephidae","Ommastrephes bartramii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5,1.6,6.2,2
+"220","220","Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis antillarum","juvenile","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",12,0,0,4
+"221","221","Cephalopoda","Oegopsida","Ommastrephidae","Ornithoteuthis volatilis","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",20.7,3.3,2.8,2
+"222","222","Cephalopoda","Oegopsida","Ommastrephidae","Sthenoteuthis oualaniensis","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",17.9,7,8.5,1
+"223","223","Cephalopoda","Oegopsida","Ommastrephidae","Todarodes pacificus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1.5,0.2,0.4,2
+"224","224","Cephalopoda","Oegopsida","Ommastrephidae","Todarodes sagittatus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",73.7,39.5,0.3,2
+"225","225","Cephalopoda","Oegopsida","Ommastrephidae","Todaropsis eblanae","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",2.777777778,0,13.64,2
+"226","226","Cephalopoda","Oegopsida","Onychoteuthidae","Ancistroteuthis lichtensteinii","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",33,4.9,0.71,2
+"227","227","Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis banksii","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",83.3333333333333,12.32,5.5,2
+"228","228","Cephalopoda","Oegopsida","Onychoteuthidae","Onychoteuthis borealijaponica","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",58.5,13.4,3.3,2
+"229","229","Cephalopoda","Oegopsida","Onychoteuthidae","Onykia loennbergii","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","non-schooling",0.5,0,0.3,4
+"230","230","Cephalopoda","Oegopsida","Onychoteuthidae","Onykia robusta","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","non-schooling",6,0.5,0.3,4
+"231","231","Cephalopoda","Oegopsida","Onychoteuthidae","Walvisteuthis rancureli","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",26.6,8.6,11.3,2
+"232","232","Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis giardi","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",1.63,0.16,0,2
+"233","233","Cephalopoda","Oegopsida","Pyroteuthidae","Pterygioteuthis microlampas","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",0.332225913621262,0,0,2
+"234","234","Cephalopoda","Oegopsida","Pyroteuthidae","Pyroteuthis margaritifera","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",1.63,0.16,0,4
+"235","235","Cephalopoda","Oegopsida","Thysanoteuthidae","Thysanoteuthis rhombus","juvenile","epipelagic","oceanic","diel (no)","season (yes)","non-schooling",1.6,0,0.6,1
+"236","236","Cephalopoda","Sepiida","Sepiolidae","Heteroteuthis dispar","adult","mesopelagic","continental shelf","diel (yes)","season (no)","non-schooling",66,88.2,3.68,4
+"237","237","Cephalopoda","Sepiida","Sepiolidae","Sepietta oweniana","adult","demersal","continental shelf","diel (yes)","season (yes)","schooling",2.85714285714286,0,0,2
+"238","238","Cephalopoda","Spirulida","Spirulidae","Spirula spirula","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",0.7,0.1,0,4
+"239","239","Cephalopoda","Vampyromorpha","Vampyroteuthidae","Vampyroteuthis infernalis","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",0.5,0.1,0,4
+"240","240","Gastropoda","Caenogastropoda","Epitoniodea","Janthina exigua","adult","epipelagic","oceanic","diel (no)","season (no)","non-schooling",5.71428571428571,0,0,6
+"241","241","Gastropoda","Littorinimorpha","Atlantidae","Atlanta peronii","adult","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",1.85185185185185,0,0,4
+"242","242","Gastropoda","Littorinimorpha","Carinariidae","Carinaria lamarckii","adult","epipelagic","oceanic","diel (yes)","season (yes)","non-schooling",34.2857142857143,0,0,4
+"243","243","Gastropoda","Pteropoda","Cavoliniidae","Cavolinia tridentata","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",10,0,0.1,2
+"244","244","Gastropoda","Pteropoda","Cliidae","Clio pyramidata","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",11.1111111111111,0,0,2
+"245","245","Hexanauplia","Calanoida","Calanidae","Calanus finmarchicus","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",3.7037037037037,0,0,2
+"246","246","Hydrozoa","Siphonophorae","Diphyidae","Chelophyes appendiculata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",16,0,0,2
+"247","247","Malacostraca","Amphipoda","Brachyscelidae","Brachyscelus crusculum","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",92.5925925925926,6.2,2.2,4
+"248","248","Malacostraca","Amphipoda","Cyphocarididae","Cyphocaris faurei","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",1.6,0.1,0,4
+"249","249","Malacostraca","Amphipoda","Eupronoidae","Parapronoe crustulum","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",1.5,0.2,0.1,4
+"250","250","Malacostraca","Amphipoda","Hyperiidae","Hyperia galba","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5.71428571428571,0,0,2
+"251","251","Malacostraca","Amphipoda","Hyperiidae","Themisto gaudichaudii","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",54.3,5.1,27.3,2
+"252","252","Malacostraca","Amphipoda","Lanceolidae","Lanceola sayana","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",1.85185185185185,0,0,4
+"253","253","Malacostraca","Amphipoda","Oxyccephalidae","Leptocotis tenuirostris","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",2.1,0.1,0.1,2
+"254","254","Malacostraca","Amphipoda","Oxyccephalidae","Streetsia challengeri","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",40,0.19,0.05,2
+"255","255","Malacostraca","Amphipoda","Phrosinidae","Anchylomera blossevillei","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",4.2,1.65,3.3,2
+"256","256","Malacostraca","Amphipoda","Phrosinidae","Phrosina semilunata","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",65,4.2,6.5,2
+"257","257","Malacostraca","Amphipoda","Phrosinidae","Primno macropa","adult","epipelagic","oceanic","diel (yes)","season (no)","schooling",2.85714285714286,0.49,0.24,4
+"258","258","Malacostraca","Amphipoda","Platyscelidae","Platyscelus armatus","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",0,0,0,4
+"259","259","Malacostraca","Amphipoda","Platyscelidae","Platyscelus ovoides","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",9.25925925925926,1.1,1.3,4
+"260","260","Malacostraca","Amphipoda","Platyscelidae","Platyscelus serratulus","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1.85185185185185,0.06,0.08,2
+"261","261","Malacostraca","Amphipoda","Vibiliidae","Vibilia gibbosa","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",0.8620689655,0.24,0.05,2
+"262","262","Malacostraca","Decapoda","Acanthephyridae","Acanthephyra pelagica","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",38.8888888888889,0,0,2
+"263","263","Malacostraca","Decapoda","Alpheidae","Alpheus glaber","larva","epipelagic","coastal","diel (yes)","season (no)","schooling",11.1111111111111,0,0,4
+"264","264","Malacostraca","Decapoda","Axiidae","Axius stirhynchus","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",4,0,0,2
+"265","265","Malacostraca","Decapoda","Benthesicymidae","Gennadas elegans","juvenile","demersal","continental shelf","diel (yes)","season (no)","schooling",4,0,0,4
+"266","266","Malacostraca","Decapoda","Munididae","Pleuroncodes planipes","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",27.75,1.3,23.3,2
+"267","267","Malacostraca","Decapoda","Oplophoroidae","Janicella spinicauda","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",2.2,0.5,0.1,4
+"268","268","Malacostraca","Decapoda","Oplophoroidae","Oplophorus typus","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",3.2,0.5,0.3,4
+"269","269","Malacostraca","Decapoda","Oplophpridae","Systellaspis debilis","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",8,0,0,2
+"270","270","Malacostraca","Decapoda","Palinuridae","Palinurus mauritanicus","larva","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",8,0,0,2
+"271","271","Malacostraca","Decapoda","Pandalidae","Heterocarpus laevigatus","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",3.2,0.3,0.1,2
+"272","272","Malacostraca","Decapoda","Pasiphaeidae","Parapasiphae sulcatifrons","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",4,0,0,4
+"273","273","Malacostraca","Decapoda","Penaeidae","Funchalia taaningi","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",1.6,0.2,0.3,4
+"274","274","Malacostraca","Decapoda","Penaeidae","Funchalia woodwardi","adult","mesopelagic","continental shelf","diel (yes)","season (no)","schooling",0.7,0.1,0.1,4
+"275","275","Malacostraca","Decapoda","Polybiidae","Polybius henslowii","larva","epipelagic","continental shelf","diel (no)","season (no)","schooling",51.4285714285714,0,1,1
+"276","276","Malacostraca","Decapoda","Scyllaridae","Parribacus antarcticus","larva","epipelagic","coastal","diel (yes)","season (no)","schooling",0.5,0.1,0,4
+"277","277","Malacostraca","Decapoda","Scyllaridae","Scyllarus arctus","larva","epipelagic","coastal","diel (yes)","season (yes)","schooling",20.7,0,4.1,2
+"278","278","Malacostraca","Decapoda","Sergestidae","Eusergestes arcticus","adult","demersal","continental shelf","diel (yes)","season (yes)","schooling",52,0,0,2
+"279","279","Malacostraca","Decapoda","Sergestidae","Eusergestes similis","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",45,76.5,0,2
+"280","280","Malacostraca","Decapoda","Sergestidae","Robustosergia robusta","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2.85714285714286,0,0,2
+"281","281","Malacostraca","Euphausiacea","Euphausiidae","Euphausia pacifica","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",38.9,43.1,0,2
+"282","282","Malacostraca","Euphausiacea","Euphausiidae","Meganyctiphanes norvegica","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",89.7,7.3,84.3,2
+"283","283","Malacostraca","Euphausiacea","Euphausiidae","Nematoscelis megalops","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",80,0.61,4.2,2
+"284","284","Malacostraca","Euphausiacea","Euphausiidae","Nyctiphanes australis","adult","epipelagic","coastal","diel (yes)","season (yes)","schooling",27.9,0,20.4,2
+"285","285","Malacostraca","Euphausiacea","Euphausiidae","Stylocheiron abbreviatum","adult","epipelagic","coastal","diel (no)","season (yes)","schooling",16.6666666666667,0,0,1
+"286","286","Malacostraca","Isopoda","Idoteidae","Idotea metallica","adult","epipelagic","continental shelf","diel (no)","season (yes)","schooling",3.7037037037037,0,0,1
+"287","287","Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",0.7,0.1,0,4
+"288","288","Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",11.1111111111111,0,0,4
+"289","289","Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","juvenile","epipelagic","coastal","diel (yes)","season (no)","schooling",7.9,0.9,0.7,4
+"290","290","Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",27,5.1,2.4,4
+"291","291","Thaliacea","Salpida","Salpidae","Salpa maxima","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",4.8,1.9,1.3,2
+"292","292","Thaliacea","Salpida","Salpidae","Soestia zonaria","adult","epipelagic","coastal","diel (yes)","season (yes)","schooling",8.57142857142857,0,0,2
