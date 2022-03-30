@@ -137,7 +137,7 @@ alb_adult_preyPA_df = cbind(alb_adult_fo[,1:13], alb_adult_preyPA)
 dim(alb_adult_preyPA) #225 obs, 137 species
 ```
 
-## Traits Probable (Q)
+## Traits (Q)
 
 - Using all the occurrence data in 'alb_adult_preyPA' df.
 

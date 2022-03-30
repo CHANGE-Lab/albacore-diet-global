@@ -112,7 +112,7 @@ prey_species = prey_traits$prey_sp
 
 use_traits = prey_traits %>%
   dplyr::select(life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat) #, gregarious
-use_traits[,1:6] = lapply(use_traits[,1:6], as.factor)
+use_traits[,1:5] = lapply(use_traits[,1:5], as.factor)
 
 
 #Old version didn't include gregarious
@@ -235,14 +235,14 @@ In the output below, we assess primarily:
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
 View(prob.stats.df.divisive)
-write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022/prob.stats.df.divisive.csv"))
+write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.stats.df.divisive.csv"))
 
 #Stats table for agglomerative method
 prob.stats.df.aggl <- cstats.table(prob.gower.dist, prob.aggl.clustc, 15) 
 #complete linkages looks like the most balanced approach
 prob.stats.df.aggl
 View(prob.stats.df.aggl)
-write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob_cluster_mar2022/prob.stats.df.aggl.csv"))
+write.csv(prob.stats.df.aggl, here("outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.stats.df.aggl.csv"))
 #As per text for adult, average within cluster metric is minimised for ~7-10 clusters, and the average between for about the same. The agglomerative clustering appears more balanced.
 
 ```
@@ -301,7 +301,7 @@ ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20
   labs(x = "Num.of clusters", y = "Within clusters sum of squares (SS)") +
   theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/prob.elbow.plot.k7.div.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.elbow.plot.k7.div.png'), width=8, height=8, dpi=300)
 
 ## Silhouette
 #When it comes to silhouette assessment, the rule is you should choose the number that maximizes the 
@@ -316,7 +316,7 @@ ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.divisive.clust, 20
   labs(x = "Num.of clusters", y = "Average silhouette width") +
   theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/prob.sil.plot.k7.div.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.sil.plot.k7.div.png'), width=8, height=8, dpi=300)
 
 ```
 
@@ -348,7 +348,7 @@ prob.dendro.graph <- ggplot(prob.ggd1, theme = theme_minimal()) +
   labs(x = "Num. observations", y = "Height", title = "Dendrogram, k = 6")
 prob.dendro.graph
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
 
 ```
 
@@ -364,7 +364,7 @@ prob.dendro.rad
 #No labels on this one, labels were too cluttered/problems
 #Save radial dendrogram for chat
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022_nonagg/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
 
 ```
 
