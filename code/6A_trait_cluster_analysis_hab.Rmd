@@ -41,6 +41,7 @@ library(formatR)
 library(ggplot2)
 library("PNWColors")
 library(viridis)
+library(scales)
 
 #Multivariate work
 library(vegan)
@@ -245,7 +246,7 @@ Below we are using simplified habitat use trait values + gregarious (as binary) 
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
 View(prob.stats.df.divisive)
-write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/prob.stats.df.divisive.hab.csv"))
+write.csv(prob.stats.df.divisive,here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/prob.stats.df.divisive.hab.csv"))
 
 ```
 
@@ -539,9 +540,23 @@ hull.data <- rbind(grp.1, grp.2, grp.3, grp.4, grp.5, grp.6)
 
 This is unfortunately not very informative as the species are very clumped by their trait values. We could figure out how to 'jitter' the points such that we have clumps?
 
+```{r make manual palette to match the cluster colours}
+#   #1         #3        #4       #2       #5         #6
+#"#00496F" "#0C7996" "#94B669" "#EDB829" "#E97C07" "#DD4124"
+
+#Need the following order
+#"#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124"
+
+fig3.pal <- c("#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124")
+show_col(fig3.pal)
+
+```
+
+
 ```{r nMDS Cluster Number, warning=FALSE, message=TRUE}
 #nMDS plot for the assessmenet of global change (yes/no) and the drivers.
 #as.integer(unique(treatment.scores$adult.clust.num))
+#treatment.scores$prob.clust.num = lapply(treatment.scores$prob.clust.num, as.factor)
 
 trait_nMDS_prob_fig <- ggplot() + 
   #geom_polygon(data=hull.data, 
@@ -550,7 +565,7 @@ trait_nMDS_prob_fig <- ggplot() +
   #                 group= prob.clust.num), 
   #             alpha=0.30) + # add the convex hulls
   geom_point(data=treatment.scores, 
-             aes(x=NMDS1, y=NMDS2, colour=prob.clust.num), 
+             aes(x=NMDS1, y=NMDS2, colour=factor(prob.clust.num)), 
              size=2,
              position = position_jitter(width = 0, height = 0.1, seed = 8)) + # add the point markers
   #geom_jitter(aes(x=NMDS1, y=NMDS2, colour=prob.clust.num))+
@@ -568,7 +583,9 @@ trait_nMDS_prob_fig <- ggplot() +
         panel.grid.major = element_blank(),  #remove major-grid labels
         panel.grid.minor = element_blank(),  #remove minor-grid labels
         plot.background = element_blank()) +
-  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+ 
+  scale_colour_manual(values=fig3.pal, name="Cluster")
+  
+#  scale_colour_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+ 
   #scale_fill_viridis(option="magma", begin = 0.8, end = 0.2, name = "Cluster Number") #+
   
 trait_nMDS_prob_fig
