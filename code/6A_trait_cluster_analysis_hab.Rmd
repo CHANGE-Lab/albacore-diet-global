@@ -47,7 +47,7 @@ library(scales)
 library(vegan)
 library(cluster)
 library("dendextend")
-library(NbClust)
+#library(NbClust)
 
 ```
 
