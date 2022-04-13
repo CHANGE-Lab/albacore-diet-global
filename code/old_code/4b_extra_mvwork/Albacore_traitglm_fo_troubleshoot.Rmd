@@ -1,0 +1,1397 @@
+---
+title: "Albacore traitglms for %FO data troubleshooting"
+author: "Natasha Hardy"
+date: "7/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "/Users/natasha/Documents/GitHub/Tuna_postdoc")
+```
+
+## Workspace Setup
+
+```{r Workspace}
+
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(reshape2)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(pander)
+
+# graphics
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(RColorBrewer)
+library(gridExtra)
+library(captioner)
+library(viridis)
+
+#modelling
+library(Hmisc)
+library(mgcv)
+library(unmarked)
+library(lme4)
+library(mvabund)
+library(tweedie)
+library(vegan)
+
+## mvabund bug
+source(here("code/mv_work/residuals.glm1path.R"))
+
+getwd()
+```
+
+## Dataframes & Prep for mv work
+
+### Frequency of Occurrence Data
+
+```{r Species %FO (L) - load}
+
+#Upload + manipulate Species & Covar DF
+#Doesn't like the here() function now for some reason
+alb_adult_fo = read.csv(paste(here("data/output_data/alb_global_wide_dietfo.csv"),
+                                   sep=""), check.names=FALSE, row.names = 1) %>%
+  dplyr::select(StudyID:ncol(.), -grouped_id) #-c(, `Diplospinus multistriatus`, `Sardina pilchardus`)
+
+#SHOULD EXCULDE ANYTHING WITH %fo < 1%
+#This will have been done in Albacore_data_manip.Rmd at point of dataframe creation
+
+#Main DF
+head(alb_adult_fo)
+```
+
+```{r Species %FO (L) - manipulate}
+#Check for empty columns
+which(colSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0) #None! #Otherwise remove these
+#Check for empty rows
+which(rowSums(alb_adult_fo[,14:ncol(alb_adult_fo)])==0) #Remove these - this becomes a thing once we start removing outlier species
+#None
+
+#Subset species df
+#If removing species
+alb_adult_prey = alb_adult_fo[,14:ncol(alb_adult_fo)]
+names(alb_adult_prey) <- str_replace_all(names(alb_adult_prey), " ", "_")
+
+#check df
+#dim(alb_adult_prey) #137 species & 225 observations
+#str(alb_adult_prey) #data are integers & numeric
+
+#Round to no decimal places if needed
+#alb_adult_prey[,1:ncol(alb_adult_prey)] =  round(alb_adult_prey[,1:ncol(alb_adult_prey)], digits = 1)
+#Convert to integer values
+#alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adult_prey)], as.integer)
+#Try numeric
+alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adult_prey)], as.numeric)
+
+#make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+alb_adult_prey_mv <- as.mvabund(alb_adult_prey) 
+
+#All species names have to match up for both dfs
+colnames(alb_adult_prey_mv) == names(alb_adult_prey) #hell yes
+
+```
+
+```{r Visualise - nMDS ordinations #1}
+#Update previous ordinations
+#Run ordination of:
+
+#FO
+alb_adult_nMDS = metaMDS(alb_adult_prey, 
+                         distance="bray", 
+                         trymax = 100, #1000
+                         k=3) #could increase to k = 4
+#plot
+pl <- ordiplot(alb_adult_nMDS, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+```
+
+```{r Data scores #1 full data}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores <- as.data.frame(scores(alb_adult_nMDS))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores$points <- rownames(data.scores)
+
+#bind treatment labels and score values
+treatment.scores <- cbind(alb_adult_fo[,1:13], data.scores)
+
+#Check
+str(treatment.scores)  
+#Awesome
+
+#ALSO
+#OR for species scores
+species.scores <- as.data.frame(scores(alb_adult_nMDS, "species"))
+#create a column of species names:
+species.scores$species <- rownames(species.scores)
+#str(data.scores)
+
+```
+
+```{r Species %FO 2 (L)}
+
+#REMOVING OUTLIERS
+#1 BY SPECIES: Can be done by checking species scores and removing columns (species) that contribute to MV dispersion
+#alb_adult_fo2 = alb_adult_fo %>%
+#  dplyr::select(StudyID:ncol(.), -c(grouped_id, `Diplospinus multistriatus`, `Sardina pilchardus`, `Todaropsis eblanae`, `Nyctiphanes australis`, `Euphausia pacifica`, `Anchylomera blossevillei`, `Benthosema glaciale`, `Scomber scombrus`, `Trachurus japonicus`, `Illex coindetii`, `Hyaloteuthis pelagica`, `Pteroctopus tetracirrhus`,  `Ancistroteuthis lichtensteinii`, `Histioteuthis heteropsis`, `Trachinotus ovatus`, `Scaeurgus unicirrhus`)) #, 
+
+#OR
+#2 BY ROWS/OBSERVATIONS: Can be done by checking treatment scores and removing rows, and subsequently corresponding columns (species) that contribute to MV dispersion.
+alb_adult_fo2 = alb_adult_fo %>%
+  slice(., -c(24, 39, 43, 59, 68, 74, 85, 
+              108, 120, 121, 126, 147, 150, 158, 184, 194, 195, 196, 197, 
+              203, 208, 209, 210, 211, 215, 222, 223)) #106, 107, 122, 123,
+
+#Check for empty columns
+which(colSums(alb_adult_fo2[,14:ncol(alb_adult_fo2)])==0) 
+#Previously None! #Otherwise remove these --> When we stepwise remove outlers, we have to remove empty columns
+alb_adult_fo2.0 = alb_adult_fo2[,-which(colSums(alb_adult_fo2[,14:ncol(alb_adult_fo2)])==0)]
+
+#Not sure why some explanatory variable columns disappear also, so adding them back in:
+alb_adult_fo2.1 = cbind(alb_adult_fo2[,1:13], alb_adult_fo2.0[,13:ncol(alb_adult_fo2.0)])
+
+#Check for empty rows
+which(rowSums(alb_adult_fo2.1[,14:ncol(alb_adult_fo2.1)])==0) 
+#Remove these - this becomes a thing once we start removing outlier species
+alb_adult_fo2.2 = alb_adult_fo2.1[-which(rowSums(alb_adult_fo2.1[,14:ncol(alb_adult_fo2.1)])==0),]
+
+#223 observations of 150 traits
+
+#Subset species df
+#If removing species
+#alb_adult_prey = alb_adult_fo2[,14:ncol(alb_adult_fo2)]
+alb_adult_prey2 = alb_adult_fo2.2[,14:ncol(alb_adult_fo2.2)]
+names(alb_adult_prey2) <- str_replace_all(names(alb_adult_prey2), " ", "_")
+#names(alb_adult_prey)
+
+#check df
+#dim(alb_adult_prey) #158 species & 253 observations
+#str(alb_adult_prey) #data are integers & numeric
+
+#Try numeric
+alb_adult_prey2[,1:ncol(alb_adult_prey2)] =  lapply(alb_adult_prey2[,1:ncol(alb_adult_prey2)], as.numeric)
+
+alb_adult_prey2_mv <- as.mvabund(alb_adult_prey2) #make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+
+#All species names have to match up for both dfs
+colnames(alb_adult_prey2_mv) == names(alb_adult_prey2) #hell yes
+
+```
+
+```{r Visualise - nMDS ordinations #2}
+#Run ordination of:
+
+#FO2
+alb_adult_nMDS2 = metaMDS(alb_adult_prey2, 
+                         distance="bray", 
+                         trymax = 100, #1000
+                         k=3) #could increase to k = 4
+
+#plot 2
+pl <- ordiplot(alb_adult_nMDS2, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
+
+```{r Data score #2}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores2 <- as.data.frame(scores(alb_adult_nMDS2))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores2$points <- rownames(data.scores2)
+
+#bind treatment labels and score values
+treatment.scores2 <- cbind(alb_adult_fo2.2[,1:13], data.scores2)
+
+#Check
+str(treatment.scores2)  
+#Awesome
+
+#ALSO
+#OR for species scores
+species.scores2 <- as.data.frame(scores(alb_adult_nMDS2, "species"))
+#create a column of species names:
+species.scores2$species <- rownames(species.scores2)
+#str(data.scores)
+
+
+```
+
+```{r Species %FO 3 (L)}
+
+alb_adult_fo3 = alb_adult_fo2 %>%
+  slice(., -c(44, 11, 144, 169, 177)) #106, 107, 122, 123,
+
+#Check for empty columns
+which(colSums(alb_adult_fo3[,14:ncol(alb_adult_fo3)])==0) 
+#Previously None! #Otherwise remove these --> When we stepwise remove outlers, we have to remove empty columns
+alb_adult_fo3.0 = alb_adult_fo3[,-which(colSums(alb_adult_fo3[,14:ncol(alb_adult_fo3)])==0)]
+
+#Not sure why some explanatory variable columns disappear also, so adding them back in:
+alb_adult_fo3.1 = cbind(alb_adult_fo3[,1:13], alb_adult_fo3.0[,11:ncol(alb_adult_fo3.0)])
+
+#Check for empty rows
+which(rowSums(alb_adult_fo3.1[,14:ncol(alb_adult_fo3.1)])==0) 
+#Remove these - this becomes a thing once we start removing outlier species
+alb_adult_fo3.2 = alb_adult_fo3.1[-which(rowSums(alb_adult_fo3.1[,14:ncol(alb_adult_fo3.1)])==0),]
+
+#223 observations of 150 traits
+
+#Subset species df
+#If removing species
+#alb_adult_prey = alb_adult_fo2[,14:ncol(alb_adult_fo2)]
+alb_adult_prey3 = alb_adult_fo3.2[,14:ncol(alb_adult_fo3.2)]
+names(alb_adult_prey3) <- str_replace_all(names(alb_adult_prey3), " ", "_")
+
+#Try numeric
+alb_adult_prey3[,1:ncol(alb_adult_prey3)] =  lapply(alb_adult_prey3[,1:ncol(alb_adult_prey3)], as.numeric)
+
+alb_adult_prey3_mv <- as.mvabund(alb_adult_prey3) #make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+
+#All species names have to match up for both dfs
+colnames(alb_adult_prey3_mv) == names(alb_adult_prey3) #hell yes
+
+
+```
+
+```{r Visualise - nMDS ordinations #3}
+#FO3
+alb_adult_nMDS3 = metaMDS(alb_adult_prey3, 
+                         distance="bray", 
+                         trymax = 100, #1000
+                         k=3) #could increase to k = 4
+
+#plot 3
+pl <- ordiplot(alb_adult_nMDS3, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
+
+```{r Data score #3}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores3 <- as.data.frame(scores(alb_adult_nMDS3))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores3$points <- rownames(data.scores3)
+
+#bind treatment labels and score values
+treatment.scores3 <- cbind(alb_adult_fo3.2[,1:13], data.scores3)
+
+#Check
+View(treatment.scores3)  
+#Awesome
+
+#ALSO
+#OR for species scores
+species.scores3 <- as.data.frame(scores(alb_adult_nMDS3, "species"))
+#create a column of species names:
+species.scores3$species <- rownames(species.scores3)
+#str(data.scores)
+
+```
+
+```{r Species %FO 4 (L)}
+
+alb_adult_fo4 = alb_adult_fo3 %>%
+  slice(., -c(110, 144)) #106, 107, 122, 123,
+
+#Check for empty columns
+which(colSums(alb_adult_fo4[,14:ncol(alb_adult_fo4)])==0) 
+#Previously None! #Otherwise remove these --> When we stepwise remove outlers, we have to remove empty columns
+alb_adult_fo4.0 = alb_adult_fo4[,-which(colSums(alb_adult_fo4[,14:ncol(alb_adult_fo4)])==0)]
+
+#Not sure why some explanatory variable columns disappear also, so adding them back in:
+alb_adult_fo4.1 = cbind(alb_adult_fo4[,1:13], alb_adult_fo4.0[,13:ncol(alb_adult_fo4.0)])
+
+#Check for empty rows
+which(rowSums(alb_adult_fo4.1[,14:ncol(alb_adult_fo4.1)])==0) 
+#Remove these - this becomes a thing once we start removing outlier species
+alb_adult_fo4.2 = alb_adult_fo4.1[-which(rowSums(alb_adult_fo4.1[,14:ncol(alb_adult_fo4.1)])==0),]
+
+#Subset species df
+#If removing species
+alb_adult_prey4 = alb_adult_fo4.2[,14:ncol(alb_adult_fo4.2)]
+names(alb_adult_prey4) <- str_replace_all(names(alb_adult_prey4), " ", "_")
+
+#Try numeric
+alb_adult_prey4[,1:ncol(alb_adult_prey4)] =  lapply(alb_adult_prey4[,1:ncol(alb_adult_prey4)], as.numeric)
+
+alb_adult_prey4_mv <- as.mvabund(alb_adult_prey4) #make mvabund object #sometimes some fiddling required [,1:ncol(alb_adult_prey)], check.names = FALSE
+
+#All species names have to match up for both dfs
+colnames(alb_adult_prey4_mv) == names(alb_adult_prey4) #hell yes
+
+
+```
+
+```{r Visualise - nMDS ordinations #4}
+#FO3
+alb_adult_nMDS4 = metaMDS(alb_adult_prey4, 
+                         distance="bray", 
+                         trymax = 100, #1000
+                         k=3) #could increase to k = 4
+
+#plot 4
+pl <- ordiplot(alb_adult_nMDS4, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
+
+```{r Data score #4}
+
+#Extract NMDS coordinates and associate with co-variates/grouping factors
+
+#Using the scores function from vegan to extract the site scores and convert to a data.frame
+data.scores4 <- as.data.frame(scores(alb_adult_nMDS4))  #, "species"
+
+#create a column of site names, from the rownames of data.scores
+data.scores4$points <- rownames(data.scores4)
+
+#bind treatment labels and score values
+treatment.scores4 <- cbind(alb_adult_fo4.2[,1:13], data.scores4)
+
+#Check
+View(treatment.scores4)  
+#Awesome
+
+#ALSO
+#OR for species scores
+species.scores4 <- as.data.frame(scores(alb_adult_nMDS4, "species"))
+#create a column of species names:
+species.scores4$species <- rownames(species.scores4)
+#str(data.scores)
+
+```
+
+```{r SAVE DF SPP (L)}
+
+write.csv(alb_adult_prey4, here("data/alb_adult_prey4.csv"))
+
+```
+
+
+### Covars
+
+```{r Covars manip #1 (R)}
+
+#Summary stats on covars
+unique(alb_adult_fo$StudyID) #23 studies
+unique(alb_adult_fo$OceanBasin) #6 Ocean basins
+unique(alb_adult_fo$OceanBasinQ) #10 Ocean basin quarters, but data gets thin for many
+unique(alb_adult_fo$YearEnd) #12 years (or groups of years) are represented in this study
+unique(alb_adult_fo$code) #10 Longhurst provinces represented, similar to Ocean Basin Q but also gets thin
+unique(alb_adult_fo$pred_life) #
+
+#Clean covars
+alb_adult_covars = alb_adult_fo[,1:13] %>%
+  mutate(pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "adult" ~ "adult",
+                             pred_life == "none" ~ "mixed")) #"none" ~ "none"
+alb_adult_covars[,1:ncol(alb_adult_covars)] =  lapply(alb_adult_covars[,1:ncol(alb_adult_covars)], as.factor)
+
+#Check representation
+summary(alb_adult_covars)
+summary(alb_adult_covars$lat_cat)
+#temperate  tropical 
+#    193        32 
+summary(alb_adult_covars$pred_life)
+#   adult juvenile    mixed 
+#     54       64      107 
+#Going to simply merge the "none" with "mixed" group for now.
+summary(alb_adult_covars$OceanBasin)
+#           Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
+#            15            29            88            66            10            17 
+summary(alb_adult_covars$OceanBasinQ)
+#Mediterranean   NE Atlantic    NE Pacific   NW Atlantic    NW Indian     NW Pacific   SE Atlantic   SW Atlantic    SW Indian  
+#           29            84            52             4             3            14             7             3            12 
+#   SW Pacific 
+#           17 
+summary(alb_adult_covars$code)
+#ARCH CCAL ISSG MEDI NADR NASW NECS NPPF NPTG SATL 
+#  17   50   22   16   92    4    5   14    2    3
+#Need to exclude NASW, NECS, NPTG, SATL
+
+str(alb_adult_covars)
+dim(alb_adult_covars) #253 observations for 13 covars
+#Best covars ==> pred_life, OceanBasin, code (Longhurst) - but need to exclude low numbered levels.
+```
+
+```{r Covars manip #4 (R)}
+
+#Summary stats on covars
+#Check study and replicates
+unique(alb_adult_fo4.2$StudyID) #21 studies
+summary(alb_adult_fo4.2$StudyID)
+
+#Check Ocean Basin
+unique(alb_adult_fo4.2$OceanBasin) #6 Ocean basins
+summary(alb_adult_covars$OceanBasin)
+# Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
+#    15            29            88            66            10            17 
+
+#Ocean Basin Quarters
+unique(alb_adult_fo4.2$OceanBasinQ) #10 Ocean basin quarters, but data gets thin for many
+summary(alb_adult_covars$OceanBasinQ)
+#Mediterranean   NE Atlantic    NE Pacific   NW Atlantic    NW Indian     NW Pacific   SE Atlantic   SW Atlantic    SW Indian  
+#      29            84            52             4             3            14             7             3            12 
+#SW Pacific 
+#      17  
+
+#Years sampled (note that this is for end of the survey period, some studies sampled one year and others more)
+unique(alb_adult_fo4.2$YearEnd) #12 years (or groups of years) are represented in this study
+
+#Longhurst province codes
+unique(alb_adult_fo4.2$code) #10 Longhurst provinces represented, similar to Ocean Basin Q but also gets thin
+
+#Preadtor life stage
+unique(alb_adult_fo4.2$pred_life) #
+#Clean life stage covar
+alb_adult_covars4 = alb_adult_fo4.2[,1:13] %>%
+  mutate(pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "adult" ~ "adult",
+                             pred_life == "none" ~ "mixed")) #"none" ~ "none"
+alb_adult_covars4[,1:ncol(alb_adult_covars4)] =  lapply(alb_adult_covars4[,1:ncol(alb_adult_covars4)], as.factor)
+#check this
+unique(alb_adult_covars4$pred_life)
+summary(alb_adult_covars4$pred_life)
+#   adult juvenile    mixed 
+#     54       64      107 
+#We merged the "none" with "mixed" group for now.
+#Do it for the treatment scores
+#Clean life stage covar
+treatment.scores4 = treatment.scores4 %>%
+  mutate(pred_life=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "adult" ~ "adult",
+                             pred_life == "none" ~ "mixed")) #"none" ~ "none"
+treatment.scores4$pred_life =  as.factor(treatment.scores4$pred_life)
+#check this
+unique(alb_adult_covars4$pred_life)
+
+#Lat - temperate/tropical
+#temperate  tropical 
+#    193        32 
+
+
+
+summary(alb_adult_covars4$code)
+#ARCH CCAL ISSG MEDI NADR NASW NECS NPPF NPTG SATL 
+#  5   44   18    8   77    2    3    8    2    2 
+#Need to exclude NASW, NECS, NPTG, SATL
+
+#Overall checks
+#str(alb_adult_covars4)
+dim(alb_adult_covars4) #169 observations for 13 covars
+#Overall check representation
+#summary(alb_adult_covars)
+
+#Best covars ==> pred_life, OceanBasin, OceanBasinQ code (Longhurst) - but need to exclude low numbered levels.
+```
+
+```{r SAVE DF COVARS (R)}
+str(alb_adult_covars4)
+
+write.csv(alb_adult_covars4, here("data/alb_adult_covars4.csv"))
+
+```
+
+```{r Trait DF manip (Q)}
+
+#Trait DF
+alb_adult_traits = read.csv(paste(here("data/adult.prey.clusternum.habgreg.aggl.k9.csv"), sep=""), header=T, row.names = 1) %>%
+  dplyr::select(prey_sp:adult.clust.num) 
+
+alb_adult_traits$prey_sp = str_replace_all(alb_adult_traits$prey_sp, " ", "_")
+
+alb_adult_traits = alb_adult_traits %>%
+  filter(prey_sp %in% names(alb_adult_prey)) #need trait values for 158 spp.
+
+rownames(alb_adult_traits) <- alb_adult_traits$prey_sp
+
+alb_adult_traits <- alb_adult_traits[ order(row.names(alb_adult_traits)), ]
+
+#Ensure traits are treated as factors for now
+alb_adult_traits[,1:8] <- lapply(alb_adult_traits[,1:8] , factor) #to convert to factors
+str(alb_adult_traits)
+
+## Make sure species names match abund matrix
+rownames(alb_adult_traits) == colnames(alb_adult_prey) #awesome!
+# And the mvabund matrix
+rownames(alb_adult_traits) == colnames(alb_adult_prey_mv) #awesome!
+
+
+```
+
+```{r Trait DF manip #4 (Q)}
+
+#Trait DF
+#alb_adult_traits = read.csv(paste(here("data/adult.prey.clusternum.habgreg.aggl.k9.csv"), sep=""), header=T, row.names = 1) %>%
+#  dplyr::select(prey_sp:adult.clust.num) 
+
+#alb_adult_traits$prey_sp = str_replace_all(alb_adult_traits$prey_sp, " ", "_")
+
+alb_adult_traits4 = alb_adult_traits %>%
+  filter(prey_sp %in% names(alb_adult_prey4)) #need trait values for 158 spp.
+
+rownames(alb_adult_traits4) <- alb_adult_traits4$prey_sp
+
+alb_adult_traits4 <- alb_adult_traits4[ order(row.names(alb_adult_traits4)), ]
+
+#Ensure traits are treated as factors for now
+alb_adult_traits4[,1:8] <- lapply(alb_adult_traits4[,1:8] , factor) #to convert to factors
+str(alb_adult_traits4)
+
+## Make sure species names match abund matrix
+rownames(alb_adult_traits4) == colnames(alb_adult_prey4) #awesome!
+# And the mvabund matrix
+rownames(alb_adult_traits4) == colnames(alb_adult_prey4_mv) #awesome!
+
+```
+
+```{r SAVE DF TRAITS (Q)}
+
+write.csv(alb_adult_traits4, here("data/alb_adult_traits4.csv"))
+
+```
+
+
+Note, need to fix issue with some of the Longhurst Province codes not copying across in the datamanip code.
+
+```{r Subsets + check covars & df dims again}
+#Check df dims
+dim(alb_adult_traits) #158 species, 8 traits
+dim(alb_adult_prey_mv) #158 species, 253 obs
+dim(alb_adult_covars) #253 observations, 13 covariates
+#ALL DF'S LINE UP
+
+#Check df str
+str(alb_adult_traits) #all characters --> does it need to be factors?
+#str(alb_adult_prey_mv) #158 species, 253 obs
+str(alb_adult_covars) #all factors
+View(alb_adult_covars)
+
+#All traits to try
+traits_try = alb_adult_traits[,2:7]
+str(traits_try) #158 species and subset of 6 traits
+View(traits_try)
+
+#Select some covars & traits
+ocean = alb_adult_covars$OceanBasin
+longhurst = alb_adult_covars$code
+pred_life = alb_adult_covars$pred_life
+lat = alb_adult_covars$lat_cat
+
+levels(alb_adult_covars$OceanBasin)
+#[1] "Indian"        "Mediterranean" "N Atlantic"    "N Pacific"     "S Atlantic"    "S Pacific"
+levels(alb_adult_covars$pred_life)
+#[1] "adult"    "juvenile" "mixed"
+alb_adult_covars$pred_life <- factor(alb_adult_covars$pred_life, levels = c("mixed", "juvenile", "adult"))
+#[1] "mixed"    "juvenile" "adult"
+
+str(alb_adult_covars)
+```
+
+```{r Subsets + check covars & df dims for data #4}
+#Check df dims
+dim(alb_adult_prey4_mv) #169 observations for 107 species
+dim(alb_adult_traits4[,2:7]) #107 species and 6 traits
+dim(alb_adult_covars4) #169 observations and 13 co-variates
+#ALL DF'S LINE UP
+
+#Check df str
+str(alb_adult_traits4) #all factors?
+#str(alb_adult_prey_mv) #107 species, 169 obs
+str(alb_adult_covars4) #all factors
+
+#All traits to try
+traits_try4 = alb_adult_traits4[,2:7]
+str(traits_try4) #107 species and subset of 6 traits
+
+#Select some covars & traits
+ocean4 = alb_adult_covars4$OceanBasin
+longhurst4 = alb_adult_covars4$code
+pred_life4 = alb_adult_covars4$pred_life
+lat4 = alb_adult_covars4$lat_cat
+
+levels(alb_adult_covars4$OceanBasin)
+#[1] "Indian"        "Mediterranean" "N Atlantic"    "N Pacific"     "S Atlantic"    "S Pacific"
+levels(alb_adult_covars4$pred_life)
+#[1] "adult"    "juvenile" "mixed"
+alb_adult_covars4$pred_life <- factor(alb_adult_covars4$pred_life, levels = c("mixed", "juvenile", "adult"))
+#[1] "mixed"    "juvenile" "adult"
+
+#str(alb_adult_covars4)
+```
+
+
+## nMDS plots
+
+### Original data
+```{r Convex hulls - Ocean Basin}
+# Type of study
+unique(treatment.scores$OceanBasin)
+str(treatment.scores)
+
+#TModel --> Theory
+#Create convex hulls for the space occupied by each Type of study
+#Hull loop
+oceans = as.character(unique(treatment.scores$OceanBasin))
+for(i in 1:length(oceans)) {
+  temp = oceans[i]
+  df = treatment.scores[treatment.scores$OceanBasin == temp, ][chull(treatment.scores[treatment.scores$OceanBasin == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+#combine the hull data
+hull.data.ocean <- rbind(grp.Indian, grp.Mediterranean, `grp.N Atlantic`, `grp.N Pacific`, `grp.S Atlantic`, `grp.S Pacific`)  
+```
+
+```{r nMDS Ocean Basin, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_ocean <- ggplot() + 
+  geom_polygon(data = hull.data.ocean,
+               aes(x=NMDS1,y=NMDS2,
+                   fill=fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific"),
+                   group=fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific")),alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores,aes(x=NMDS1,y=NMDS2, colour = fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific")), size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin") +
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin")
+
+adult_nmds_ocean
+
+ggsave(here("output_figures/diet_mvtraits/adult_FO_nmds_ocean.jpeg"), plot = adult_nmds_ocean, width = 8, height = 8, dpi = 300)
+
+```
+
+```{r nMDS Ocean Basin Q, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_ocean <- ggplot() + 
+  #geom_polygon(data=hull.data.tos,aes(x=NMDS1,y=NMDS2,
+  #fill=fct_relevel(TOS, "Observational", "Experiment", "Metanalysis", "Review", "Theory"),group=fct_relevel(TOS, "Observational", "Experiment", "Metanalysis", "Review", "Theory")),alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores,aes(x=NMDS1,y=NMDS2, colour = OceanBasinQ), size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin Q") #+
+  #scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Study type")
+
+adult_nmds_ocean
+
+#ggsave("trait_nMDS_tos.jpeg", plot = trait_nMDS_tos, width = 8, height = 8, dpi = 300)
+
+```
+
+### Outliers removed
+
+#### Ocean Basin
+```{r Convex hulls #4 - Ocean Basin}
+#Check factors
+unique(treatment.scores4$OceanBasin)
+#str(treatment.scores4)
+
+#Create convex hulls for the space occupied by each Ocean Basin
+#Hull loop
+oceans = as.character(unique(treatment.scores4$OceanBasin))
+for(i in 1:length(oceans)) {
+  temp = oceans[i]
+  df = treatment.scores4[treatment.scores4$OceanBasin == temp, ][chull(treatment.scores4[treatment.scores4$OceanBasin == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+#combine the hull data
+hull.data.ocean <- rbind(grp.Indian, grp.Mediterranean, `grp.N Atlantic`, `grp.N Pacific`, `grp.S Atlantic`, `grp.S Pacific`)  
+```
+
+```{r nMDS Ocean Basin, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_ocean4 <- ggplot() + 
+  geom_polygon(data = hull.data.ocean,
+               aes(x=NMDS1,y=NMDS2,
+                   fill=fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific"),
+                   group=fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific")),alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores4,
+             aes(x=NMDS1,y=NMDS2,
+                 colour = fct_relevel(OceanBasin, "N Atlantic", "Mediterranean", "S Atlantic", "Indian", "N Pacific", "S Pacific")), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin") +
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin")
+
+adult_nmds_ocean4
+
+ggsave(here("output_figures/diet_mvtraits/adult_FO_nmds_ocean4.jpeg"), plot = adult_nmds_ocean4, width = 8, height = 8, dpi = 300)
+
+```
+
+#### Ocean Basin Q
+```{r Convex hulls #4 - Ocean Basin Q}
+#Check factors
+unique(treatment.scores4$OceanBasinQ)
+#str(treatment.scores4)
+
+#Create convex hulls for the space occupied by each Ocean Basin
+#Hull loop
+oceansq = as.character(unique(treatment.scores4$OceanBasinQ))
+for(i in 1:length(oceansq)) {
+  temp = oceansq[i]
+  df = treatment.scores4[treatment.scores4$OceanBasinQ == temp, ][chull(treatment.scores4[treatment.scores4$OceanBasinQ == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+#combine the hull data
+hull.data.oceanq <- rbind(`grp.NE Atlantic`, grp.Mediterranean, `grp.NE Pacific`, `grp.SW Atlantic`, `grp.NW Atlantic`, `grp.SE Atlantic`, `grp.SW Indian`, `grp.NW Indian`, `grp.NW Pacific`, `grp.SW Pacific`)  
+
+hull.data.oceanq <- rbind(`grp.Mediterranean`, `grp.NE Atlantic`, `grp.NE Pacific`, `grp.NW Atlantic`, `grp.NW Pacific`, `grp.SE Atlantic`, `grp.SW Atlantic`, `grp.SW Pacific`)
+#`grp.NW Indian`, `grp.SW Indian`,  
+```
+
+```{r nMDS Ocean Basin Q, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_oceanq <- ggplot() + 
+  geom_polygon(data=hull.data.oceanq,
+               aes(x=NMDS1,y=NMDS2,
+                   fill=fct_relevel(OceanBasinQ, "Mediterranean", "NE Atlantic", "NE Pacific", "NW Atlantic", 
+                                    "NW Pacific", "SE Atlantic", "SW Atlantic",  "SW Pacific"),
+                   group=fct_relevel(OceanBasinQ, "Mediterranean", "NE Atlantic", "NE Pacific", "NW Atlantic", 
+                                    "NW Pacific", "SE Atlantic", "SW Atlantic", "SW Pacific")),
+               alpha=0.30) + # add the convex hulls
+  geom_point(data= treatment.scores4,
+             aes(x=NMDS1,y=NMDS2, colour = OceanBasinQ), size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin Q") +
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin Q")
+
+adult_nmds_oceanq
+
+ggsave(here("output_figures/diet_mvtraits/adult_FO_nmds_oceanq4.jpeg"), plot = adult_nmds_oceanq, width = 8, height = 8, dpi = 300)
+
+```
+
+#### Predator Life Stage
+
+```{r Convex hulls #4 - Ocean Basin}
+#Check factors
+unique(treatment.scores4$pred_life)
+#str(treatment.scores4)
+
+#Create convex hulls for the space occupied by each Ocean Basin
+#Hull loop
+life = as.character(unique(treatment.scores4$pred_life))
+for(i in 1:length(life)) {
+  temp = life[i]
+  df = treatment.scores4[treatment.scores4$pred_life == temp, ][chull(treatment.scores4[treatment.scores4$pred_life == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+#combine the hull data
+hull.data.life <- rbind(grp.adult, grp.juvenile, grp.mixed)  
+```
+
+```{r nMDS Ocean Basin, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_life4 <- ggplot() + 
+  geom_polygon(data = hull.data.life,
+               aes(x=NMDS1,y=NMDS2,
+                   fill=fct_relevel(pred_life, "adult", "juvenile", "mixed"),
+                   group=fct_relevel(pred_life, "adult", "juvenile", "mixed")),
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores4,
+             aes(x=NMDS1,y=NMDS2,
+                 colour = fct_relevel(pred_life, "adult", "juvenile", "mixed")), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Predator life stage") +
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Predator life stage")
+
+adult_nmds_life4
+
+ggsave(here("output_figures/diet_mvtraits/adult_FO_nmds_life4.jpeg"), plot = adult_nmds_life4, width = 8, height = 8, dpi = 300)
+
+```
+
+#### Tropical/Temperate
+
+```{r Convex hulls #4 - Lat Cat}
+#Check factors
+unique(treatment.scores4$lat_cat)
+#str(treatment.scores4)
+
+#Create convex hulls for the space occupied by each Ocean Basin
+#Hull loop
+lat = as.character(unique(treatment.scores4$lat_cat))
+for(i in 1:length(lat)) {
+  temp = lat[i]
+  df = treatment.scores4[treatment.scores4$lat_cat == temp, ][chull(treatment.scores4[treatment.scores4$lat_cat == temp, c("NMDS1", "NMDS2")]), ]
+  assign(paste0('grp.',temp), df)
+}
+#combine the hull data
+hull.data.lat <- rbind(grp.temperate, grp.tropical)  
+```
+
+```{r nMDS Lat Cat, echo=FALSE}
+#nMDS plot for the type of study
+
+adult_nmds_lat4 <- ggplot() + 
+  geom_polygon(data = hull.data.lat,
+               aes(x=NMDS1,y=NMDS2,
+                   fill=fct_relevel(lat_cat, "temperate", "tropical"),
+                   group=fct_relevel(lat_cat, "temperate", "tropical")),
+               alpha=0.30) + # add the convex hulls
+  geom_point(data=treatment.scores4,
+             aes(x=NMDS1,y=NMDS2,
+                 colour = fct_relevel(lat_cat, "temperate", "tropical")), 
+             size=2) + # add the point markers
+  coord_equal() +
+  theme_bw()  +
+  theme(axis.text.x = element_blank(),  # remove x-axis text
+        axis.text.y = element_blank(), # remove y-axis text
+        axis.ticks = element_blank(),  # remove axis ticks
+        axis.title.x = element_text(size=18), # remove x-axis labels
+        axis.title.y = element_text(size=18), # remove y-axis labels
+        legend.title = element_text(size = 18),
+        legend.text = element_text(size = 18),
+        legend.justification = c(0,0.5),
+        #panel.background = element_rect(fill = "lightgrey"), 
+        panel.grid.major = element_blank(),  #remove major-grid labels
+        panel.grid.minor = element_blank(),  #remove minor-grid labels
+        plot.background = element_blank()) +
+  #guides(fill = FALSE, colour = FALSE) +
+  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Latitude") +
+  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Latitude")
+
+adult_nmds_lat4
+
+ggsave(here("output_figures/diet_mvtraits/adult_FO_nmds_lat4.jpeg"), plot = adult_nmds_lat4, width = 8, height = 8, dpi = 300)
+
+```
+
+
+
+```{r ManyGLM}
+#Fit ManyGLM to ensure the matrix works
+## Run trial manyglm() to check for problems
+adult_prey_m1 <- manyglm(alb_adult_prey_mv ~ ocean, data=alb_adult_fo, family="negative.binomial")
+plot(adult_prey_m1) #check model residuals
+
+adult_prey_m1_anova <- anova.manyglm(adult_prey_m1)
+# Get anova result
+adult_prey_m1_anova
+#Multivariate test:
+#            Res.Df Df.diff  Dev Pr(>Dev)    
+#(Intercept)    252                          
+#ocean          247       5 1248    0.001 ***
+
+summary(adult_prey_m1)
+#Test statistics:
+#                   wald value Pr(>wald)    
+#(Intercept)            11.501  0.000999 ***
+#oceanMediterranean      1.686  0.213786    
+#oceanN Atlantic         4.292  0.001998 ** 
+#oceanN Pacific          3.551  0.002997 ** 
+#oceanS Atlantic         3.400  0.034965 *  
+#oceanS Pacific          1.077  0.646354   
+
+```
+
+
+## Trait GLM
+
+Need to add the following code:
+# load correction to traitglm:
+source("traitglm.R")
+source("get_polys.R")
+
+### Original data - Predator life stage
+
+This is now not working on data that I previously had it working.
+Note on troubleshooting, this bit is almost always an effing PIA. 
+(i) First we build a multivariate GLM
+
+```{r ManyGLM}
+#Fit ManyGLM to ensure the matrix works
+## Run trial manyglm() to check for problems
+adult_prey_m1 <- manyglm(alb_adult_prey_mv ~ ocean, data=alb_adult_fo, family="negative.binomial")
+plot(adult_prey_m1) #check model residuals
+
+adult_prey_m1_anova <- anova.manyglm(adult_prey_m1)
+# Get anova result
+adult_prey_m1_anova
+#Multivariate test:
+#            Res.Df Df.diff  Dev Pr(>Dev)    
+#(Intercept)    224                          
+#ocean          219       5 1078    0.001 ***
+
+## Prey assemblages differed by ocean basin
+
+summary(adult_prey_m1)
+#Test statistics:
+#                   wald value Pr(>wald)    
+#(Intercept)            11.501  0.000999 ***
+#oceanMediterranean      1.686  0.213786    
+#oceanN Atlantic         4.292  0.001998 ** 
+#oceanN Pacific          3.551  0.002997 ** 
+#oceanS Atlantic         3.400  0.034965 *  
+#oceanS Pacific          1.077  0.646354   
+
+```
+
+Also double check df's
+
+```{r Check matrices for traitglm}
+#Double check dfs
+dim(alb_adult_prey_mv) #225 observations for 139 species
+dim(alb_adult_traits[,2:7]) #139 species and 6 traits
+#dim(pred_life4)
+dim(alb_adult_covars) #225 observations and 13 co-variates
+```
+
+(ii) Then fit traitglm to species assemblage + environmental variables
+
+```{r TraitGLM test #1}
+
+#Using predator life stage
+trait_life_spp <- traitglm(L = alb_adult_prey_mv,
+                      #R =  alb_adult_covars$pred_life, 
+                      #Both options for input matrices works
+                      R = pred_life,
+                      method="glm1path" #method="manyglm"
+                      )
+
+#Warning
+#Warning message:
+#In manyglm(formula = l ~ ., family = "negative.binomial", data = list( :
+#  Non-integer data are fitted to the negative.binomial model.
+
+#Note on data
+#I believe this is fine, but could be wrong. 
+#We are fitting numerical values that should take values from 0 to 100%
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life_spp)[which(residuals(trait_life_spp)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life_spp)[is.finite((residuals(trait_life_spp)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+It works!
+Now to do this with the subsetted data....
+Also test the "glm1path" method, which we ultimately want.
+
+```{r TraitGLM test #2}
+
+#Using predator life stage
+trait_life_spp <- traitglm(L = alb_adult_prey_mv,
+                      #R =  alb_adult_covars$pred_life,
+                      R = pred_life,
+                      Q = alb_adult_traits[,2:7], 
+                      method="manyglm"#,
+                      #link = "cloglog",
+                      #method="glm1path"
+                      )
+
+#Warning
+#Same warning as above
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life_spp)[which(residuals(trait_life_spp)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life_spp)[is.finite((residuals(trait_life_spp)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner, eval=FALSE}
+
+a        = max( abs(trait_life_spp$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life_spp$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "Solitary",
+#                   "Schooling",
+#                   "Pairs/groups",
+#                   "Known prey",
+#                   "Potential prey",
+#                   "Bathypelagic")
+plot.4th = levelplot(temp, 
+                     xlab=list("Environmental Variables", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+```
+
+(iii) Then fit all matrices (RLQ)
+
+```{r TraitGLM - predator age}
+
+trait_life <- traitglm(L = alb_adult_prey_mv,
+                      R =  pred_life, #or alb_adult_covars$pred_life
+                      Q = alb_adult_traits[,2:7],
+                      family="negative.binomial", #default
+                      #link = "cloglog",
+                      method="glm1path", #method="manyglm"#,
+                      composition=FALSE,
+                      col.intercepts = TRUE #default
+                      )
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life)[which(residuals(trait_life)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life)[is.finite((residuals(trait_life)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+### Outlier-free data
+
+```{r ManyGLM #4}
+
+#Fit ManyGLM to ensure the matrix works
+## Run trial manyglm() to check for problems
+adult_prey_m4 <- manyglm(alb_adult_prey4_mv ~ ocean4, data=alb_adult_fo4.2, family="negative.binomial")
+plot(adult_prey_m4) #check model residuals
+
+adult_prey_m4_anova <- anova.manyglm(adult_prey_m4)
+# Get anova result
+adult_prey_m4_anova
+#Multivariate test:
+#            Res.Df Df.diff  Dev Pr(>Dev)    
+#(Intercept)    252                          
+#ocean          247       5 1248    0.001 ***
+
+summary(adult_prey_m4)
+#Test statistics:
+#                   wald value Pr(>wald)    
+#(Intercept)            11.501  0.000999 ***
+#oceanMediterranean      1.686  0.213786    
+#oceanN Atlantic         4.292  0.001998 ** 
+#oceanN Pacific          3.551  0.002997 ** 
+#oceanS Atlantic         3.400  0.034965 *  
+#oceanS Pacific          1.077  0.646354   
+
+```
+
+```{r TraitGLM - predator age #4}
+#Double check dfs
+dim(alb_adult_prey4_mv) #169 observations for 107 species
+dim(alb_adult_traits4[,2:7]) #107 species and 6 traits
+#dim(pred_life4)
+dim(alb_adult_covars4) #169 observations and 13 co-variates
+
+trait_life <- traitglm(L = alb_adult_prey4_mv,
+                      R =  alb_adult_covars4$pred_life, #pred_life4, #pred_life
+                      #Q = 
+                      #Q = alb_adult_traits4[,2:7],
+                      #family="negative.binomial", #default
+                      #method="manyglm"#,
+                      #link = "cloglog",
+                      method="glm1path",
+                      composition=FALSE#,
+                      #col.intercepts = TRUE #default
+                      )
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life)[which(residuals(trait_life)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life)[is.finite((residuals(trait_life)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner}
+
+a        = max( abs(trait_life$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "Solitary",
+#                   "Schooling",
+#                   "Pairs/groups",
+#                   "Known prey",
+#                   "Potential prey",
+#                   "Bathypelagic")
+plot.4th = levelplot(temp, 
+                     xlab=list("Environmental Variables", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+#ggsave(here("output_figures/diet_mvtraits/fourth_lifestage.png"), plot.4th, width=8, height=8, dpi=300)
+
+```
+
+### Latitude
+
+```{r TraitGLM - predator age, eval=FALSE}
+#Double check dfs
+dim(alb_adult_prey_mv)
+dim(alb_adult_covars)
+dim(alb_adult_traits)
+
+trait_life <- traitglm(alb_adult_prey_mv,
+                      pred_life,
+                      traits_try,
+                      family="negative.binomial",
+                      #method="manyglm",
+                      method="glm1path",
+                      composition=FALSE
+                      )
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_life)[which(residuals(trait_life)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_life)[is.finite((residuals(trait_life)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner, eval=FALSE}
+
+a        = max( abs(trait_life$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_life$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "Solitary",
+#                   "Schooling",
+#                   "Pairs/groups",
+#                   "Known prey",
+#                   "Potential prey",
+#                   "Bathypelagic")
+plot.4th = levelplot(temp, 
+                     xlab=list("Environmental Variables", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+```
+
+### Ocean Basin
+
+```{r TraitGLM - Ocean Basin}
+#Double check dfs
+dim(alb_adult_prey_mv)
+dim(alb_adult_covars)
+dim(alb_adult_traits)
+
+trait_ocean <- traitglm(alb_adult_prey_mv,
+                      alb_adult_covars$OceanBasin,
+                      traits_try,
+                      #family="negative.binomial",
+                      #method="manyglm",
+                      method="glm1path"#,
+                      #composition=FALSE
+                      )
+
+#Check model output - residuals TEST
+qqnorm(residuals(trait_ocean)[which(residuals(trait_ocean)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(trait_ocean)[is.finite((residuals(trait_ocean)))]
+plot(resids.full)
+abline(c(0,0),col="red")
+
+```
+
+```{r Plot 4th corner}
+
+a        = max( abs(trait_ocean$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+temp = t(as.matrix(trait_ocean$fourth.corner))
+
+#rownames(temp) = c("Region: Ocean Basin")
+#colnames(temp) = c("Trophic group: Benthic Invertivore",
+#                   "Trophic group: Browsing Herbivore",
+#                   "Trophic group: Mesopredator",
+#                   "Trophic group: Planktivore",
+#                   "Solitary",
+#                   "Schooling",
+#                   "Pairs/groups",
+#                   "Known prey",
+#                   "Potential prey",
+#                   "Bathypelagic")
+plot.4th = levelplot(temp, 
+                     xlab=list("Environmental Variables", cex=1.5),
+                     ylab=list("Species traits", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
+                     colorkey=list(labels=list(cex=1.3)))
+
+print(plot.4th)
+
+```
+
+## TUTORIAL
+Mvabund tutorial for traitglm to check on any df formatting requirements
+
+```{r mvabund traitglm tute}
+
+data(antTraits)
+#Abund matrix --> integers
+str(antTraits$abund) #30 obs and 41 species
+#Env matrix --> all numeric info 
+str(antTraits$env) #30 observations and 5 variables 
+#Traits matrix --> mixed character, factor, numeric and integers!!
+str(antTraits$traits) #41 species and 5 traits
+
+ft = traitglm(antTraits$abund,
+            antTraits$env,
+            antTraits$traits,
+            method="manyglm")
+ft$fourth #print fourth corner terms
+
+# for a pretty picture of fourth corner coefficients, uncomment the following lines:
+# library(lattice)
+a        = max( abs(ft$fourth.corner) )
+colort   = colorRampPalette(c("blue","white","red")) 
+plot.4th = levelplot(t(as.matrix(ft$fourth.corner)), xlab="Environmental Variables",
+  ylab="Species traits", col.regions=colort(100), at=seq(-a, a, length=100),
+  scales = list( x= list(rot = 45)))
+print(plot.4th)
+
+plot(ft) # for a Dunn-smyth residual plot
+qqnorm(residuals(ft)); abline(c(0,1),col="red") # for a normal quantile plot.
+
+# predict to the first five sites
+predict(ft,newR=antTraits$env[1:5,])
+
+# refit using LASSO and less variables, including row effects and only two interaction terms:
+ft1=traitglm(antTraits$abund,antTraits$env[,3:4],antTraits$traits[,c(1,3)],
+      formula=~Shrub.cover:Femur.length+Shrub.cover:Pilosity,composition=TRUE,method="glm1path")
+ft1$fourth #notice LASSO penalty has one interaction to zero
+
+
+```
+
