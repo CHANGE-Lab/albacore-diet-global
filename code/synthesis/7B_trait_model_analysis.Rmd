@@ -584,7 +584,7 @@ saveRDS(ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_20
 saveRDS(ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
 
 #LASSO glms
-saveRDS(ocean_clusters_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_LASSO.rds"))
+saveRDS(ocean_cluster_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
 saveRDS(ocean_phylo_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
 saveRDS(ocean_trait_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))
 
@@ -605,11 +605,11 @@ alb_pa_ord = metaMDS(alb_prey_pa_use,
                      trymax = 20,#10000, #1000
                      k=3) #could increase to k = 4
 
-saveRDS(alb_prob_nMDS_pa, here("outputs_figures/traitglmsalb_prob_nMDS_pa.rds"))
+saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_prob_nMDS_pa.rds"))
 
 #Note pb with this!! insufficient data?
 
-pl <- ordiplot(alb_prob_nMDS_pa, type = "none")
+pl <- ordiplot(alb_pa_ord, type = "none")
 points(pl, "sites", pch=21, col="red", bg="yellow")
 text(pl, "species", col="blue", cex=0.9)
 
