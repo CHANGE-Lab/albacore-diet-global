@@ -95,37 +95,37 @@ Load presence/absence data.
 #Doesn't like the here() function now for some reason
 alb_prey_pa = read.csv(paste(here("data/output_data/alb_global_wide_dietpa.csv"),
                                    sep=""), check.names=FALSE) %>% #, row.names = 1
-  dplyr::select(StudyID:ncol(.)) %>%
+  dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %>% #remove species outlier
   filter(OceanBasin %notin% c("Indian", "S Atlantic")) #not eough replication for these values
 
-print(dim(alb_prey_pa)) #65 317
+print(dim(alb_prey_pa)) #65 316
+```
+
+Now we need to check for and remove any zero-sum columns or rows of data, and low FO data and adjust the co-variate data.
+
+```{r Species PA (L) remove low abundance taxa, tidy=TRUE, warning=FALSE, message=FALSE}
+#Check for empty columns
+which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2) #Remove
+
+names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))
+
+alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
+
+#Check for empty rows
+which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #None
+
+alb_prey_use = alb_prey_use %>%
+  slice(-c(60,61))
 
 ```
 
-Manipulate and subset data. Here we obtain 137 species as columns and 225 obs.
-
-```{r Species PA (L) manipulate, tidy=TRUE, warning=FALSE, message=FALSE}
-#Check for empty columns
-which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])==0) #Remove
-
-names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])==0))
-
-alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])==0))]
-
-#Check for empty rows
-which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #Remove these - this becomes a thing once we start removing outlier species
-#None
-
+```{r Select species only (L), tidy=TRUE, warning=FALSE, message=FALSE}
 #Subset species df
-alb_prey_use = alb_prey_use[,10:ncol(alb_prey_use)]
-names(alb_prey_use) <- str_replace_all(names(alb_prey_use), " ", "_")
+alb_prey_use_spp = alb_prey_use[,10:ncol(alb_prey_use)]
+names(alb_prey_use_spp) <- str_replace_all(names(alb_prey_use_spp), " ", "_")
 
 #check df
-dim(alb_prey_use) #236 species & 65 observations
-#str(alb_adult_prey) #data are integers & numeric
-
-#Try numeric
-#alb_prey_use[,1:ncol(alb_prey_use)] =  lapply(alb_prey_use[,1:ncol(alb_prey_use)], as.numeric)
+dim(alb_prey_use_spp) #140 species & 65 observations
 
 ```
 
@@ -166,7 +166,7 @@ alb_trait_use[,3:8] <- lapply(alb_trait_use[,3:8], factor) #to convert to factor
 
 #Need to filter by prey species we want to use.
 alb_trait_use = alb_trait_use %>%
-  filter(prey_sp %in% names(alb_prey_use))
+  filter(prey_sp %in% names(alb_prey_use_spp))
   #we retain 292 species and 8 trait values
 
 dim(alb_trait_use)
@@ -197,55 +197,33 @@ summary(as.factor(alb_trait_use$prob.clust.num)) #good distribution of species w
 
 **Cleaning and preparing trait values for analyses**
 
-## UPDATE DIET DATA (L) & SELECT COVARS (R)
+## Data (L) -- Select
 
 Here we filter our prey species (presence/absence data) by the species that were also used for cluster analysis, because we have complete trait information for these species, as well as frequency of occurrence data.
 
 ```{r FILTER PREY BY PROB TRAITS, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_prey_use <- alb_prey_use[colnames(alb_prey_use) %in% rownames(alb_trait_use)]
+alb_prey_use <- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_use)]
 
-dim(alb_prey_use) #70 rows and 226 spp
-
-```
-
-Now we need to check for and remove any zero-sum columns or rows of data, and adjust the co-variate data.
-
-```{r Diet data check zero sum, tidy=TRUE, warning=FALSE, message=FALSE}
-
-#Need to check for empty columns and rows again
-#Check for empty columns
-which(colSums(alb_prey_use)==0) #None! #Otherwise remove these
-#Check for empty rows
-which(rowSums(alb_prey_use)==0) #Remove these - this becomes a thing once we start removing outlier species
+dim(alb_prey_use) #63 rows and 134 spp
 
 ```
 
-```{r Diet data check less than two occurrences, tidy=TRUE, warning=FALSE, message=FALSE}
 
-#Need to check for empty columns and rows again
-#Check for empty columns
-which(colSums(alb_prey_use)<2) #Consider removing
-length(which(colSums(alb_prey_use)<2)) #Consider removing #91 spp with low occurrence
-#Check for empty rows
-which(rowSums(alb_prey_use)<2) #Consider removing
+## Covars (R) - MANIPS
 
-```
-
+Checking the level replication for each covariate. Note that our best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but would need to exclude low numbered levels.
 
 ```{r Select covars}
 
 alb_covars = alb_prey_pa %>%
-  select(StudyID:pred_life_adjust)
+  select(StudyID:pred_life_adjust) %>%
+  slice(-c(60,61))
 
 #As factors
 alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.factor)
 
 ```
-
-## Covars (R) - MANIPS
-
-Checking the level replication for each covariate. Note that our best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but would need to exclude low numbered levels.
 
 ```{r Covars (R) checking, eval=FALSE}
 #Check representation
@@ -260,8 +238,8 @@ summary(alb_covars$pred_life)
 #   2       40       28
 
 summary(alb_covars$OceanBasin)
-#   Indian Mediterranean    N Atlantic     N Pacific    S Atlantic     S Pacific 
-#     3             9            21            28             2             7 
+#   Mediterranean    N Atlantic     N Pacific     S Pacific 
+#         9            21            28             5 
 #Remove Indian and S Atlantic Oceans from analyses
 
 summary(alb_covars$OceanBasinQ)
@@ -282,25 +260,47 @@ dim(alb_covars) #65 observations for 9 covars
 rownames(alb_trait_use) == colnames(alb_prey_use) #awesome!
 
 #Check all matrix dimensions
-dim(alb_trait_use) #226 species and 8 traits
-dim(alb_prey_use) #65 obs, 226 species
-dim(alb_covars) #65 obs, 9 covariates
+dim(alb_trait_use) #134 species and 8 traits
+dim(alb_prey_use) #63 obs, 134 species
+dim(alb_covars) #63 obs, 9 covariates
 
 ```
 
+## Check multivariate data
+
+### Ordination
+
+```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
+
+
+#PA
+check_nmds = metaMDS(alb_prey_use,
+                     distance="bray",
+                     trymax = 20,#10000, #1000
+                     k=3) #could increase to k = 4
+
+#saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_prob_nMDS_pa.rds"))
+
+#Note pb with this!! insufficient data?
+
+pl <- ordiplot(check_nmds, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
 
 ## SAVE DFS FOR ANALYSES
 
 ```{r Saving dfs for analysis}
 
 #L - species df
-write.csv(alb_prey_use, here("./data/output_data/alb_prey_pa_use.csv"))
+write.csv(alb_prey_use, here("./data/output_data/alb_prey_pa_use.csv"), row.names=FALSE)
 
 #R - covars df
-write.csv(alb_covars, here("./data/output_data/alb_covars_use.csv"))
+write.csv(alb_covars, here("./data/output_data/alb_covars_use.csv"), row.names=FALSE)
 
 #Q - trait df
-write.csv(alb_trait_use, here("./data/output_data/alb_trait_use.csv"))
+write.csv(alb_trait_use, here("./data/output_data/alb_trait_use.csv"), row.names=FALSE)
 
 ```
 
