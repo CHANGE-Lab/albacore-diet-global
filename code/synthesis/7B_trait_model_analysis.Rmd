@@ -283,6 +283,18 @@ resids.full = residuals(ocean_spp)[is.finite((residuals(ocean_spp)))]
 plot(resids.full); abline(c(0,0),col="red")
 ```
 
+**SPP LASSO - Ocean Basin**
+
+```{r SPP ocean manyglm}
+
+ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                      R = alb_covars_use$OceanBasin,
+                      family=binomial(link = "logit"),
+                      method="glm1path"
+                      ) #note default is "manyglm"
+
+```
+
 ### Trait clusters model
 
 **MANYGLM Clusters - Ocean Basin**
@@ -598,6 +610,7 @@ saveRDS(ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_20
 saveRDS(ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
 
 #LASSO glms
+saveRDS(ocean_spp_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_spp_LASSO.rds"))
 saveRDS(ocean_cluster_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
 saveRDS(ocean_phylo_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
 saveRDS(ocean_trait_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))

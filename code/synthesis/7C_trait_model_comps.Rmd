@@ -115,13 +115,12 @@ str(traits_use)
 ```{r Save interaction models}
 #Species model
 ocean_spp = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_spp.rds"))
-
-#Manyglm
 ocean_clusters_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many.rds"))
 ocean_phylo_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many.rds"))
 ocean_trait_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
 
 #LASSO glms
+ocean_spp_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_spp_LASSO.rds"))
 ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
 ocean_phylo_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
 ocean_trait_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))
@@ -206,7 +205,8 @@ The interaction model that included ocean basin + life stage had the lowest AIC 
   
 ## Model Comp Outputs
 
-### Model List
+### Model List - manyglm
+
 ```{r Model list for outputs, eval=FALSE}
 
 #Species*env models
@@ -227,7 +227,7 @@ ocean_phylo_LASSO
 ```
 
 
-### Model outputs without phylo
+### Model outputs without phylo - manyglm
   
 ```{r Make output dataframe}
 
@@ -280,3 +280,69 @@ ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpeg"),
 
 ```
 
+## Model list - LASSO
+
+```{r Model list for outputs LASSO, eval=FALSE}
+
+#Species*env models
+ocean_spp_LASSO
+#LASSO glms
+ocean_trait_LASSO$deviance
+ocean_cluster_LASSO$deviance
+ocean_phylo_LASSO$deviance
+
+
+```
+
+### Model outputs without phylo - LASSO
+  
+```{r Make output dataframe LASSO}
+
+model = c("ocean_spp", "ocean_phylo_LASSO", "ocean_trait_LASSO",  "ocean_clusters_LASSO")
+
+mod_type = c("species", "phylo", "traits", "cluster")
+
+covar = c("Ocean Basin", "Ocean Basin", "Ocean Basin",  "Ocean Basin")
+
+deviance = c(ocean_spp_LASSO$deviance, ocean_phylo_LASSO$deviance,
+             ocean_trait_LASSO$deviance, ocean_cluster_LASSO$deviance)
+
+mod_dev_lasso = data.frame(covar, mod_type, model, deviance)
+
+write.csv(mod_dev, here("data/output_data/mod_dev_lasso_apr2022.csv"))
+
+```
+
+```{r Make output graph LASSO}
+mod_dev_lasso$mod_type = as.factor(mod_dev_lasso$mod_type)
+mod_dev_lasso$mod_type = factor(mod_dev_lasso$mod_type, 
+                          levels = c("species", "phylo", "cluster", "traits"))
+levels(mod_dev_lasso$mod_type)
+
+mod_dev_graph_lasso = ggplot(data = mod_dev_lasso, 
+                             aes(x = deviance, y = mod_type, fill = mod_type)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  theme_classic() +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        #axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "right") +
+  #coord_flip()+
+  xlab("Deviance explained") + ylab("Covariate fitted to model") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type",
+                       guide = guide_legend(reverse = TRUE))+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
+
+mod_dev_graph_lasso
+
+ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.pdf"), 
+       plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
+
+ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.jpeg"), 
+       plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
+
+```
