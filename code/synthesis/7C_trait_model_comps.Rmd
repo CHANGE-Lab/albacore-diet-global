@@ -195,8 +195,10 @@ an_ocean_trait_many
 
 ## Conclusions
 
-The species models had the lowest residual deviance explained, and typically higher AIC values.
-Cluster models performed slightly better than traits models, but not massive difference. Both cluster and trait sets of models outperformed species models.
+UPDATE THESE...
+
+The species models had the lowest residual deviance explained, and typically higher AIC values. Then phylo model also lower.
+Traits models performed slightly better than cluster models, but not massive difference. Both cluster and trait sets of models outperformed species models.
 
 The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
 The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
@@ -209,24 +211,19 @@ The interaction model that included ocean basin + life stage had the lowest AIC 
 
 #Species*env models
 ocean_spp
-
 #Cluster*env models (manyglm and LASSO)
-#Manyglms
 ocean_clusters_many
-#LASSO glms
-ocean_cluster_LASSO
-
 #Phylo*env models (manyglm and LASSO)
-#Manyglms
 ocean_phylo_many
-#LASSO glms
-ocean_phylo_LASSO
-
 #Trait*env models
-# Manyglms
 ocean_trait_many
+
 #LASSO glms
 ocean_trait_LASSO
+ocean_cluster_LASSO
+ocean_phylo_LASSO
+
+
 ```
 
 
@@ -249,6 +246,7 @@ aic = c(ocean_spp$AICsum, ocean_phylo_many$AICsum,
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
 write.csv(mod_dev, here("data/output_data/mod_dev_apr2022.csv"))
+
 ```
 
 ```{r Make output graph}
@@ -274,30 +272,11 @@ mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mo
 
 mod_dev_graph
 
-mod_dev_graph2 = ggplot(data = mod_dev) + 
-  geom_bar(aes(y = deviance, fill = mod_type)) + #, #x= mod_type, 
-           #position = position_dodge(0.5), size=2) +
-  #geom_bar(width=0.9, position=position_dodge())+
-  theme_classic() +
-  theme(axis.title = element_text(size=18),
-        axis.text = element_text(size=18),
-        axis.text.x = element_blank(),
-        axis.ticks = element_blank(),
-        legend.text = element_text(size=18),
-        legend.title = element_text(size=18),
-        legend.position = "top") +
-  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
-  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
-  facet_grid(.~ covar) +
-  theme(strip.text.x = element_text(size = 18))
-
-mod_dev_graph2
-
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.pdf"), 
        plot = mod_dev_graph, width=8, height=4, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpeg"), 
-       plot = mod_dev_graph, width=8, height=4, dpi=300)
+       plot = mod_dev_graph, width=, height=4, dpi=300)
 
 ```
 
