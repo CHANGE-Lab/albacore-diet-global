@@ -65,8 +65,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("code/2a_synthesis/traitglm.R")
-source("code/2a_synthesis/get_polys.R")
+source("code/traitglm.R")
+source("code/get_polys.R")
 
 ```
 
@@ -133,7 +133,7 @@ summary(alb_trait_use$diel_migrant_cat) #USE
 
 summary(alb_trait_use$season_cat) #USE
 
-summary(alb_trait_use$gregarious) #USE
+summary(alb_trait_use$gregarious) #DON'T USE
 
 summary(alb_trait_use$prob.clust.num) #USE
 
@@ -163,7 +163,7 @@ levels(alb_trait_use$vert_habitat) #check
 
 levels(alb_trait_use$horz_habitat) #check
 
-levels(alb_trait_use$gregarious) #check
+#levels(alb_trait_use$gregarious) #check
 
 ```
 
@@ -506,7 +506,7 @@ Trait (trait matrix)*Env (ocean basin) - Manyglm
 
 ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
                              R = alb_covars_use$OceanBasin,
-                             Q = traits_use[,1:5],
+                             Q = traits_use[,1:4], #traits_use[,1:5]
                              family=binomial(link = "logit")
                              ) #note default is "manyglm"
 
@@ -553,7 +553,7 @@ Using method = glm1path == LASSO model.
 
 ocean_trait_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                                  R = alb_covars_use$OceanBasin,
-                                 Q = traits_use[,1:5],
+                                 Q = traits_use[,1:4], #traits_use[,1:5]
                                  family=binomial(link = "logit"),
                                  method="glm1path"
                                  ) #note default is "manyglm"
@@ -578,8 +578,8 @@ colnames(temp) = c("Vert. habitat - demersal",
                    "Horz. habitat - continental shelf",
                    "Horz. habitat - oceanic",
                    "Diel migrant (yes)",
-                   "Seasonal migrant (yes)",
-                   "Gregarious - schooling")
+                   "Seasonal migrant (yes)") #,
+                   #"Gregarious - schooling"
 
 ocean_LASSO_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
