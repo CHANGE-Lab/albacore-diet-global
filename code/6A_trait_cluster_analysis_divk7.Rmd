@@ -245,7 +245,7 @@ Below we are using simplified habitat use trait values + gregarious (as binary) 
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
 View(prob.stats.df.divisive)
-write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022/divisivek6/prob.stats.df.divisive.hab.csv"))
+write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.stats.df.divisive.hab.csv"))
 
 ```
 
@@ -273,7 +273,7 @@ prob.div.elbow = ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.d
   labs(x = "Num.of clusters", y = "Within clusters sum of squares (SS)") +
   theme(plot.title = element_text(hjust = 0.5))
 prob.div.elbow
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/divisivek6/prob.div.elbow.hab.png'), 
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.div.elbow.hab.png'), 
        plot=prob.div.elbow, width=8, height=8, dpi=300)
 
 ## Silhouette
@@ -288,7 +288,7 @@ prob.div.silh = ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.di
   labs(x = "Num.of clusters", y = "Average silhouette width") +
   theme(plot.title = element_text(hjust = 0.5))
 prob.div.silh
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/divisivek6/prob.div.silh.hab.png'), 
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.div.silh.hab.png'), 
        plot=prob.div.silh, width=8, height=8, dpi=300)
 
 ```
@@ -469,7 +469,7 @@ library(plyr)
 ```{r Summary info, warning=FALSE, message=FALSE}
 summary(as.factor(prob.prey.cl$prob.clust.num))
 #  1  2  3  4  5  6  7 
-# 12 88 51 14 55 44 28 
+# 44 88 28 51 55 12 14 
 
 ```
 
@@ -480,9 +480,16 @@ Here we want to visualise species' occupancy of trait-based cluster in multivari
 ### Ordination
 
 ```{r nMDS dissimilarity, tidy=TRUE, warning=FALSE, message=FALSE, results='hide'}
+
+prob.gower.dist <- daisy(use_traits, metric = c("gower"))
+str(prob.gower.dist)
 #### nMDS for dissimilarity
-trait_NMDS_prob <- metaMDS(prob.gower.dist, trymax = 1000) #solution after 20 iterations
+trait_NMDS_prob <- metaMDS(prob.gower.dist #, 
+                           #k = 2, trymax = 100
+                           ) 
+#solution after 20 iterations #prob.gower.dist
 trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
+plot(trait_NMDS_prob )
 
 ```
 
@@ -491,10 +498,11 @@ trait_NMDS_prob[["stress"]] #stress = 0.1477077 #reasonable
 ```{r Data scores for plotting, warning=FALSE, message=FALSE}
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
+data.scores = as.data.frame(trait_NMDS_prob$points)
 
 #Using the scores function from vegan to extract the site scores and convert to a data.frame
-data.scores <- as.data.frame(scores(trait_NMDS_prob))  #, "species"
-
+#data.scores <- as.data.frame(scores(trait_NMDS_prob))  #, "species"
+#?scores()
 #create a column of site names, from the rownames of data.scores
 data.scores$points <- rownames(data.scores)
 
@@ -510,7 +518,7 @@ This is unfortunately not very informative as the species are very clumped by th
 
 ```{r make manual palette to match the cluster colours}
 
-
+library(scales)
 #   #1         #3        #4       #2       #5         #6
 #"#00496F" "#0C7996" "#94B669" "#EDB829" "#E97C07" "#DD4124"
 
@@ -519,6 +527,7 @@ This is unfortunately not very informative as the species are very clumped by th
 
 str(PNW.pal7)
 #"#00496F" "#0A718F" "#59A082" "#EDD746" "#EDA417" "#E7720B" "#DD4124"
+show_col(PNW.pal7)
 
 fig3.pal <- c("#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124")
 show_col(fig3.pal)
@@ -541,7 +550,7 @@ trait_nMDS_prob_fig <- ggplot() +
   #                 group= prob.clust.num), 
   #             alpha=0.30) + # add the convex hulls
   geom_point(data=treatment.scores, 
-             aes(x=NMDS1, y=NMDS2, colour=factor(prob.clust.num)), 
+             aes(x=MDS1, y=MDS2, colour=factor(prob.clust.num)), 
              size=2,
              position = position_jitter(width = 0, height = 0.1, seed = 8)) + # add the point markers
   #geom_jitter(aes(x=NMDS1, y=NMDS2, colour=prob.clust.num))+
