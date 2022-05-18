@@ -449,7 +449,7 @@ heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level))
   facet_grid(trait~. , scales="free_y")
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.life.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
@@ -460,7 +460,7 @@ heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(
   facet_grid(trait~., scales="free_y")
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.life.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
 
 library(plyr)
 
@@ -481,8 +481,8 @@ Here we want to visualise species' occupancy of trait-based cluster in multivari
 
 ```{r nMDS dissimilarity, tidy=TRUE, warning=FALSE, message=FALSE, results='hide'}
 
-prob.gower.dist <- daisy(use_traits, metric = c("gower"))
-str(prob.gower.dist)
+#prob.gower.dist <- daisy(use_traits, metric = c("gower"))
+#str(prob.gower.dist)
 #### nMDS for dissimilarity
 trait_NMDS_prob <- metaMDS(prob.gower.dist #, 
                            #k = 2, trymax = 100
@@ -529,11 +529,11 @@ str(PNW.pal7)
 #"#00496F" "#0A718F" "#59A082" "#EDD746" "#EDA417" "#E7720B" "#DD4124"
 show_col(PNW.pal7)
 
-fig3.pal <- c("#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124")
-show_col(fig3.pal)
+fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
+              "#EDA417", "#EDD746", 
+              "#E7720B", "#DD4124")
 
-fig3.pal <- c("#00496F", "#EDD746", "#0A718F", "#59A082", 
-              "#EDA417", "#E7720B", "#DD4124")
+show_col(fig3.pal)
 
 ```
 
@@ -575,6 +575,9 @@ trait_nMDS_prob_fig <- ggplot() +
   
 trait_nMDS_prob_fig
 
-ggsave(here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/trait_nMDS_prob_clusters_div7_hab.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+#Note plyr can mess with this!!
+detach("package:plyr", unload=TRUE)
+
+ggsave(here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/trait_nMDS_prob_clusters_div7_b.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```
