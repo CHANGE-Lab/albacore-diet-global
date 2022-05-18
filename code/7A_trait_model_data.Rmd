@@ -140,7 +140,7 @@ dim(alb_prey_use_spp) #140 species & 65 observations
 
 ```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum.divis.k6.hab.csv"), 
+alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
    dplyr::select(prey_sp:prob.clust.num)
 

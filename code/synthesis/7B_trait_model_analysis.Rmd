@@ -374,7 +374,8 @@ colnames(temp) = c("C1",
                    "C3",
                    "C4",
                    "C5",
-                   "C6")
+                   "C6",
+                   "C7")
 
 ocean_cluster_LASSO_graph = levelplot(temp, 
                      xlab=list("Ocean Basins", cex=1.5),

@@ -521,7 +521,7 @@ This is unfortunately not very informative as the species are very clumped by th
 library(scales)
 #   #1         #3        #4       #2       #5         #6
 #"#00496F" "#0C7996" "#94B669" "#EDB829" "#E97C07" "#DD4124"
-
+show_col(c("#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124"))
 #Need the following order
 #"#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124"
 
@@ -529,9 +529,16 @@ str(PNW.pal7)
 #"#00496F" "#0A718F" "#59A082" "#EDD746" "#EDA417" "#E7720B" "#DD4124"
 show_col(PNW.pal7)
 
+#Swap yellow with "#EDB829",
+#Swap green with "#94B669"
+
 fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
               "#EDA417", "#EDD746", 
               "#E7720B", "#DD4124")
+#Edit this!!
+#fig3.pal <- c("#00496F", "#94B669", "#0A718F", 
+#              "#EDA417", "#EDB829", 
+#              "#E7720B", "#DD4124")
 
 show_col(fig3.pal)
 

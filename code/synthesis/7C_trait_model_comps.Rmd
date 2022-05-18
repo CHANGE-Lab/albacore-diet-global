@@ -138,7 +138,7 @@ ocean_spp
 
 ```{r Anova ocean_spp}
 
-an_ocean_spp = anova.traitglm(ocean_spp)
+#an_ocean_spp = anova.traitglm(ocean_spp)
 #saveRDS(an_ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp
@@ -153,7 +153,7 @@ ocean_clusters_many
 
 ```{r Anova ocean_clusters_many}
 
-an_ocean_clusters_many = anova.traitglm(ocean_clusters_many)
+#an_ocean_clusters_many = anova.traitglm(ocean_clusters_many)
 #saveRDS(an_ocean_clusters_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many
@@ -168,9 +168,9 @@ ocean_phylo_many
 
 ```{r Anova ocean_phylo_many}
 
-an_ocean_phylo_many = anova.traitglm(ocean_phylo_many)
-saveRDS(an_ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
-#an_ocean_phylo_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
+#an_ocean_phylo_many = anova.traitglm(ocean_phylo_many)
+#saveRDS(an_ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
+an_ocean_phylo_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
 an_ocean_phylo_many
 
 ```
@@ -184,9 +184,9 @@ ocean_trait_many
 
 ```{r Anova ocean_trait_many}
 
-an_ocean_trait_many = anova.traitglm(ocean_trait_many)
-saveRDS(an_ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
-#an_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
+#an_ocean_trait_many = anova.traitglm(ocean_trait_many)
+#saveRDS(an_ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
+an_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
 an_ocean_trait_many
 
 ```
@@ -227,7 +227,7 @@ ocean_phylo_LASSO
 ```
 
 
-### Model outputs without phylo - manyglm
+### Model outputs - manyglm
   
 ```{r Make output dataframe}
 
