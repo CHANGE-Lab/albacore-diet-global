@@ -135,7 +135,6 @@ ocean_trait_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/oc
 ocean_spp
 ```
 
-
 ```{r Anova ocean_spp}
 
 #an_ocean_spp = anova.traitglm(ocean_spp)
@@ -257,7 +256,8 @@ levels(mod_dev$mod_type)
 
 mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mod_type)) + 
   geom_bar(stat = "identity", width = 1) + 
-  theme_classic() +
+  #ylim(2500,4360) +
+  theme_classic() + 
   theme(axis.title = element_text(size=18),
         axis.text = element_text(size=18),
         axis.text.x = element_blank(),
