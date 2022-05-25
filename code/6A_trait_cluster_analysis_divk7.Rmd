@@ -15,6 +15,7 @@ We use code and concepts described by Anastasia Reusova here: https://towardsdat
 
 And cluster validation concepts further discussed here: https://www.datanovia.com/en/lessons/cluster-validation-statistics-must-know-methods/#silhouette-coefficient
 
+**Note:** We excluded the aggregation behavioural trait from trait guild characterisation because the vast majority of prey species were schooling or aggregating taxa and we did not obtain congruent outputs when included. 
 
 ## Workspace
 

@@ -111,10 +111,18 @@ write.csv(alb_global, here::here("data/output_data/alb_global_diet.csv"),
 
 ### Covariates
 
+Note that we lose two replicates here:
+
+- McHugh 1952 (Mexico to USA) due to containing only higher level taxa classifications and not species-level data
+
+- Williams 2015 (NZ_L_2010) due to data entry error or copy/paste error, data have been copied over.
+
+
 ```{r Covariates, tidy = TRUE}
 
 alb_covars = alb_global %>%
-  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %>% #, stomachs_used
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %>% 
+  #, stomachs_used
   distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
            LocatLongitude, YearEnd, MonthRange, stomachs_used, pred_life) %>% 
   #, stomachs_used

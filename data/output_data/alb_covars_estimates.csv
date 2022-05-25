@@ -1,71 +1,71 @@
-"StudyID","CiteYear","OceanBasin","OceanBasinQ","LocatName","LocatLatitude","LocatLongitude","MonthRange","YearEnd","stomachs_used","pred_life","pred_flmean","pred_flmean_est","pred_flmin","pred_flmax","pred_flest"
-"Aloncle1973","1973.0","N Atlantic","NE Atlantic","NE Atlantic, Spain, France, Azores",44.632016,-5.5,"May–Sep",1971,"1754","juvenile",72.9,"Estimated: by meta-analysis",39,83,"Measured: study reported"
-"Bello1999","1999.0","Mediterranean","Mediterranean","SW Adriatic",41.096462,17.512247,"Sep–Oct",1992,"35","juvenile",47.23,"Estimated: by meta-analysis",45,60,"Estimated: by meta-analysis"
-"Bello1999","1999.0","Mediterranean","Mediterranean","SW Adriatic",41.2,17.512247,"Sep–Oct",1994,"21","juvenile",65,"Estimated: by meta-analysis",60,100,"Estimated: by meta-analysis"
-"Bernard1985","1985.0","N Pacific","NE Pacific","Southern CA",35.358333,-121.9083335,"Aug–Sep",1983,"94","juvenile",69.3,"Estimated: by meta-analysis",61.13,77.47,"Measured: study reported"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Oct",1928,"1","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Aug",1929,"6","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1930,"9","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1931,"25","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Oct",1932,"35","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Bouxin&Legendre","1934; 1936; 1940","N Atlantic","NE Atlantic","Golfe de Gascogne",48,-11.680527,"Jul–Nov",1933,"54","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A",38,-124,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A-B",36.046601,-123.6211254,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","A-B-C",32.5,-121.835632,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","B",33.5,-121.835632,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","B-C",31.5,-119.5,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","C",30,-120,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Clemens&Iselin1963","1963.0","N Pacific","NE Pacific","D",26,-115,"Jul–Sep",1961,"not reported","juvenile",68.4,"Estimated: by meta-analysis",50,95,"Estimated: by meta-analysis"
-"Consoli2008","2008.0","Mediterranean","Mediterranean","Central Mediterranean Sea",38.744181,15.059509,"Year-round",2006,"116","juvenile, adult",94.4,"Estimated: by meta-analysis",38.9,102.1,"Measured: study reported"
-"DosSantos&Haimovici2002","2002.0","S Atlantic","SW Atlantic","Southern Brazil",-30,-47.035828,"Multi-month",1998,"not reported","juvenile, adult",89.9,"Estimated: by meta-analysis",50,130,"Estimated: by meta-analysis"
-"Glaser2015","2015.0","N Pacific","NE Pacific","Mexico to Canada, northern Baja California to Vancouver Island",42,-128.992307,"Jun–Sep",2006,"371","juvenile",75.6,"Measured: study reported",54,99,"Measured: study reported"
-"Goni2011","2011.0","Mediterranean","Mediterranean","Balearic",40.158082,5,"Oct",2005,"24","juvenile",64.4,"Measured: study reported",58.5,83.2,"Measured: study reported"
-"Goni2011","2011.0","Mediterranean","Mediterranean","S Adriatic",41.824403,16.766758,"Nov",2006,"24","juvenile",64.4,"Measured: study reported",58.5,83.2,"Measured: study reported"
-"Goni2011","2011.0","Mediterranean","Mediterranean","Tyrrhenian",40.658373,11.445351,"Jan",2008,"29","juvenile",75,"Measured: study reported",58.5,83.2,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 1)",48,-13,"Jul–Aug",2005,"46","juvenile, adult",63.2,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Aug–Oct",2004,"19","juvenile, adult",63.2,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2005,"14","juvenile, adult",63.2,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 2)",47.8,-10,"Jul",2006,"39","juvenile, adult",61.1,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Aug",2005,"29","juvenile, adult",63.2,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 3)",46.7,-5.6,"Sep–Oct",2006,"32","juvenile, adult",61.1,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 4)",45.4,-3.5,"Jul–Sep",2006,"22","juvenile, adult",61.1,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2005,"186","juvenile, adult",63.2,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Jun–Oct",2006,"58","juvenile, adult",61.1,"Measured: study reported",39.6,112,"Measured: study reported"
-"Goni2011","2011.0","N Atlantic","NE Atlantic","Bay of Biscay (Zone 5)",44,-2.7,"Aug–Oct",2007,"31","juvenile, adult",61.1,"Measured: study reported",39.6,112,"Measured: study reported"
-"Hart1948","1948.0","N Pacific","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1941,"214","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1941,"196","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1945,"45","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Vancouver Island",49.117928,-127.546089,NA,1946,"3","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1946,"222","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Deck Collection Washington Coast",47.046499,-124.79124,NA,1947,"4","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Hart1948","1948.0","N Pacific","NE Pacific","Washington Coast",47.046499,-124.79124,NA,1947,"84","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Iversen1962","1962.0","N Pacific","NE Pacific","Central NE Pacific",15,-150,"Year-round",1957,"348","juvenile",67,"Measured: study reported",50,85,"Measured: study reported"
-"Jordan1880","1880.0","N Pacific","NE Pacific","Central CA, Santa Barbara Channel",34.345859,-119.723274,NA,1880,"1","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Joubin1918","1918.0","N Atlantic","NE Atlantic","Golfe de Gascogne",46.307336,-12.25,NA,1918,"not reported","juvenile, adult",72.9,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"Madigan2015","2015.0","N Pacific","NE Pacific","Mexico to California",34.633208,-124.292542,"Jul–Oct",2010,"86","juvenile",75.6,"Estimated: by meta-analysis",54,99,"Estimated: by meta-analysis"
-"Matthews1977","1977.0","N Atlantic","NW Atlantic","NW Atlantic",38,-56,NA,1964,"38","adult",101,"Measured: study reported",96,106,"Measured: study reported"
-"McHugh1952","1952.0","N Pacific","NE Pacific","Baja to northern CA",32.5,-121,"Jun & Oct",1949,"301","juvenile",68.4,"Estimated: by meta-analysis",37,105,"Estimated: by meta-analysis"
-"Monaco1888","1888.0","Mediterranean","Mediterranean","Mediterranean",34.061761,19.209595,"Sep",1888,"not reported","juvenile, adult",63.4875,"Estimated: by meta-analysis",40,110,"Estimated: by meta-analysis"
-"OrtizZarate1987","1987.0","N Atlantic","NE Atlantic","Bay of Biscay",46.986108,-5.407589,NA,1968,"97","juvenile",72.9,"Estimated: by meta-analysis",52,90,"Measured: study reported"
-"Pinkas1971","1971.0","N Pacific","NE Pacific","Central California (Region 2)",35.283333333,-122,"Jul–Nov",1968,"286","juvenile",68.4,"Estimated: by meta-analysis",52.2,93.2,"Measured: study reported"
-"Pinkas1971","1971.0","N Pacific","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Nov",1968,"177","juvenile",68.4,"Estimated: by meta-analysis",52.2,93.2,"Measured: study reported"
-"Pinkas1971","1971.0","N Pacific","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Nov",1968,"222","juvenile",68.4,"Estimated: by meta-analysis",52.2,93.2,"Measured: study reported"
-"Pinkas1971","1971.0","N Pacific","NE Pacific","Southern California (Region 1)",32,-119.5,"Jul–Sep",1969,"200","juvenile",68.4,"Estimated: by meta-analysis",52.2,93.2,"Measured: study reported"
-"Pinkas1971","1971.0","N Pacific","NE Pacific","Oregon-Washington (Region 3)",45,-126,"Jul–Sep",1969,"20","juvenile",68.4,"Estimated: by meta-analysis",52.2,93.2,"Measured: study reported"
-"Pusineri2005","2005.0","N Atlantic","NE Atlantic","Bay of Biscay",45,-17.5,"Jun–Sep",1993,"27","juvenile",72.9,"Estimated: by meta-analysis",53,93,"Measured: study reported"
-"Romanov2020","2020.0","Indian","SW Indian","Indian South Subtropical Gyre Province, Reunion Island",-19,53,"Multi-month",2014,"184","juvenile, adult",95.5,"Measured: study reported",67,119,"Measured: study reported"
-"Romanov2020","2020.0","Indian","SW Indian","Mozambique Channel, Madagascar",-15.5,42.76,"Multi-month",2014,"63","juvenile, adult",95.5,"Measured: study reported",67,119,"Measured: study reported"
-"Romanov2020","2020.0","S Atlantic","SE Atlantic","Atlantic Ocean off Cape Town, South Africa",-35,18,"Multi-month",2014,"290","juvenile, adult",95.5,"Measured: study reported",67,119,"Measured: study reported"
-"Romanov2020","2020.0","Indian","NW Indian","Indian Monsoon Gyre Province",-8,57,"Multi-month",2015,"150","juvenile, adult",95.5,"Measured: study reported",67,119,"Measured: study reported"
-"Romeo2012","2012.0","Mediterranean","Mediterranean","S. Tyrrhenian sea and Strait of Messina",38.6,15,NA,2008,"not reported","juvenile",72.84,"Estimated: by meta-analysis",48,91,"Measured: study reported"
-"Salman&Karakulak2009","2009.0","Mediterranean","Mediterranean","Antalya Bay (Levantine Sea)",36.5,31.5,"May-July",2007,"61","juvenile",73.9,"Measured: study reported",64,91,"Measured: study reported"
-"Watanabe2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",40,163,"September",2001,"14","juvenile",54.763,"Estimated: by meta-analysis",51.7,56.4,"Measured: study reported"
-"Watanabe2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"July",2002,"46","juvenile",64.006,"Estimated: by meta-analysis",48.9,76.2,"Measured: study reported"
-"Watanabe2004","2004.0","N Pacific","NW Pacific","central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,"May-June",2002,"64","juvenile",64.006,"Estimated: by meta-analysis",50.5,75.8,"Measured: study reported"
-"Williams2015","2015.0","S Pacific","SW Pacific","New Caledonia (NC_L_2010)",-19,168,"Feb–Oct",2010,"342","juvenile, adult",90.13,"Estimated: by meta-analysis",73,106,"Measured: study reported"
-"Williams2015","2015.0","S Pacific","SW Pacific","SW New Zealand (NZ_T_2008)",-42.5,170,"Jan–Apr",2008,"152","juvenile",64.006,"Estimated: by meta-analysis",43,86,"Measured: study reported"
-"Williams2015","2015.0","S Pacific","SW Pacific","SW New Zealand (NZ_T_2009)",-42.5,170,"Jan–Mar",2009,"61","juvenile",74.248,"Estimated: by meta-analysis",43,90,"Measured: study reported"
-"Williams2015","2015.0","S Pacific","SW Pacific","NE New Zealand (NZ_T_2010)",-40,178,"Apr–May",2010,"11","juvenile, adult",84.409,"Estimated: by meta-analysis",69,95,"Measured: study reported"
-"Williams2015","2015.0","S Pacific","SW Pacific","Tonga (TO_L_2010)",-20,-175.093115,"Jun–Jul",2010,"42","juvenile, adult",90.13,"Estimated: by meta-analysis",76,105,"Measured: study reported"
-"Young2010","2010.0","S Pacific","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-31,160,"Year-round",2006,"10","adult",90.5,"Measured: study reported",100,113,"Measured: study reported"
-"Young2010","2010.0","S Pacific","SW Pacific","Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-30,160,"Year-round",2006,"36","juvenile, adult",90.5,"Measured: study reported",63,100,"Measured: study reported"
+StudyID,CiteYear,OceanBasin,OceanBasinQ,LocatName,LocatLatitude,LocatLongitude,MonthRange,YearEnd,stomachs_used,pred_life,pred_flmean,pred_flmean_est,pred_flmin,pred_flmax,pred_flest
+Aloncle1973,1973,N Atlantic,NE Atlantic,"NE Atlantic, Spain, France, Azores",44.632016,-5.5,May–Sep,1971,1754,juvenile,72.9,Estimated: by meta-analysis,39,83,Measured: study reported
+Bello1999,1999,Mediterranean,Mediterranean,SW Adriatic,41.096462,17.512247,Sep–Oct,1992,35,juvenile,47.23,Estimated: by meta-analysis,45,60,Estimated: by meta-analysis
+Bello1999,1999,Mediterranean,Mediterranean,SW Adriatic,41.2,17.512247,Sep–Oct,1994,21,juvenile,65,Estimated: by meta-analysis,60,100,Estimated: by meta-analysis
+Bernard1985,1985,N Pacific,NE Pacific,Southern CA,35.358333,-121.9083335,Aug–Sep,1983,94,juvenile,69.3,Estimated: by meta-analysis,61.13,77.47,Measured: study reported
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Oct,1928,1,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Jul–Aug,1929,6,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Jul–Oct,1930,9,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Jul–Oct,1931,25,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Jul–Oct,1932,35,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Bouxin&Legendre,1934; 1936; 1940,N Atlantic,NE Atlantic,Golfe de Gascogne,48,-11.680527,Jul–Nov,1933,54,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,A,38,-124,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,A-B,36.046601,-123.6211254,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,A-B-C,32.5,-121.835632,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,B,33.5,-121.835632,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,B-C,31.5,-119.5,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,C,30,-120,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Clemens&Iselin1963,1963,N Pacific,NE Pacific,D,26,-115,Jul–Sep,1961,not reported,juvenile,68.4,Estimated: by meta-analysis,50,95,Estimated: by meta-analysis
+Consoli2008,2008,Mediterranean,Mediterranean,Central Mediterranean Sea,38.744181,15.059509,Year-round,2006,116,"juvenile, adult",94.4,Estimated: by meta-analysis,38.9,102.1,Measured: study reported
+DosSantos&Haimovici2002,2002,S Atlantic,SW Atlantic,Southern Brazil,-30,-47.035828,Multi-month,1998,not reported,"juvenile, adult",89.9,Estimated: by meta-analysis,50,130,Estimated: by meta-analysis
+Glaser2015,2015,N Pacific,NE Pacific,"Mexico to Canada, northern Baja California to Vancouver Island",42,-128.992307,Jun–Sep,2006,371,juvenile,75.6,Measured: study reported,54,99,Measured: study reported
+Goni2011,2011,Mediterranean,Mediterranean,Balearic,40.158082,5,Oct,2005,24,juvenile,64.4,Measured: study reported,58.5,83.2,Measured: study reported
+Goni2011,2011,Mediterranean,Mediterranean,S Adriatic,41.824403,16.766758,Nov,2006,24,juvenile,64.4,Measured: study reported,58.5,83.2,Measured: study reported
+Goni2011,2011,Mediterranean,Mediterranean,Tyrrhenian,40.658373,11.445351,Jan,2008,29,juvenile,75,Measured: study reported,58.5,83.2,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 1),48,-13,Jul–Aug,2005,46,"juvenile, adult",63.2,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 2),47.8,-10,Aug–Oct,2004,19,"juvenile, adult",63.2,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 2),47.8,-10,Jul,2005,14,"juvenile, adult",63.2,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 2),47.8,-10,Jul,2006,39,"juvenile, adult",61.1,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 3),46.7,-5.6,Aug,2005,29,"juvenile, adult",63.2,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 3),46.7,-5.6,Sep–Oct,2006,32,"juvenile, adult",61.1,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 4),45.4,-3.5,Jul–Sep,2006,22,"juvenile, adult",61.1,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 5),44,-2.7,Jun–Oct,2005,186,"juvenile, adult",63.2,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 5),44,-2.7,Jun–Oct,2006,58,"juvenile, adult",61.1,Measured: study reported,39.6,112,Measured: study reported
+Goni2011,2011,N Atlantic,NE Atlantic,Bay of Biscay (Zone 5),44,-2.7,Aug–Oct,2007,31,"juvenile, adult",61.1,Measured: study reported,39.6,112,Measured: study reported
+Hart1948,1948,N Pacific,NE Pacific,Vancouver Island,49.117928,-127.546089,NA,1941,214,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Washington Coast,47.046499,-124.79124,NA,1941,196,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Washington Coast,47.046499,-124.79124,NA,1945,45,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Vancouver Island,49.117928,-127.546089,NA,1946,3,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Washington Coast,47.046499,-124.79124,NA,1946,222,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Deck Collection Washington Coast,47.046499,-124.79124,NA,1947,4,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Hart1948,1948,N Pacific,NE Pacific,Washington Coast,47.046499,-124.79124,NA,1947,84,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Iversen1962,1962,N Pacific,NE Pacific,Central NE Pacific,15,-150,Year-round,1957,348,juvenile,67,Measured: study reported,50,85,Measured: study reported
+Jordan1880,1880,N Pacific,NE Pacific,"Central CA, Santa Barbara Channel",34.345859,-119.723274,NA,1880,1,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Joubin1918,1918,N Atlantic,NE Atlantic,Golfe de Gascogne,46.307336,-12.25,NA,1918,not reported,"juvenile, adult",72.9,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+Madigan2015,2015,N Pacific,NE Pacific,Mexico to California,34.633208,-124.292542,Jul–Oct,2010,86,juvenile,75.6,Estimated: by meta-analysis,54,99,Estimated: by meta-analysis
+Matthews1977,1977,N Atlantic,NW Atlantic,NW Atlantic,38,-56,NA,1964,38,adult,101,Measured: study reported,96,106,Measured: study reported
+McHugh1952,1952,N Pacific,NE Pacific,Baja to northern CA,32.5,-121,Jun & Oct,1949,301,juvenile,68.4,Estimated: by meta-analysis,37,105,Estimated: by meta-analysis
+Monaco1888,1888,Mediterranean,Mediterranean,Mediterranean,34.061761,19.209595,Sep,1888,not reported,"juvenile, adult",63.4875,Estimated: by meta-analysis,40,110,Estimated: by meta-analysis
+OrtizZarate1987,1987,N Atlantic,NE Atlantic,Bay of Biscay,46.986108,-5.407589,NA,1968,97,juvenile,72.9,Estimated: by meta-analysis,52,90,Measured: study reported
+Pinkas1971,1971,N Pacific,NE Pacific,Central California (Region 2),35.28333333,-122,Jul–Nov,1968,286,juvenile,68.4,Estimated: by meta-analysis,52.2,93.2,Measured: study reported
+Pinkas1971,1971,N Pacific,NE Pacific,Oregon-Washington (Region 3),45,-126,Jul–Nov,1968,177,juvenile,68.4,Estimated: by meta-analysis,52.2,93.2,Measured: study reported
+Pinkas1971,1971,N Pacific,NE Pacific,Southern California (Region 1),32,-119.5,Jul–Nov,1968,222,juvenile,68.4,Estimated: by meta-analysis,52.2,93.2,Measured: study reported
+Pinkas1971,1971,N Pacific,NE Pacific,Southern California (Region 1),32,-119.5,Jul–Sep,1969,200,juvenile,68.4,Estimated: by meta-analysis,52.2,93.2,Measured: study reported
+Pinkas1971,1971,N Pacific,NE Pacific,Oregon-Washington (Region 3),45,-126,Jul–Sep,1969,20,juvenile,68.4,Estimated: by meta-analysis,52.2,93.2,Measured: study reported
+Pusineri2005,2005,N Atlantic,NE Atlantic,Bay of Biscay,45,-17.5,Jun–Sep,1993,27,juvenile,72.9,Estimated: by meta-analysis,53,93,Measured: study reported
+Romanov2020,2020,Indian,SW Indian,"Indian South Subtropical Gyre Province, Reunion Island",-19,53,Multi-month,2014,184,"juvenile, adult",95.5,Measured: study reported,67,119,Measured: study reported
+Romanov2020,2020,Indian,SW Indian,"Mozambique Channel, Madagascar",-15.5,42.76,Multi-month,2014,63,"juvenile, adult",95.5,Measured: study reported,67,119,Measured: study reported
+Romanov2020,2020,S Atlantic,SE Atlantic,"Atlantic Ocean off Cape Town, South Africa",-35,18,Multi-month,2014,290,"juvenile, adult",95.5,Measured: study reported,67,119,Measured: study reported
+Romanov2020,2020,Indian,NW Indian,Indian Monsoon Gyre Province,-8,57,Multi-month,2015,150,"juvenile, adult",95.5,Measured: study reported,67,119,Measured: study reported
+Romeo2012,2012,Mediterranean,Mediterranean,S. Tyrrhenian sea and Strait of Messina,38.6,15,NA,2008,not reported,juvenile,72.84,Estimated: by meta-analysis,48,91,Measured: study reported
+Salman&Karakulak2009,2009,Mediterranean,Mediterranean,Antalya Bay (Levantine Sea),36.5,31.5,May-July,2007,61,juvenile,73.9,Measured: study reported,64,91,Measured: study reported
+Watanabe2004,2004,N Pacific,NW Pacific,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E",40,163,September,2001,14,juvenile,54.763,Estimated: by meta-analysis,51.7,56.4,Measured: study reported
+Watanabe2004,2004,N Pacific,NW Pacific,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,July,2002,46,juvenile,64.006,Estimated: by meta-analysis,48.9,76.2,Measured: study reported
+Watanabe2004,2004,N Pacific,NW Pacific,"central North Pacifc between 34°N and 45°N, and 151°E and 175°E",36,160,May-June,2002,64,juvenile,64.006,Estimated: by meta-analysis,50.5,75.8,Measured: study reported
+Williams2015,2015,S Pacific,SW Pacific,New Caledonia (NC_L_2010),-19,168,Feb–Oct,2010,342,"juvenile, adult",90.13,Estimated: by meta-analysis,73,106,Measured: study reported
+Williams2015,2015,S Pacific,SW Pacific,SW New Zealand (NZ_T_2008),-42.5,170,Jan–Apr,2008,152,juvenile,64.006,Estimated: by meta-analysis,43,86,Measured: study reported
+Williams2015,2015,S Pacific,SW Pacific,SW New Zealand (NZ_T_2009),-42.5,170,Jan–Mar,2009,61,juvenile,74.248,Estimated: by meta-analysis,43,90,Measured: study reported
+Williams2015,2015,S Pacific,SW Pacific,NE New Zealand (NZ_T_2010),-40,178,Apr–May,2010,11,"juvenile, adult",84.409,Estimated: by meta-analysis,69,95,Measured: study reported
+Williams2015,2015,S Pacific,SW Pacific,Tonga (TO_L_2010),-20,-175.093115,Jun–Jul,2010,42,"juvenile, adult",90.13,Estimated: by meta-analysis,76,105,Measured: study reported
+Young2010,2010,S Pacific,SW Pacific,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-31,160,Year-round,2006,10,adult,90.5,Measured: study reported,100,113,Measured: study reported
+Young2010,2010,S Pacific,SW Pacific,"Eastern Australia, offshore, Eastern Tuna and Billfish fishery",-30,160,Year-round,2006,36,"juvenile, adult",90.5,Measured: study reported,63,100,Measured: study reported
