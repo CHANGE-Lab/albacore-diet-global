@@ -35,6 +35,9 @@ library(lattice)
 
 ```
 
+## ADD
+
+Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"
 ## Load key dataframes
 
 Prey traits, albacore diet and covariates:
@@ -70,8 +73,8 @@ unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #the
 unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
 unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
 
-alb_covars_use = alb_covars_geog %>%
-  dplyr::select(-optional, -MonthRange)
+alb_covars_use = alb_covars_geog #%>%
+#  dplyr::select(-MonthRange) #-optional, 
 
 ```
 
@@ -79,10 +82,11 @@ alb_covars_use = alb_covars_geog %>%
 
 alb_global_diet = alb_global %>%
   left_join(alb_covars_geog) %>% #looks good #, by = "StudyID"
-  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, pred_life_adjust,
+  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, upwell_gyre, pred_life_adjust,
                 stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit)
 
 unique(alb_global_diet$code)
+summary(as.factor(alb_global_diet$upwell_gyre))
 summary(as.factor(alb_global_diet$code))
 table(alb_global_diet$code)
 

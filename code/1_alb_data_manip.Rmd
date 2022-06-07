@@ -100,6 +100,7 @@ alb_global$stomachs_used <- as.integer(alb_global$stomachs_used)
 alb_global$stomachs_used <- as.character(alb_global$stomachs_used)
 alb_global$stomachs_used <- replace_na(alb_global$stomachs_used, "not reported")
 unique(alb_global$stomachs_used)
+unique(alb_global$prey_sp)
 
 #Save total df version
 write.csv(alb_global, here::here("data/output_data/alb_global_diet.csv"), 
