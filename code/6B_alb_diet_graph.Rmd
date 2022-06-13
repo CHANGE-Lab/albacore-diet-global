@@ -148,6 +148,7 @@ diet_cluster_graph
 
 - Improve visibility of Indian Ocean and S Pacific.
 
+- Prompts me to remove S Pacific as well as Indian Ocean, S Atlantic from further analyses
 
 ## Example code
 
