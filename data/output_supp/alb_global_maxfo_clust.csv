@@ -1,0 +1,121 @@
+"StudyID","YearEnd","OceanBasin","prob.clust.num","maxFO"
+"Aloncle1973",1971,"N Atlantic",1,34.25
+"Aloncle1973",1971,"N Atlantic",4,16
+"Aloncle1973",1971,"N Atlantic",5,27
+"Bello1999",1992,"Mediterranean",1,25.8
+"Bello1999",1992,"Mediterranean",3,58.1
+"Bello1999",1994,"Mediterranean",1,73.7
+"Bello1999",1994,"Mediterranean",2,63.2
+"Bello1999",1994,"Mediterranean",3,57.9
+"Bernard1985",1983,"N Pacific",5,69.7
+"Bouxin&Legendre",1928,"N Atlantic",2,100
+"Bouxin&Legendre",1929,"N Atlantic",1,50
+"Bouxin&Legendre",1929,"N Atlantic",2,33.3333333333333
+"Bouxin&Legendre",1929,"N Atlantic",3,33.3333333333333
+"Bouxin&Legendre",1929,"N Atlantic",4,16.6666666666667
+"Bouxin&Legendre",1929,"N Atlantic",5,66.6666666666667
+"Bouxin&Legendre",1929,"N Atlantic",6,33.3333333333333
+"Bouxin&Legendre",1930,"N Atlantic",1,55.5555555555556
+"Bouxin&Legendre",1930,"N Atlantic",2,33.3333333333333
+"Bouxin&Legendre",1930,"N Atlantic",3,33.3333333333333
+"Bouxin&Legendre",1930,"N Atlantic",4,22.2222222222222
+"Bouxin&Legendre",1930,"N Atlantic",5,55.5555555555556
+"Bouxin&Legendre",1930,"N Atlantic",6,66.6666666666667
+"Bouxin&Legendre",1931,"N Atlantic",1,64
+"Bouxin&Legendre",1931,"N Atlantic",2,28
+"Bouxin&Legendre",1931,"N Atlantic",3,80
+"Bouxin&Legendre",1931,"N Atlantic",4,40
+"Bouxin&Legendre",1931,"N Atlantic",5,48
+"Bouxin&Legendre",1931,"N Atlantic",6,32
+"Bouxin&Legendre",1932,"N Atlantic",1,85.7142857142857
+"Bouxin&Legendre",1932,"N Atlantic",2,48.5714285714286
+"Bouxin&Legendre",1932,"N Atlantic",3,71.4285714285714
+"Bouxin&Legendre",1932,"N Atlantic",4,51.4285714285714
+"Bouxin&Legendre",1932,"N Atlantic",5,80
+"Bouxin&Legendre",1932,"N Atlantic",6,65.7142857142857
+"Bouxin&Legendre",1933,"N Atlantic",1,72.2222222222222
+"Bouxin&Legendre",1933,"N Atlantic",2,68.5185185185185
+"Bouxin&Legendre",1933,"N Atlantic",3,92.5925925925926
+"Bouxin&Legendre",1933,"N Atlantic",4,64.8148148148148
+"Bouxin&Legendre",1933,"N Atlantic",5,83.3333333333333
+"Bouxin&Legendre",1933,"N Atlantic",6,81.4814814814815
+"DosSantos&Haimovici2002",1998,"S Atlantic",1,12
+"DosSantos&Haimovici2002",1998,"S Atlantic",2,12
+"DosSantos&Haimovici2002",1998,"S Atlantic",3,12
+"Glaser2015",2006,"N Pacific",1,16
+"Glaser2015",2006,"N Pacific",4,18
+"Glaser2015",2006,"N Pacific",5,53
+"Goni2011",2004,"N Atlantic",1,73.7
+"Goni2011",2004,"N Atlantic",2,15.8
+"Goni2011",2004,"N Atlantic",4,26.3
+"Goni2011",2004,"N Atlantic",5,10.5
+"Goni2011",2005,"Mediterranean",1,75
+"Goni2011",2005,"Mediterranean",5,29.2
+"Goni2011",2005,"N Atlantic",1,65.5
+"Goni2011",2005,"N Atlantic",2,10.3
+"Goni2011",2005,"N Atlantic",4,35.7
+"Goni2011",2005,"N Atlantic",5,54.3
+"Goni2011",2006,"Mediterranean",1,79
+"Goni2011",2006,"Mediterranean",3,12.5
+"Goni2011",2006,"N Atlantic",1,89.7
+"Goni2011",2006,"N Atlantic",4,41
+"Goni2011",2006,"N Atlantic",5,72.4
+"Goni2011",2007,"N Atlantic",1,56.3
+"Goni2011",2007,"N Atlantic",5,62.5
+"Goni2011",2008,"Mediterranean",1,27.6
+"Hart1948",1946,"N Pacific",1,33.33333333
+"Hart1948",1946,"N Pacific",4,33.33333333
+"Hart1948",1946,"N Pacific",5,33.33333333
+"Hart1948",1946,"N Pacific",7,33.33333333
+"Hart1948",1947,"N Pacific",1,25
+"Hart1948",1947,"N Pacific",4,25
+"Hart1948",1947,"N Pacific",5,25
+"Hart1948",1947,"N Pacific",7,25
+"Iversen1962",1957,"N Pacific",4,10.9
+"Jordan1880",1880,"N Pacific",1,100
+"Jordan1880",1880,"N Pacific",2,100
+"Madigan2015",2010,"N Pacific",4,11.6279069767442
+"Madigan2015",2010,"N Pacific",5,40.6976744186046
+"Matthews1977",1964,"N Atlantic",1,65
+"McHugh1952",1949,"N Pacific",1,27.75
+"McHugh1952",1949,"N Pacific",2,20.1
+"McHugh1952",1949,"N Pacific",4,54.35
+"McHugh1952",1949,"N Pacific",5,12.75
+"OrtizZarate1987",1968,"N Atlantic",1,12
+"OrtizZarate1987",1968,"N Atlantic",4,26
+"OrtizZarate1987",1968,"N Atlantic",5,43
+"Pinkas1971",1968,"N Pacific",1,13.4
+"Pinkas1971",1968,"N Pacific",2,32.7
+"Pinkas1971",1968,"N Pacific",4,42.8
+"Pinkas1971",1968,"N Pacific",5,58.5
+"Pinkas1971",1969,"N Pacific",1,10.2
+"Pinkas1971",1969,"N Pacific",2,38.5
+"Pinkas1971",1969,"N Pacific",4,45.5
+"Pinkas1971",1969,"N Pacific",5,44.9
+"Pusineri2005",1993,"N Atlantic",1,46
+"Pusineri2005",1993,"N Atlantic",2,52
+"Pusineri2005",1993,"N Atlantic",4,48
+"Pusineri2005",1993,"N Atlantic",5,18
+"Romanov2020",2014,"Indian",2,26.6
+"Romanov2020",2014,"Indian",3,27
+"Romanov2020",2014,"Indian",5,11.4
+"Romanov2020",2014,"Indian",6,17.9
+"Romanov2020",2014,"S Atlantic",1,37.2
+"Romanov2020",2014,"S Atlantic",2,32.8
+"Romanov2020",2014,"S Atlantic",3,14.5
+"Romanov2020",2015,"Indian",4,70.7
+"Romeo2012",2008,"Mediterranean",1,46
+"Romeo2012",2008,"Mediterranean",3,66
+"Romeo2012",2008,"Mediterranean",5,57
+"Salman&Karakulak2009",2007,"Mediterranean",1,27.8
+"Salman&Karakulak2009",2007,"Mediterranean",2,11.47
+"Salman&Karakulak2009",2007,"Mediterranean",3,49.1
+"Salman&Karakulak2009",2007,"Mediterranean",4,21.31
+"Salman&Karakulak2009",2007,"Mediterranean",5,50.81
+"Watanabe2004",2001,"N Pacific",4,27.8
+"Watanabe2004",2001,"N Pacific",5,11.1
+"Watanabe2004",2002,"N Pacific",2,28.8
+"Watanabe2004",2002,"N Pacific",3,13.6
+"Watanabe2004",2002,"N Pacific",4,85.4
+"Williams2015",2008,"S Pacific",5,13.2
+"Williams2015",2009,"S Pacific",5,27.9

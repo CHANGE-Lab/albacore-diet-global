@@ -84,7 +84,6 @@ source("code/get_polys.R")
 
 ```
 
-
 ## Data (L)
 
 Load presence/absence data.

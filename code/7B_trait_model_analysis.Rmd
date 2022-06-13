@@ -13,6 +13,12 @@ output:
 
 This document contains code for loading mostly manipulated data for global albacore prey communities consumed and for conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
 
+## Current work
+
+Troubleshoot following analysis: BM suggested (email from 3/06/2020):
+You might also see differences between upwelling systems (e.g. California Current, Canary Current) vs. downwelling systems (e.g. Agulhas Current, both coasts of Australia), but that should also fall out in the ocean basin analysis, given the sample distribution
+
+
 ## Workspace
 
 ```{r setup, include=FALSE}
@@ -111,7 +117,7 @@ alb_trait_use <- alb_trait_use[ order(row.names(alb_trait_use)), ]
 #Traits as factors for analyses
 alb_trait_use[,1:ncol(alb_trait_use)] =  lapply(alb_trait_use[,1:ncol(alb_trait_use)], as.factor)
 
-dim(alb_trait_use) #156  12
+dim(alb_trait_use)
 
 ```
 
@@ -326,7 +332,7 @@ rownames(temp) = c(#"Mediterranean",
 colnames(temp)
 
 ocean_clusters_many_graph = levelplot(temp, 
-                     xlab=list("Ocean Basins", cex=1.5),
+                     xlab=list("", cex=1.5), #Ocean Basins
                      ylab=list("Species clusters", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
@@ -378,21 +384,53 @@ colnames(temp) = c("C1",
                    "C7")
 
 ocean_cluster_LASSO_graph = levelplot(temp, 
-                     xlab=list("Ocean Basins", cex=1.5),
+                     xlab=list("", cex=1.5), #Ocean Basins
                      ylab=list("Species clusters", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
-                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
-                     colorkey=list(labels=list(cex=1.3)))
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
 
 print(ocean_cluster_LASSO_graph)
 
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO_graph.pdf"), 
-       plot = as.ggplot(ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO_graph.jpeg"), 
-       plot = as.ggplot(ocean_cluster_LASSO_graph), width=12, height=12, dpi=300)
+       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
 
+```
+
+Plot 2nd corner
+
+```{r Plot 2nd query,echo=FALSE,message=FALSE, warning=FALSE}
+
+ocean_cluster_LASSO$coefficients#[86:97]
+
+#a        = max( abs(t_fullA$coefficients[86:97]) )
+#second = t(as.matrix(t_fullA$coefficients[86:97]))
+#View(second)
+#rownames(second) = " "
+#colnames(second) = c("Region: South",
+#                     "Site type: Haul-out",
+#                     "Trophic group: Benthic Invertivore",
+#                     "Trophic group: Browsing Herbivore",
+#                     "Trophic group: Mesopredator",
+#                     "Trophic group: Planktivore",
+#                     "Gregariousness: Solitary",
+#                     "Gregariousness: Pairs",
+#                     "Gregariousness: Schools",
+#                     "Seal: prey",
+#                     "Seal: potential prey",
+#                     "Seal: not prey")
+#plot.2nd = levelplot(second, 
+#                     xlab=list("Coefficients", cex=1.5),
+#                     ylab=list("Main Effects", cex=1.5), 
+#                     col.regions=colort(100), 
+#                     at=seq(-a, a,length=100),
+#                     scales = list(x=list(rot = 45, cex=1.3, tck=0, tick.number=1),
+#                                   y=list(cex=1.2)), colorkey=list(labels=list(cex=1.3)))
+#print(plot.2nd)
 ```
 
 ### Phylogeny models
@@ -478,8 +516,8 @@ colnames(temp) = c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda
                   "Syngnathiformes", "Vampyromorpha")
 
 ocean_phylo_LASSO_graph = levelplot(temp, 
-                     xlab=list("Ocean Basins", cex=1.5),
-                     ylab=list("Species phylogeny", cex=1.5), 
+                     xlab=list("", cex=1.5), #Ocean Basins
+                     ylab=list("Species Phylogenetic Order", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
@@ -586,16 +624,16 @@ ocean_LASSO_graph = levelplot(temp,
                      ylab=list("Species traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
-                     scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
-                     colorkey=list(labels=list(cex=1.3)))
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
 
 print(ocean_LASSO_graph)
 
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.pdf"), 
-       plot = as.ggplot(ocean_LASSO_graph), width=12, height=12, dpi=300)
+       plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
 
 ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.jpeg"), 
-       plot = as.ggplot(ocean_LASSO_graph), width=12, height=12, dpi=300)
+       plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
 
 ```
 

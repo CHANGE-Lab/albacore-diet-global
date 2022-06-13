@@ -38,6 +38,7 @@ library(lattice)
 ## ADD
 
 Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"
+
 ## Load key dataframes
 
 Prey traits, albacore diet and covariates:
@@ -46,7 +47,8 @@ Prey traits, albacore diet and covariates:
 
 #prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
 
-alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) 
+alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) %>%
+  dplyr::select(-CiteYear)
 
 alb_covars = read.csv(here::here("data/output_data/alb_covars.csv"), check.names = FALSE)
 
@@ -82,8 +84,8 @@ alb_covars_use = alb_covars_geog #%>%
 
 alb_global_diet = alb_global %>%
   left_join(alb_covars_geog) %>% #looks good #, by = "StudyID"
-  dplyr::select(StudyID:YearEnd, rep_ID, province, code, lat_cat, upwell_gyre, pred_life_adjust,
-                stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit)
+  #by = c("StudyID", "OceanBasin", "OceanBasinQ" "YearEnd", "MonthRange")
+  dplyr::select(StudyID, CiteAuth, CiteYear, YearEnd, rep_ID, OceanBasin:MonthRange, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit) #system, 
 
 unique(alb_global_diet$code)
 summary(as.factor(alb_global_diet$upwell_gyre))
@@ -91,11 +93,11 @@ summary(as.factor(alb_global_diet$code))
 table(alb_global_diet$code)
 
 #Write over previous output from first data chunk
-write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total.csv"), 
+write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total_v2.csv"), 
           row.names = FALSE)
 ```
 
-## Coavariate data exploration
+### Albacore measurement data exploration
 
 Supplementary figures S1a/b:
 
@@ -272,7 +274,6 @@ alb_covars_esti_life_plot
 ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot2.jpeg"), 
        plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
 ```
-
 
 ### Diet datasets
 
