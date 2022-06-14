@@ -137,7 +137,7 @@ ocean_spp
 
 ```{r Anova ocean_spp}
 
-#an_ocean_spp = anova.traitglm(ocean_spp)
+an_ocean_spp = anova.traitglm(ocean_spp)
 #saveRDS(an_ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp

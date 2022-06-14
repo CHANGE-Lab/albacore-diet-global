@@ -1,130 +1,130 @@
-"prey_sp","prey_order","life_stage","vert_habitat","horz_habitat","diel_migrant_cat","season_cat","gregarious","prob.clust.num"
-"Abraliopsis_felis","Oegopsida","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Acanthephyra_pelagica","Decapoda","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Alloteuthis_subulata","Myopsida","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Alpheus_glaber","Decapoda","larva","epipelagic","coastal","diel (yes)","season (no)","schooling",3
-"Anarrhichthys_ocellatus","Perciformes","juvenile","epipelagic","continental shelf","diel (no)","season (no)","schooling",4
-"Anchylomera_blossevillei","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Ancistroteuthis_lichtensteinii","Oegopsida","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Anoplopoma_fimbria","Scorpaeniformes","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",4
-"Anotopterus_pharao","Aulopiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Arctozenus_risso","Aulopiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","non-schooling",2
-"Argonauta_argo","Octopoda","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4
-"Argonauta_nouryi","Octopoda","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4
-"Argyropelecus_olfersii","Stomiiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Arnoglossus_imperialis","Pleuronectiformes","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Belone_belone","Beloniformes","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",4
-"Benthosema_glaciale","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Berryteuthis_anonychus","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Blennius_ocellaris","Perciformes","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","non-schooling",4
-"Boops_boops","Perciformes","juvenile","demersal","continental shelf","diel (yes)","season (no)","schooling",3
-"Brachioteuthis_riisei","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Brachyscelus_crusculum","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
-"Brama_brama","Perciformes","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Brama_orcini","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Capros_aper","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
-"Carinaria_lamarckii","Littorinimorpha","adult","epipelagic","oceanic","diel (yes)","season (yes)","non-schooling",5
-"Ceratoscopelus_maderensis","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Ceratoscopelus_townsendi","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Ceratoscopelus_warmingii","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Chelophyes_appendiculata","Siphonophorae","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Chilara_taylori","Ophidiiformes","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
-"Chiroteuthis_veranii","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (no)","schooling",5
-"Chtenopteryx_sicula","Decapodiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Citharichthys_sordidus","Pleuronectiformes","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Clio_pyramidata","Pteropoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Cololabis_saira","Beloniformes","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4
-"Cubiceps_gracilis","Perciformes","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4
-"Diaphus_theta","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Doryteuthis_opalescens","Myopsida","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Dosidicus_gigas","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Electrona_risso","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Eledone_cirrhosa","Octopoda","juvenile","demersal","continental shelf","diel (yes)","season (no)","non-schooling",3
-"Engraulis_encrasicolus","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Engraulis_japonicus","Clupeiformes","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",4
-"Engraulis_mordax","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Entelurus_aequoreus","Syngnathiformes","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","schooling",4
-"Euphausia_pacifica","Euphausiacea","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Eusergestes_arcticus","Decapoda","adult","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Eusergestes_similis","Decapoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Gaidropsarus_vulgaris","Gadiformes","juvenile","demersal","continental shelf","diel (no)","season (no)","non-schooling",7
-"Galiteuthis_armata","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",5
-"Gonatopsis_borealis","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Gonatus_steenstrupi","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Helicocranchia_pfefferi","Oegopsida","adult","mesopelagic","oceanic","diel (no)","season (no)","non-schooling",6
-"Helicolenus_dactylopterus","Scorpaeniformes","juvenile","epipelagic","continental shelf","diel (no)","season (yes)","non-schooling",4
-"Heteroteuthis_dispar","Sepiida","adult","mesopelagic","continental shelf","diel (yes)","season (no)","non-schooling",3
-"Histioteuthis_bonnellii","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Histioteuthis_heteropsis","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Histioteuthis_reversa","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Hyperia_galba","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Icichthys_lockingtoni","Perciformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Idotea_metallica","Isopoda","adult","epipelagic","continental shelf","diel (no)","season (yes)","schooling",4
-"Illex_coindetii","Oegopsida","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Janthina_exigua","Caenogastropoda","adult","epipelagic","oceanic","diel (no)","season (no)","non-schooling",4
-"Lampanyctus_crocodilus","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Lampanyctus_intricarius","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Leptocotis_tenuirostris","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Lestidiops_ringens","Aulopiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Lestidiops_sphyrenoides","Aulopiformes","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Macroramphosus_scolopax","Sygnathiformes","adult","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Magnisudis_atlantica","Aulopiformes","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",6
-"Mastigoteuthis_dentata","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",2
-"Maurolicus_muelleri","Stomiiformes","adult","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Medialuna_californiensis","Perciformes","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",4
-"Meganyctiphanes_norvegica","Euphausiacea","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Melamphaes_lugubris","Stephanoberyciformes","adult","mesopelagic","oceanic","diel (no)","season (no)","non-schooling",6
-"Merluccius_productus","Gadiformes","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Microgadus_proximus","Gadiformes","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Micromesistius_poutassou","Gadiformes","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Microstomus_pacificus","Pleuronectiformes","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Myctophum_punctatum","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Nannobrachium_ritteri","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Nematoscelis_megalops","Euphausiacea","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Neognathophausia_gigas","Lophogastrida","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Notoscopelus_kroyeri","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Octopoteuthis_sicula","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",2
-"Octopus_bimaculatus","Octopoda","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",4
-"Octopus_vulgaris","Octopoda","juvenile","epipelagic","coastal","diel (no)","season (yes)","schooling",4
-"Ocythoe_tuberculata","Oegopsida","juvenile","epipelagic","oceanic","diel (no)","season (yes)","non-schooling",4
-"Ommastrephes_bartramii","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Onychoteuthis_banksii","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Onychoteuthis_borealijaponica","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Onykia_robusta","Oegopsida","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","non-schooling",1
-"Palinurus_mauritanicus","Decapoda","larva","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Paralepis_coregonoides","Aulopiformes","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",6
-"Parapasiphae_sulcatifrons","Decapoda","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Phrosina_semilunata","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Platyscelus_armatus","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
-"Platyscelus_ovoides","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
-"Platyscelus_serratulus","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Pleuroncodes_planipes","Decapoda","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Pleuronichthys_decurrens","Pleuronectiformes","juvenile","demersal","continental shelf","diel (no)","season (no)","schooling",7
-"Polybius_henslowii","Decapoda","larva","epipelagic","continental shelf","diel (no)","season (no)","schooling",4
-"Primno_macropa","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (no)","schooling",5
-"Protomyctophum_crockeri","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Sardina_pilchardus","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Sardinops_sagax","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Scaeurgus_unicirrhus","Octopoda","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Scomber_japonicus","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Scomber_scombrus","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Scomberesox_saurus","Beloniformes","juvenile","epipelagic","oceanic","diel (no)","season (yes)","schooling",4
-"Scopelogadus_bispinosus","Stephanoberyciformes","adult","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",2
-"Scyllarus_arctus","Decapoda","larva","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Stenobrachius_leucopsarus","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Sternoptyx_diaphana","Stomiiformes","adult","mesopelagic","oceanic","diel (no)","season (yes)","non-schooling",6
-"Streetsia_challengeri","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
-"Stylocheiron_abbreviatum","Euphausiacea","adult","epipelagic","coastal","diel (no)","season (yes)","schooling",4
-"Syngnathus_californiensis","Syngnathiformes","juvenile","demersal","coastal","diel (no)","season (yes)","non-schooling",7
-"Tarletonbeania_crenularis","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Tetragonurus_atlanticus","Perciformes","juvenile","epipelagic","oceanic","diel (no)","season (no)","schooling",4
-"Tetragonurus_cuvieri","Perciformes","juvenile","epipelagic","oceanic","diel (no)","season (no)","schooling",4
-"Teuthowenia_megalops","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (no)","non-schooling",5
-"Thaleichthys_pacificus","Osmeriformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Themisto_gaudichaudii","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Todarodes_sagittatus","Oegopsida","juvenile","demersal","continental shelf","diel (yes)","season (yes)","schooling",1
-"Trachurus_symmetricus","Perciformes","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
-"Trachurus_trachurus","Perciformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
-"Triphoturus_mexicanus","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Vampyroteuthis_infernalis","Vampyromorpha","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","non-schooling",2
-"Vinciguerria_lucetia","Stomiiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
+prey_sp,prey_order,life_stage,vert_habitat,horz_habitat,diel_migrant_cat,season_cat,gregarious,prob.clust.num
+Abraliopsis_felis,Oegopsida,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Acanthephyra_pelagica,Decapoda,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Alloteuthis_subulata,Myopsida,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Alpheus_glaber,Decapoda,larva,epipelagic,coastal,diel (yes),season (no),schooling,3
+Anarrhichthys_ocellatus,Perciformes,juvenile,epipelagic,continental shelf,diel (no),season (no),schooling,4
+Anchylomera_blossevillei,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Ancistroteuthis_lichtensteinii,Oegopsida,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Anoplopoma_fimbria,Scorpaeniformes,juvenile,epipelagic,continental shelf,diel (no),season (yes),schooling,4
+Anotopterus_pharao,Aulopiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Arctozenus_risso,Aulopiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),non-schooling,2
+Argonauta_argo,Octopoda,juvenile,epipelagic,oceanic,diel (no),season (yes),schooling,4
+Argonauta_nouryi,Octopoda,juvenile,epipelagic,oceanic,diel (no),season (yes),schooling,4
+Argyropelecus_olfersii,Stomiiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Arnoglossus_imperialis,Pleuronectiformes,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Belone_belone,Beloniformes,juvenile,epipelagic,coastal,diel (no),season (yes),schooling,4
+Benthosema_glaciale,Myctophiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Berryteuthis_anonychus,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Blennius_ocellaris,Perciformes,juvenile,epipelagic,continental shelf,diel (no),season (yes),non-schooling,4
+Boops_boops,Perciformes,juvenile,demersal,continental shelf,diel (yes),season (no),schooling,3
+Brachioteuthis_riisei,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Brachyscelus_crusculum,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (no),schooling,3
+Brama_brama,Perciformes,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Brama_orcini,Perciformes,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Capros_aper,Perciformes,juvenile,epipelagic,continental shelf,diel (yes),season (no),schooling,3
+Carinaria_lamarckii,Littorinimorpha,adult,epipelagic,oceanic,diel (yes),season (yes),non-schooling,5
+Ceratoscopelus_maderensis,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Ceratoscopelus_townsendi,Myctophiformes,juvenile,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Ceratoscopelus_warmingii,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Chelophyes_appendiculata,Siphonophorae,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Chilara_taylori,Ophidiiformes,juvenile,epipelagic,continental shelf,diel (yes),season (no),schooling,3
+Chiroteuthis_veranii,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (no),schooling,5
+Chtenopteryx_sicula,Decapodiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Citharichthys_sordidus,Pleuronectiformes,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Clio_pyramidata,Pteropoda,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Cololabis_saira,Beloniformes,juvenile,epipelagic,oceanic,diel (no),season (yes),schooling,4
+Cubiceps_gracilis,Perciformes,juvenile,epipelagic,oceanic,diel (no),season (yes),schooling,4
+Diaphus_theta,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Doryteuthis_opalescens,Myopsida,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Dosidicus_gigas,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Electrona_risso,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Eledone_cirrhosa,Octopoda,juvenile,demersal,continental shelf,diel (yes),season (no),non-schooling,3
+Engraulis_encrasicolus,Clupeiformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Engraulis_japonicus,Clupeiformes,juvenile,epipelagic,continental shelf,diel (no),season (yes),schooling,4
+Engraulis_mordax,Clupeiformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Entelurus_aequoreus,Syngnathiformes,juvenile,epipelagic,continental shelf,diel (no),season (yes),schooling,4
+Euphausia_pacifica,Euphausiacea,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Eusergestes_arcticus,Decapoda,adult,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Eusergestes_similis,Decapoda,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Gaidropsarus_vulgaris,Gadiformes,juvenile,demersal,continental shelf,diel (no),season (no),non-schooling,7
+Galiteuthis_armata,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (no),non-schooling,5
+Gonatopsis_borealis,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Gonatus_steenstrupi,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Helicocranchia_pfefferi,Oegopsida,adult,mesopelagic,oceanic,diel (no),season (no),non-schooling,6
+Helicolenus_dactylopterus,Scorpaeniformes,juvenile,epipelagic,continental shelf,diel (no),season (yes),non-schooling,4
+Heteroteuthis_dispar,Sepiida,adult,mesopelagic,continental shelf,diel (yes),season (no),non-schooling,3
+Histioteuthis_bonnellii,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Histioteuthis_heteropsis,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Histioteuthis_reversa,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Hyperia_galba,Amphipoda,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Icichthys_lockingtoni,Perciformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Idotea_metallica,Isopoda,adult,epipelagic,continental shelf,diel (no),season (yes),schooling,4
+Illex_coindetii,Oegopsida,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Janthina_exigua,Caenogastropoda,adult,epipelagic,oceanic,diel (no),season (no),non-schooling,4
+Lampanyctus_crocodilus,Myctophiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Lampanyctus_intricarius,Myctophiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Leptocotis_tenuirostris,Amphipoda,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Lestidiops_ringens,Aulopiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Lestidiops_sphyrenoides,Aulopiformes,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Macroramphosus_scolopax,Syngnathiformes,adult,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Magnisudis_atlantica,Aulopiformes,juvenile,mesopelagic,oceanic,diel (no),season (yes),schooling,6
+Mastigoteuthis_dentata,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),non-schooling,2
+Maurolicus_muelleri,Stomiiformes,adult,mesopelagic,continental shelf,diel (yes),season (yes),schooling,1
+Medialuna_californiensis,Perciformes,juvenile,epipelagic,coastal,diel (no),season (yes),schooling,4
+Meganyctiphanes_norvegica,Euphausiacea,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Melamphaes_lugubris,Stephanoberyciformes,adult,mesopelagic,oceanic,diel (no),season (no),non-schooling,6
+Merluccius_productus,Gadiformes,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Microgadus_proximus,Gadiformes,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Micromesistius_poutassou,Gadiformes,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Microstomus_pacificus,Pleuronectiformes,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Myctophum_punctatum,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Nannobrachium_ritteri,Myctophiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Nematoscelis_megalops,Euphausiacea,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Neognathophausia_gigas,Lophogastrida,adult,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Notoscopelus_kroyeri,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Octopoteuthis_sicula,Oegopsida,juvenile,mesopelagic,oceanic,diel (yes),season (no),non-schooling,2
+Octopus_bimaculatus,Octopoda,juvenile,epipelagic,coastal,diel (no),season (yes),schooling,4
+Octopus_vulgaris,Octopoda,juvenile,epipelagic,coastal,diel (no),season (yes),schooling,4
+Ocythoe_tuberculata,Oegopsida,juvenile,epipelagic,oceanic,diel (no),season (yes),non-schooling,4
+Ommastrephes_bartramii,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Onychoteuthis_banksii,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Onychoteuthis_borealijaponica,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Onykia_robusta,Oegopsida,juvenile,mesopelagic,continental shelf,diel (yes),season (yes),non-schooling,1
+Palinurus_mauritanicus,Decapoda,larva,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Paralepis_coregonoides,Aulopiformes,juvenile,mesopelagic,oceanic,diel (no),season (yes),schooling,6
+Parapasiphae_sulcatifrons,Decapoda,adult,mesopelagic,oceanic,diel (yes),season (no),schooling,2
+Phrosina_semilunata,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Platyscelus_armatus,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (no),schooling,3
+Platyscelus_ovoides,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (no),schooling,3
+Platyscelus_serratulus,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Pleuroncodes_planipes,Decapoda,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Pleuronichthys_decurrens,Pleuronectiformes,juvenile,demersal,continental shelf,diel (no),season (no),schooling,7
+Polybius_henslowii,Decapoda,larva,epipelagic,continental shelf,diel (no),season (no),schooling,4
+Primno_macropa,Amphipoda,adult,epipelagic,oceanic,diel (yes),season (no),schooling,5
+Protomyctophum_crockeri,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Sardina_pilchardus,Clupeiformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Sardinops_sagax,Clupeiformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Scaeurgus_unicirrhus,Octopoda,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Scomber_japonicus,Perciformes,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Scomber_scombrus,Perciformes,juvenile,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Scomberesox_saurus,Beloniformes,juvenile,epipelagic,oceanic,diel (no),season (yes),schooling,4
+Scopelogadus_bispinosus,Stephanoberyciformes,adult,mesopelagic,oceanic,diel (yes),season (no),non-schooling,2
+Scyllarus_arctus,Decapoda,larva,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Stenobrachius_leucopsarus,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Sternoptyx_diaphana,Stomiiformes,adult,mesopelagic,oceanic,diel (no),season (yes),non-schooling,6
+Streetsia_challengeri,Amphipoda,adult,epipelagic,continental shelf,diel (yes),season (yes),schooling,1
+Stylocheiron_abbreviatum,Euphausiacea,adult,epipelagic,coastal,diel (no),season (yes),schooling,4
+Syngnathus_californiensis,Syngnathiformes,juvenile,demersal,coastal,diel (no),season (yes),non-schooling,7
+Tarletonbeania_crenularis,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Tetragonurus_atlanticus,Perciformes,juvenile,epipelagic,oceanic,diel (no),season (no),schooling,4
+Tetragonurus_cuvieri,Perciformes,juvenile,epipelagic,oceanic,diel (no),season (no),schooling,4
+Teuthowenia_megalops,Oegopsida,juvenile,epipelagic,oceanic,diel (yes),season (no),non-schooling,5
+Thaleichthys_pacificus,Osmeriformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Themisto_gaudichaudii,Amphipoda,adult,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Todarodes_sagittatus,Oegopsida,juvenile,demersal,continental shelf,diel (yes),season (yes),schooling,1
+Trachurus_symmetricus,Perciformes,juvenile,epipelagic,oceanic,diel (yes),season (yes),schooling,5
+Trachurus_trachurus,Perciformes,juvenile,epipelagic,coastal,diel (yes),season (yes),schooling,5
+Triphoturus_mexicanus,Myctophiformes,adult,mesopelagic,oceanic,diel (yes),season (yes),schooling,2
+Vampyroteuthis_infernalis,Vampyromorpha,juvenile,mesopelagic,oceanic,diel (yes),season (no),non-schooling,2
+Vinciguerria_lucetia,Stomiiformes,juvenile,mesopelagic,oceanic,diel (yes),season (yes),schooling,2

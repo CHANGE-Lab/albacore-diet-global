@@ -333,7 +333,7 @@ colnames(temp)
 
 ocean_clusters_many_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
-                     ylab=list("Species clusters", cex=1.5), 
+                     ylab=list("Trait Guilds", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
@@ -385,7 +385,7 @@ colnames(temp) = c("C1",
 
 ocean_cluster_LASSO_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
-                     ylab=list("Species clusters", cex=1.5), 
+                     ylab=list("Trait Guilds", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
@@ -457,9 +457,8 @@ temp = t(as.matrix(ocean_phylo_many$fourth.corner))
 
 rownames(temp) = c(#"Mediterranean",
                    "N Atlantic",
-                   "N Pacific",
-                   "S Pacific"#,
-                   #"Indian"
+                   "N Pacific"#,
+                   #"S Pacific"
                    )
 
 ocean_phylo_many_graph = levelplot(temp, 
@@ -472,10 +471,10 @@ ocean_phylo_many_graph = levelplot(temp,
 
 print(ocean_phylo_many_graph)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many_graph.pdf"), 
        plot = as.ggplot(ocean_phylo_many_graph), width=12, height=18, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many_graph.jpeg"), 
        plot = as.ggplot(ocean_phylo_many_graph), width=12, height=18, dpi=300)
 
 ```
@@ -503,8 +502,9 @@ temp = t(as.matrix(ocean_phylo_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "N Pacific",
-                   "S Pacific")
+                   "N Pacific"#,
+                   #"S Pacific"
+                   )
 
 colnames(temp) = c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda",
                   "Clupeiformes", "Decapoda", "Decapodiformes", "Euphausiacea",
@@ -512,12 +512,12 @@ colnames(temp) = c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda
                   "Myctophiformes", "Myopsida", "Octopoda", "Oegopsida",
                   "Ophidiiformes", "Osmeriformes", "Perciformes", "Pleuronectiformes",
                   "Pteropoda", "Scorpaeniformes", "Sepiida", "Siphonophorae",
-                  "Stephanoberyciformes", "Stomiiformes", "Sygnathiformes",
-                  "Syngnathiformes", "Vampyromorpha")
+                  "Stephanoberyciformes", "Stomiiformes", "Syngnathiformes", "Vampyromorpha") 
+#NOTE Sygnathiformes pb #"Sygnathiformes", removed
 
 ocean_phylo_LASSO_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
-                     ylab=list("Species Phylogenetic Order", cex=1.5), 
+                     ylab=list("Phylogenetic Order", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
@@ -525,14 +525,13 @@ ocean_phylo_LASSO_graph = levelplot(temp,
 
 print(ocean_phylo_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO_graph.pdf"), 
        plot = as.ggplot(ocean_phylo_LASSO_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO_graph.jpeg"), 
        plot = as.ggplot(ocean_phylo_LASSO_graph), width=12, height=12, dpi=300)
 
 ```
-
 
 ### Trait models
 
@@ -558,15 +557,15 @@ temp = t(as.matrix(ocean_trait_many$fourth.corner))
 
 rownames(temp) = c(#"Mediterranean",
                    "N Atlantic",
-                   "N Pacific",
-                   "S Pacific"
+                   "N Pacific"#,
+                   #"S Pacific"
                    )
 
 colnames(temp) 
 
 ocean_trait_many_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
-                     ylab=list("Species traits", cex=1.5), 
+                     ylab=list("Individual traits", cex=1.5), 
                      col.regions=colort(100), 
                      at=seq(-a, a,length=100),
                      scales = list(x=list(rot = 45, cex=1.3), y=list(cex=1.3)), 
@@ -575,10 +574,10 @@ ocean_trait_many_graph = levelplot(temp,
 
 print(ocean_trait_many_graph)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_many_graph.pdf"), 
        plot = as.ggplot(ocean_trait_many_graph), width=12, height=12, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_many_graph.jpeg"), 
        plot = as.ggplot(ocean_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
@@ -606,8 +605,9 @@ temp = t(as.matrix(ocean_trait_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "N Pacific",
-                   "S Pacific")
+                   "N Pacific"#,
+                   #"S Pacific"
+                   )
 
 colnames(temp) = c("Vert. habitat - demersal",
                    "Vert. habitat - epipelagic",
@@ -629,10 +629,10 @@ ocean_LASSO_graph = levelplot(temp,
 
 print(ocean_LASSO_graph)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.pdf"), 
        plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_graph.jpeg"), 
        plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
 
 ```
@@ -643,16 +643,16 @@ ggsave(here("outputs_figures/traitglms/ocean_models_2022/ocean_traits_LASSO_grap
 ```{r Save interaction models}
 
 #Manyglm
-saveRDS(ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_spp.rds"))
-saveRDS(ocean_clusters_many, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many.rds"))
-saveRDS(ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many.rds"))
-saveRDS(ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
+saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_spp.rds"))
+saveRDS(ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many.rds"))
+saveRDS(ocean_phylo_many, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many.rds"))
+saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
 
 #LASSO glms
-saveRDS(ocean_spp_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_spp_LASSO.rds"))
-saveRDS(ocean_cluster_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
-saveRDS(ocean_phylo_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
-saveRDS(ocean_trait_LASSO, file = here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))
+saveRDS(ocean_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_spp_LASSO.rds"))
+saveRDS(ocean_cluster_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
+saveRDS(ocean_phylo_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
+saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))
 
 ```
 
