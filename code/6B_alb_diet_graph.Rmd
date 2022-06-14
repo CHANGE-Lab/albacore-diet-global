@@ -16,7 +16,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r Packages to load}
-
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(tidyverse)
+library(readxl)
+library(readr)
+library(plyr)
+library(dplyr)
 library(vegan)
 library(mvabund)
 library(ggplot2)
@@ -35,7 +42,7 @@ library(RColorBrewer)
 
 alb_global = read.csv(here::here("data/output_data/alb_global_diet_total_v2.csv"), check.names = FALSE)
 
-prob.prey.cl = read.csv (here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv")) %>%
+prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv")) %>%
   select(-c(X, dendlabs, maxFO:maxM))
 
 ```
@@ -48,12 +55,200 @@ prob.prey.cl = read.csv (here("outputs_figures/clusters/prob_cluster_mar2022/div
 
 alb_diet_clust = alb_global %>%
   left_join(prob.prey.cl) %>%
-  filter(prob.clust.num != "NA", pFOuse > 5) #> 0
+  filter(prob.clust.num != "NA") %>% #> 0 #, pFOuse > 5
+  select(StudyID:rep_ID, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
 #unique(alb_diet_clust$prob.clust.num)
 #unique(alb_diet_clust$OceanBasin)
 
+alb_diet_clust$YearEnd = as.integer(alb_diet_clust$YearEnd)
+alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
+
+
 ```
 
+## Figures
+
+Match the colour palette for clusters in these and other graphs in the MS.
+
+```{r Colour palette for cluster graphs}
+
+fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
+              "#EDA417", "#EDD746", 
+              "#E7720B", "#DD4124")
+library(scales)
+show_col(fig3.pal)
+
+```
+
+### Scatterplots
+
+```{r Try scatterplot pFO}
+
+diet_cluster_scatter = alb_diet_clust %>%
+  filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_point(data = alb_diet_clust, aes(y=pFOuse, x=YearEnd,
+                                        group=prob.clust.num,
+                                        fill=prob.clust.num),
+             
+             size=5, shape=23) +
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
+  ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_scatter
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = diet_cluster_scatter, width = 24, height = 16, dpi = 300)
+
+```
+
+```{r Try scatterplot pN}
+
+diet_cluster_scatterN = alb_diet_clust %>%
+  filter(pN > 5) %>%
+  ggplot() +
+  geom_point(data = alb_diet_clust, aes(y=pN, x=YearEnd,
+                                        group=prob.clust.num,
+                                        fill=prob.clust.num),
+             
+             size=5, shape=23) +
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in numerical abundance (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
+  ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_scatterN
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterN.jpeg"), plot = diet_cluster_scatterN, width = 24, height = 16, dpi = 300)
+
+```
+
+```{r Try scatterplot pM}
+
+diet_cluster_scatterM = alb_diet_clust %>%
+  filter(pN > 5) %>%
+  ggplot() +
+  geom_point(data = alb_diet_clust, aes(y=pM, x=YearEnd,
+                                        group=prob.clust.num,
+                                        fill=prob.clust.num),
+             
+             size=5, shape=23) +
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in biomass contribution (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
+  ylim(0,100)+
+  xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_scatterM
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterM.jpeg"), plot = diet_cluster_scatterM, width = 24, height = 16, dpi = 300)
+
+```
+
+### Boxplots
+
+```{r Try boxplot FO}
+
+diet_cluster_box = alb_diet_clust %>%
+  filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_boxplot(data = alb_diet_clust, 
+                      aes(y=pFOuse, x=YearEnd, 
+                          group=prob.clust.num, 
+                          fill=prob.clust.num
+                          ),
+              position = "dodge") + #fill #YearEnd 
+  #geom_violin()+
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
+  ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_box
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_boxFO.jpeg"), plot = diet_cluster_box, width = 24, height = 16, dpi = 300)
+
+```
+
+```{r Try violin FO}
+
+diet_cluster_violin = alb_diet_clust %>%
+  filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_violin(data = alb_diet_clust, 
+                      aes(y=pFOuse, x=YearEnd, 
+                          group=prob.clust.num, 
+                          fill=prob.clust.num
+                          ),
+              position = "dodge") + #fill #YearEnd 
+  #geom_violin()+
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
+  ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_violin
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violinFO.jpeg"), plot = diet_cluster_violin, width = 24, height = 16, dpi = 300)
+
+```
+
+### TO DO
+
+- Assess graphics for main message, representation of the data, 
+
+- Check data - range of values in each ocean basin, consider a scatter plot to better display range of data?
+
+- Improve visibility of Indian Ocean and S Pacific.
+
+- Prompts me to remove S Pacific as well as Indian Ocean, S Atlantic from further analyses
+
+## Example & extra code
 
 ### Summarize max FO
 
@@ -100,59 +295,6 @@ NATL_order = alb_global_maxfo_order %>% filter(OceanBasin == "N Atlantic")
 
 
 ```
-
-
-## Figures
-
-```{r Try boxplot}
-
-alb_diet_clust$YearEnd = as.integer(alb_diet_clust$YearEnd)
-alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
-
-fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
-              "#EDA417", "#EDD746", 
-              "#E7720B", "#DD4124")
-library(scales)
-show_col(fig3.pal)
-
-diet_cluster_graph <- ggplot(data = alb_diet_clust, 
-                      aes(y=pFOuse, x=YearEnd, 
-                          group=prob.clust.num, 
-                          fill=prob.clust.num
-                          )) + #fill #YearEnd 
-  #geom_boxplot(position = "dodge")+
-  geom_violin(position = "dodge")+
-  #geom_point()+
-  coord_flip()+
-  theme(panel.grid.major = element_blank()) +
-  theme(axis.title=element_text(size=18)) +
-  theme(axis.text=element_text(size=18)) +
-  theme(legend.text=element_text(size=18)) +
-  theme(legend.title=element_text(size=18)) +
-  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
-  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
-  #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
-  ylim(0,100)+
-  xlim(1900,2019)+
-  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
-  theme(strip.text = element_text(face="bold", size=rel(1.5)))
-diet_cluster_graph
-
-```
-
-### TO DO
-
-- Assess graphics for main message, representation of the data, 
-
-- Check data - range of values in each ocean basin, consider a scatter plot to better display range of data?
-
-- Improve visibility of Indian Ocean and S Pacific.
-
-- Prompts me to remove S Pacific as well as Indian Ocean, S Atlantic from further analyses
-
-## Example code
-
-
 
 
 ```{r}
