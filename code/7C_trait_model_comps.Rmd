@@ -137,7 +137,7 @@ ocean_spp
 
 ```{r Anova ocean_spp}
 
-an_ocean_spp = anova.traitglm(ocean_spp)
+#an_ocean_spp = anova.traitglm(ocean_spp)
 #saveRDS(an_ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
 an_ocean_spp
@@ -244,14 +244,16 @@ aic = c(ocean_spp$AICsum, ocean_phylo_many$AICsum,
 
 mod_dev = data.frame(covar, mod_type, model, deviance, aic)
 
-write.csv(mod_dev, here("data/output_data/mod_dev_apr2022.csv"))
+mod_dev$mod_type[mod_dev$mod_type == "cluster"] <- "guilds"
+
+write.csv(mod_dev, here::here("data/output_data/mod_dev_apr2022.csv"))
 
 ```
 
 ```{r Make output graph}
 mod_dev$mod_type = as.factor(mod_dev$mod_type)
 mod_dev$mod_type = factor(mod_dev$mod_type, 
-                          levels = c("species", "phylo", "traits", "cluster"))
+                          levels = c("species", "phylo", "traits", "guilds"))
 levels(mod_dev$mod_type)
 
 mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mod_type)) + 
@@ -272,10 +274,10 @@ mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mo
 
 mod_dev_graph
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.pdf"), 
        plot = mod_dev_graph, width=8, height=4, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpeg"), 
        plot = mod_dev_graph, width=, height=4, dpi=300)
 
 ```
@@ -309,14 +311,16 @@ deviance = c(ocean_spp_LASSO$deviance, ocean_phylo_LASSO$deviance,
 
 mod_dev_lasso = data.frame(covar, mod_type, model, deviance)
 
-write.csv(mod_dev, here("data/output_data/mod_dev_lasso_apr2022.csv"))
+mod_dev_lasso$mod_type[mod_dev_lasso$mod_type == "cluster"] <- "guilds"
+
+write.csv(mod_dev, here::here("data/output_data/mod_dev_lasso_apr2022.csv"))
 
 ```
 
 ```{r Make output graph LASSO}
 mod_dev_lasso$mod_type = as.factor(mod_dev_lasso$mod_type)
 mod_dev_lasso$mod_type = factor(mod_dev_lasso$mod_type, 
-                          levels = c("species", "phylo", "cluster", "traits"))
+                          levels = c("species", "phylo", "traits", "guilds"))
 levels(mod_dev_lasso$mod_type)
 
 mod_dev_graph_lasso = ggplot(data = mod_dev_lasso, 
@@ -339,10 +343,10 @@ mod_dev_graph_lasso = ggplot(data = mod_dev_lasso,
 
 mod_dev_graph_lasso
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.pdf"), 
        plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.jpeg"), 
        plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
 
 ```

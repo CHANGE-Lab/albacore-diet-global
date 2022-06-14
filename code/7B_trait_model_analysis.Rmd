@@ -302,7 +302,7 @@ ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
 
 ```
 
-### Trait clusters model
+### Trait guild model
 
 **MANYGLM Clusters - Ocean Basin**
 
