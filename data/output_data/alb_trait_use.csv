@@ -24,7 +24,6 @@
 "Brama_orcini","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
 "Capros_aper","Perciformes","juvenile","epipelagic","continental shelf","diel (yes)","season (no)","schooling",3
 "Carinaria_lamarckii","Littorinimorpha","adult","epipelagic","oceanic","diel (yes)","season (yes)","non-schooling",5
-"Cavolinia_tridentata","Pteropoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
 "Ceratoscopelus_maderensis","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
 "Ceratoscopelus_townsendi","Myctophiformes","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
 "Ceratoscopelus_warmingii","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
@@ -58,7 +57,6 @@
 "Histioteuthis_bonnellii","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
 "Histioteuthis_heteropsis","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
 "Histioteuthis_reversa","Oegopsida","juvenile","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
-"Hyaloteuthis_pelagica","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (no)","schooling",5
 "Hyperia_galba","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
 "Icichthys_lockingtoni","Perciformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
 "Idotea_metallica","Isopoda","adult","epipelagic","continental shelf","diel (no)","season (yes)","schooling",4
@@ -93,7 +91,6 @@
 "Onychoteuthis_banksii","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
 "Onychoteuthis_borealijaponica","Oegopsida","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
 "Onykia_robusta","Oegopsida","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","non-schooling",1
-"Ornithoteuthis_volatilis","Oegopsida","juvenile","mesopelagic","continental shelf","diel (yes)","season (yes)","schooling",1
 "Palinurus_mauritanicus","Decapoda","larva","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
 "Paralepis_coregonoides","Aulopiformes","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",6
 "Parapasiphae_sulcatifrons","Decapoda","adult","mesopelagic","oceanic","diel (yes)","season (no)","schooling",2
@@ -106,7 +103,6 @@
 "Polybius_henslowii","Decapoda","larva","epipelagic","continental shelf","diel (no)","season (no)","schooling",4
 "Primno_macropa","Amphipoda","adult","epipelagic","oceanic","diel (yes)","season (no)","schooling",5
 "Protomyctophum_crockeri","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
-"Pterycombus_petersii","Perciformes","juvenile","epipelagic","oceanic","diel (yes)","season (yes)","schooling",5
 "Sardina_pilchardus","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
 "Sardinops_sagax","Clupeiformes","juvenile","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
 "Scaeurgus_unicirrhus","Octopoda","juvenile","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
@@ -117,7 +113,6 @@
 "Scyllarus_arctus","Decapoda","larva","epipelagic","coastal","diel (yes)","season (yes)","schooling",5
 "Stenobrachius_leucopsarus","Myctophiformes","adult","mesopelagic","oceanic","diel (yes)","season (yes)","schooling",2
 "Sternoptyx_diaphana","Stomiiformes","adult","mesopelagic","oceanic","diel (no)","season (yes)","non-schooling",6
-"Sthenoteuthis_oualaniensis","Oegopsida","juvenile","mesopelagic","oceanic","diel (no)","season (yes)","schooling",6
 "Streetsia_challengeri","Amphipoda","adult","epipelagic","continental shelf","diel (yes)","season (yes)","schooling",1
 "Stylocheiron_abbreviatum","Euphausiacea","adult","epipelagic","coastal","diel (no)","season (yes)","schooling",4
 "Syngnathus_californiensis","Syngnathiformes","juvenile","demersal","coastal","diel (no)","season (yes)","non-schooling",7

@@ -43,8 +43,6 @@ knitr::opts_chunk$set(echo = TRUE)
 #To clear your environment
 #remove(list = ls())
 
-getwd()
-
 # general
 library(readxl)
 library(plyr)
@@ -92,12 +90,12 @@ Load presence/absence data.
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
-alb_prey_pa = read.csv(paste(here("data/output_data/alb_global_wide_dietpa.csv"),
+alb_prey_pa = read.csv(paste(here::here("data/output_data/alb_global_wide_dietpa.csv"),
                                    sep=""), check.names=FALSE) %>% #, row.names = 1
   dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %>% #remove species outlier
-  filter(OceanBasin %notin% c("Indian", "S Atlantic")) #not eough replication for these values
+  filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values
 
-print(dim(alb_prey_pa)) #65 316
+print(dim(alb_prey_pa)) #58 316 from 70 obs after removing the other ocean basins noted above
 ```
 
 Now we need to check for and remove any zero-sum columns or rows of data, and low FO data and adjust the co-variate data.
@@ -106,6 +104,8 @@ Now we need to check for and remove any zero-sum columns or rows of data, and lo
 #Check for empty columns
 which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2) #Remove
 
+length(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2)) #173 species have low prevalence
+
 names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))
 
 alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
@@ -113,18 +113,19 @@ alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb
 #Check for empty rows
 which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #None
 
-alb_prey_use = alb_prey_use %>%
-  slice(-c(60,61))
+#alb_prey_use = alb_prey_use %>%
+#  slice(-c(60,61))
 
 ```
 
 ```{r Select species only (L), tidy=TRUE, warning=FALSE, message=FALSE}
 #Subset species df
 alb_prey_use_spp = alb_prey_use[,10:ncol(alb_prey_use)]
+
 names(alb_prey_use_spp) <- str_replace_all(names(alb_prey_use_spp), " ", "_")
 
 #check df
-dim(alb_prey_use_spp) #140 species & 65 observations
+dim(alb_prey_use_spp) #134 species & 58 observations
 
 ```
 
@@ -139,13 +140,13 @@ dim(alb_prey_use_spp) #140 species & 65 observations
 
 ```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_prob_clust = read.csv(paste(here("./data/output_data/prob.prey.clusternum.divis.k7.csv"), 
+alb_prob_clust = read.csv(paste(here::here("./data/output_data/prob.prey.clusternum.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
    dplyr::select(prey_sp:prob.clust.num)
 
 dim(alb_prob_clust) #we obtain 292 species, 11 traits or covariates
 
-add_order = read.csv(paste(here("./data/output_data/prey_trait_select.csv"))) %>%
+add_order = read.csv(paste(here::here("./data/output_data/prey_trait_select.csv"))) %>%
   select(prey_sp, prey_order)
 
 alb_trait_use = alb_prob_clust %>%
@@ -204,7 +205,7 @@ Here we filter our prey species (presence/absence data) by the species that were
 
 alb_prey_use <- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_use)]
 
-dim(alb_prey_use) #63 rows and 134 spp
+dim(alb_prey_use) #63 rows and 129 spp
 
 ```
 
@@ -216,8 +217,8 @@ Checking the level replication for each covariate. Note that our best covars ==>
 ```{r Select covars}
 
 alb_covars = alb_prey_pa %>%
-  select(StudyID:pred_life_adjust) %>%
-  slice(-c(60,61))
+  select(StudyID:pred_life_adjust) #%>%
+  #slice(-c(60,61))
 
 #As factors
 alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.factor)
@@ -228,17 +229,17 @@ alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.fa
 #Check representation
 #summary(alb_adult_covars)
 
-summary(alb_covars$lat_cat)
+summary(alb_covars$lat_cat) #don't use
 #temperate  tropical 
 #     64         6 
 
-summary(alb_covars$pred_life)
+summary(alb_covars$pred_life) #don't use
 #  adult juvenile    mixed 
 #   2       40       28
 
 summary(alb_covars$OceanBasin)
-#   Mediterranean    N Atlantic     N Pacific     S Pacific 
-#         9            21            28             5 
+#   Mediterranean    N Atlantic     N Pacific     ##S Pacific  #don't use S Pacific
+#         9            21            28             ##5 
 #Remove Indian and S Atlantic Oceans from analyses
 
 summary(alb_covars$OceanBasinQ)
@@ -247,7 +248,7 @@ summary(alb_covars$OceanBasinQ)
 summary(alb_covars$code)
 #Not going to use
 
-dim(alb_covars) #65 observations for 9 covars
+dim(alb_covars) #58 observations for 9 covars
 
 ```
 
@@ -259,9 +260,9 @@ dim(alb_covars) #65 observations for 9 covars
 rownames(alb_trait_use) == colnames(alb_prey_use) #awesome!
 
 #Check all matrix dimensions
-dim(alb_trait_use) #134 species and 8 traits
-dim(alb_prey_use) #63 obs, 134 species
-dim(alb_covars) #63 obs, 9 covariates
+dim(alb_trait_use) #129 species and 9 traits
+dim(alb_prey_use) #58 obs, 129 species
+dim(alb_covars) #58 obs, 9 covariates
 
 ```
 
@@ -293,13 +294,13 @@ text(pl, "species", col="blue", cex=0.9)
 ```{r Saving dfs for analysis}
 
 #L - species df
-write.csv(alb_prey_use, here("./data/output_data/alb_prey_pa_use.csv"), row.names=FALSE)
+write.csv(alb_prey_use, here::here("./data/output_data/alb_prey_pa_use.csv"), row.names=FALSE)
 
 #R - covars df
-write.csv(alb_covars, here("./data/output_data/alb_covars_use.csv"), row.names=FALSE)
+write.csv(alb_covars, here::here("./data/output_data/alb_covars_use.csv"), row.names=FALSE)
 
 #Q - trait df
-write.csv(alb_trait_use, here("./data/output_data/alb_trait_use.csv"), row.names=FALSE)
+write.csv(alb_trait_use, here::here("./data/output_data/alb_trait_use.csv"), row.names=FALSE)
 
 ```
 
