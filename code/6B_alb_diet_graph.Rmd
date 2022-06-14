@@ -29,6 +29,7 @@ library(mvabund)
 library(ggplot2)
 library(viridis)
 library(RColorBrewer)
+library(ggh4x)
 #library(wesanderson)
 
 ```
@@ -105,6 +106,8 @@ diet_cluster_scatter = alb_diet_clust %>%
   ylim(0,90)+
   xlim(1900,2019)+
   facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
+                   rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_scatter
 
@@ -150,7 +153,6 @@ diet_cluster_scatterM = alb_diet_clust %>%
   geom_point(data = alb_diet_clust, aes(y=pM, x=YearEnd,
                                         group=prob.clust.num,
                                         fill=prob.clust.num),
-             
              size=5, shape=23) +
   coord_flip()+
   theme(panel.grid.major = element_blank(),
@@ -196,15 +198,19 @@ diet_cluster_box = alb_diet_clust %>%
   labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
   scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
   #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
-  ylim(0,90)+
-  xlim(1900,2019)+
+  #ylim(0,90)+
+  #xlim(1900,2019)+
   facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
+                   rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_box
 
 ggsave(here::here("outputs_figures/diet_comp/diet_cluster_boxFO.jpeg"), plot = diet_cluster_box, width = 24, height = 16, dpi = 300)
 
 ```
+
+### Violin plots
 
 ```{r Try violin FO}
 
@@ -228,13 +234,54 @@ diet_cluster_violin = alb_diet_clust %>%
   labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
   scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
   #scale_fill_brewer(palette="BrBG", name="Prey Trait Guilds")+
-  ylim(0,90)+
-  xlim(1900,2019)+
+  #ylim(0,90)+
+  #xlim(1900,2019)+
   facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.5, 0.4),
+                   rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_violin
 
 ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violinFO.jpeg"), plot = diet_cluster_violin, width = 24, height = 16, dpi = 300)
+
+```
+
+```{r Try violin and scatter FO}
+
+diet_cluster_violin_scatter = alb_diet_clust %>%
+  filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_point(data = alb_diet_clust, aes(y=pFOuse, x=YearEnd,
+                                        group=prob.clust.num,
+                                        colour=prob.clust.num),
+             size=5, shape=23) +
+  geom_violin(data = alb_diet_clust, 
+                      aes(y=pFOuse, x=YearEnd, 
+                          group=prob.clust.num, 
+                          fill=prob.clust.num
+                          ),
+              position = "dodge") + #fill #YearEnd 
+  #geom_violin()+
+  coord_flip()+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "none") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  scale_colour_manual(values=fig3.pal) + #, name="Prey Trait Guilds"
+  #ylim(0,90)+
+  #xlim(1900,2019)+
+  facet_grid(prob.clust.num~OceanBasin, scales ="free")+
+  force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.5, 0.4),
+                   rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+diet_cluster_violin_scatter
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"), plot = diet_cluster_violin_scatter, width = 24, height = 16, dpi = 300)
+
 
 ```
 
