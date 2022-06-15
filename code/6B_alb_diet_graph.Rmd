@@ -7,7 +7,7 @@ output: html_document
 
 ## About
 
-To produce graphical illustrations of global albacore diet composition in relation to prey clusters & phylogeny.
+To produce graphical illustrations of global albacore diet composition in relation to prey clusters/guilds and relative importance of prey trait guilds.
 
 ## Workspace
 
@@ -48,7 +48,7 @@ prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar202
 
 ```
 
-## Data manip for diet composition
+## Total data + manip for diet composition
 
 ### DF for range graph
 
@@ -67,7 +67,8 @@ alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
 
 ```
 
-## Figures
+
+### Total Data Figures
 
 Match the colour palette for clusters in these and other graphs in the MS.
 
@@ -81,7 +82,7 @@ show_col(fig3.pal)
 
 ```
 
-### Scatterplots
+#### Scatterplots
 
 ```{r Try scatterplot pFO}
 
@@ -174,7 +175,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterM.jpeg"), plot 
 
 ```
 
-### Boxplots
+#### Boxplots
 
 ```{r Try boxplot FO}
 
@@ -210,7 +211,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_boxFO.jpeg"), plot = d
 
 ```
 
-### Violin plots
+#### Violin plots
 
 ```{r Try violin FO}
 
@@ -285,15 +286,122 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"
 
 ```
 
+
+## Index of relative importance for FO
+
+### DF for FO index of relative importance
+
+```{r Create df for range graph}
+
+index_alb_diet_clust = alb_diet_clust %>%
+  group_by(StudyID, rep_ID, YearEnd, OceanBasin, prob.clust.num) %>%
+  dplyr::summarize(clustFO = sum(pFOuse, na.rm=TRUE)) 
+
+totals_alb_diet_clust = alb_diet_clust %>%
+  group_by(StudyID, rep_ID, YearEnd, OceanBasin) %>%
+  dplyr::summarize(totalFO = sum(pFOuse, na.rm=TRUE)) 
+
+index_alb_diet_clust_data = index_alb_diet_clust %>%
+  left_join(totals_alb_diet_clust) %>%
+  mutate(relFO = clustFO/totalFO)
+
+summary(as.factor(index_alb_diet_clust_data$OceanBasin:rep_ID))
+
+table(index_alb_diet_clust_data$rep_ID, index_alb_diet_clust_data$OceanBasin)
+
+write.csv(index_alb_diet_clust_data, here::here("data/output_data/index_alb_diet_clust_data.csv"))
+
+```
+
+### Figure for index data - scatter
+
+```{r Try scatterplot relative FO}
+
+index_cluster_scatter = index_alb_diet_clust_data %>%
+  #filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_point(data = index_alb_diet_clust_data, 
+             aes(y=relFO, x=YearEnd, group=prob.clust.num, fill=prob.clust.num),
+             size=5, shape=23, position = "dodge") +
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "top") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
+  #ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(OceanBasin~.)+ #, scales ="free"
+  #force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
+  #                 rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+index_cluster_scatter
+
+#ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = diet_cluster_scatter, width = 24, height = 16, dpi = 300)
+
+```
+
+### Figure for index data - pie
+
+```{r Try stacked bar chart}
+
+index_cluster_bar = index_alb_diet_clust_data %>%
+  #filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_bar(data = index_alb_diet_clust_data, 
+             aes(y=relFO, x=YearEnd, #group=rep_ID, 
+                 fill=prob.clust.num),
+             width = 1, stat = "identity") + #, position = "jitter", , position="identity"
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "top") +
+  labs(x="Years sampled", y="Relative %FO")+
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
+  facet_grid(OceanBasin~.)+ #, scales ="free"
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+index_cluster_bar
+
+```
+
+```{r Try bar plot S Pacific example}
+
+index_cluster_bar = index_alb_diet_clust_data %>%
+  filter(OceanBasin == "S Pacific") %>%
+  ggplot() +
+  geom_bar(data = index_alb_diet_clust_data, 
+             aes(y=relFO, x=YearEnd, #group=rep_ID, 
+                 fill=prob.clust.num),
+             width = 1, stat = "identity") + #, position = "jitter"
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "top") +
+  labs(x="Years sampled", y="Relative %FO")+
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") #+
+  #xlim(1900,2019)+
+  #facet_grid(OceanBasin~.)+ #, scales ="free"
+  #force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
+  #                 rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
+  #theme(strip.text = element_text(face="bold", size=rel(2)))
+index_cluster_bar
+
+```
+
 ### TO DO
 
-- Assess graphics for main message, representation of the data, 
+- PROBLEM have redesigned graph and input metric information, but in current graph, half the data disappear... ???
 
-- Check data - range of values in each ocean basin, consider a scatter plot to better display range of data?
 
-- Improve visibility of Indian Ocean and S Pacific.
-
-- Prompts me to remove S Pacific as well as Indian Ocean, S Atlantic from further analyses
 
 ## Example & extra code
 

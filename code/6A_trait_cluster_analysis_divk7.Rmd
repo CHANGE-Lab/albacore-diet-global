@@ -82,6 +82,7 @@ prey_traits = prey_traits_load %>%
          season_cat != "season (unknown)"
          ) %>%
   drop_na()
+
 ```
 
 Check on distribution and levels of factors for cluster analyses.
