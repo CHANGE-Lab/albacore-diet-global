@@ -1,0 +1,306 @@
+---
+title: "Albacore Diet Synthesis C"
+author: "Natasha Hardy"
+date: "15/04/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Trait variation in albacore diet across geographies
+
+## About
+
+This document contains code for data manipulation and refinement, to pipe to multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
+
+## Blueprint for paragraphs:
+
+1. (Results) Describe the dominant significant traits and non-sig traits in relation to albacore age and geography sampled (Fig. R3).
+
+2. Relate to clusters (potential additional analysis/figure).
+
+3. Discussion - Investigate how species traits may be used to explain variation in prey use by albacore tuna using a multi-matrix approach.
+
+## Current Issues / Limitations to discuss in paper
+
+- We do currently use community data that includes single occurrence species, this means species that only occurred once in albacore diets across the world. As these are also associated with trait information and we aim to use traits to explain differences in communities, we believe this isn't problematic, but worth noting. In a traditional multivariate analysis, single occurrence species would inflate differences between communities that are analysed on a species-only basis, whilst our sampling (a.k.a. tuna foraging) does not adequately pick up these rarer species.
+
+- The data are longer (225 obs) than they are wide (137 species), but only just. There are up to 30 species that only occurred once, and that would also cost us about 30 observations. Could be worth re-running models excluding single occurrence to check results.
+
+## Workspace
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#library("rstudioapi")
+#setwd(dirname(getActiveDocumentContext()$path))
+```
+
+```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
+#If need to clear 'Environment'
+#First view environment if you like
+#ls()
+#To clear your environment
+#remove(list = ls())
+
+# general
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(reshape2)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(pander)
+library(stringr)
+
+# graphics
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(RColorBrewer)
+library(gridExtra)
+library(captioner)
+library(viridis)
+library("grid")
+library("ggplotify")
+
+
+#modelling
+library(Hmisc)
+library(mgcv)
+library(unmarked)
+library(lme4)
+library(mvabund)
+library(tweedie)
+library(vegan)
+
+## mvabund bug source code
+source("code/traitglm.R")
+source("code/get_polys.R")
+
+```
+
+## Data (L)
+
+Load presence/absence data.
+
+```{r Species PA (L) load data, tidy=TRUE, warning=FALSE, message=FALSE}
+
+#Upload + manipulate Species & Covar DF
+#Doesn't like the here() function now for some reason
+alb_prey_fo = read.csv(paste(here::here("data/output_data/alb_global_wide_dietfo.csv"),
+                                   sep=""), check.names=FALSE) %>% #, row.names = 1
+  dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %>% #remove species outlier
+  filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values
+
+print(dim(alb_prey_fo)) #45 240 from 70 obs after removing the other ocean basins noted above
+```
+
+Now we need to check for and remove any zero-sum columns or rows of data, and low FO data and adjust the co-variate data.
+
+```{r Species PA (L) remove low abundance taxa, tidy=TRUE, warning=FALSE, message=FALSE}
+#Check for empty columns
+which(colSums(alb_prey_fo[,10:ncol(alb_prey_fo)])<2) #Remove
+
+length(which(colSums(alb_prey_fo[,10:ncol(alb_prey_fo)])<2)) #173 species have low prevalence
+
+names(which(colSums(alb_prey_fo[,10:ncol(alb_prey_fo)])<2))
+
+alb_prey_use = alb_prey_fo[colnames(alb_prey_fo) %notin% names(which(colSums(alb_prey_fo[,10:ncol(alb_prey_fo)])<2))]
+
+#Check for empty rows
+which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #None
+
+#alb_prey_use = alb_prey_use %>%
+#  slice(-c(60,61))
+
+```
+
+```{r Select species only (L), tidy=TRUE, warning=FALSE, message=FALSE}
+#Subset species df
+alb_prey_use_spp = alb_prey_use[,10:ncol(alb_prey_use)]
+
+names(alb_prey_use_spp) <- str_replace_all(names(alb_prey_use_spp), " ", "_")
+
+#check df
+dim(alb_prey_use_spp) #134 species & 58 observations
+
+```
+
+
+## Traits (Q)
+
+- Using all the occurrence data in 'alb_adult_preyPA' df.
+
+- Could filter out low occurrences using 'alb_adult_preyPA_clean' df, extra code to do this is provided in the 'Albacore_synthesis_c_extra.Rmd'.
+
+- Note that we obtain 135 species and their traits, so we'll need to filter the species df by the traits.
+
+```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
+
+alb_prob_clust = read.csv(paste(here::here("./data/output_data/prob.prey.clusternum.divis.k7.csv"), 
+                                sep=""), header=T, row.names = 1) %>%
+   dplyr::select(prey_sp:prob.clust.num)
+
+dim(alb_prob_clust) #we obtain 292 species, 11 traits or covariates
+
+add_order = read.csv(paste(here::here("./data/output_data/prey_trait_select.csv"))) %>%
+  select(prey_sp, prey_order)
+
+alb_trait_fo_use = alb_prob_clust %>%
+  left_join(add_order) %>%
+  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
+         diel_migrant_cat, season_cat, gregarious, prob.clust.num)
+  
+#Relabel to add underscore in names
+alb_trait_fo_use$prey_sp = str_replace_all(alb_trait_fo_use$prey_sp, " ", "_")
+#Assign species as row names
+rownames(alb_trait_fo_use) <- alb_trait_fo_use$prey_sp
+#Order species list
+alb_trait_fo_use <- alb_trait_fo_use[ order(row.names(alb_trait_fo_use)), ]
+
+#Ensure traits are treated as factors for now
+alb_trait_fo_use[,3:8] <- lapply(alb_trait_fo_use[,3:8], factor) #to convert to factors
+
+#Need to filter by prey species we want to use.
+alb_trait_fo_use = alb_trait_fo_use %>%
+  filter(prey_sp %in% names(alb_prey_use_spp))
+  #we retain 292 species and 8 trait values
+
+dim(alb_trait_fo_use) #141 spp 9 traits
+str(alb_trait_fo_use)
+
+```
+
+**Trait value checks**
+
+Here we check the trait values for each trait, and check the distribution of values. Note we merge certain values with low occurrences of species within them, and if we have a logical reason to merge.
+
+```{r Trait values check, warning=FALSE, message=FALSE}
+summary(alb_trait_fo_use$life_stage) #low numbers for larva, do not use
+
+summary(alb_trait_fo_use$vert_habitat) #use
+
+summary(alb_trait_fo_use$horz_habitat) #use
+
+summary(alb_trait_fo_use$diel_migrant_cat) #a lot more diel migrants than not
+
+summary(alb_trait_fo_use$season_cat) #more seasonal taxa than not
+
+summary(alb_trait_fo_use$gregarious) #still more gregarious than not, just an artefact of the pelagic prey data.
+
+summary(as.factor(alb_trait_fo_use$prob.clust.num)) #good distribution of species within clusters
+
+```
+
+**Cleaning and preparing trait values for analyses**
+
+## Data (L) -- Select
+
+Here we filter our prey species (presence/absence data) by the species that were also used for cluster analysis, because we have complete trait information for these species, as well as frequency of occurrence data.
+
+```{r FILTER PREY BY PROB TRAITS, tidy=TRUE, warning=FALSE, message=FALSE}
+
+alb_prey_fo_use <- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_fo_use)]
+
+dim(alb_prey_use) #45 rows and 155 spp
+
+```
+
+
+## Covars (R) - MANIPS
+
+Checking the level replication for each covariate. Note that our best covars ==> pred_life, OceanBasin, lat_cat, and maybe code (Longhurst) - but would need to exclude low numbered levels.
+
+```{r Select covars}
+
+alb_covars = alb_prey_fo %>%
+  select(StudyID:pred_life_adjust) #%>%
+  #slice(-c(60,61))
+
+#As factors
+alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.factor)
+
+```
+
+```{r Covars (R) checking, eval=FALSE}
+#Check representation
+#summary(alb_adult_covars)
+
+summary(alb_covars$lat_cat) #don't use
+#temperate  tropical 
+#     64         6 
+
+summary(alb_covars$pred_life) #don't use
+#  adult juvenile    mixed 
+#   2       40       28
+
+summary(alb_covars$OceanBasin)
+#   Mediterranean    N Atlantic     N Pacific     ##S Pacific  #don't use S Pacific
+#         9            21            28             ##5 
+#Remove Indian and S Atlantic Oceans from analyses
+
+summary(alb_covars$OceanBasinQ)
+#Not going to use
+
+summary(alb_covars$code)
+#Not going to use
+
+dim(alb_covars) #58 observations for 9 covars
+
+```
+
+## DF checks
+
+```{r Check names and df dimensions, eval=FALSE}
+
+## Make sure species names match abund matrix
+rownames(alb_trait_fo_use) == colnames(alb_prey_fo_use) #awesome!
+
+#Check all matrix dimensions
+dim(alb_trait_fo_use) #141 species and 9 traits
+dim(alb_prey_fo_use) #45 obs, 141 species
+dim(alb_covars) #45 obs, 9 covariates
+
+```
+
+## Check multivariate data
+
+### Ordination
+
+```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
+
+
+#PA
+check_nmds = metaMDS(alb_prey_fo_use,
+                     distance="bray",
+                     trymax = 20,#10000, #1000
+                     k=3) #could increase to k = 4
+
+#saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_prob_nMDS_pa.rds"))
+
+#Note pb with this!! insufficient data?
+
+pl <- ordiplot(check_nmds, type = "none")
+points(pl, "sites", pch=21, col="red", bg="yellow")
+text(pl, "species", col="blue", cex=0.9)
+
+```
+
+## SAVE DFS FOR ANALYSES
+
+```{r Saving dfs for analysis}
+
+#L - species df
+write.csv(alb_prey_fo_use, here::here("./data/output_data/alb_prey_fo_use.csv"), row.names=FALSE)
+
+#R - covars df
+write.csv(alb_covars, here::here("./data/output_data/alb_covars_use.csv"), row.names=FALSE)
+
+#Q - trait df
+write.csv(alb_trait_fo_use, here::here("./data/output_data/alb_trait_fo_use.csv"), row.names=FALSE)
+
+```
+
