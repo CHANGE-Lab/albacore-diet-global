@@ -75,8 +75,8 @@ index_cluster_bar = index_alb_diet_clust_data %>%
   #filter(pFOuse > 5) %>%
   ggplot() +
   geom_bar(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=YearEnd, #group=rep_ID, 
-                 fill=prob.clust.num),
+             aes(y=relFO, x=yearrepID, #group=rep_ID, 
+                 fill=as.factor(prob.clust.num)),
              width = 1, stat = "identity") + #, position = "jitter", , position="identity"
   #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
   theme(panel.grid.major = element_blank(),

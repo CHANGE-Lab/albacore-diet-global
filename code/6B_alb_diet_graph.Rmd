@@ -48,10 +48,6 @@ prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar202
 
 ```
 
-## Total data + manip for diet composition
-
-### DF for range graph
-
 ```{r Create df for range graph}
 
 alb_diet_clust = alb_global %>%
@@ -67,6 +63,9 @@ alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
 
 ```
 
+## Total data + manip for diet composition
+
+### DF for range graph
 
 ### Total Data Figures
 
@@ -291,6 +290,14 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"
 
 ### DF for FO index of relative importance
 
+```{r Load index data}
+
+#index_alb_diet_clust_data = read.csv(here::here("data/output_data/index_alb_diet_clust_data.csv")) %>%
+#  select(-X)
+
+```
+
+
 ```{r Create df for range graph}
 
 index_alb_diet_clust = alb_diet_clust %>%
@@ -303,9 +310,10 @@ totals_alb_diet_clust = alb_diet_clust %>%
 
 index_alb_diet_clust_data = index_alb_diet_clust %>%
   left_join(totals_alb_diet_clust) %>%
-  mutate(relFO = clustFO/totalFO)
+  mutate(relFO = clustFO/totalFO) %>%
+  dplyr::filter(relFO > 0)
 
-summary(as.factor(index_alb_diet_clust_data$OceanBasin:rep_ID))
+index_alb_diet_clust_data$yearrepID <- paste(index_alb_diet_clust_data$YearEnd, index_alb_diet_clust_data$rep_ID, sep = "_")
 
 table(index_alb_diet_clust_data$rep_ID, index_alb_diet_clust_data$OceanBasin)
 
@@ -344,63 +352,34 @@ index_cluster_scatter
 
 ```
 
-### Figure for index data - pie
+### Figure for index data - stacked bar
 
 ```{r Try stacked bar chart}
 
 index_cluster_bar = index_alb_diet_clust_data %>%
-  #filter(pFOuse > 5) %>%
   ggplot() +
   geom_bar(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=YearEnd, #group=rep_ID, 
-                 fill=prob.clust.num),
+             aes(y=relFO, x=yearrepID, #group=rep_ID, 
+                 fill=as.factor(prob.clust.num)),
              width = 1, stat = "identity") + #, position = "jitter", , position="identity"
   #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
   theme(panel.grid.major = element_blank(),
-        axis.title=element_text(size=24),
-        axis.text=element_text(size=24),
-        legend.text=element_text(size=24),
-        legend.title=element_text(size=24),
+        axis.title=element_text(size=34),
+        axis.title.x=element_blank(),
+        axis.text=element_text(size=26),
+        axis.text.x = element_text(angle = 90, vjust = 1, hjust=1),
+        legend.text=element_text(size=34),
+        legend.title=element_text(size=34),
         legend.position = "top") +
   labs(x="Years sampled", y="Relative %FO")+
   scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
   facet_grid(OceanBasin~.)+ #, scales ="free"
-  theme(strip.text = element_text(face="bold", size=rel(2)))
+  theme(strip.text = element_text(face="bold", size=rel(3)))
 index_cluster_bar
 
-```
-
-```{r Try bar plot S Pacific example}
-
-index_cluster_bar = index_alb_diet_clust_data %>%
-  filter(OceanBasin == "S Pacific") %>%
-  ggplot() +
-  geom_bar(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=YearEnd, #group=rep_ID, 
-                 fill=prob.clust.num),
-             width = 1, stat = "identity") + #, position = "jitter"
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
-  theme(panel.grid.major = element_blank(),
-        axis.title=element_text(size=24),
-        axis.text=element_text(size=24),
-        legend.text=element_text(size=24),
-        legend.title=element_text(size=24),
-        legend.position = "top") +
-  labs(x="Years sampled", y="Relative %FO")+
-  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") #+
-  #xlim(1900,2019)+
-  #facet_grid(OceanBasin~.)+ #, scales ="free"
-  #force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
-  #                 rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
-  #theme(strip.text = element_text(face="bold", size=rel(2)))
-index_cluster_bar
+ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
 
 ```
-
-### TO DO
-
-- PROBLEM have redesigned graph and input metric information, but in current graph, half the data disappear... ???
-
 
 
 ## Example & extra code

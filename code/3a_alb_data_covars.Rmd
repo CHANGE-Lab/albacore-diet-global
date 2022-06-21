@@ -50,9 +50,11 @@ Prey traits, albacore diet and covariates:
 alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) %>%
   dplyr::select(-CiteYear)
 
-alb_covars = read.csv(here::here("data/output_data/alb_covars.csv"), check.names = FALSE)
+alb_covars = read.csv(here::here("data/output_data/alb_covars.csv"), check.names = FALSE) %>%
+  dplyr::select(-CiteYear)
 
-alb_covars_geog = read.csv(here::here("data/output_data/alb_covars_longhurst.csv"), check.names = FALSE)
+alb_covars_geog = read.csv(here::here("data/output_data/alb_covars_longhurst.csv"), check.names = FALSE) %>%
+  dplyr::select(-CiteYear)
 
 ```
 
@@ -71,7 +73,7 @@ unique(alb_covars_geog$code)
 
 #check names match
 unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they do
-unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
+#unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
 unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
 unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
 
@@ -80,12 +82,28 @@ alb_covars_use = alb_covars_geog #%>%
 
 ```
 
+```{r Check on global diet data also}
+
+#check names match
+unique(sort(alb_global$StudyID)) == unique(sort(alb_covars$StudyID)) #they do
+unique(sort(alb_global$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
+unique(sort(alb_global$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
+unique(sort(alb_global$OceanBasin)) == unique(sort(alb_covars$OceanBasin)) #they do
+unique(sort(alb_global$LocatName)) == unique(sort(alb_covars$LocatName)) #they do
+
+```
+
 ```{r Covars + Longhurst + Diet data, tidy = TRUE}
 
 alb_global_diet = alb_global %>%
   left_join(alb_covars_geog) %>% #looks good #, by = "StudyID"
   #by = c("StudyID", "OceanBasin", "OceanBasinQ" "YearEnd", "MonthRange")
-  dplyr::select(StudyID, CiteAuth, CiteYear, YearEnd, rep_ID, OceanBasin:MonthRange, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit) #system, 
+  dplyr::select(StudyID, CiteAuth, YearEnd, rep_ID, OceanBasin:MonthRange, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit) #system, CiteYear, 
+
+#issue joining data from "Pinkas1971_49"
+
+unique(alb_covars_geog$rep_ID)
+unique(alb_global_diet$rep_ID)
 
 unique(alb_global_diet$code)
 summary(as.factor(alb_global_diet$upwell_gyre))

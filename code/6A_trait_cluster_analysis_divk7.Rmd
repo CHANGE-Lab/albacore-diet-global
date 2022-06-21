@@ -62,7 +62,7 @@ Below we select variables for use in clustering algorithms. We selected vertical
 
 ```{r Load and manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
 
-prey_traits_load = read.csv(here("data/output_data/prey_trait_select.csv"), header=TRUE) %>%   dplyr::select(-c(diel_migrant, refuge_cat, season_migrant, life_note, diet_likely)) %>% 
+prey_traits_load = read.csv(here::here("data/output_data/prey_trait_select.csv"), header=TRUE) %>%   dplyr::select(-c(diel_migrant, refuge_cat, season_migrant, life_note, diet_likely)) %>% 
   dplyr::rename(gregarious = gregarious_primary) %>%
   mutate(diel_migrant_cat = case_when(diel_migrant_cat == "diel_no" ~ "diel (no)",
                                       diel_migrant_cat == "diel_UN" ~ "diel (unknown)",

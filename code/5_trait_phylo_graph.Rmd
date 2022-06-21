@@ -81,13 +81,15 @@ library(tidytree)
 #data contains sp list, class, order & family + traits.
 
 #Probable life stage data
-my_prey_prob = read.csv(here("./data/output_data/prey_trait_select.csv"), header=TRUE) %>%
+my_prey_prob = read.csv(here::here("./data/output_data/prey_trait_select.csv"), header=TRUE) %>%
   dplyr::select(prey_sp, prey_class:prey_family, life_stage:maxM, -c(diet_likely, life_note)) %>%
   filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
   #Need to remove these two species as they cause issues with ROTL due to naming
 
 #306 species and 13 variables of interest excluding prey_sp
 #str(my_prey_prob)
+unique(my_prey_prob$vert_habitat)
+unique(my_prey_prob$horz_habitat)
 
 ```
 
@@ -155,7 +157,7 @@ write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
 
 ```{r load in saved tree, warning=FALSE, message=FALSE}
 
-my_tree_prob <- read.tree(here("./data/output_data/albacore_diet_tree_prob"))
+my_tree_prob <- read.tree(here::here("./data/output_data/albacore_diet_tree_prob"))
 #306 species
 
 ```
@@ -661,8 +663,8 @@ ggsave("prob_hab4.png",
        plot=habitat_traits_prob_final, width=14, height=10, dpi=300)
 
 #Save vert + horizontal + diel graph + seasonal + aggreg
-ggsave("prob_hab5.png",
+#ggsave("prob_hab5.png",
        #here('./outputs_figures/phylo_graphs/prob_hab4.png'), 
-       plot=habitat_traits_prob_agg_final, width=14, height=10, dpi=300)
+#       plot=habitat_traits_prob_agg_final, width=14, height=10, dpi=300)
 
 ```

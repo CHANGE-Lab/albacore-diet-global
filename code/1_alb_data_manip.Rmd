@@ -85,6 +85,7 @@ alb_global = as.data.frame(read_xlsx(here::here("data/input_data/albacore_diet_g
 
 #Correct data type
 alb_global$maxl_use <- as.numeric(alb_global$maxl_use)
+
 #The NA's in the reported age for prey column cause problems later and need 
 #to be assigned a categorical value
 alb_global$prey_age_reported_1 <- as.character(alb_global$prey_age_reported_1)
@@ -134,6 +135,7 @@ alb_covars = alb_global %>%
                              pred_life == "adult" ~ "adult"))
 
 alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
+unique(alb_covars$rep_ID)
 
 #Merge these back to the diet df
 alb_global_diet = alb_global %>%
@@ -255,6 +257,8 @@ check_spp = prey_trait_select %>%
 prey_trait_select_use = prey_trait_select %>%
   filter(prey_sp %in% unique(alb_global_metrics_basic$prey_sp)) %>%
   left_join(alb_global_metrics_basic)
+
+summary(as.factor(prey_trait_select_use$life_stage))
 
 write.csv(prey_trait_select_use, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
 
