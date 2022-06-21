@@ -89,7 +89,7 @@ source("code/get_polys.R")
 ```{r Load Prey data (L)}
 
 #L - species df
-alb_prey_pa_use = read.csv(here::here("./data/output_data/alb_prey_pa_use.csv"))
+alb_prey_pa_use = read.csv(here::here("./data/2_output_data/alb_prey_pa_use.csv"))
 dim(alb_prey_pa_use)
 
 ```
@@ -97,17 +97,19 @@ dim(alb_prey_pa_use)
 ```{r Load Covar data (R)}
 
 #R - covars df
-alb_covars_use = read.csv(here::here("./data/output_data/alb_covars_use.csv"))
+alb_covars_use = read.csv(here::here("./data/2_output_data/alb_covars_use.csv"))
 
 #As factors
 alb_covars_use[,1:ncol(alb_covars_use)] =  lapply(alb_covars_use[,1:ncol(alb_covars_use)], as.factor)
+
+unique(alb_covars_use$StudyID)
 
 ```
 
 ```{r Load Trait data (Q)}
 
 #Q - trait df
-alb_trait_use = read.csv(here::here("./data/output_data/alb_trait_use.csv")) #%>%
+alb_trait_use = read.csv(here::here("./data/2_output_data/alb_trait_use.csv")) #%>%
 #  select(-X)
 
 #Needs species as rows

@@ -292,8 +292,11 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"
 
 ```{r Load index data}
 
-#index_alb_diet_clust_data = read.csv(here::here("data/output_data/index_alb_diet_clust_data.csv")) %>%
-#  select(-X)
+index_alb_diet_clust_data = read.csv(here::here("data/2_output_data/index_alb_diet_clust_data.csv")) %>%
+  select(-X)
+
+unique(index_alb_diet_clust_data$StudyID)
+unique(index_alb_diet_clust_data$rep_ID)
 
 ```
 

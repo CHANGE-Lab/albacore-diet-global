@@ -44,9 +44,9 @@ here::here()
 
 List of outputs created for analyses:
 
-- Prey species' coarse trait information *data/output_data/prey_trait_select.csv*
+- Prey species' coarse trait information *data/2_output_data/prey_trait_select.csv*
 
-- Albacore diet data *data/output_data/alb_global_diet_total.csv*
+- Albacore diet data *data/2_output_data/alb_global_diet_total.csv*
 
 - Albacore diet sampling covariates *alb_covars.csv*
 
@@ -60,7 +60,7 @@ Load diet data and merge with prey size trait information, and undertake necessa
 ```{r Albacore diet data load & manipulation, tidy=TRUE}
 
 #Load diet data spreadsheet
-alb_global = as.data.frame(read_xlsx(here::here("data/input_data/albacore_diet_global.xlsx"),
+alb_global = as.data.frame(read_xlsx(here::here("data/1_input_data/albacore_diet_global.xlsx"),
                       sheet = "albacore_diet_global")) %>% #2134 rows and 77 vars
   dplyr::filter(TaxLev == "species") %>% #1107 rows and 77 vars
   #There are ~1105 observations when we filter by species
@@ -68,7 +68,8 @@ alb_global = as.data.frame(read_xlsx(here::here("data/input_data/albacore_diet_g
   #1028 when we remove larval albacore diet studies (there are 3)
   #dplyr::rename() %>%
   dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
-                LocatLatitude:LocatLongitude, MonthRange, YearEnd, stomachs_used,
+                LocatLatitude:LocatLongitude, MonthRange, YearEnd, SampleMethod, SampleDepth,
+                stomachs_used,
                 pred_life:est_ref, stomachs_used, prey_class:prey_sp,
                 prey_age_reported_1:prey_age_use, Include, FO, 
                 pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
@@ -104,7 +105,7 @@ unique(alb_global$stomachs_used)
 unique(alb_global$prey_sp)
 
 #Save total df version
-write.csv(alb_global, here::here("data/output_data/alb_global_diet.csv"), 
+write.csv(alb_global, here::here("data/2_output_data/alb_global_diet.csv"), 
           row.names = FALSE) 
 #1028 observations and 41 variables
 
@@ -135,13 +136,40 @@ alb_covars = alb_global %>%
                              pred_life == "adult" ~ "adult"))
 
 alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
-unique(alb_covars$rep_ID)
+
+unique(alb_covars$StudyID) #26
+unique(alb_covars$rep_ID) #70
 
 #Merge these back to the diet df
 alb_global_diet = alb_global %>%
   left_join(alb_covars)
 
-write.csv(alb_covars, here::here("data/output_data/alb_covars.csv"), row.names = FALSE)
+write.csv(alb_covars, here::here("data/2_output_data/alb_covars.csv"), row.names = FALSE)
+
+```
+
+### Table S3 content
+
+```{r Covariates table S3, tidy = TRUE}
+
+alb_table_S3 = alb_global %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:est_ref) %>% 
+  #, stomachs_used
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+           LocatLongitude, YearEnd, MonthRange, SampleMethod, SampleDepth, stomachs_used, 
+           pred_life, pred_life_est, pred_age, pred_age_est, pred_flmean, pred_flmean_se, pred_flmean_est, pred_flmin, pred_flmax, pred_flest, est_note, est_ref) %>% 
+  #, stomachs_used
+  mutate(#lat_cat = if_else(abs(LocatLatitude) > 23.43662, "temperate", "tropical"),
+         pred_life_adjust=case_when(pred_life == "juvenile" ~ "juvenile",
+                             pred_life == "juvenile, adult" ~ "mixed",
+                             pred_life == "none" ~ "mixed",
+                             pred_life == "adult" ~ "adult"),
+         rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_"))
+
+unique(alb_table_S3$StudyID) #26
+unique(alb_table_S3$rep_ID) #70
+
+write.csv(alb_table_S3, here::here("data/3_output_supp/table_S3.csv"), row.names = FALSE)
 
 ```
 
@@ -213,7 +241,6 @@ write.csv(alb_global_metrics_basic, here::here("data/output_supp/alb_global_metr
 ```
 
 
-
 ## Prey trait db
 
 ### Load and select traits for analyses
@@ -260,7 +287,29 @@ prey_trait_select_use = prey_trait_select %>%
 
 summary(as.factor(prey_trait_select_use$life_stage))
 
-write.csv(prey_trait_select_use, here::here("data/output_data/prey_trait_select.csv"), row.names = FALSE)
+write.csv(prey_trait_select_use, here::here("data/2_output_data/prey_trait_select.csv"), row.names = FALSE)
+
+```
+
+### Table S4 content - life stage and measurements
+
+```{r Covariates, tidy = TRUE}
+
+prey_trait_select_use = read.csv(here::here("data/2_output_data/prey_trait_select.csv"))
+
+alb_table_S4 = alb_global %>%
+  #filter(maxl_use > 0) %>%
+  dplyr::select(prey_class:prey_sp, prey_age_reported_1, maxl_use, maxl_type, gape_lmax) %>%
+  group_by(prey_sp, prey_age_reported_1, maxl_type) %>% #, life_stage , pFOuse, pN, pM maxl_use, , gape_lmax
+  dplyr::summarize(`maxL (cm)` = max(maxl_use/10, na.rm=TRUE),
+                   `maxGape (cm)` = max(gape_lmax, na.rm=TRUE)) %>%
+  left_join(prey_trait_select_use, by="prey_sp") %>%
+  select(-c(prey_class:prey_family, diet_likely, vert_habitat:maxM))
+
+summary(as.factor(alb_table_S4$prey_age_reported_1))
+summary(as.factor(alb_table_S4$life_stage))
+
+write.csv(alb_table_S4, here::here("data/3_output_supp/table_S4.csv"), row.names = FALSE)
 
 ```
 
