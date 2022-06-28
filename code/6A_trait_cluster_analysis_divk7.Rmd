@@ -62,7 +62,7 @@ Below we select variables for use in clustering algorithms. We selected vertical
 
 ```{r Load and manip data for cluster analyses, tidy=TRUE, warning=FALSE, message=FALSE}
 
-prey_traits_load = read.csv(here::here("data/output_data/prey_trait_select.csv"), header=TRUE) %>%   dplyr::select(-c(diel_migrant, refuge_cat, season_migrant, life_note, diet_likely)) %>% 
+prey_traits_load = read.csv(here::here("data/2_output_data/prey_trait_select.csv"), header=TRUE) %>%   dplyr::select(-c(diel_migrant, refuge_cat, season_migrant, life_note, diet_likely)) %>% 
   dplyr::rename(gregarious = gregarious_primary) %>%
   mutate(diel_migrant_cat = case_when(diel_migrant_cat == "diel_no" ~ "diel (no)",
                                       diel_migrant_cat == "diel_UN" ~ "diel (unknown)",
@@ -413,6 +413,14 @@ write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_mar2022/div_
 
 ```
 
+```{r load cluster data back in}
+
+
+prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv")) %>%
+  select(-c(X))
+
+```
+
 ```{r Cluster heatmap dfs, warning=FALSE, message=FALSE}
 # Time for the heatmap
 # the 1st step here is to have 1 variable per row
@@ -423,7 +431,11 @@ detach("package:plyr", unload=TRUE)
 
 #Create dfs for graphs
 prob.clust.long = prob.prey.cl %>%
-  dplyr::select(prey_sp, life_stage:season_cat, `gregarious`, `prob.clust.num`) %>% #maxFO:maxM, 
+  dplyr::select(prey_sp, vert_habitat:season_cat, `prob.clust.num`) %>% #maxFO:maxM, 
+  rename(Vertical = vert_habitat,
+         Horizontal = horz_habitat,
+         `Diel Migrant` = diel_migrant_cat,
+         `Seaonsal Migrant` = season_cat) %>%
   reshape2::melt(id.vars = c("prey_sp", "prob.clust.num"), variable.name = "trait", value.name = "level") %>%
   group_by(prob.clust.num, trait, level) %>%
   mutate(count = n_distinct(prey_sp)) %>%
@@ -432,7 +444,7 @@ prob.clust.long = prob.prey.cl %>%
   mutate(percent = count / sum(count)*100) %>%
   arrange(prob.clust.num)
 
-#View(prob.clust.long)
+View(prob.clust.long)
 
 ```
 
@@ -446,23 +458,38 @@ levels(as.factor(prob.clust.long$prob.clust.num))
 #Example: View(alb.cust.long.q[96:nrow(alb.cust.long.q),])
 heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level)) +
   geom_tile(aes(fill = count))+
-  labs(title = "Distribution of characteristics across clusters by counts", x = "Cluster number", y = NULL) +
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24)) +
+  labs(x = "Trait guild (cluster number)", y = NULL) +
   scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
-  facet_grid(trait~. , scales="free_y")
+  facet_grid(trait~. , scales="free_y")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.pdf'), plot=heatmap.c, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.clean.pdf'), plot=heatmap.c, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.clean.jpeg'), plot=heatmap.c, width=12, height=12, dpi=300)
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
   geom_tile(aes(fill = percent), alpha = 0.85)+
-  labs(title = "Distribution of characteristics across clusters by percentage", x = "Cluster number", y = NULL) +
+   theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24)) +
+  labs(x = "Trait guild (cluster number)", y = NULL) +
+  #labs(title = "Distribution of characteristics across clusters by percentage", x = "Cluster number", y = NULL) +
   #scale_fill_gradient2(low = "darkslategray1", mid = "yellow", high = "turquoise4") +
   scale_fill_viridis(option="magma", begin = 0.2, end = 0.95)+
-  facet_grid(trait~., scales="free_y")
+  facet_grid(trait~., scales="free_y")+
+  theme(strip.text = element_text(face="bold", size=rel(2)))
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.pdf'), plot=heatmap.p, width=8, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.clean.pdf'), plot=heatmap.p, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.clean.jpeg'), plot=heatmap.p, width=12, height=12, dpi=300)
 
 library(plyr)
 
