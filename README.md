@@ -9,12 +9,19 @@ This GitHub Repo and Project contains all current and archived older versions of
 **Corresponding author:** nahardy@ualberta.ca; Department of Biological Sciences, CW 422 Biological Sciences Building, University of Alberta, Edmonton, Alberta, Canada, T6G 2E9
 
 **Author affiliations**
+
 1 Department of Biological Sciences, University of Alberta, Edmonton, Alberta, Canada
+
 2 University of California Santa Cruz, Santa Cruz, CA, United States
+
 3 Institute of Marine Sciences, University of California, Santa Cruz, Santa Cruz, CA, United States
+
 4 NOAA Southwest Fisheries Science Center, San Diego, CA, United States
+
 5 NOAA Southwest Fisheries Science Center, Monterey, CA, United States
+
 6 NOAA Physical Sciences Laboratory, Boulder, CO, United States
+
 7 Hopkins Marine Station of Stanford University, Pacific Grove, CA, United States
 
 **Target journal:** Fish & Fisheries
