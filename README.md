@@ -1,4 +1,6 @@
-# albacore-diet-global
+# Global Albacore Diet Project
+
+## CHANGE-Lab/albacore-diet-global
 
 This GitHub Repo and Project contains all current and archived older versions of code used to create the figures, undertake analyses and outputs for many of the tables for the global albacore diet meta-analysis paper.
 
@@ -38,4 +40,4 @@ Marine species distribution modelling has greatly informed spatial management ap
 
 * /documents --> contains additional package information, inspiring literature and relevant communications regarding this project; 
 
-* / outputs_figures --> contains all figures, ordinations and other outputs from the analyses performed for this manuscript.
+* /outputs_figures --> contains all figures, ordinations and other outputs from the analyses performed for this manuscript.
