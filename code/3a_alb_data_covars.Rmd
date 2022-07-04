@@ -35,9 +35,6 @@ library(lattice)
 
 ```
 
-## ADD
-
-Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"
 
 ## Load key dataframes
 
@@ -47,13 +44,13 @@ Prey traits, albacore diet and covariates:
 
 #prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
 
-alb_global = read.csv(here::here("data/output_data/alb_global_diet.csv"), check.names = FALSE) %>%
+alb_global = read.csv(here::here("data/2_output_data/alb_global_diet.csv"), check.names = FALSE) %>%
   dplyr::select(-CiteYear)
 
-alb_covars = read.csv(here::here("data/output_data/alb_covars.csv"), check.names = FALSE) %>%
+alb_covars = read.csv(here::here("data/2_output_data/alb_covars.csv"), check.names = FALSE) %>%
   dplyr::select(-CiteYear)
 
-alb_covars_geog = read.csv(here::here("data/output_data/alb_covars_longhurst.csv"), check.names = FALSE) %>%
+alb_covars_geog = read.csv(here::here("data/2_output_data/alb_covars_longhurst.csv"), check.names = FALSE) %>%
   dplyr::select(-CiteYear)
 
 ```
@@ -111,7 +108,7 @@ summary(as.factor(alb_global_diet$code))
 table(alb_global_diet$code)
 
 #Write over previous output from first data chunk
-write.csv(alb_global_diet, here::here("data/output_data/alb_global_diet_total_v2.csv"), 
+write.csv(alb_global_diet, here::here("data/2_output_data/alb_global_diet_total_v2.csv"), 
           row.names = FALSE)
 ```
 
@@ -226,7 +223,7 @@ alb_covars_esti_SI = alb_global_diet %>%
   #                              )
   #       )
 #Write over previous output from first data chunk
-write.csv(alb_covars_esti_SI, here::here("data/output_data/alb_covars_estimates.csv"), 
+write.csv(alb_covars_esti_SI, here::here("data/2_output_data/alb_covars_estimates.csv"), 
           row.names = FALSE)
 
 ```
@@ -331,7 +328,7 @@ alb_global_dietpa = alb_global_diet_use %>% #_use
   #dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pa, fill = 0, convert = FALSE)
 
-write.csv(alb_global_dietpa, here("data/output_data/alb_global_wide_dietpa.csv"), 
+write.csv(alb_global_dietpa, here("data/2_output_data/alb_global_wide_dietpa.csv"), 
           row.names = FALSE)
 ```
 
@@ -374,7 +371,7 @@ summary(as.factor(alb_global_dietfo$code))
 summary(as.factor(alb_global_dietfo$OceanBasin))
 summary(as.factor(alb_global_dietfo$OceanBasinQ))
 
-write.csv(alb_global_dietfo, here("data/output_data/alb_global_wide_dietfo.csv"), 
+write.csv(alb_global_dietfo, here("data/2_output_data/alb_global_wide_dietfo.csv"), 
           row.names = FALSE)
 
 ```
@@ -397,7 +394,7 @@ summary(as.factor(alb_global_dietn$code))
 summary(as.factor(alb_global_dietn$OceanBasin))
 summary(as.factor(alb_global_dietn$OceanBasinQ))
 
-write.csv(alb_global_dietn, here("data/output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
+write.csv(alb_global_dietn, here("data/2_output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
 ```
 
 #### Diet data - biomass
@@ -419,6 +416,10 @@ summary(as.factor(alb_global_dietm$code))
 summary(as.factor(alb_global_dietm$OceanBasin))
 summary(as.factor(alb_global_dietm$OceanBasinQ))
 
-write.csv(alb_global_dietm, here("data/output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
+write.csv(alb_global_dietm, here("data/2_output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
 
 ```
+
+## ADD ???
+
+Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"

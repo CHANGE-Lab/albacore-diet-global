@@ -106,7 +106,7 @@ list.files(path="code/longhurst")
 
 ```{r read in and manipulate albacore data, message=FALSE, tidy=TRUE}
 
-alb <- read.csv("data/output_data/alb_covars.csv", head = TRUE, sep= ",")
+alb <- read.csv("data/2_output_data/alb_covars.csv", head = TRUE, sep= ",")
 
 # Set coordinates
 View(alb)
@@ -119,7 +119,7 @@ proj4string(alb) <- proj4string(longs)
 provinces <- over(alb, longs)
 alb$province <- provinces$ProvDescr
 alb$code <- provinces$ProvCode
-write.csv(alb, "data/output_data/alb_covars_longhurst.csv", row.names = FALSE)
+write.csv(alb, "data/2_output_data/alb_covars_longhurst.csv", row.names = FALSE)
 
 ```
 

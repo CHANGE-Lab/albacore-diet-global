@@ -57,7 +57,7 @@ library(tcltk)
 
 ```{r Load in species community data, tidy=TRUE}
 #Data -- using total diet data
-alb_global_dietpa = read.csv(here("data/output_data/alb_global_wide_dietpa.csv"), 
+alb_global_dietpa = read.csv(here("data/2_output_data/alb_global_wide_dietpa.csv"), 
           check.names = FALSE) %>%
   group_by(OceanBasin) %>%
   arrange(YearEnd)
