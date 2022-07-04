@@ -41,9 +41,9 @@ library(ggh4x)
 
 #diet_fo_wide <- read.csv(here("./data/output_data/alb_global_wide_dietfo.csv"))
 
-alb_global = read.csv(here::here("data/output_data/alb_global_diet_total_v2.csv"), check.names = FALSE)
+alb_global = read.csv(here::here("data/2_output_data/alb_global_diet_total_v2.csv"), check.names = FALSE)
 
-prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv")) %>%
+prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divis.k7.csv")) %>%
   select(-c(X, dendlabs, maxFO:maxM))
 
 ```
@@ -59,7 +59,6 @@ alb_diet_clust = alb_global %>%
 
 alb_diet_clust$YearEnd = as.integer(alb_diet_clust$YearEnd)
 alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
-
 
 ```
 
@@ -285,7 +284,6 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"
 
 ```
 
-
 ## Index of relative importance for FO
 
 ### DF for FO index of relative importance
@@ -299,7 +297,6 @@ unique(index_alb_diet_clust_data$StudyID)
 unique(index_alb_diet_clust_data$rep_ID)
 
 ```
-
 
 ```{r Create df for range graph}
 
@@ -320,7 +317,7 @@ index_alb_diet_clust_data$yearrepID <- paste(index_alb_diet_clust_data$YearEnd, 
 
 table(index_alb_diet_clust_data$rep_ID, index_alb_diet_clust_data$OceanBasin)
 
-write.csv(index_alb_diet_clust_data, here::here("data/output_data/index_alb_diet_clust_data.csv"))
+write.csv(index_alb_diet_clust_data, here::here("data/2_output_data/index_alb_diet_clust_data.csv"))
 
 ```
 
@@ -383,111 +380,3 @@ index_cluster_bar
 ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
 
 ```
-
-
-## Example & extra code
-
-### Summarize max FO
-
-Need to manipulate data such that we have prey organised by phylogeny (later also by cluster), in relation to the year sampled, ocean basin and a metric of observation.
-
-```{r Data manip for diet composition}
-#Need to create MaxFO
-#alb_global = alb_global %>% filter(MaxFO > 15) #gets the top 10
-
-alb_global_maxfo_order = alb_global %>%
-  left_join(prob.prey.cl) %>%
-  dplyr::select(StudyID:OceanBasin, prey_class:prey_sp, prob.clust.num, pFOuse) %>% #pN, pM, maxl_use, maxl_type
-  group_by(StudyID, YearEnd, OceanBasin, prey_order) %>% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE)) %>%
-  filter(maxFO > 10)
-
-write.csv(alb_global_maxfo_order, here::here("data/output_supp/alb_global_maxfo_order.csv"), row.names = FALSE)
-
-alb_global_maxfo_order = read.csv(here::here("data/output_supp/alb_global_maxfo_order.csv"))
-
-alb_global_maxfo_clust = alb_global %>%
-  left_join(prob.prey.cl) %>%
-  dplyr::select(StudyID:OceanBasin, prey_class:prey_sp, prob.clust.num, pFOuse) %>%
-  filter(prob.clust.num != "NA") %>%
-  group_by(StudyID, YearEnd, OceanBasin, prob.clust.num) %>% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE)) %>%
-  filter(maxFO > 10)
-
-write.csv(alb_global_maxfo_clust, here::here("data/output_supp/alb_global_maxfo_clust.csv"), row.names = FALSE)
-
-alb_global_maxfo_clust = read.csv(here::here("data/output_supp/alb_global_maxfo_clust.csv"))
-
-```
-
-- Could also simplify these data?
-
-```{r Split data by ocean for clusters}
-
-unique(alb_global_maxfo_clust$OceanBasin)
-# "N Atlantic"    "Mediterranean" "N Pacific"     "S Atlantic"    "Indian"        "S Pacific" 
-
-NATL_order = alb_global_maxfo_order %>% filter(OceanBasin == "N Atlantic")
-#MEDI_order = alb_global_maxfo_order %>% filter(OceanBasin == "N Atlantic")
-
-
-```
-
-
-```{r}
-
-NATL_order_graph <- ggplot(data = NATL_order, 
-                      aes(y=maxFO, x=YearEnd , fill=prey_order)) +
-  geom_bar(stat="identity", position = "dodge")+
-  theme(panel.grid.major = element_blank()) +
-  theme(axis.title=element_text(size=18)) +
-  theme(axis.text=element_text(size=18)) +
-  theme(legend.text=element_text(size=18)) +
-  theme(legend.title=element_text(size=18)) +
-  labs(x="Years sampled", y="Maximum frequency of occurrence (%)")+
-  scale_fill_brewer(palette="BrBG", name="Prey Orders")+
-  ylim(0,100)+
-  facet_grid(.~OceanBasin, scales="free")+
-  theme(strip.text = element_text(face="bold", size=rel(1.5)))
-NATL_order_graph
-
-```
-
-```{r}
-
-maxfo_clust <- ggplot(data = alb_global_maxfo_clust, 
-                      aes(y=maxFO, x=YearEnd , fill=prob.clust.num)) +
-  geom_bar(stat="identity", position = "dodge")+
-  theme(panel.grid.major = element_blank()) +
-  theme(axis.title=element_text(size=18)) +
-  theme(axis.text=element_text(size=18)) +
-  theme(legend.text=element_text(size=18)) +
-  theme(legend.title=element_text(size=18)) +
-  labs(x="Years sampled", y="Maximum frequency of occurrence (%)")+
-  #scale_fill_brewer(palette="BrBG", name="Prey Guilds")+
-  ylim(0,100)+
-  facet_grid(OceanBasin~., scales="free")+
-  theme(strip.text = element_text(face="bold", size=rel(1.5)))
-maxfo_clust
-
-```
-
-```{r}
-MedFams <- AdultF %>% filter(OceanBasinQ == "Mediterranean")
-MedFamsF <- MedFams %>% filter(MaxFO > 30) #gets the top 10
-
-MedFBar <- ggplot(data = MedFamsF, aes(y=MaxFO, x=YearSample , fill=PreyFamily)) +
-  geom_bar(stat="identity", position = "dodge")+
-  theme(panel.grid.major = element_blank()) +
-  theme(axis.title=element_text(size=18)) +
-  theme(axis.text=element_text(size=18)) +
-  theme(legend.text=element_text(size=18)) +
-  theme(legend.title=element_text(size=18)) +
-  labs(x="Years sampled", y="Maximum frequency of occurrence (%)")+
-  scale_fill_brewer(palette="BrBG", name="Prey Families")+
-  ylim(0,100)+
-  facet_grid(.~OceanBasinQ)+
-  theme(strip.text = element_text(face="bold", size=rel(1.5)))
-MedFBar
-```
-

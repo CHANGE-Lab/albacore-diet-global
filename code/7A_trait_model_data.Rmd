@@ -90,7 +90,7 @@ Load presence/absence data.
 
 #Upload + manipulate Species & Covar DF
 #Doesn't like the here() function now for some reason
-alb_prey_pa = read.csv(paste(here::here("data/output_data/alb_global_wide_dietpa.csv"),
+alb_prey_pa = read.csv(paste(here::here("data/2_output_data/alb_global_wide_dietpa.csv"),
                                    sep=""), check.names=FALSE) %>% #, row.names = 1
   dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %>% #remove species outlier
   filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values
@@ -140,13 +140,13 @@ dim(alb_prey_use_spp) #134 species & 58 observations
 
 ```{r Trait DF (Q) inc clust num, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_prob_clust = read.csv(paste(here::here("./data/output_data/prob.prey.clusternum.divis.k7.csv"), 
+alb_prob_clust = read.csv(paste(here::here("./data/2_output_data/prob.prey.clusternum.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
    dplyr::select(prey_sp:prob.clust.num)
 
 dim(alb_prob_clust) #we obtain 292 species, 11 traits or covariates
 
-add_order = read.csv(paste(here::here("./data/output_data/prey_trait_select.csv"))) %>%
+add_order = read.csv(paste(here::here("./data/2_output_data/prey_trait_select.csv"))) %>%
   select(prey_sp, prey_order)
 
 alb_trait_use = alb_prob_clust %>%
@@ -294,13 +294,13 @@ text(pl, "species", col="blue", cex=0.9)
 ```{r Saving dfs for analysis}
 
 #L - species df
-write.csv(alb_prey_use, here::here("./data/output_data/alb_prey_pa_use.csv"), row.names=FALSE)
+write.csv(alb_prey_use, here::here("./data/2_output_data/alb_prey_pa_use.csv"), row.names=FALSE)
 
 #R - covars df
-write.csv(alb_covars, here::here("./data/output_data/alb_covars_use.csv"), row.names=FALSE)
+write.csv(alb_covars, here::here("./data/2_output_data/alb_covars_use.csv"), row.names=FALSE)
 
 #Q - trait df
-write.csv(alb_trait_use, here::here("./data/output_data/alb_trait_use.csv"), row.names=FALSE)
+write.csv(alb_trait_use, here::here("./data/2_output_data/alb_trait_use.csv"), row.names=FALSE)
 
 ```
 

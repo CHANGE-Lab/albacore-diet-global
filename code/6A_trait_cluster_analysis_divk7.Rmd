@@ -410,13 +410,14 @@ prob.prey.cl <- cbind(prey_traits, prob.clust.num)
 #View(prob.prey.cl)
 
 write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv"))
+write.csv(prob.prey.cl, here("data/2_output_data/prob.prey.clusternum.divis.k7.csv"))
 
 ```
 
 ```{r load cluster data back in}
 
 
-prob.prey.cl = read.csv(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv")) %>%
+prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divis.k7.csv")) %>%
   select(-c(X))
 
 ```

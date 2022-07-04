@@ -81,7 +81,7 @@ library(tidytree)
 #data contains sp list, class, order & family + traits.
 
 #Probable life stage data
-my_prey_prob = read.csv(here::here("./data/output_data/prey_trait_select.csv"), header=TRUE) %>%
+my_prey_prob = read.csv(here::here("./data/2_output_data/prey_trait_select.csv"), header=TRUE) %>%
   dplyr::select(prey_sp, prey_class:prey_family, life_stage:maxM, -c(diet_likely, life_note)) %>%
   filter(prey_sp %notin% c("Lampanyctus mexicanus", "Janthina exigua"))
   #Need to remove these two species as they cause issues with ROTL due to naming
@@ -149,7 +149,7 @@ View(my_tree_prob)
 
 ```{r save tree, tidy=TRUE, eval=FALSE}
 
-write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
+write.tree(my_tree_prob, here("./data/2_output_data/albacore_diet_tree_prob"))
 
 ```
 
@@ -157,7 +157,7 @@ write.tree(my_tree_prob, here("./data/output_data/albacore_diet_tree_prob"))
 
 ```{r load in saved tree, warning=FALSE, message=FALSE}
 
-my_tree_prob <- read.tree(here::here("./data/output_data/albacore_diet_tree_prob"))
+my_tree_prob <- read.tree(here::here("./data/2_output_data/albacore_diet_tree_prob"))
 #306 species
 
 ```
