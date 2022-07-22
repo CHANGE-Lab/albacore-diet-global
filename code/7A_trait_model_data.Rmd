@@ -96,6 +96,7 @@ alb_prey_pa = read.csv(paste(here::here("data/2_output_data/alb_global_wide_diet
   filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values
 
 print(dim(alb_prey_pa)) #58 316 from 70 obs after removing the other ocean basins noted above
+
 ```
 
 Now we need to check for and remove any zero-sum columns or rows of data, and low FO data and adjust the co-variate data.
@@ -193,6 +194,7 @@ summary(alb_trait_use$gregarious) #still more gregarious than not, just an artef
 
 summary(as.factor(alb_trait_use$prob.clust.num)) #good distribution of species within clusters
 
+summary(as.factor(alb_trait_use$prey_order)) #still more gregarious than not, just an artefact of the pelagic prey data.
 ```
 
 **Cleaning and preparing trait values for analyses**
