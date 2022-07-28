@@ -20,8 +20,6 @@ knitr::opts_chunk$set(echo = TRUE)
 #To clear your environment
 #remove(list = ls())
 
-getwd()
-
 # general
 library(tidyverse)
 library(readxl)
@@ -103,26 +101,23 @@ dim(alb_trait_use)
 ```{r Select covars traits and levels}
 
 #Traits - select and manipulate that df - ideally we want to use the same df here
-traits_use = alb_trait_use[,c(4:9)] %>%
+traits_use = alb_trait_use[,c(3:6,8)] %>%
   dplyr::rename(cluster = prob.clust.num) 
 
-levels(traits_use$gregarious)
-
 str(traits_use)
+
 ```
 
 ```{r Save interaction models}
 #Species model
-ocean_spp = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_spp.rds"))
-ocean_clusters_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many.rds"))
-ocean_phylo_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_many.rds"))
-ocean_trait_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_many.rds"))
+ocean_spp = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+ocean_clusters_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+ocean_trait_many = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
 
 #LASSO glms
-ocean_spp_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_spp_LASSO.rds"))
-ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO.rds"))
-ocean_phylo_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_phylo_LASSO.rds"))
-ocean_trait_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022/ocean_trait_LASSO.rds"))
+ocean_spp_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_LASSO.rds"))
+ocean_cluster_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO.rds"))
+ocean_trait_LASSO = readRDS(here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_LASSO.rds"))
 
 ```
 
@@ -137,9 +132,11 @@ ocean_spp
 ```{r Anova ocean_spp}
 
 #an_ocean_spp = anova.traitglm(ocean_spp)
-#saveRDS(an_ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
-an_ocean_spp = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_spp.rds"))
+#saveRDS(an_ocean_spp, file = here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
+an_ocean_spp = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp
+
+View(an_ocean_spp$table)
 
 ```
 
@@ -152,24 +149,9 @@ ocean_clusters_many
 ```{r Anova ocean_clusters_many}
 
 #an_ocean_clusters_many = anova.traitglm(ocean_clusters_many)
-#saveRDS(an_ocean_clusters_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_clusters_many.rds"))
-an_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_clusters_many.rds"))
+#saveRDS(an_ocean_clusters_many, file = here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
+an_ocean_clusters_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many
-
-```
-
-### Model: ocean_phylo_many
-
-```{r Model Output ocean_phylo_many}
-ocean_phylo_many
-```
-
-```{r Anova ocean_phylo_many}
-
-#an_ocean_phylo_many = anova.traitglm(ocean_phylo_many)
-#saveRDS(an_ocean_phylo_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
-an_ocean_phylo_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_phylo_many.rds"))
-an_ocean_phylo_many
 
 ```
 
@@ -183,9 +165,24 @@ ocean_trait_many
 ```{r Anova ocean_trait_many}
 
 #an_ocean_trait_many = anova.traitglm(ocean_trait_many)
-#saveRDS(an_ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
-an_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022/an_ocean_trait_many.rds"))
+#saveRDS(an_ocean_trait_many, file = here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
+an_ocean_trait_many = readRDS(file = here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
 an_ocean_trait_many
+
+```
+
+## Create ANOVA table output for MS
+
+```{r ANOVA table output for MS}
+
+anova_comp = anova.traitglm(ocean_spp
+                            , ocean_trait_many
+                            #, ocean_clusters_many
+                            )
+
+#saveRDS(anova_comp, file = here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp.rds"))
+
+anova_comp$table
 
 ```
 
@@ -217,10 +214,11 @@ ocean_phylo_many
 ocean_trait_many
 
 #LASSO glms
-ocean_trait_LASSO
-ocean_cluster_LASSO
-ocean_phylo_LASSO
-
+ocean_trait_LASSO$deviance
+ocean_cluster_LASSO$deviance
+ocean_phylo_LASSO$deviance
+summary(ocean_phylo_trait_LASSO)
+ocean_phylo_trait_LASSO$deviance
 
 ```
 
