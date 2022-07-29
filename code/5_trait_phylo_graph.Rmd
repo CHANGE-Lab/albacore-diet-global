@@ -280,6 +280,7 @@ rownames(my_prey_prob) = my_prey_prob$prey_sp
 #tip labels need to be characters to pipe onto the tree
 my_tree_prob$tip.label <- as.character(my_tree_prob$tip.label)
 str(my_tree_prob)
+str(my_prey_prob)
 
 ```
 

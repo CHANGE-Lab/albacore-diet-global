@@ -438,7 +438,8 @@ ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
                              R = alb_covars_use$OceanBasin,
                              Q = traits_use[,1:4], #traits_use[,1:5]
                              family=binomial(link = "logit"),
-                             composition = TRUE
+                             composition = TRUE,
+                             col.intercepts=TRUE
                              ) #note default is "manyglm"
 ocean_trait_many$deviance
 ```
