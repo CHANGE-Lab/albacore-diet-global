@@ -155,7 +155,7 @@ Note that we lose two replicates here:
 
 - Williams 2015 (NZ_L_2010) due to data entry error or copy/paste error, data have been copied over.
 
-```{r Covariates, tidy = TRUE}
+```{r Covariates df, tidy = TRUE}
 
 alb_covars = alb_global %>%
   dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %>% 
@@ -337,18 +337,16 @@ prey_trait <- as.data.frame(read_xlsx(here::here("data/1_input_data/prey_trait_d
 
 ```
 
-Note that there are 308 spp remaining in the global diet db, and there are 221 for which we need to resolve which trait information to use. Why the difference in 5-6 species from the trait db? These were the prey taxa found in the larval albacore tuna diets and were thus previously removed.
+Note that there are 308 spp remaining in the global diet db, and there are 221 for which we need to resolve which trait information to use. Why the difference in species from the trait db? There were 8 prey taxa found in the larval albacore tuna diets and were thus previously removed.
 
-```{r check why some species drop out}
-
+```{r check why some species drop out, tidy=TRUE}
 check_spp = prey_trait %>%
   anti_join(alb_global_metrics_basic, by="prey_sp")
-
 ```
 
 Need to filter by prey species we already have life stage or length data to estimate life stage. This leaves 221 species for which we need to figure out life stage information.
 
-```{r Tally species remaining to id traits}
+```{r Tally species remaining to id traits, tidy=TRUE}
 check_traits = prey_trait %>%
   filter(!prey_sp %in% check_spp$prey_sp) %>%
   filter(!prey_sp %in% check_prey_life$prey_sp) %>%
@@ -360,7 +358,7 @@ length(unique(check_traits$prey_sp)) #221.
 
 What meta-information did I annotate for species? There were 65 with annotations (and 157 without), likely hinting at a decision that needed to be made. But of these some did include the same trait information for adult and juvenile life stages, so we can't be sure from these data alone.
 
-```{r Checking on trait metainformation}
+```{r Checking on trait metainformation, tidy=TRUE}
 length(which(check_traits$life_note != "NA")) #191
 
 check_traits_a = check_traits %>%
@@ -374,71 +372,71 @@ length(unique(check_traits_b$prey_sp))
 
 Which species have the same or different vertical habitat use traits?
 
-```{r Check same vert traits}
+```{r Check same vert traits, message=FALSE}
 df_vert = check_traits %>%
   select(prey_sp, life_stage, vert_habitat) %>%
   pivot_wider(., names_from = life_stage, values_from = vert_habitat)
 
 check_traits_vert = df_vert %>%
-  slice(which(df$adult == df$juvenile))
+  dplyr::slice(which(df_vert$adult == df_vert$juvenile))
 #136 with same
 
 check_traits_vert_not = df_vert %>%
-  slice(-which(df$adult == df$juvenile))
+  slice(-which(df_vert$adult == df_vert$juvenile))
 #85 with different vertical habitat use trait
 ```
 
 Which species have the same or different horizontal habitat use traits?
 
-```{r Check same horz traits}
+```{r Check same horz traits, tidy=TRUE, message=FALSE}
 df_horz = check_traits %>%
   select(prey_sp, life_stage, horz_habitat) %>%
   pivot_wider(., names_from = life_stage, values_from = horz_habitat)
 
 check_traits_horz = df_horz %>%
-  slice(which(df$adult == df$juvenile))
+  dplyr::slice(which(df_horz$adult == df_horz$juvenile))
 #136 with same
 
 check_traits_horz_not = df_horz %>%
-  slice(-which(df$adult == df$juvenile))
+  slice(-which(df_horz$adult == df_horz$juvenile))
 #85 with different vertical habitat use trait
 ```
 
 Which species have the same or different seasonal habitat use traits?
 
-```{r Check same season traits}
+```{r Check same season traits, tidy=TRUE, message=FALSE}
 df_season = check_traits %>%
   select(prey_sp, life_stage, season_migrant) %>%
   pivot_wider(., names_from = life_stage, values_from = season_migrant)
 
 check_traits_season = df_season %>%
-  slice(which(df$adult == df$juvenile))
+  dplyr::slice(which(df_season$adult == df_season$juvenile))
 #136 with same
 
 check_traits_season_not = df_season %>%
-  slice(-which(df$adult == df$juvenile))
+  slice(-which(df_season$adult == df_season$juvenile))
 #85 with different vertical habitat use trait
 ```
 
 Which species have the same or different diel vertical migration strategy traits?
 
-```{r Check same diel traits}
+```{r Check same diel traits, tidy=TRUE, message=FALSE}
 df_diel = check_traits %>%
   select(prey_sp, life_stage, diel_migrant) %>%
   pivot_wider(., names_from = life_stage, values_from = diel_migrant)
 
 check_traits_diel = df_diel %>%
-  slice(which(df$adult == df$juvenile))
+  dplyr::slice(which(df_diel$adult == df_diel$juvenile))
 #136 with same
 
 check_traits_diel_not = df_diel %>%
-  slice(-which(df$adult == df$juvenile))
+  slice(-which(df_diel$adult == df_diel$juvenile))
 #85 with different vertical habitat use trait
 ```
 
-There were 103 species for which trait information did not differ between adult and juvenile life stages.
+There were 136 species for which trait information did not differ between adult and juvenile life stages.
 
-```{r Join dataset with same traits}
+```{r Join dataset with same traits, tidy=TRUE}
 check_traits_same = check_traits %>%
   filter(prey_sp %in% check_traits_diel$prey_sp) %>%
   filter(prey_sp %in% check_traits_season$prey_sp) %>%
@@ -446,22 +444,28 @@ check_traits_same = check_traits %>%
   filter(prey_sp %in% check_traits_vert$prey_sp)
 
 length(unique(check_traits_same$prey_sp)) #136
+
+length(unique(check_traits_same$prey_sp))*100/308
 ```
 
-How many species had different trait values for any of the traits and thus required manual curation step? --> 85.
+There were 85 species for which trait information differed in one or more traits for adult and juvenile life stages.
 
-```{r check traits diff}
+```{r check traits diff, tidy=TRUE}
 check_traits_diff = check_traits %>%
   filter(!prey_sp %in% check_traits_diel$prey_sp) %>%
   filter(!prey_sp %in% check_traits_season$prey_sp) %>%
   filter(!prey_sp %in% check_traits_horz$prey_sp) %>%
   filter(!prey_sp %in% check_traits_vert$prey_sp)
 length(unique(check_traits_diff$prey_sp)) #85
+
+length(unique(check_traits_diff$prey_sp))*100/308
+
+write.csv(check_traits_diff, here::here("data/3_output_supp/check_traits_diff.csv"), row.names = FALSE)
 ```
 
 Double check that these also add up to 221.
 
-```{r Check some numbers}
+```{r Check some numbers, tidy=TRUE}
 length(unique(check_traits_diff$prey_sp)) + length(unique(check_traits_same$prey_sp)) #Needs to add up to 221.
 ```
 
@@ -501,6 +505,8 @@ write.csv(prey_trait_select_use, here::here("data/2_output_data/prey_trait_selec
 
 ### Table S4 content - life stage and measurements
 
+Include this in meta-information.
+
 ```{r Covariates, tidy = TRUE}
 
 prey_trait_select_use = read.csv(here::here("data/2_output_data/prey_trait_select.csv"))
@@ -518,7 +524,6 @@ summary(as.factor(alb_table_S4$prey_age_reported_1))
 summary(as.factor(alb_table_S4$life_stage))
 
 write.csv(alb_table_S4, here::here("data/3_output_supp/table_S4.csv"), row.names = FALSE)
-
 ```
 
 ## GO TO 2_extract_longhurst to work on Figure 1a
