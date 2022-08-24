@@ -57,22 +57,59 @@ List of outputs created for analyses:
 
 Load diet data and merge with prey size trait information, and undertake necessary data selection and manipulation of variables.
 
-```{r Albacore diet data load & manipulation, tidy=TRUE}
+Note: total dataset contained 2134 rows of individual observations of prey items from 32 studies.
 
+```{r Albacore diet original data load & manipulation, tidy=TRUE}
 #Load diet data spreadsheet
-alb_global = as.data.frame(read_xlsx(here::here("data/1_input_data/albacore_diet_global.xlsx"),
-                      sheet = "albacore_diet_global")) %>% #2134 rows and 77 vars
-  dplyr::filter(TaxLev == "species") %>% #1107 rows and 77 vars
-  #There are ~1105 observations when we filter by species
-  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") %>% #1028 rows
-  #1028 when we remove larval albacore diet studies (there are 3)
-  #dplyr::rename() %>%
+alb_global = as.data.frame(read_xlsx(here::here(
+  "data/1_input_data/albacore_diet_global.xlsx"), 
+  sheet = "albacore_diet_global")) #2134 rows and 77 vars
+nrow(alb_global)
+length(unique(alb_global$StudyID)) #32 studies
+original = data.frame(unique(alb_global$StudyID))
+```
+
+Note: 3 studies investigated the diets of larval albacore tuna (Catalan et al. 2007, Uotani et al. 1982, and Young & Davis 1990) and one (Hart 1942) contained data that was also published again in a longer time series (Hart 1948). These four were thus excluded from further analyses of juvenile and adult tuna diets, with 1936 observations of prey items consumed from 28 studies.
+
+```{r Albacore diet filter data by albacore life stage, tidy=TRUE}
+alb_global = alb_global %>% 
+  dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") 
+nrow(alb_global) #1936
+length(unique(alb_global$StudyID)) #28 studies
+check28 = data.frame(unique(alb_global$StudyID))
+
+original_check28 = original %>%
+  anti_join(check28)
+unique(original_check28$unique.alb_global.StudyID.)
+rm(original, original_check28)
+```
+
+Note: a further 2 studies die not report any prey items to species level and we did not include these in this meta-analysis. These were Logan et al (2013) and Teffer et al. (2015). Thus we retained 26 studies with 1027 rows of prey species-level diet observations.
+
+```{r Albacore diet data by prey species identified, tidy=TRUE}
+alb_global = alb_global %>%
+  dplyr::filter(TaxLev == "species") #1027 rows and 77 vars
+nrow(alb_global) 
+length(unique(alb_global$StudyID)) #28 studies
+
+check26 = data.frame(unique(alb_global$StudyID))
+
+check26_check28 = check28 %>%
+  anti_join(check26)
+unique(check26_check28$unique.alb_global.StudyID.)
+rm(check28, check26_check28, check26)
+```
+
+```{r Albacore diet data manipulation, tidy=TRUE}
+
+alb_global = alb_global %>%
   dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
                 LocatLatitude:LocatLongitude, MonthRange, YearEnd, SampleMethod, SampleDepth,
                 stomachs_used,
                 pred_life:est_ref, stomachs_used, prey_class:prey_sp,
                 prey_age_reported_1:prey_age_use, Include, FO, 
                 pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %>%
+  #Add gape length information for albacore by study, to relate to potential prey length
   mutate(gape_lmax = pred_flmean*0.0823+1.758, 
          gape_height_limit = pred_flmean*0.0246+4.603,
          prey_age_reported_1=case_when(
@@ -80,7 +117,7 @@ alb_global = as.data.frame(read_xlsx(here::here("data/1_input_data/albacore_diet
                              prey_age_reported_1 == "larvae" ~ "larva",
                              prey_age_reported_1 == "juvenile" ~ "juvenile",
                              prey_age_reported_1 == "adult" ~ "adult"))
-  #1028 obsm 44 vars
+  #1028 obsm 43 vars
   #calculates the gape length and height limits
   #Reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
 
@@ -102,15 +139,13 @@ alb_global$stomachs_used <- as.integer(alb_global$stomachs_used)
 alb_global$stomachs_used <- as.character(alb_global$stomachs_used)
 alb_global$stomachs_used <- replace_na(alb_global$stomachs_used, "not reported")
 unique(alb_global$stomachs_used)
-unique(alb_global$prey_sp)
+unique(alb_global$prey_sp) #308
 
 #Save total df version
 write.csv(alb_global, here::here("data/2_output_data/alb_global_diet.csv"), 
           row.names = FALSE) 
-#1028 observations and 41 variables
-
+#1028 observations and 43 variables
 ```
-
 
 ### Covariates
 
@@ -136,8 +171,8 @@ alb_covars = alb_global %>%
 
 alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
 
-unique(alb_covars$StudyID) #26
-unique(alb_covars$rep_ID) #70
+length(unique(alb_covars$StudyID)) #26
+length(unique(alb_covars$rep_ID)) #70
 
 #Merge these back to the diet df
 alb_global_diet = alb_global %>%
@@ -169,29 +204,15 @@ unique(alb_table_S3$StudyID) #26
 unique(alb_table_S3$rep_ID) #70
 
 write.csv(alb_table_S3, here::here("data/3_output_supp/table_S3.csv"), row.names = FALSE)
+write.csv(alb_table_S3, here::here("outputs_figures/ms_figures/SI_results/table_S3.csv"), row.names = FALSE)
 
 ```
 
 ## Data checks & additional info
 
-### Prey length info reported
-
-```{r Reported prey length information, tidy = TRUE}
-
-alb_global_prey_lengths = alb_global %>%
-  filter(maxl_use > 0) %>%
-  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxl_use, maxl_type) %>%
-  group_by(prey_sp, maxl_type) %>% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
-                   maxN = max(pN, na.rm=TRUE), 
-                   maxM = max(pM, na.rm=TRUE), 
-                   maxL = max(maxl_use, na.rm=TRUE)) 
-
-write.csv(alb_global_prey_lengths, here::here("data/3_output_supp/alb_global_prey_lengths.csv"), row.names = FALSE)
-
-```
-
 ### Prey life stage reported
+
+How many prey taxa were reported with an observation or estimation of life stage consumed?
 
 ```{r Reported prey lifestage information, tidy = TRUE}
 
@@ -204,8 +225,70 @@ alb_global_prey_life = alb_global %>%
                    maxM = max(pM, na.rm=TRUE), 
                    maxL = max(maxl_use, na.rm=TRUE)) 
 
-write.csv(alb_global_prey_life, here::here("data/3_output_supp/alb_global_prey_life.csv"), row.names = FALSE)
+length(unique(alb_global_prey_life$prey_sp)) #72 species
+#What percent of the total number of species?
+length(unique(alb_global_prey_life$prey_sp))*100/308
+#23.4%
+#What number of species were identified to which life stage?
+summary(as.factor(alb_global_prey_life$prey_age_reported_1))
+#Note that 13 species had multiple life stage assignments (up to 3)
 
+write.csv(alb_global_prey_life, here::here("data/3_output_supp/alb_table_E1_global_prey_life.csv"), row.names = FALSE)
+
+```
+
+### Prey length info reported
+
+How many prey taxa were recorded with lengths of remains measured and thus able to calculate likely total lengths?
+
+```{r Reported prey length information, tidy = TRUE}
+
+alb_global_prey_lengths = alb_global %>%
+  filter(maxl_use > 0) %>%
+  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxl_use, maxl_type) %>%
+  group_by(prey_sp, maxl_type) %>% #, life_stage , pFOuse, pN, pM
+  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
+                   maxN = max(pN, na.rm=TRUE), 
+                   maxM = max(pM, na.rm=TRUE), 
+                   maxL = max(maxl_use, na.rm=TRUE)) 
+
+length(unique(alb_global_prey_lengths$prey_sp)) #43 species
+
+write.csv(alb_global_prey_lengths, here::here("data/3_output_supp/alb_table_E2_global_prey_lengths.csv"), row.names = FALSE)
+```
+
+More precisely, how many prey taxa without reported life stage were recorded with lengths of remains measured and thus able to calculate likely total lengths? Note we exclude three Cephalopods here because their length measurements were for beaks and we did not at the time have any conversion calculations to convert those measurements to mantle or total lengths.
+
+```{r check how much data this added}
+check_prey_life = data.frame(unique(alb_global_prey_life$prey_sp)) %>%
+  dplyr::rename(prey_sp = unique.alb_global_prey_life.prey_sp.)
+
+check_length_info = alb_global_prey_lengths %>%
+  anti_join(check_prey_life) %>%
+  filter(!prey_sp %in% c("Onychoteuthis borealijaponica", "Onykia robusta", "Vampyroteuthis infernalis"))
+
+length(unique(check_length_info$prey_sp))
+length(unique(check_length_info$prey_sp))*100/308
+#4.8
+
+write.csv(check_length_info, here::here("data/3_output_supp/alb_table_E3_lengths_life_stage.csv"), row.names = FALSE)
+```
+
+How much data do we then have some near direct estimation capacity for life stage and how much is left to estimate?
+
+```{r check how much data remained for further estimation}
+#Species for which we have either reported life stage or measurement info
+length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp))
+#=87
+#Species without that
+308-(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp)))
+#=221
+#Proportion of data with info
+(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp)))*100/308
+#28%
+#Proportion of data without
+(308-(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp))))*100/308
+#72%
 ```
 
 ### Prey prevalence data reported
@@ -221,7 +304,7 @@ alb_global_metrics = alb_global %>%
                    maxM = max(pM, na.rm=TRUE), 
                    maxL = max(maxl_use, na.rm=TRUE)) 
 
-write.csv(alb_global_metrics, here::here("data/3_output_supp/alb_global_metrics.csv"), row.names = FALSE)
+write.csv(alb_global_metrics, here::here("data/3_output_supp/albtable_Eglobal_metrics.csv"), row.names = FALSE)
 
 ```
 
@@ -235,16 +318,16 @@ alb_global_metrics_basic = alb_global %>%
                    maxN = max(pN, na.rm=TRUE), 
                    maxM = max(pM, na.rm=TRUE)) 
 
-write.csv(alb_global_metrics_basic, here::here("data/3_output_supp/alb_global_metrics_basic.csv"), row.names = FALSE)
+write.csv(alb_global_metrics_basic, here::here("data/3_output_supp/alb_table_E5_global_metrics_basic.csv"), row.names = FALSE)
 
 ```
 
 
 ## Prey trait db
 
-### Load and select traits for analyses
+### Load and check trait information
 
-Loading in and selecting key species coarse traits: for habitat association, seasonal, vertical migration and aggregation behaviour. Note that NH overhauled our prey life stage estimation protocol in December 2021 through early 2022, and we have thoroughly curated this step.
+Loading in data. Note that NH overhauled our prey life stage estimation protocol in December 2021 through early 2022, and we have thoroughly curated this step. These steps are to investigate how much information was gained from this curation step.
 
 ```{r Prey trait data load, message=FALSE, results='hide', tidy=TRUE}
 
@@ -254,11 +337,144 @@ prey_trait <- as.data.frame(read_xlsx(here::here("data/1_input_data/prey_trait_d
 
 ```
 
-Key traits selection:
+Note that there are 308 spp remaining in the global diet db, and there are 221 for which we need to resolve which trait information to use. Why the difference in 5-6 species from the trait db? These were the prey taxa found in the larval albacore tuna diets and were thus previously removed.
+
+```{r check why some species drop out}
+
+check_spp = prey_trait %>%
+  anti_join(alb_global_metrics_basic, by="prey_sp")
+
+```
+
+Need to filter by prey species we already have life stage or length data to estimate life stage. This leaves 221 species for which we need to figure out life stage information.
+
+```{r Tally species remaining to id traits}
+check_traits = prey_trait %>%
+  filter(!prey_sp %in% check_spp$prey_sp) %>%
+  filter(!prey_sp %in% check_prey_life$prey_sp) %>%
+  filter(!prey_sp %in% check_length_info$prey_sp) %>%
+  select(prey_class:trait_confidence_cat, vert_habitat, horz_habitat, season_migrant, diel_migrant)
+
+length(unique(check_traits$prey_sp)) #221.
+```
+
+What meta-information did I annotate for species? There were 65 with annotations (and 157 without), likely hinting at a decision that needed to be made. But of these some did include the same trait information for adult and juvenile life stages, so we can't be sure from these data alone.
+
+```{r Checking on trait metainformation}
+length(which(check_traits$life_note != "NA")) #191
+
+check_traits_a = check_traits %>%
+  slice(which(check_traits$life_note != "NA"))
+length(unique(check_traits_a$prey_sp))
+
+check_traits_b = check_traits %>%
+  slice(-which(check_traits$life_note != "NA"))
+length(unique(check_traits_b$prey_sp))
+```
+
+Which species have the same or different vertical habitat use traits?
+
+```{r Check same vert traits}
+df_vert = check_traits %>%
+  select(prey_sp, life_stage, vert_habitat) %>%
+  pivot_wider(., names_from = life_stage, values_from = vert_habitat)
+
+check_traits_vert = df_vert %>%
+  slice(which(df$adult == df$juvenile))
+#136 with same
+
+check_traits_vert_not = df_vert %>%
+  slice(-which(df$adult == df$juvenile))
+#85 with different vertical habitat use trait
+```
+
+Which species have the same or different horizontal habitat use traits?
+
+```{r Check same horz traits}
+df_horz = check_traits %>%
+  select(prey_sp, life_stage, horz_habitat) %>%
+  pivot_wider(., names_from = life_stage, values_from = horz_habitat)
+
+check_traits_horz = df_horz %>%
+  slice(which(df$adult == df$juvenile))
+#136 with same
+
+check_traits_horz_not = df_horz %>%
+  slice(-which(df$adult == df$juvenile))
+#85 with different vertical habitat use trait
+```
+
+Which species have the same or different seasonal habitat use traits?
+
+```{r Check same season traits}
+df_season = check_traits %>%
+  select(prey_sp, life_stage, season_migrant) %>%
+  pivot_wider(., names_from = life_stage, values_from = season_migrant)
+
+check_traits_season = df_season %>%
+  slice(which(df$adult == df$juvenile))
+#136 with same
+
+check_traits_season_not = df_season %>%
+  slice(-which(df$adult == df$juvenile))
+#85 with different vertical habitat use trait
+```
+
+Which species have the same or different diel vertical migration strategy traits?
+
+```{r Check same diel traits}
+df_diel = check_traits %>%
+  select(prey_sp, life_stage, diel_migrant) %>%
+  pivot_wider(., names_from = life_stage, values_from = diel_migrant)
+
+check_traits_diel = df_diel %>%
+  slice(which(df$adult == df$juvenile))
+#136 with same
+
+check_traits_diel_not = df_diel %>%
+  slice(-which(df$adult == df$juvenile))
+#85 with different vertical habitat use trait
+```
+
+There were 103 species for which trait information did not differ between adult and juvenile life stages.
+
+```{r Join dataset with same traits}
+check_traits_same = check_traits %>%
+  filter(prey_sp %in% check_traits_diel$prey_sp) %>%
+  filter(prey_sp %in% check_traits_season$prey_sp) %>%
+  filter(prey_sp %in% check_traits_horz$prey_sp) %>%
+  filter(prey_sp %in% check_traits_vert$prey_sp)
+
+length(unique(check_traits_same$prey_sp)) #136
+```
+
+How many species had different trait values for any of the traits and thus required manual curation step? --> 85.
+
+```{r check traits diff}
+check_traits_diff = check_traits %>%
+  filter(!prey_sp %in% check_traits_diel$prey_sp) %>%
+  filter(!prey_sp %in% check_traits_season$prey_sp) %>%
+  filter(!prey_sp %in% check_traits_horz$prey_sp) %>%
+  filter(!prey_sp %in% check_traits_vert$prey_sp)
+length(unique(check_traits_diff$prey_sp)) #85
+```
+
+Double check that these also add up to 221.
+
+```{r Check some numbers}
+length(unique(check_traits_diff$prey_sp)) + length(unique(check_traits_same$prey_sp)) #Needs to add up to 221.
+```
+
+Edit decision tree with this information!
+
+### Select traits for analyses
+
+Key traits selection for species coarse traits: for habitat association, seasonal, vertical migration and aggregation behaviour.
 
 ```{r Prey traits selection, tidy=TRUE}
 
 prey_trait_select = prey_trait %>%
+  filter(!prey_sp %in% check_spp$prey_sp) %>%
   dplyr::select(prey_class:prey_sp, life_stage, diet_likely, life_note, 
                 vert_habitat, horz_habitat, diel_migrant, diel_migrant_cat, refuge_cat, season_migrant, season_cat, gregarious_primary) %>%
   filter(life_stage == diet_likely)
@@ -269,14 +485,7 @@ str(prey_trait_select)
 
 ```
 
-Note that there are 308 spp remaining in the global diet db. Why the difference in 5 species from the trait db? These were the prey taxa found in the larval albacore tuna diets and were thus previously removed.
-
-```{r check why some species drop out}
-
-check_spp = prey_trait_select %>%
-  anti_join(alb_global_metrics_basic, by="prey_sp")
-
-```
+This resulted in 93 adult, 210 juvenile and 5 larval prey taxa in the trait database.
 
 ```{r filter prey trait df by species remaining in diet df}
 
