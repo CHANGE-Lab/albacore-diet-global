@@ -11,9 +11,12 @@ output:
 
 This document contains code for manipulating trait information for 5 prey traits, and life history estimation, for albacore prey species from our global meta-analysis of albacore diet composition.
 
-From the MS:
+Relates to following sections of MS:
 
-"2.2 Prey trait information
+"2.2 Prey life stage estimation
+See MS"
+
+"2.3 Prey trait information
 
 For each prey species and main life stage distinctions (i.e., larva, juvenile, adult), we collected trait information for four habitat use traits and one behavioural trait known to affect the likelihood of a pelagic predator encountering, attacking and capturing prey (Green et al., 2019). These were: (i) vertical and (ii) horizontal habitat association, (iii) presence of diel vertical migration, (iv) presence of seasonal migration and (v) aggregation behaviour (Supplementary Data, Table S4 & S5). For analyses, we include the phylogenetic Order verified using Open Tree of Life Data (OpenTree et al, 2020). Trait data were compiled for a broader database construction effort of traits that inform predator-prey interactions for albacore (Gleiber et al. in prep). We further describe how prey species’ trait values were collected in Appendix B (Supporting Information)."
 
@@ -46,10 +49,11 @@ List of outputs created for analyses:
 
 - Prey species' coarse trait information *data/2_output_data/prey_trait_select.csv*
 
-- Albacore diet data *data/2_output_data/alb_global_diet_total.csv*
+- Albacore diet data *data/2_output_data/alb_global_diet.csv*
 
 - Albacore diet sampling covariates *data/2_output_data/alb_covars.csv*
 
+- And many more for supplementary information!
 
 ## Dataframes
 
@@ -100,6 +104,8 @@ unique(check26_check28$unique.alb_global.StudyID.)
 rm(check28, check26_check28, check26)
 ```
 
+Data manipulations for global diet dataset for analyses:
+
 ```{r Albacore diet data manipulation, tidy=TRUE}
 
 alb_global = alb_global %>%
@@ -138,8 +144,9 @@ alb_global$YearEnd <- as.integer(alb_global$YearEnd)
 alb_global$stomachs_used <- as.integer(alb_global$stomachs_used)
 alb_global$stomachs_used <- as.character(alb_global$stomachs_used)
 alb_global$stomachs_used <- replace_na(alb_global$stomachs_used, "not reported")
-unique(alb_global$stomachs_used)
-unique(alb_global$prey_sp) #308
+#Check this briefly
+range(alb_global$stomachs_used)
+length(unique(alb_global$prey_sp)) #308
 
 #Save total df version
 write.csv(alb_global, here::here("data/2_output_data/alb_global_diet.csv"), 
@@ -378,12 +385,12 @@ df_vert = check_traits %>%
   pivot_wider(., names_from = life_stage, values_from = vert_habitat)
 
 check_traits_vert = df_vert %>%
-  dplyr::slice(which(df_vert$adult == df_vert$juvenile))
+  slice(which(df_vert$adult == df_vert$juvenile))
 #136 with same
 
 check_traits_vert_not = df_vert %>%
   slice(-which(df_vert$adult == df_vert$juvenile))
-#85 with different vertical habitat use trait
+#84 with different vertical habitat use trait
 ```
 
 Which species have the same or different horizontal habitat use traits?
@@ -395,11 +402,11 @@ df_horz = check_traits %>%
 
 check_traits_horz = df_horz %>%
   dplyr::slice(which(df_horz$adult == df_horz$juvenile))
-#136 with same
+#182 with same
 
 check_traits_horz_not = df_horz %>%
   slice(-which(df_horz$adult == df_horz$juvenile))
-#85 with different vertical habitat use trait
+#39 with different vertical habitat use trait
 ```
 
 Which species have the same or different seasonal habitat use traits?
@@ -411,11 +418,11 @@ df_season = check_traits %>%
 
 check_traits_season = df_season %>%
   dplyr::slice(which(df_season$adult == df_season$juvenile))
-#136 with same
+#189 with same
 
 check_traits_season_not = df_season %>%
   slice(-which(df_season$adult == df_season$juvenile))
-#85 with different vertical habitat use trait
+#32 with different vertical habitat use trait
 ```
 
 Which species have the same or different diel vertical migration strategy traits?
@@ -426,37 +433,38 @@ df_diel = check_traits %>%
   pivot_wider(., names_from = life_stage, values_from = diel_migrant)
 
 check_traits_diel = df_diel %>%
-  dplyr::slice(which(df_diel$adult == df_diel$juvenile))
-#136 with same
+  slice(which(df_diel$adult == df_diel$juvenile))
+#182 with same
 
 check_traits_diel_not = df_diel %>%
   slice(-which(df_diel$adult == df_diel$juvenile))
-#85 with different vertical habitat use trait
+#39 with different vertical habitat use trait
 ```
 
-There were 136 species for which trait information did not differ between adult and juvenile life stages.
+There were 127 species for which trait information did not differ between adult and juvenile life stages.
 
 ```{r Join dataset with same traits, tidy=TRUE}
 check_traits_same = check_traits %>%
-  filter(prey_sp %in% check_traits_diel$prey_sp) %>%
   filter(prey_sp %in% check_traits_season$prey_sp) %>%
+  filter(prey_sp %in% check_traits_diel$prey_sp) %>%
   filter(prey_sp %in% check_traits_horz$prey_sp) %>%
   filter(prey_sp %in% check_traits_vert$prey_sp)
 
-length(unique(check_traits_same$prey_sp)) #136
+length(unique(check_traits_same$prey_sp)) #127
 
 length(unique(check_traits_same$prey_sp))*100/308
 ```
 
-There were 85 species for which trait information differed in one or more traits for adult and juvenile life stages.
+There were 94 species for which trait information differed in one or more traits for adult and juvenile life stages.
 
 ```{r check traits diff, tidy=TRUE}
 check_traits_diff = check_traits %>%
-  filter(!prey_sp %in% check_traits_diel$prey_sp) %>%
-  filter(!prey_sp %in% check_traits_season$prey_sp) %>%
-  filter(!prey_sp %in% check_traits_horz$prey_sp) %>%
-  filter(!prey_sp %in% check_traits_vert$prey_sp)
-length(unique(check_traits_diff$prey_sp)) #85
+  filter(!prey_sp %in% check_traits_same$prey_sp)
+  #filter(!prey_sp %in% check_traits_diel$prey_sp) %>%
+  #filter(!prey_sp %in% check_traits_season$prey_sp) %>%
+  #filter(!prey_sp %in% check_traits_horz$prey_sp) %>%
+  #filter(!prey_sp %in% check_traits_vert$prey_sp)
+length(unique(check_traits_diff$prey_sp)) #94
 
 length(unique(check_traits_diff$prey_sp))*100/308
 
@@ -467,6 +475,33 @@ Double check that these also add up to 221.
 
 ```{r Check some numbers, tidy=TRUE}
 length(unique(check_traits_diff$prey_sp)) + length(unique(check_traits_same$prey_sp)) #Needs to add up to 221.
+```
+
+Now check on data proportions for albacore reported or measured and how much data this affects. To this we separate how many rows of data corresponded to "Estimated" or "Measured" albacore fork lengths. We then filter these data to match the species for which different trait information was on record but no further meta-information that would help establish the prey's likely life stage or trait information. We then report these outputs in the decision tree.
+
+```{r Checking on }
+
+check_studyID_df = data.frame(table(alb_global_diet$StudyID)) %>%
+  mutate(prop = Freq*100/1027)
+
+check_spp_alb_measured = alb_global_diet %>%
+  filter(pred_flmean_est == "Measured: study reported") %>% #Note this is 391 rows of data out of 1027
+  filter(prey_sp %in% check_traits_diff$prey_sp)
+  
+391*100/1027 #38% of the data
+length(unique(check_spp_alb_measured$prey_sp)) #51 species with measured albacore lengths
+length(unique(check_spp_alb_measured$prey_sp))*100/308 #16.5% of species with measured albacore lengths
+
+check_spp_alb_estimated = alb_global_diet %>%
+  filter(pred_flmean_est == "Estimated: by meta-analysis") %>% #Note this is 636 rows of data out of 1027
+  filter(prey_sp %in% check_traits_diff$prey_sp) %>%
+  filter(!prey_sp %in% check_spp_alb_measured$prey_sp)
+
+636*100/1027 #62% of the data
+length(unique(check_spp_alb_estimated$prey_sp)) #43 species with estimated albacore lengths
+length(unique(check_spp_alb_estimated$prey_sp))*100/308 #14% of species with measured albacore lengths
+
+length(unique(check_spp_alb_measured$prey_sp))+length(unique(check_spp_alb_estimated$prey_sp)) #Needs to sum to 94.
 ```
 
 Edit decision tree with this information!
@@ -526,7 +561,7 @@ summary(as.factor(alb_table_S4$life_stage))
 write.csv(alb_table_S4, here::here("data/3_output_supp/table_S4.csv"), row.names = FALSE)
 ```
 
-## GO TO 2_extract_longhurst to work on Figure 1a
-## THEN TO document 3a_alb_data_covars to work on covariate info
-## THEN TO 4_species_accum doc to work on Figure 1b and c
-## THEN TO 5_trait_phylo_graph for species and trait phylogenetic graphs
+## Step 2 GO TO 2_extract_longhurst to work on Figure 1a
+## Step 3 THEN TO document 3a_alb_data_covars to work on covariate info
+## Step 4 THEN TO 4_species_accum doc to work on Figure 1b and c
+## Step 5 THEN TO 5_trait_phylo_graph for species and trait phylogenetic graphs

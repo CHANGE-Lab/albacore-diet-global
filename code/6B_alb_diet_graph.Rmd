@@ -41,7 +41,7 @@ library(ggh4x)
 
 #diet_fo_wide <- read.csv(here("./data/output_data/alb_global_wide_dietfo.csv"))
 
-alb_global = read.csv(here::here("data/2_output_data/alb_global_diet_total_v2.csv"), check.names = FALSE)
+alb_global = read.csv(here::here("data/2_output_data/alb_global_diet.csv"), check.names = FALSE)
 
 prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divis.k7.csv")) %>%
   select(-c(X, dendlabs, maxFO:maxM))
@@ -53,7 +53,7 @@ prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divi
 alb_diet_clust = alb_global %>%
   left_join(prob.prey.cl) %>%
   filter(prob.clust.num != "NA") %>% #> 0 #, pFOuse > 5
-  select(StudyID:rep_ID, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
+  select(StudyID, rep_ID, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
 #unique(alb_diet_clust$prob.clust.num)
 #unique(alb_diet_clust$OceanBasin)
 

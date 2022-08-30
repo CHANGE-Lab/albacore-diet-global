@@ -375,8 +375,9 @@ pre code {
 <p>This document contains code for manipulating trait information for 5
 prey traits, and life history estimation, for albacore prey species from
 our global meta-analysis of albacore diet composition.</p>
-<p>From the MS:</p>
-<p>“2.2 Prey trait information</p>
+<p>Relates to following sections of MS:</p>
+<p>“2.2 Prey life stage estimation See MS”</p>
+<p>“2.3 Prey trait information</p>
 <p>For each prey species and main life stage distinctions (i.e., larva,
 juvenile, adult), we collected trait information for four habitat use
 traits and one behavioural trait known to affect the likelihood of a
@@ -417,6 +418,7 @@ here::here()</code></pre>
 <em>data/2_output_data/alb_global_diet_total.csv</em></p></li>
 <li><p>Albacore diet sampling covariates
 <em>data/2_output_data/alb_covars.csv</em></p></li>
+<li><p>And many more for supplementary information!</p></li>
 </ul>
 </div>
 <div id="dataframes" class="section level2">
@@ -473,6 +475,7 @@ check26_check28 = check28 %&gt;%
 <pre class="r"><code>unique(check26_check28$unique.alb_global.StudyID.)</code></pre>
 <pre><code>## [1] &quot;Logan2013&quot;  &quot;Teffer2015&quot;</code></pre>
 <pre class="r"><code>rm(check28, check26_check28, check26)</code></pre>
+<p>Data manipulations for global diet dataset for analyses:</p>
 <pre class="r"><code>alb_global = alb_global %&gt;%
   dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
                 LocatLatitude:LocatLongitude, MonthRange, YearEnd, SampleMethod, SampleDepth,
@@ -510,173 +513,11 @@ alb_global$YearEnd &lt;- as.integer(alb_global$YearEnd)
 alb_global$stomachs_used &lt;- as.integer(alb_global$stomachs_used)
 alb_global$stomachs_used &lt;- as.character(alb_global$stomachs_used)
 alb_global$stomachs_used &lt;- replace_na(alb_global$stomachs_used, &quot;not reported&quot;)
-unique(alb_global$stomachs_used)</code></pre>
-<pre><code>##  [1] &quot;1754&quot;         &quot;35&quot;           &quot;21&quot;           &quot;94&quot;           &quot;1&quot;           
-##  [6] &quot;6&quot;            &quot;9&quot;            &quot;25&quot;           &quot;54&quot;           &quot;not reported&quot;
-## [11] &quot;116&quot;          &quot;371&quot;          &quot;24&quot;           &quot;29&quot;           &quot;46&quot;          
-## [16] &quot;19&quot;           &quot;14&quot;           &quot;39&quot;           &quot;32&quot;           &quot;22&quot;          
-## [21] &quot;186&quot;          &quot;58&quot;           &quot;31&quot;           &quot;214&quot;          &quot;196&quot;         
-## [26] &quot;45&quot;           &quot;3&quot;            &quot;222&quot;          &quot;4&quot;            &quot;84&quot;          
-## [31] &quot;348&quot;          &quot;86&quot;           &quot;38&quot;           &quot;301&quot;          &quot;97&quot;          
-## [36] &quot;286&quot;          &quot;177&quot;          &quot;200&quot;          &quot;20&quot;           &quot;27&quot;          
-## [41] &quot;184&quot;          &quot;63&quot;           &quot;290&quot;          &quot;150&quot;          &quot;61&quot;          
-## [46] &quot;64&quot;           &quot;342&quot;          &quot;152&quot;          &quot;11&quot;           &quot;42&quot;          
-## [51] &quot;10&quot;           &quot;36&quot;</code></pre>
-<pre class="r"><code>unique(alb_global$prey_sp) #308</code></pre>
-<pre><code>##   [1] &quot;Cubiceps gracilis&quot;              &quot;Nematoscelis megalops&quot;         
-##   [3] &quot;Scyllarus arctus&quot;               &quot;Acanthephyra pelagica&quot;         
-##   [5] &quot;Meganyctiphanes norvegica&quot;      &quot;Themisto gaudichaudii&quot;         
-##   [7] &quot;Hyperia galba&quot;                  &quot;Phrosina semilunata&quot;           
-##   [9] &quot;Brachyscelus crusculum&quot;         &quot;Macroramphosus scolopax&quot;       
-##  [11] &quot;Lestidiops sphyrenoides&quot;        &quot;Arctozenus risso&quot;              
-##  [13] &quot;Paralepis coregonoides&quot;         &quot;Scomberesox saurus&quot;            
-##  [15] &quot;Maurolicus muelleri&quot;            &quot;Heteroteuthis dispar&quot;          
-##  [17] &quot;Todarodes sagittatus&quot;           &quot;Histioteuthis bonnellii&quot;       
-##  [19] &quot;Engraulis mordax&quot;               &quot;Argyropelecus olfersii&quot;        
-##  [21] &quot;Eusergestes arcticus&quot;           &quot;Chtenopteryx sicula&quot;           
-##  [23] &quot;Sternoptyx diaphana&quot;            &quot;Carinaria lamarckii&quot;           
-##  [25] &quot;Brachioteuthis riisei&quot;          &quot;Engraulis encrasicolus&quot;        
-##  [27] &quot;Octopus vulgaris&quot;               &quot;Onychoteuthis banksii&quot;         
-##  [29] &quot;Teuthowenia megalops&quot;           &quot;Trachurus trachurus&quot;           
-##  [31] &quot;Histioteuthis reversa&quot;          &quot;Arnoglossus imperialis&quot;        
-##  [33] &quot;Neognathophausia ingens&quot;        &quot;Boops boops&quot;                   
-##  [35] &quot;Chiroteuthis veranii&quot;           &quot;Clio pyramidata&quot;               
-##  [37] &quot;Ceratoscopelus maderensis&quot;      &quot;Lobianchia gemellarii&quot;         
-##  [39] &quot;Myctophum punctatum&quot;            &quot;Notoscopelus kroyeri&quot;          
-##  [41] &quot;Lampanyctus intricarius&quot;        &quot;Lampanyctus crocodilus&quot;        
-##  [43] &quot;Gennadas elegans&quot;               &quot;Palinurus mauritanicus&quot;        
-##  [45] &quot;Polybius henslowii&quot;             &quot;Alpheus glaber&quot;                
-##  [47] &quot;Axius stirhynchus&quot;              &quot;Chelophyes appendiculata&quot;      
-##  [49] &quot;Janthina exigua&quot;                &quot;Parapasiphae sulcatifrons&quot;     
-##  [51] &quot;Streetsia challengeri&quot;          &quot;Stylocheiron abbreviatum&quot;      
-##  [53] &quot;Japetella diaphana&quot;             &quot;Octopoteuthis sicula&quot;          
-##  [55] &quot;Helicocranchia pfefferi&quot;        &quot;Systellaspis debilis&quot;          
-##  [57] &quot;Helicolenus dactylopterus&quot;      &quot;Tetragonurus atlanticus&quot;       
-##  [59] &quot;Eledone cirrhosa&quot;               &quot;Eutrigla gurnardus&quot;            
-##  [61] &quot;Galiteuthis armata&quot;             &quot;Gaidropsarus vulgaris&quot;         
-##  [63] &quot;Anotopterus pharao&quot;             &quot;Ocythoe tuberculata&quot;           
-##  [65] &quot;Diaphus luetkeni&quot;               &quot;Electrona risso&quot;               
-##  [67] &quot;Platyscelus ovoides&quot;            &quot;Primno macropa&quot;                
-##  [69] &quot;Sepietta oweniana&quot;              &quot;Blennius ocellaris&quot;            
-##  [71] &quot;Capros aper&quot;                    &quot;Idotea metallica&quot;              
-##  [73] &quot;Robustosergia robusta&quot;          &quot;Chlorophthalmus agassizi&quot;      
-##  [75] &quot;Diplodus sargus&quot;                &quot;Entelurus aequoreus&quot;           
-##  [77] &quot;Belone belone&quot;                  &quot;Diacria trispinosa&quot;            
-##  [79] &quot;Pyrosoma atlanticum&quot;            &quot;Soestia zonaria&quot;               
-##  [81] &quot;Lampanyctus alatus&quot;             &quot;Lanceola sayana&quot;               
-##  [83] &quot;Atlanta peronii&quot;                &quot;Barathronus parfaiti&quot;          
-##  [85] &quot;Calanus finmarchicus&quot;           &quot;Platyscelus serratulus&quot;        
-##  [87] &quot;Liocranchia reinhardtii&quot;        &quot;Mullus barbatus barbatus&quot;      
-##  [89] &quot;Spondyliosoma cantharus&quot;        &quot;Trachinotus ovatus&quot;            
-##  [91] &quot;Centrolophus niger&quot;             &quot;Brachyscelus macrocephalus&quot;    
-##  [93] &quot;Platyscelus armatus&quot;            &quot;Japetella heathi&quot;              
-##  [95] &quot;Tarletonbeania crenularis&quot;      &quot;Rhinogobiops nicholsii&quot;        
-##  [97] &quot;Lestidiops ringens&quot;             &quot;Pleuronichthys decurrens&quot;      
-##  [99] &quot;Photonectes margarita&quot;          &quot;Cololabis saira&quot;               
-## [101] &quot;Chilara taylori&quot;                &quot;Citharichthys sordidus&quot;        
-## [103] &quot;Clupea pallasii&quot;                &quot;Icichthys lockingtoni&quot;         
-## [105] &quot;Magnisudis atlantica&quot;           &quot;Glyptocephalus zachirus&quot;       
-## [107] &quot;Tetragonurus cuvieri&quot;           &quot;Microstomus pacificus&quot;         
-## [109] &quot;Trachurus symmetricus&quot;          &quot;Trachipterus trachypterus&quot;     
-## [111] &quot;Vinciguerria lucetia&quot;           &quot;Melanostomias valdiviae&quot;       
-## [113] &quot;Taractes asper&quot;                 &quot;Brama brama&quot;                   
-## [115] &quot;Desmodema polystictum&quot;          &quot;Galiteuthis phyllura&quot;          
-## [117] &quot;Syngnathus californiensis&quot;      &quot;Merluccius productus&quot;          
-## [119] &quot;Pleuroncodes planipes&quot;          &quot;Bathylagoides wesethi&quot;         
-## [121] &quot;Chromis punctipinnis&quot;           &quot;Halichoeres nicholsi&quot;          
-## [123] &quot;Medialuna californiensis&quot;       &quot;Mugil cephalus&quot;                
-## [125] &quot;Scomber japonicus&quot;              &quot;Paralepis speciosa&quot;            
-## [127] &quot;Sudis hyalina&quot;                  &quot;Sardina pilchardus&quot;            
-## [129] &quot;Sardinella aurita&quot;              &quot;Illex coindetii&quot;               
-## [131] &quot;Anchylomera blossevillei&quot;       &quot;Alloteuthis subulata&quot;          
-## [133] &quot;Ancistroteuthis lichtensteinii&quot; &quot;Vibilia gibbosa&quot;               
-## [135] &quot;Illex argentinus&quot;               &quot;Ornithoteuthis antillarum&quot;     
-## [137] &quot;Lycoteuthis lorigera&quot;           &quot;Abralia redfieldi&quot;             
-## [139] &quot;Ommastrephes bartramii&quot;         &quot;Tremoctopus violaceus&quot;         
-## [141] &quot;Argonauta nodosus&quot;              &quot;Haliphron atlanticus&quot;          
-## [143] &quot;Atherinopsis californiensis&quot;    &quot;Diaphus theta&quot;                 
-## [145] &quot;Stenobrachius leucopsarus&quot;      &quot;Sardinops sagax&quot;               
-## [147] &quot;Eusergestes similis&quot;            &quot;Sebastes zacentrus&quot;            
-## [149] &quot;Sebastes diploproa&quot;             &quot;Sebastes proriger&quot;             
-## [151] &quot;Sebastes wilsoni&quot;               &quot;Sebastes brevispinis&quot;          
-## [153] &quot;Sebastes aleutianus&quot;            &quot;Sebastes miniatus&quot;             
-## [155] &quot;Onychoteuthis borealijaponica&quot;  &quot;Vampyroteuthis infernalis&quot;     
-## [157] &quot;Gonatus onyx&quot;                   &quot;Gonatus californiensis&quot;        
-## [159] &quot;Onykia robusta&quot;                 &quot;Doryteuthis opalescens&quot;        
-## [161] &quot;Gonatus pyros&quot;                  &quot;Gonatopsis borealis&quot;           
-## [163] &quot;Sebastes helvomaculatus&quot;        &quot;Sebastes maliger&quot;              
-## [165] &quot;Mastigoteuthis dentata&quot;         &quot;Argonauta argo&quot;                
-## [167] &quot;Eucleoteuthis luminosa&quot;         &quot;Bathyagonus pentacanthus&quot;      
-## [169] &quot;Anotopterus nikparini&quot;          &quot;Micromesistius poutassou&quot;      
-## [171] &quot;Benthosema glaciale&quot;            &quot;Gonatus steenstrupi&quot;           
-## [173] &quot;Scomber scombrus&quot;               &quot;Microgadus proximus&quot;           
-## [175] &quot;Thaleichthys pacificus&quot;         &quot;Anoplopoma fimbria&quot;            
-## [177] &quot;Anarrhichthys ocellatus&quot;        &quot;Gempylus serpens&quot;              
-## [179] &quot;Brama orcini&quot;                   &quot;Katsuwonus pelamis&quot;            
-## [181] &quot;Odontodactylus hansenii&quot;        &quot;Echinosquilla guerinii&quot;        
-## [183] &quot;Chiasmodon niger&quot;               &quot;Lactoria diaphana&quot;             
-## [185] &quot;Coryphaena hippurus&quot;            &quot;Octopus bimaculatus&quot;           
-## [187] &quot;Dosidicus gigas&quot;                &quot;Abraliopsis felis&quot;             
-## [189] &quot;Triphoturus mexicanus&quot;          &quot;Abraliopsis affinis&quot;           
-## [191] &quot;Diplospinus multistriatus&quot;      &quot;Peristedion gracile&quot;           
-## [193] &quot;Omosudis lowii&quot;                 &quot;Nealotus tripes&quot;               
-## [195] &quot;Antigonia capros&quot;               &quot;Selene setapinnis&quot;             
-## [197] &quot;Psenes pellucidus&quot;              &quot;Nesiarchus nasutus&quot;            
-## [199] &quot;Sternoptyx obscura&quot;             &quot;Strongylura exilis&quot;            
-## [201] &quot;Octopoteuthis nielseni&quot;         &quot;Pterygioteuthis microlampas&quot;   
-## [203] &quot;Lampanyctus mexicanus&quot;          &quot;Nannobrachium ritteri&quot;         
-## [205] &quot;Ceratoscopelus townsendi&quot;       &quot;Nannobrachium regale&quot;          
-## [207] &quot;Euphausia pacifica&quot;             &quot;Neognathophausia gigas&quot;        
-## [209] &quot;Scopelogadus bispinosus&quot;        &quot;Protomyctophum crockeri&quot;       
-## [211] &quot;Histioteuthis heteropsis&quot;       &quot;Leuroglossus stilbius&quot;         
-## [213] &quot;Melamphaes lugubris&quot;            &quot;Argonauta nouryi&quot;              
-## [215] &quot;Berryteuthis anonychus&quot;         &quot;Cranchia scabra&quot;               
-## [217] &quot;Peprilus simillimus&quot;            &quot;Opisthoteuthis californiana&quot;   
-## [219] &quot;Bathophilus flemingi&quot;           &quot;Cymatogaster aggregata&quot;        
-## [221] &quot;Macroparalepis affinis&quot;         &quot;Walvisteuthis rancureli&quot;       
-## [223] &quot;Sthenoteuthis oualaniensis&quot;     &quot;Nansenia macrolepis&quot;           
-## [225] &quot;Lestrolepis intermedia&quot;         &quot;Odontodactylus scyllarus&quot;      
-## [227] &quot;Diretmus argenteus&quot;             &quot;Diaphus perspicillatus&quot;        
-## [229] &quot;Abraliopsis morisii&quot;            &quot;Diaphus lucidus&quot;               
-## [231] &quot;Ranzania laevis&quot;                &quot;Grimalditeuthis bonplandi&quot;     
-## [233] &quot;Histioteuthis meleagroteuthis&quot;  &quot;Octopoteuthis rugosa&quot;          
-## [235] &quot;Onykia loennbergii&quot;             &quot;Thysanoteuthis rhombus&quot;        
-## [237] &quot;Decapterus macrosoma&quot;           &quot;Scombrolabrax heterolepis&quot;     
-## [239] &quot;Scopelosaurus hoedti&quot;           &quot;Monacoa grimaldii&quot;             
-## [241] &quot;Argyropelecus aculeatus&quot;        &quot;Scopelarchus analis&quot;           
-## [243] &quot;Lysiosquilla tredecimdentata&quot;   &quot;Myctophum asperum&quot;             
-## [245] &quot;Salpa maxima&quot;                   &quot;Neoanchisquilla tuberculata&quot;   
-## [247] &quot;Stigmatoteuthis dofleini&quot;       &quot;Stigmatoteuthis hoylei&quot;        
-## [249] &quot;Janicella spinicauda&quot;           &quot;Oplophorus typus&quot;              
-## [251] &quot;Makaira mazara&quot;                 &quot;Ornithoteuthis volatilis&quot;      
-## [253] &quot;Thyrsitoides marleyi&quot;           &quot;Ateleopus natalensis&quot;          
-## [255] &quot;Alepisaurus ferox&quot;              &quot;Lampadena luminosa&quot;            
-## [257] &quot;Ancistrocheirus lesueurii&quot;      &quot;Funchalia taaningi&quot;            
-## [259] &quot;Cookeolus japonicus&quot;            &quot;Balistes punctatus&quot;            
-## [261] &quot;Ostracion cubicus&quot;              &quot;Lestidiops similis&quot;            
-## [263] &quot;Beryx splendens&quot;                &quot;Taningia danae&quot;                
-## [265] &quot;Tremoctopus gracilis&quot;           &quot;Cyphocaris faurei&quot;             
-## [267] &quot;Parribacus antarcticus&quot;         &quot;Pterycombus petersii&quot;          
-## [269] &quot;Decapterus macarellus&quot;          &quot;Rexea prometheoides&quot;           
-## [271] &quot;Cubiceps capensis&quot;              &quot;Dactyloptena orientalis&quot;       
-## [273] &quot;Masturus lanceolatus&quot;           &quot;Ceratias tentaculatus&quot;         
-## [275] &quot;Lepidocybium flavobrunneum&quot;     &quot;Lagocephalus lagocephalus&quot;     
-## [277] &quot;Heterocarpus laevigatus&quot;        &quot;Diaphus effulgens&quot;             
-## [279] &quot;Canthidermis maculata&quot;          &quot;Lampanyctodes hectoris&quot;        
-## [281] &quot;Engraulis capensis&quot;             &quot;Symbolophorus barnardi&quot;        
-## [283] &quot;Pyroteuthis margaritifera&quot;      &quot;Cubiceps pauciradiatus&quot;        
-## [285] &quot;Antimora rostrata&quot;              &quot;Diaphus ostenfeldi&quot;            
-## [287] &quot;Hygophum hygomii&quot;               &quot;Symbolophorus evermanni&quot;       
-## [289] &quot;Bregmaceros mcclellandi&quot;        &quot;Abraliopsis gilchristi&quot;        
-## [291] &quot;Spirula spirula&quot;                &quot;Funchalia woodwardi&quot;           
-## [293] &quot;Natosquilla investigatoris&quot;     &quot;Pteroctopus tetracirrhus&quot;      
-## [295] &quot;Scaeurgus unicirrhus&quot;           &quot;Pterygioteuthis giardi&quot;        
-## [297] &quot;Engraulis japonicus&quot;            &quot;Ceratoscopelus warmingii&quot;      
-## [299] &quot;Trachurus japonicus&quot;            &quot;Parapronoe crustulum&quot;          
-## [301] &quot;Maurolicus imperatorius&quot;        &quot;Todarodes pacificus&quot;           
-## [303] &quot;Leptocotis tenuirostris&quot;        &quot;Gonatus berryi&quot;                
-## [305] &quot;Hyaloteuthis pelagica&quot;          &quot;Nyctiphanes australis&quot;         
-## [307] &quot;Todaropsis eblanae&quot;             &quot;Cavolinia tridentata&quot;</code></pre>
+#Check this briefly
+range(alb_global$stomachs_used)</code></pre>
+<pre><code>## [1] &quot;1&quot;            &quot;not reported&quot;</code></pre>
+<pre class="r"><code>length(unique(alb_global$prey_sp)) #308</code></pre>
+<pre><code>## [1] 308</code></pre>
 <pre class="r"><code>#Save total df version
 write.csv(alb_global, here::here(&quot;data/2_output_data/alb_global_diet.csv&quot;), 
           row.names = FALSE) 
@@ -948,12 +789,12 @@ traits?</p>
   pivot_wider(., names_from = life_stage, values_from = vert_habitat)
 
 check_traits_vert = df_vert %&gt;%
-  dplyr::slice(which(df_vert$adult == df_vert$juvenile))
+  slice(which(df_vert$adult == df_vert$juvenile))
 #136 with same
 
 check_traits_vert_not = df_vert %&gt;%
   slice(-which(df_vert$adult == df_vert$juvenile))
-#85 with different vertical habitat use trait</code></pre>
+#84 with different vertical habitat use trait</code></pre>
 <p>Which species have the same or different horizontal habitat use
 traits?</p>
 <pre class="r"><code>df_horz = check_traits %&gt;%
@@ -962,11 +803,11 @@ traits?</p>
 
 check_traits_horz = df_horz %&gt;%
     dplyr::slice(which(df_horz$adult == df_horz$juvenile))
-# 136 with same
+# 182 with same
 
 check_traits_horz_not = df_horz %&gt;%
     slice(-which(df_horz$adult == df_horz$juvenile))
-# 85 with different vertical habitat use trait</code></pre>
+# 39 with different vertical habitat use trait</code></pre>
 <p>Which species have the same or different seasonal habitat use
 traits?</p>
 <pre class="r"><code>df_season = check_traits %&gt;%
@@ -975,11 +816,11 @@ traits?</p>
 
 check_traits_season = df_season %&gt;%
     dplyr::slice(which(df_season$adult == df_season$juvenile))
-# 136 with same
+# 189 with same
 
 check_traits_season_not = df_season %&gt;%
     slice(-which(df_season$adult == df_season$juvenile))
-# 85 with different vertical habitat use trait</code></pre>
+# 32 with different vertical habitat use trait</code></pre>
 <p>Which species have the same or different diel vertical migration
 strategy traits?</p>
 <pre class="r"><code>df_diel = check_traits %&gt;%
@@ -987,40 +828,74 @@ strategy traits?</p>
     pivot_wider(., names_from = life_stage, values_from = diel_migrant)
 
 check_traits_diel = df_diel %&gt;%
-    dplyr::slice(which(df_diel$adult == df_diel$juvenile))
-# 136 with same
+    slice(which(df_diel$adult == df_diel$juvenile))
+# 182 with same
 
 check_traits_diel_not = df_diel %&gt;%
     slice(-which(df_diel$adult == df_diel$juvenile))
-# 85 with different vertical habitat use trait</code></pre>
-<p>There were 136 species for which trait information did not differ
+# 39 with different vertical habitat use trait</code></pre>
+<p>There were 127 species for which trait information did not differ
 between adult and juvenile life stages.</p>
 <pre class="r"><code>check_traits_same = check_traits %&gt;%
-    filter(prey_sp %in% check_traits_diel$prey_sp) %&gt;%
     filter(prey_sp %in% check_traits_season$prey_sp) %&gt;%
+    filter(prey_sp %in% check_traits_diel$prey_sp) %&gt;%
     filter(prey_sp %in% check_traits_horz$prey_sp) %&gt;%
     filter(prey_sp %in% check_traits_vert$prey_sp)
 
-length(unique(check_traits_same$prey_sp))  #136</code></pre>
+length(unique(check_traits_same$prey_sp))  #127</code></pre>
 <pre><code>## [1] 127</code></pre>
 <pre class="r"><code>length(unique(check_traits_same$prey_sp)) * 100/308</code></pre>
 <pre><code>## [1] 41.23377</code></pre>
-<p>There were 85 species for which trait information differed in one or
+<p>There were 94 species for which trait information differed in one or
 more traits for adult and juvenile life stages.</p>
 <pre class="r"><code>check_traits_diff = check_traits %&gt;%
-    filter(!prey_sp %in% check_traits_diel$prey_sp) %&gt;%
-    filter(!prey_sp %in% check_traits_season$prey_sp) %&gt;%
-    filter(!prey_sp %in% check_traits_horz$prey_sp) %&gt;%
-    filter(!prey_sp %in% check_traits_vert$prey_sp)
-length(unique(check_traits_diff$prey_sp))  #85</code></pre>
-<pre><code>## [1] 26</code></pre>
+    filter(!prey_sp %in% check_traits_same$prey_sp)
+# filter(!prey_sp %in% check_traits_diel$prey_sp) %&gt;% filter(!prey_sp %in%
+# check_traits_season$prey_sp) %&gt;% filter(!prey_sp %in%
+# check_traits_horz$prey_sp) %&gt;% filter(!prey_sp %in%
+# check_traits_vert$prey_sp)
+length(unique(check_traits_diff$prey_sp))  #94</code></pre>
+<pre><code>## [1] 94</code></pre>
 <pre class="r"><code>length(unique(check_traits_diff$prey_sp)) * 100/308</code></pre>
-<pre><code>## [1] 8.441558</code></pre>
+<pre><code>## [1] 30.51948</code></pre>
 <pre class="r"><code>write.csv(check_traits_diff, here::here(&quot;data/3_output_supp/check_traits_diff.csv&quot;),
     row.names = FALSE)</code></pre>
 <p>Double check that these also add up to 221.</p>
 <pre class="r"><code>length(unique(check_traits_diff$prey_sp)) + length(unique(check_traits_same$prey_sp))  #Needs to add up to 221.</code></pre>
-<pre><code>## [1] 153</code></pre>
+<pre><code>## [1] 221</code></pre>
+<p>Now check on data proportions for albacore reported or measured and
+how much data this affects. To this we separate how many rows of data
+corresponded to “Estimated” or “Measured” albacore fork lengths. We then
+filter these data to match the species for which different trait
+information was on record but no further meta-information that would
+help establish the prey’s likely life stage or trait information. We
+then report these outputs in the decision tree.</p>
+<pre class="r"><code>check_studyID_df = data.frame(table(alb_global_diet$StudyID)) %&gt;%
+  mutate(prop = Freq*100/1027)
+
+check_spp_alb_measured = alb_global_diet %&gt;%
+  filter(pred_flmean_est == &quot;Measured: study reported&quot;) %&gt;% #Note this is 391 rows of data out of 1027
+  filter(prey_sp %in% check_traits_diff$prey_sp)
+  
+391*100/1027 #38% of the data</code></pre>
+<pre><code>## [1] 38.07205</code></pre>
+<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp)) #51 species with measured albacore lengths</code></pre>
+<pre><code>## [1] 51</code></pre>
+<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp))*100/308 #16.5% of species with measured albacore lengths</code></pre>
+<pre><code>## [1] 16.55844</code></pre>
+<pre class="r"><code>check_spp_alb_estimated = alb_global_diet %&gt;%
+  filter(pred_flmean_est == &quot;Estimated: by meta-analysis&quot;) %&gt;% #Note this is 636 rows of data out of 1027
+  filter(prey_sp %in% check_traits_diff$prey_sp) %&gt;%
+  filter(!prey_sp %in% check_spp_alb_measured$prey_sp)
+
+636*100/1027 #62% of the data</code></pre>
+<pre><code>## [1] 61.92795</code></pre>
+<pre class="r"><code>length(unique(check_spp_alb_estimated$prey_sp)) #43 species with estimated albacore lengths</code></pre>
+<pre><code>## [1] 43</code></pre>
+<pre class="r"><code>length(unique(check_spp_alb_estimated$prey_sp))*100/308 #14% of species with measured albacore lengths</code></pre>
+<pre><code>## [1] 13.96104</code></pre>
+<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp))+length(unique(check_spp_alb_estimated$prey_sp)) #Needs to sum to 94.</code></pre>
+<pre><code>## [1] 94</code></pre>
 <p>Edit decision tree with this information!</p>
 </div>
 <div id="select-traits-for-analyses" class="section level3">
@@ -1088,18 +963,19 @@ alb_table_S4 = alb_global %&gt;%
 <pre class="r"><code>write.csv(alb_table_S4, here::here(&quot;data/3_output_supp/table_S4.csv&quot;), row.names = FALSE)</code></pre>
 </div>
 </div>
-<div id="go-to-2_extract_longhurst-to-work-on-figure-1a" class="section level2">
-<h2>GO TO 2_extract_longhurst to work on Figure 1a</h2>
+<div id="step-2-go-to-2_extract_longhurst-to-work-on-figure-1a" class="section level2">
+<h2>Step 2 GO TO 2_extract_longhurst to work on Figure 1a</h2>
 </div>
-<div id="then-to-document-3a_alb_data_covars-to-work-on-covariate-info" class="section level2">
-<h2>THEN TO document 3a_alb_data_covars to work on covariate info</h2>
+<div id="step-3-then-to-document-3a_alb_data_covars-to-work-on-covariate-info" class="section level2">
+<h2>Step 3 THEN TO document 3a_alb_data_covars to work on covariate
+info</h2>
 </div>
-<div id="then-to-4_species_accum-doc-to-work-on-figure-1b-and-c" class="section level2">
-<h2>THEN TO 4_species_accum doc to work on Figure 1b and c</h2>
+<div id="step-4-then-to-4_species_accum-doc-to-work-on-figure-1b-and-c" class="section level2">
+<h2>Step 4 THEN TO 4_species_accum doc to work on Figure 1b and c</h2>
 </div>
-<div id="then-to-5_trait_phylo_graph-for-species-and-trait-phylogenetic-graphs" class="section level2">
-<h2>THEN TO 5_trait_phylo_graph for species and trait phylogenetic
-graphs</h2>
+<div id="step-5-then-to-5_trait_phylo_graph-for-species-and-trait-phylogenetic-graphs" class="section level2">
+<h2>Step 5 THEN TO 5_trait_phylo_graph for species and trait
+phylogenetic graphs</h2>
 </div>
 
 
