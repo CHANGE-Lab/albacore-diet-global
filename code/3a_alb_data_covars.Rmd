@@ -44,14 +44,14 @@ Prey traits, albacore diet and covariates:
 
 #prey_trait_select = read.csv(here::here("data/output_data/prey_trait_select.csv"), check.names = FALSE)
 
-alb_global = read.csv(here::here("data/2_output_data/alb_global_diet.csv"), check.names = FALSE) %>%
-  dplyr::select(-CiteYear)
+alb_global = read.csv(here::here("data/2_output_data/alb_global_diet.csv"), check.names = FALSE) #%>%
+#  dplyr::select(-CiteYear)
 
-alb_covars = read.csv(here::here("data/2_output_data/alb_covars.csv"), check.names = FALSE) %>%
-  dplyr::select(-CiteYear)
+alb_covars = read.csv(here::here("data/2_output_data/alb_covars.csv"), check.names = FALSE) #%>%
+#  dplyr::select(-CiteYear)
 
-alb_covars_geog = read.csv(here::here("data/2_output_data/alb_covars_longhurst.csv"), check.names = FALSE) %>%
-  dplyr::select(-CiteYear)
+alb_covars_geog = read.csv(here::here("data/2_output_data/alb_covars_longhurst.csv"), check.names = FALSE) #%>%
+#  dplyr::select(-CiteYear)
 
 ```
 
@@ -70,7 +70,7 @@ unique(alb_covars_geog$code)
 
 #check names match
 unique(sort(alb_covars_geog$StudyID)) == unique(sort(alb_covars$StudyID)) #they do
-#unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
+unique(sort(alb_covars_geog$CiteYear)) == unique(sort(alb_covars$CiteYear)) #they do
 unique(sort(alb_covars_geog$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
 unique(sort(alb_covars_geog$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
 
@@ -87,7 +87,6 @@ unique(sort(alb_global$YearEnd)) == unique(sort(alb_covars$YearEnd)) #they do
 unique(sort(alb_global$MonthRange)) == unique(sort(alb_covars$MonthRange)) #they do!
 unique(sort(alb_global$OceanBasin)) == unique(sort(alb_covars$OceanBasin)) #they do
 unique(sort(alb_global$LocatName)) == unique(sort(alb_covars$LocatName)) #they do
-
 ```
 
 ```{r Covars + Longhurst + Diet data, tidy = TRUE}
@@ -95,13 +94,13 @@ unique(sort(alb_global$LocatName)) == unique(sort(alb_covars$LocatName)) #they d
 alb_global_diet = alb_global %>%
   left_join(alb_covars_geog) %>% #looks good #, by = "StudyID"
   #by = c("StudyID", "OceanBasin", "OceanBasinQ" "YearEnd", "MonthRange")
-  dplyr::select(StudyID, CiteAuth, YearEnd, rep_ID, OceanBasin:MonthRange, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit) #system, CiteYear, 
+  dplyr::select(StudyID, CiteAuth, CiteYear, YearEnd, rep_ID, OceanBasin:MonthRange, province, code, lat_cat, pred_life_adjust, stomachs_used:est_ref, prey_class:maxl_type, gape_lmax, gape_height_limit) #system, CiteYear, 
 
 #issue joining data from "Pinkas1971_49"
 
 unique(alb_covars_geog$rep_ID)
 unique(alb_global_diet$rep_ID)
-
+as.factor(alb_global_diet$code)
 unique(alb_global_diet$code)
 summary(as.factor(alb_global_diet$upwell_gyre))
 summary(as.factor(alb_global_diet$code))
@@ -119,8 +118,8 @@ Supplementary figures S1a/b:
 ```{r supplementary data for figures S1, tidy = TRUE}
 
 alb_covars_esti = alb_global_diet %>%
-  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
-  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
+  dplyr::select(StudyID, CiteYear, YearEnd, MonthRange, stomachs_used, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>% # 
+  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, #CiteYear, 
            LocatLongitude, YearEnd, MonthRange, stomachs_used, 
            pred_life, pred_flmean, pred_flmin, pred_flmax, pred_flmean_est, pred_flest) %>%
   pivot_longer(cols = c(pred_flmin, pred_flmean, pred_flmax), names_to = "measurement", values_to = "FL") %>%
@@ -165,15 +164,15 @@ alb_covars_esti$pred_life = factor(alb_covars_esti$pred_life,
                                    levels = c("adult", "juvenile, adult", "juvenile"),
                                    labels = c("adult", "mixed cohort", "juvenile"))
 levels(alb_covars_esti$pred_life)
-
 #Save this df for Supplementary Information Section C
-
+#write.csv(alb_covars_esti, here::here("data/2_output_data/....csv"), 
+#          row.names = FALSE)
 ```
 
 ```{r supplementary plot for figures S1, tidy = TRUE}
 
 alb_covars_esti_plot <- alb_covars_esti %>%
-  mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>%
+  mutate(StudyID = fct_reorder(as.factor(StudyID), desc(CiteYear))) %>% #YearEnd
   ggplot(aes(x=StudyID, y=FL, fill=measurement)) + 
   geom_bar(stat="identity", position="dodge")+
   #geom_errorbar(data = fish_plot_data_troph, position=position_dodge(0.8), 
@@ -213,7 +212,8 @@ ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot.jpeg"),
 ```{r supplementary data on estimation for SI}
 
 alb_covars_esti_SI = alb_global_diet %>%
-  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_flest) %>%
+  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, LocatLongitude, YearEnd, MonthRange, stomachs_used, 
+           pred_life, pred_flmean, pred_flmin, pred_flmax, pred_flmean_est, pred_flest) %>%
   distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
            LocatLongitude, YearEnd, MonthRange, stomachs_used, 
            pred_life, pred_flmean, pred_flmin, pred_flmax, pred_flmean_est, pred_flest) #%>%
@@ -286,8 +286,8 @@ alb_covars_esti_life_plot <- alb_covars_esti %>%
                                         size=1.75))
 alb_covars_esti_life_plot
 
-ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot2.jpeg"), 
-       plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
+#ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot2.jpeg"), 
+#       plot = alb_covars_esti_plot, width=8, height=12, dpi=300)
 ```
 
 ### Diet datasets
@@ -328,7 +328,7 @@ alb_global_dietpa = alb_global_diet_use %>% #_use
   #dplyr::mutate(grouped_id = row_number()) %>%
   spread(prey_sp, pa, fill = 0, convert = FALSE)
 
-write.csv(alb_global_dietpa, here("data/2_output_data/alb_global_wide_dietpa.csv"), 
+write.csv(alb_global_dietpa, here::here("data/2_output_data/alb_global_wide_dietpa.csv"), 
           row.names = FALSE)
 ```
 
@@ -371,7 +371,7 @@ summary(as.factor(alb_global_dietfo$code))
 summary(as.factor(alb_global_dietfo$OceanBasin))
 summary(as.factor(alb_global_dietfo$OceanBasinQ))
 
-write.csv(alb_global_dietfo, here("data/2_output_data/alb_global_wide_dietfo.csv"), 
+write.csv(alb_global_dietfo, here::here("data/2_output_data/alb_global_wide_dietfo.csv"), 
           row.names = FALSE)
 
 ```
@@ -394,7 +394,7 @@ summary(as.factor(alb_global_dietn$code))
 summary(as.factor(alb_global_dietn$OceanBasin))
 summary(as.factor(alb_global_dietn$OceanBasinQ))
 
-write.csv(alb_global_dietn, here("data/2_output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
+write.csv(alb_global_dietn, here::here("data/2_output_data/alb_global_wide_dietn.csv"), row.names = FALSE)
 ```
 
 #### Diet data - biomass
@@ -416,7 +416,7 @@ summary(as.factor(alb_global_dietm$code))
 summary(as.factor(alb_global_dietm$OceanBasin))
 summary(as.factor(alb_global_dietm$OceanBasinQ))
 
-write.csv(alb_global_dietm, here("data/2_output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
+write.csv(alb_global_dietm, here::here("data/2_output_data/alb_global_wide_dietm.csv"), row.names = FALSE)
 
 ```
 

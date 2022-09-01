@@ -16,17 +16,16 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r load packages, message=FALSE}
-
+#Spatial & plot
 library(sf)
 library(rnaturalearth)
 library(ggplot2)
-library(dplyr)
-library(rgeos)
 library(sp)
-#library(rgdal)
+#Data
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
+library(dplyr)
 
 ```
 
@@ -43,14 +42,77 @@ baseMap <- ggplot() +
 baseMap
 ```
 
-### Add Longhurst Province Shp
+### Add Longhurst Province Shapefile
 
-```{r Add Longhurst Province Shp, message=FALSE, tidy=TRUE}
+```{r upload longhurst province shp}
+
+# Load the Longhurst shapefile, convert to SpatialPolygonsDataFrame
+longhurst <- st_read(here::here("code/longhurst/Longhurst_world_v4_2010.shp")) 
+names(longhurst)
+head(longhurst)
+#Check data
+plot(longhurst)
+```
+
+```{r plot longhurst province shp}
+
+# Plot provinces should work as before, just with annoying warning messages
+longMap <- baseMap + geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
+  theme_bw() + theme(legend.position="none", axis.title = element_blank()) +
+  geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
+                colour = "grey20", check_overlap = TRUE) +
+  scale_fill_viridis_d()+ coord_sf(expand = FALSE)
+longMap
+```
+
+
+### Manipulate Longhurst shp to spatial polygon df
+
+```{r manip longhurst shapefile to spatial polygon df, message=FALSE, tidy=TRUE}
+
+longs <- sf:::as_Spatial(longhurst) # SpatialPolygonsDataFrame
+
+st_crs(longs)
+```
+
+### Albacore data
+
+```{r read in and manipulate albacore data, message=FALSE, tidy=TRUE}
+
+alb <- read.csv(here::here("data/2_output_data/alb_covars.csv"), head = TRUE, sep= ",")
+rep_ID = alb$rep_ID
+# Set coordinates
+coordinates(alb) <- ~ LocatLongitude + LocatLatitude # SpatialPointsDataFrame
+# Set the projection of the SpatialPointsDataFrames to match the projection of the shapefile
+suppressWarnings(proj4string(alb) <- proj4string(longs))
+
+# Extract the Longhurst province of each location
+provinces <- over(alb, longs)
+alb$province <- provinces$ProvDescr
+alb$code <- provinces$ProvCode
+provinces$rep_ID = rep_ID
+
+write.csv(alb, here::here("data/2_output_data/alb_covars_longhurst.csv"), row.names = FALSE)
+```
+
+### Albacore data map
+```{r make albacore study data map, message=FALSE, tidy=TRUE}
+# Map
+albMap <- longMap + 
+  geom_point(data = as.data.frame(alb), aes(x = LocatLongitude, y = LocatLatitude)) +
+  ylim(c(-55, 63))
+albMap
+
+ggsave("outputs_figures/maps/alb_global_map_f.pdf", plot = albMap, dpi = 300)
+ggsave("outputs_figures/maps/alb_global_map_f.jpeg", plot = albMap, dpi = 300)
+```
+
+## Old Code
+
+```{r Add Longhurst Province Shp, include=FALSE, eval=FALSE,message=FALSE, tidy=TRUE}
 # Add longhurst regions information:
 longhurst <- sf::read_sf(here::here("code/longhurst/Longhurst_world_v4_2010.shp")) 
 # or wherever you have it stored
-names(longhurst)
-head(longhurst)
 
 # simplify the object to make it 'usable'
 # Gives a warning, one/some of the regions may be off?
@@ -76,172 +138,3 @@ It's an issue with the update of sf (see here). You can use the fix they suggest
 You can just add "ylim(c(-52, 52)" or something similar to trim the map extent, in the plotting code. I would add "theme_bw()" just before "theme(legend.position ... ", as that will keep a border around the whole map area.
 
 The warnings are annoying but they appear harmless. It's not uncommon for R to not like some features in imported shapefiles. The bounding box errors relate to province BPLR in the Arctic (if you subset out that row, you'll notice these warnings disappear). The other errors are mostly related to the fact that we're doing spatial things with unprojected polygons. That would be an issue if, say, we wanted to calculate the area of each polygon, which requires us to project the dataset into a coordinate reference system that uses meters rather than decimal degrees. But as we're just simplifying the shapefile and mapping it, I don't think it matters. 
-
-### Plot provinces
-
-```{r plot provinces, message=FALSE, tidy=TRUE}
-
-# Plot provinces
-longMap <- baseMap + 
-  geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
-  #ggtitle(paste("Longhurst Biogeochemical Provinces -", length(unique(longhurst$ProvCode)),"provinces"))+
-  theme_bw() +
-  theme(legend.position="none",
-        axis.title = element_blank())+
-  geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
-               colour = "grey20", check_overlap=TRUE)+
-  scale_fill_viridis_d()+
-  coord_sf(expand = FALSE)
-longMap
-
-```
-
-```{r Read in Longhurst shapefile, message=FALSE, tidy=TRUE}
-list.files(path="code/longhurst")
-
-#This no longer works with retirement of rgdal
-#longs <- readOGR("code/longhurst/Longhurst_world_v4_2010.shp")
-#This works
-#longs <- st_read("code/longhurst/Longhurst_world_v4_2010.shp")
-#Also this and same code as above
-longs <- sf::read_sf(here::here("code/longhurst/Longhurst_world_v4_2010.shp")) 
-#check the spatial polygon df
-longs 
-head(st_coordinates(longs))
-st_crs(longs)
-```
-
-### Albacore data
-
-```{r read in and manipulate albacore data, message=FALSE, tidy=TRUE}
-
-alb <- read.csv("data/2_output_data/alb_covars.csv", head = TRUE, sep= ",")
-
-# Set coordinates
-View(alb)
-coordinates(alb) <- ~ LocatLongitude + LocatLatitude
-crs_wgs84 <- st_crs(4326)
-slot(alb, "proj4string") <- crs_wgs84 #sf::st_crs(longs)
-sf::st_crs(alb) == sf::st_crs(longs)
-
-#alb df does not have a CRS.
-#Not working without building new df in code chunk below, but then there's an issue with that df not being an spdf.
-#st_crs(alb) <- st_crs(longs)
-
-#Set the projection of the SpatialPointsDataFrame using the projection of the shapefile
-#proj4string(alb) <- proj4string(longs)
-#alb$proj4string
-#longs$geometry
-
-# Extract province associated with each diet sampling data point
-# Note diet study longitudes are inconsistent: some in degrees east, some in degrees west? See map below
-provinces <- sp::over(alb, longs)
-alb$province <- provinces$ProvDescr
-alb$code <- provinces$ProvCode
-#write.csv(alb, "data/2_output_data/alb_covars_longhurst.csv", row.names = FALSE)
-
-provinces <- rgeos::overGeomGeom(alb, longs)
-
-```
-
-```{r more spatial df manip}
-alb2 <- sf::st_as_sf(alb, coords = c("X", "Y"))
-alb2
-sf::st_crs(alb2) <- sf::st_crs(longs)
-sf::st_crs(alb2)
-
-#install.packages("remotes")
-#remotes::install_github("laurimyllyvirta/lauR")
-#library(lauR)
-#alb3 <- spdf(alb2, crs = NULL, llcols = NULL, na.action = na.omit)
-
-provinces <- sp::over(alb2, longs)
-alb$province <- provinces$ProvDescr
-alb$code <- provinces$ProvCode
-
-#sp code not working 
-coordinates(alb2)
-provinces <- rgeos::overGeomGeom(alb2, longs)
-
-```
-
-```{r alternative import alb covars data and manip}
-
-alb <- read.csv("data/2_output_data/alb_covars.csv", head = TRUE, sep= ",")
-
-# Set coordinates
-View(alb)
-coordinates(alb) <- ~ LocatLongitude + LocatLatitude
-
-crs_wgs84 <- CRS(SRS_string = "EPSG:4326") # WGS 84 has EPSG code 4326
-class(crs_wgs84)
-crs_wgs84
-wkt_wgs84 <- wkt(crs_wgs84)
-cat(wkt_wgs84)
-wkt_wgs84
-
-alb2 <- alb
-coordinates(alb2) <-  ~ X + Y
-
-
-```
-
-```{r make albacore study data map, message=FALSE, tidy=TRUE}
-
-# Map
-albMap <- longMap + 
-  geom_point(data = as.data.frame(alb), aes(x = LocatLongitude, y = LocatLatitude)) +
-  ylim(c(-55, 63))
-albMap
-
-ggsave("outputs_figures/maps/alb_global_map_f.pdf", plot = albMap, dpi = 300)
-
-ggsave("outputs_figures/maps/alb_global_map_f.jpeg", plot = albMap, dpi = 300)
-```
-
-## Barb new script
-
-```{r barb new script}
-library(sf)
-library(rnaturalearth)
-library(ggplot2)
-library(dplyr)
-library(sp)
-
-# Base map
-world_map <- rnaturalearth::ne_countries(scale = 'small', returnclass = c("sf"))
-baseMap <- ggplot() + geom_sf(data = world_map, size = .2, fill = "gray80", col = "gray90") +
-  theme(panel.grid.major = element_line(color = gray(0.9), linetype = "dashed", size = 0.5))
-baseMap
-
-# Load the Longhurst shapefile, convert to SpatialPolygonsDataFrame
-longhurst <- st_read("Longhurst_world_v4_2010.shp") 
-longs <- sf:::as_Spatial(longhurst) # SpatialPolygonsDataFrame
-
-# Plot provinces should work as before, just with annoying warning messages
-longMap <- baseMap + geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
-  theme_bw() + theme(legend.position="none", axis.title = element_blank()) +
-  geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
-                colour = "grey20", check_overlap = TRUE) +
-  scale_fill_viridis_d()+ coord_sf(expand = FALSE)
-longMap
-
-# Load points
-alb <- read.csv("2_output_data/alb_covars.csv",  head = TRUE, sep= ",")
-
-# Set coordinates
-coordinates(alb) <- ~ LocatLongitude + LocatLatitude # SpatialPointsDataFrame
-# Set the projection of the SpatialPointsDataFrames to match the projection of the shapefile
-suppressWarnings(proj4string(alb) <- proj4string(longs))
-
-# Extract the Longhurst province of each location
-provinces <- over(alb, longs)
-alb$province <- provinces$ProvDescr
-alb$code <- provinces$ProvCode
-
-# Map
-albMap <- longMap + geom_point(data = as.data.frame(alb), aes(x = LocatLongitude, y = LocatLatitude)) + ylim(c(-55, 63))
-albMap
-
-```
-
