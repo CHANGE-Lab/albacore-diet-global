@@ -105,11 +105,10 @@ Match the colour palette for clusters in these and other graphs in the MS.
 
 ```{r Colour palette for cluster graphs, tidy=TRUE}
 
-fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
-              "#EDA417", "#EDD746", 
-              "#E7720B", "#DD4124")
+fig3.pal <- c("#00496F", "#EDD746", 
+              "#0A718F", "#59A082", 
+              "#EDA417", "#E7720B", "#DD4124")
 scales::show_col(fig3.pal)
-
 ```
 
 ### Figure for index data - stacked bar

@@ -51,7 +51,6 @@ library(NbClust)
 
 ```
 
-
 ## Prey traits load & cluster algorithms
 
 ### Prey & traits for cluster
@@ -362,7 +361,7 @@ dendlabs2 <- as.data.frame(dendlabs) #turn in df
 #Join these data so we can relabel the dendrogram
 #Use plyr function because it conserves the row order of the left df, which matters for assigning labels here
 
-dfdend <- join(dendlabs2, prey_traits)
+dfdend <- plyr::join(dendlabs2, prey_traits)
 
 ggd1 <- ggplot(prob.dendro %>%
                  set("branches_k_color", k = 7, value = PNW.pal7) %>%
@@ -498,8 +497,8 @@ library(plyr)
 
 ```{r Summary info, warning=FALSE, message=FALSE}
 summary(as.factor(prob.prey.cl$prob.clust.num))
-#  1  2  3  4  5  6  7 
-# 44 88 28 51 55 12 14 
+#1  2  3  4  5  6  7 
+#12 88 51 14 55 44 28 
 
 ```
 
@@ -549,22 +548,10 @@ This is unfortunately not very informative as the species are very clumped by th
 ```{r make manual palette to match the cluster colours}
 
 library(scales)
-#   #1         #3        #4       #2       #5         #6
-#"#00496F" "#0C7996" "#94B669" "#EDB829" "#E97C07" "#DD4124"
-show_col(c("#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124"))
-#Need the following order
-#"#00496F", "#EDB829", "#0C7996", "#94B669", "#E97C07", "#DD4124"
 
-str(PNW.pal7)
-#"#00496F" "#0A718F" "#59A082" "#EDD746" "#EDA417" "#E7720B" "#DD4124"
-show_col(PNW.pal7)
-
-#Swap yellow with "#EDB829",
-#Swap green with "#94B669"
-
-fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
-              "#EDA417", "#EDD746", 
-              "#E7720B", "#DD4124")
+fig3.pal <- c("#00496F", "#EDD746", 
+              "#0A718F", "#59A082", 
+              "#EDA417", "#E7720B", "#DD4124")
 #Edit this!!
 #fig3.pal <- c("#00496F", "#94B669", "#0A718F", 
 #              "#EDA417", "#EDB829", 
@@ -615,6 +602,6 @@ trait_nMDS_prob_fig
 #Note plyr can mess with this!!
 detach("package:plyr", unload=TRUE)
 
-ggsave(here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/trait_nMDS_prob_clusters_div7_b.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+ggsave(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/trait_nMDS_prob_clusters_div7_b.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```
