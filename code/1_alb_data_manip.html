@@ -415,7 +415,7 @@ here::here()</code></pre>
 <li><p>Prey species’ coarse trait information
 <em>data/2_output_data/prey_trait_select.csv</em></p></li>
 <li><p>Albacore diet data
-<em>data/2_output_data/alb_global_diet_total.csv</em></p></li>
+<em>data/2_output_data/alb_global_diet.csv</em></p></li>
 <li><p>Albacore diet sampling covariates
 <em>data/2_output_data/alb_covars.csv</em></p></li>
 <li><p>And many more for supplementary information!</p></li>
@@ -433,7 +433,7 @@ prey items from 32 studies.</p>
 alb_global = as.data.frame(read_xlsx(here::here(&quot;data/1_input_data/albacore_diet_global.xlsx&quot;),
     sheet = &quot;albacore_diet_global&quot;))  #2134 rows and 77 vars
 nrow(alb_global)</code></pre>
-<pre><code>## [1] 2134</code></pre>
+<pre><code>## [1] 2051</code></pre>
 <pre class="r"><code>length(unique(alb_global$StudyID))  #32 studies</code></pre>
 <pre><code>## [1] 32</code></pre>
 <pre class="r"><code>original = data.frame(unique(alb_global$StudyID))</code></pre>
@@ -446,7 +446,7 @@ observations of prey items consumed from 28 studies.</p>
 <pre class="r"><code>alb_global = alb_global %&gt;%
     dplyr::filter(Include %in% c(&quot;Yes&quot;, &quot;Maybe&quot;) &amp; !pred_life == &quot;larvae&quot;)
 nrow(alb_global)  #1936</code></pre>
-<pre><code>## [1] 1936</code></pre>
+<pre><code>## [1] 1837</code></pre>
 <pre class="r"><code>length(unique(alb_global$StudyID))  #28 studies</code></pre>
 <pre><code>## [1] 28</code></pre>
 <pre class="r"><code>check28 = data.frame(unique(alb_global$StudyID))
@@ -464,7 +464,7 @@ with 1027 rows of prey species-level diet observations.</p>
 <pre class="r"><code>alb_global = alb_global %&gt;%
     dplyr::filter(TaxLev == &quot;species&quot;)  #1027 rows and 77 vars
 nrow(alb_global)</code></pre>
-<pre><code>## [1] 1027</code></pre>
+<pre><code>## [1] 995</code></pre>
 <pre class="r"><code>length(unique(alb_global$StudyID))  #28 studies</code></pre>
 <pre><code>## [1] 26</code></pre>
 <pre class="r"><code>check26 = data.frame(unique(alb_global$StudyID))
@@ -473,7 +473,7 @@ check26_check28 = check28 %&gt;%
     anti_join(check26)</code></pre>
 <pre><code>## Joining, by = &quot;unique.alb_global.StudyID.&quot;</code></pre>
 <pre class="r"><code>unique(check26_check28$unique.alb_global.StudyID.)</code></pre>
-<pre><code>## [1] &quot;Logan2013&quot;  &quot;Teffer2015&quot;</code></pre>
+<pre><code>## [1] &quot;Teffer2015&quot; &quot;Logan2013&quot;</code></pre>
 <pre class="r"><code>rm(check28, check26_check28, check26)</code></pre>
 <p>Data manipulations for global diet dataset for analyses:</p>
 <pre class="r"><code>alb_global = alb_global %&gt;%
@@ -504,7 +504,7 @@ alb_global$prey_age_reported_1 &lt;- as.character(alb_global$prey_age_reported_1
 alb_global$prey_age_reported_1 &lt;- replace_na(alb_global$prey_age_reported_1, &quot;none&quot;)
 #check this
 unique(as.factor(alb_global$prey_age_reported_1))</code></pre>
-<pre><code>## [1] none     adult    juvenile larva   
+<pre><code>## [1] none     juvenile adult    larva   
 ## Levels: adult juvenile larva none</code></pre>
 <pre class="r"><code>#Change vector type for YearEnd variable
 alb_global$YearEnd &lt;- as.integer(alb_global$YearEnd)
@@ -548,14 +548,17 @@ alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = &quot
 length(unique(alb_covars$StudyID))  #26</code></pre>
 <pre><code>## [1] 26</code></pre>
 <pre class="r"><code>length(unique(alb_covars$rep_ID))  #70</code></pre>
-<pre><code>## [1] 70</code></pre>
+<pre><code>## [1] 69</code></pre>
 <pre class="r"><code># Merge these back to the diet df
 alb_global_diet = alb_global %&gt;%
     left_join(alb_covars)</code></pre>
 <pre><code>## Joining, by = c(&quot;StudyID&quot;, &quot;CiteYear&quot;, &quot;OceanBasin&quot;, &quot;OceanBasinQ&quot;,
 ## &quot;LocatName&quot;, &quot;LocatLatitude&quot;, &quot;LocatLongitude&quot;, &quot;MonthRange&quot;, &quot;YearEnd&quot;,
 ## &quot;stomachs_used&quot;, &quot;pred_life&quot;)</code></pre>
-<pre class="r"><code>write.csv(alb_covars, here::here(&quot;data/2_output_data/alb_covars.csv&quot;), row.names = FALSE)</code></pre>
+<pre class="r"><code>write.csv(alb_covars, here::here(&quot;data/2_output_data/alb_covars.csv&quot;), row.names = FALSE)
+write.csv(alb_global_diet, here::here(&quot;data/2_output_data/alb_global_diet_total.csv&quot;),
+    row.names = FALSE)
+# 1028 observations and 43 variables</code></pre>
 </div>
 <div id="table-s3-content" class="section level3">
 <h3>Table S3 content</h3>
@@ -574,55 +577,55 @@ alb_global_diet = alb_global %&gt;%
          rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = &quot;_&quot;))
 
 unique(alb_table_S3$StudyID) #26</code></pre>
-<pre><code>##  [1] &quot;Aloncle1973&quot;             &quot;Bello1999&quot;              
-##  [3] &quot;Bernard1985&quot;             &quot;Bouxin&amp;Legendre&quot;        
-##  [5] &quot;Clemens&amp;Iselin1963&quot;      &quot;Consoli2008&quot;            
-##  [7] &quot;DosSantos&amp;Haimovici2002&quot; &quot;Glaser2015&quot;             
-##  [9] &quot;Goni2011&quot;                &quot;Hart1948&quot;               
-## [11] &quot;Iversen1962&quot;             &quot;Jordan1880&quot;             
-## [13] &quot;Joubin1918&quot;              &quot;Madigan2015&quot;            
-## [15] &quot;Matthews1977&quot;            &quot;McHugh1952&quot;             
-## [17] &quot;Monaco1888&quot;              &quot;OrtizZarate1987&quot;        
-## [19] &quot;Pinkas1971&quot;              &quot;Pusineri2005&quot;           
+<pre><code>##  [1] &quot;Pusineri2005&quot;            &quot;OrtizZarate1987&quot;        
+##  [3] &quot;Matthews1977&quot;            &quot;Aloncle1973&quot;            
+##  [5] &quot;Glaser2015&quot;              &quot;Joubin1918&quot;             
+##  [7] &quot;Bernard1985&quot;             &quot;Pinkas1971&quot;             
+##  [9] &quot;Bello1999&quot;               &quot;Bouxin&amp;Legendre&quot;        
+## [11] &quot;Clemens&amp;Iselin1963&quot;      &quot;Consoli2008&quot;            
+## [13] &quot;DosSantos&amp;Haimovici2002&quot; &quot;Goni2011&quot;               
+## [15] &quot;Hart1948&quot;                &quot;Iversen1962&quot;            
+## [17] &quot;Jordan1880&quot;              &quot;Madigan2015&quot;            
+## [19] &quot;McHugh1952&quot;              &quot;Monaco1888&quot;             
 ## [21] &quot;Romanov2020&quot;             &quot;Romeo2012&quot;              
 ## [23] &quot;Salman&amp;Karakulak2009&quot;    &quot;Watanabe2004&quot;           
 ## [25] &quot;Williams2015&quot;            &quot;Young2010&quot;</code></pre>
 <pre class="r"><code>unique(alb_table_S3$rep_ID) #70</code></pre>
-<pre><code>##  [1] &quot;Aloncle1973_1&quot;              &quot;Bello1999_2&quot;               
-##  [3] &quot;Bello1999_3&quot;                &quot;Bernard1985_4&quot;             
-##  [5] &quot;Bouxin&amp;Legendre_5&quot;          &quot;Bouxin&amp;Legendre_6&quot;         
-##  [7] &quot;Bouxin&amp;Legendre_7&quot;          &quot;Bouxin&amp;Legendre_8&quot;         
-##  [9] &quot;Bouxin&amp;Legendre_9&quot;          &quot;Bouxin&amp;Legendre_10&quot;        
-## [11] &quot;Clemens&amp;Iselin1963_11&quot;      &quot;Clemens&amp;Iselin1963_12&quot;     
-## [13] &quot;Clemens&amp;Iselin1963_13&quot;      &quot;Clemens&amp;Iselin1963_14&quot;     
-## [15] &quot;Clemens&amp;Iselin1963_15&quot;      &quot;Clemens&amp;Iselin1963_16&quot;     
-## [17] &quot;Clemens&amp;Iselin1963_17&quot;      &quot;Consoli2008_18&quot;            
-## [19] &quot;DosSantos&amp;Haimovici2002_19&quot; &quot;Glaser2015_20&quot;             
-## [21] &quot;Goni2011_21&quot;                &quot;Goni2011_22&quot;               
-## [23] &quot;Goni2011_23&quot;                &quot;Goni2011_24&quot;               
-## [25] &quot;Goni2011_25&quot;                &quot;Goni2011_26&quot;               
-## [27] &quot;Goni2011_27&quot;                &quot;Goni2011_28&quot;               
+<pre><code>##  [1] &quot;Pusineri2005_1&quot;             &quot;OrtizZarate1987_2&quot;         
+##  [3] &quot;Matthews1977_3&quot;             &quot;Aloncle1973_4&quot;             
+##  [5] &quot;Glaser2015_5&quot;               &quot;Joubin1918_6&quot;              
+##  [7] &quot;Bernard1985_7&quot;              &quot;Pinkas1971_8&quot;              
+##  [9] &quot;Pinkas1971_9&quot;               &quot;Pinkas1971_10&quot;             
+## [11] &quot;Bello1999_11&quot;               &quot;Bello1999_12&quot;              
+## [13] &quot;Bouxin&amp;Legendre_13&quot;         &quot;Bouxin&amp;Legendre_14&quot;        
+## [15] &quot;Bouxin&amp;Legendre_15&quot;         &quot;Bouxin&amp;Legendre_16&quot;        
+## [17] &quot;Bouxin&amp;Legendre_17&quot;         &quot;Bouxin&amp;Legendre_18&quot;        
+## [19] &quot;Clemens&amp;Iselin1963_19&quot;      &quot;Clemens&amp;Iselin1963_20&quot;     
+## [21] &quot;Clemens&amp;Iselin1963_21&quot;      &quot;Clemens&amp;Iselin1963_22&quot;     
+## [23] &quot;Clemens&amp;Iselin1963_23&quot;      &quot;Clemens&amp;Iselin1963_24&quot;     
+## [25] &quot;Clemens&amp;Iselin1963_25&quot;      &quot;Consoli2008_26&quot;            
+## [27] &quot;DosSantos&amp;Haimovici2002_27&quot; &quot;Goni2011_28&quot;               
 ## [29] &quot;Goni2011_29&quot;                &quot;Goni2011_30&quot;               
 ## [31] &quot;Goni2011_31&quot;                &quot;Goni2011_32&quot;               
-## [33] &quot;Goni2011_33&quot;                &quot;Hart1948_34&quot;               
-## [35] &quot;Hart1948_35&quot;                &quot;Hart1948_36&quot;               
-## [37] &quot;Hart1948_37&quot;                &quot;Hart1948_38&quot;               
-## [39] &quot;Hart1948_39&quot;                &quot;Hart1948_40&quot;               
-## [41] &quot;Iversen1962_41&quot;             &quot;Jordan1880_42&quot;             
-## [43] &quot;Joubin1918_43&quot;              &quot;Madigan2015_44&quot;            
-## [45] &quot;Matthews1977_45&quot;            &quot;McHugh1952_46&quot;             
-## [47] &quot;Monaco1888_47&quot;              &quot;OrtizZarate1987_48&quot;        
-## [49] &quot;Pinkas1971_49&quot;              &quot;Pinkas1971_50&quot;             
-## [51] &quot;Pinkas1971_51&quot;              &quot;Pinkas1971_52&quot;             
-## [53] &quot;Pinkas1971_53&quot;              &quot;Pusineri2005_54&quot;           
+## [33] &quot;Goni2011_33&quot;                &quot;Goni2011_34&quot;               
+## [35] &quot;Goni2011_35&quot;                &quot;Goni2011_36&quot;               
+## [37] &quot;Goni2011_37&quot;                &quot;Goni2011_38&quot;               
+## [39] &quot;Goni2011_39&quot;                &quot;Goni2011_40&quot;               
+## [41] &quot;Hart1948_41&quot;                &quot;Hart1948_42&quot;               
+## [43] &quot;Hart1948_43&quot;                &quot;Hart1948_44&quot;               
+## [45] &quot;Hart1948_45&quot;                &quot;Hart1948_46&quot;               
+## [47] &quot;Iversen1962_47&quot;             &quot;Jordan1880_48&quot;             
+## [49] &quot;Madigan2015_49&quot;             &quot;McHugh1952_50&quot;             
+## [51] &quot;Monaco1888_51&quot;              &quot;Pinkas1971_52&quot;             
+## [53] &quot;Pinkas1971_53&quot;              &quot;Romanov2020_54&quot;            
 ## [55] &quot;Romanov2020_55&quot;             &quot;Romanov2020_56&quot;            
-## [57] &quot;Romanov2020_57&quot;             &quot;Romanov2020_58&quot;            
-## [59] &quot;Romeo2012_59&quot;               &quot;Salman&amp;Karakulak2009_60&quot;   
+## [57] &quot;Romanov2020_57&quot;             &quot;Romeo2012_58&quot;              
+## [59] &quot;Salman&amp;Karakulak2009_59&quot;    &quot;Watanabe2004_60&quot;           
 ## [61] &quot;Watanabe2004_61&quot;            &quot;Watanabe2004_62&quot;           
-## [63] &quot;Watanabe2004_63&quot;            &quot;Williams2015_64&quot;           
+## [63] &quot;Williams2015_63&quot;            &quot;Williams2015_64&quot;           
 ## [65] &quot;Williams2015_65&quot;            &quot;Williams2015_66&quot;           
-## [67] &quot;Williams2015_67&quot;            &quot;Williams2015_68&quot;           
-## [69] &quot;Young2010_69&quot;               &quot;Young2010_70&quot;</code></pre>
+## [67] &quot;Williams2015_67&quot;            &quot;Young2010_68&quot;              
+## [69] &quot;Young2010_69&quot;</code></pre>
 <pre class="r"><code>write.csv(alb_table_S3, here::here(&quot;data/3_output_supp/table_S3.csv&quot;), row.names = FALSE)
 write.csv(alb_table_S3, here::here(&quot;outputs_figures/ms_figures/SI_results/table_S3.csv&quot;), row.names = FALSE)</code></pre>
 </div>
@@ -970,12 +973,21 @@ alb_table_S4 = alb_global %&gt;%
 <h2>Step 3 THEN TO document 3a_alb_data_covars to work on covariate
 info</h2>
 </div>
-<div id="step-4-then-to-4_species_accum-doc-to-work-on-figure-1b-and-c" class="section level2">
-<h2>Step 4 THEN TO 4_species_accum doc to work on Figure 1b and c</h2>
+<div id="step-4-to-4_species_accum-doc-to-work-on-figure-1b-and-c" class="section level2">
+<h2>Step 4 TO 4_species_accum doc to work on Figure 1b and c</h2>
 </div>
-<div id="step-5-then-to-5_trait_phylo_graph-for-species-and-trait-phylogenetic-graphs" class="section level2">
-<h2>Step 5 THEN TO 5_trait_phylo_graph for species and trait
-phylogenetic graphs</h2>
+<div id="step-5-to-5_trait_phylo_graph-for-species-and-trait-phylogenetic-graphs" class="section level2">
+<h2>Step 5 TO 5_trait_phylo_graph for species and trait phylogenetic
+graphs</h2>
+</div>
+<div id="step-6-to-6a_trait_cluster_analysis_divis7-for-clustering-algorithm-analyses-6b_alb_diet_graph-for-trait-relative-frequency-of-occurrence-graphics" class="section level2">
+<h2>Step 6 TO 6a_trait_cluster_analysis_divis7 for clustering algorithm
+analyses &amp; 6b_alb_diet_graph for trait relative frequency of
+occurrence graphics</h2>
+</div>
+<div id="step-7-to-7a-c_trait_model-code-for-trait-based-modelling-steps." class="section level2">
+<h2>Step 7 TO 7a-c_trait_model code for trait-based modelling
+steps.</h2>
 </div>
 
 

@@ -8,12 +8,12 @@
 "Alepisaurus ferox","none","NO",2.7,0.3,1,0
 "Alloteuthis subulata","none","NO",1,0.43,0.08,0
 "Alpheus glaber","none","NO",11.1111111111111,0,0,0
-"Anarrhichthys ocellatus","none","NO",33.33333333,0,0,0
+"Anarrhichthys ocellatus","none","NO",1.136363636,0,0,0
 "Anchylomera blossevillei","none","NO",4.2,1.65,3.3,0
 "Ancistrocheirus lesueurii","none","NO",7,0.4,0.5,0
 "Ancistroteuthis lichtensteinii","none","ML",12,0.2,0,128
 "Ancistroteuthis lichtensteinii","none","NO",33,4.9,0.71,0
-"Anoplopoma fimbria","none","NO",33.33333333,0,0,0
+"Anoplopoma fimbria","none","NO",0.9345794393,0,0,0
 "Anotopterus nikparini","none","NO",1,0,0,0
 "Anotopterus pharao","none","NO",11.1111111111111,0,0,0
 "Antigonia capros","none","NO",3,0,0,0
@@ -48,7 +48,7 @@
 "Brachyscelus crusculum","none","NO",14.5,6.2,2.2,0
 "Brachyscelus macrocephalus","none","NO",0,0,0,0
 "Brama brama","none","NO",0,0,0,0
-"Brama orcini","none","NO",3,0.1593117731,0,0
+"Brama orcini","none","NO",3,0.1529519731,0,0
 "Bregmaceros mcclellandi","none","NO",2.1,0.3,0.2,0
 "Calanus finmarchicus","none","NO",3.7037037037037,0,0,0
 "Canthidermis maculata","none","NO",1.6,0.1,0,0
@@ -72,11 +72,11 @@
 "Clio pyramidata","none","NO",11.1111111111111,0,0,0
 "Clupea pallasii","none","NO",0,0,0,0
 "Cololabis saira","adult","NO",54.35,0,23.3,0
-"Cololabis saira","juvenile","NO",10.9,3.313684881,0,0
+"Cololabis saira","juvenile","NO",10.9,3.18140104,0,0
 "Cololabis saira","juvenile","PB",18,2,20,119.1
-"Cololabis saira","none","NO",45.5,11.1,0.00609243441494352,0
+"Cololabis saira","none","NO",66.66666667,11.1,0.00609243441494352,0
 "Cookeolus japonicus","none","NO",0.5,0.2,0,0
-"Coryphaena hippurus","none","NO",0.3,0.01593117731,0,0
+"Coryphaena hippurus","none","NO",0.3,0.01529519731,0,0
 "Cranchia scabra","none","NO",1.1,0.1,0,0
 "Cubiceps capensis","none","NO",0.7,0.1,0.5,0
 "Cubiceps gracilis","none","NO",0,0,0,0
@@ -103,7 +103,7 @@
 "Doryteuthis opalescens","none","NO",13.4,6.04437643458301,22.6638560235899,0
 "Dosidicus gigas","none","ML",1.16279069767442,0.0765110941086457,3.35083892821894,0
 "Dosidicus gigas","none","NO",0.5,0.1,0,0
-"Echinosquilla guerinii","none","NO",0.6,0.03186235463,0,0
+"Echinosquilla guerinii","none","NO",0.6,0.03059039462,0,0
 "Electrona risso","adult","NO",5.71428571428571,0,0,0
 "Electrona risso","none","NO",0.5,0.1,0.1,0
 "Eledone cirrhosa","none","NO",8,0.16,0,0
@@ -129,7 +129,7 @@
 "Gaidropsarus vulgaris","none","NO",8,0,0,0
 "Galiteuthis armata","none","NO",54.2857142857143,0,0,0
 "Galiteuthis phyllura","none","NO",0,0,0,0
-"Gempylus serpens","none","NO",5.2,0.7487653338,0.5,0
+"Gempylus serpens","none","NO",5.2,0.7188742735,0.5,0
 "Gennadas elegans","juvenile","NO",4,0,0,0
 "Glyptocephalus zachirus","none","NO",0,0,0,0
 "Gonatopsis borealis","juvenile","NO",12.5,1.7,0.3,0
@@ -166,8 +166,8 @@
 "Janthina exigua","none","NO",5.71428571428571,0,0,0
 "Japetella diaphana","none","NO",4.8,1,2.1,0
 "Japetella heathi","none","NO",7,0,0.6,0
-"Katsuwonus pelamis","none","NO",0.6,0.1433805958,0,0
-"Lactoria diaphana","none","NO",0.3,0.01593117731,0,0
+"Katsuwonus pelamis","none","NO",0.6,0.1376567758,0,0
+"Lactoria diaphana","none","NO",0.3,0.01529519731,0,0
 "Lagocephalus lagocephalus","none","NO",1.6,0,0,0
 "Lampadena luminosa","none","NO",0.5,0.3,0.5,0
 "Lampanyctodes hectoris","none","NO",23.4,11.7,10.8,0
@@ -206,7 +206,7 @@
 "Merluccius productus","juvenile","PB",16,19,30,60.9
 "Merluccius productus","larva","NO",15.15,0,1.3,0
 "Merluccius productus","none","NO",100,0.1,0,0
-"Microgadus proximus","none","NO",33.33333333,0.5,0,0
+"Microgadus proximus","none","NO",9.5,0.5,0,0
 "Micromesistius poutassou","none","NO",72.4,4.5,68.5,160
 "Microstomus pacificus","none","NO",0,0,0,0
 "Monacoa grimaldii","none","NO",0.5,0,0,0
@@ -237,7 +237,7 @@
 "Octopus bimaculatus","none","ML",11.6279069767442,1.8362662586075,0.182773032448306,0
 "Octopus vulgaris","none","NO",16.6666666666667,0,0,0
 "Ocythoe tuberculata","none","NO",17.2,0.7,0.6,0
-"Odontodactylus hansenii","none","NO",0.3,0.04779353194,0,0
+"Odontodactylus hansenii","none","NO",0.3,0.04588559192,0,0
 "Odontodactylus scyllarus","none","NO",27,5.1,2.4,0
 "Ommastrephes bartramii","none","NO",5,1.6,6.2,0
 "Omosudis lowii","none","NO",16.7,0.7,1.2,0
@@ -347,7 +347,7 @@
 "Tarletonbeania crenularis","larva","NO",0.996677740863787,0,0,0
 "Tarletonbeania crenularis","none","NO",100,5.4,0,0
 "Tetragonurus atlanticus","none","NO",14.2857142857143,0,0,0
-"Tetragonurus cuvieri","none","NO",0.6,0.04779353194,0,0
+"Tetragonurus cuvieri","none","NO",0.6,0.04588559192,0,0
 "Teuthowenia megalops","none","ML",4,0.1,0,129
 "Teuthowenia megalops","none","NO",16.6666666666667,0,0,0
 "Thaleichthys pacificus","none","NO",33.33333333,0,0,0

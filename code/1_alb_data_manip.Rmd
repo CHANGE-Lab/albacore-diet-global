@@ -61,24 +61,24 @@ List of outputs created for analyses:
 
 Load diet data and merge with prey size trait information, and undertake necessary data selection and manipulation of variables.
 
-Note: total dataset contained 2134 rows of individual observations of prey items from 32 studies.
+Note: total dataset contained 2051 rows of individual observations of prey items from 32 studies.
 
 ```{r Albacore diet original data load & manipulation, tidy=TRUE}
 #Load diet data spreadsheet
 alb_global = as.data.frame(read_xlsx(here::here(
   "data/1_input_data/albacore_diet_global.xlsx"), 
-  sheet = "albacore_diet_global")) #2134 rows and 77 vars
+  sheet = "albacore_diet_global")) #2051 rows and 77 vars
 nrow(alb_global)
 length(unique(alb_global$StudyID)) #32 studies
 original = data.frame(unique(alb_global$StudyID))
 ```
 
-Note: 3 studies investigated the diets of larval albacore tuna (Catalan et al. 2007, Uotani et al. 1982, and Young & Davis 1990) and one (Hart 1942) contained data that was also published again in a longer time series (Hart 1948). These four were thus excluded from further analyses of juvenile and adult tuna diets, with 1936 observations of prey items consumed from 28 studies.
+Note: 3 studies investigated the diets of larval albacore tuna (Catalan et al. 2007, Uotani et al. 1982, and Young & Davis 1990) and one (Hart 1942) contained data that was also published again in a longer time series (Hart 1948). These four were thus excluded from further analyses of juvenile and adult tuna diets, with 1837 observations of prey items consumed from 28 studies.
 
 ```{r Albacore diet filter data by albacore life stage, tidy=TRUE}
 alb_global = alb_global %>% 
   dplyr::filter(Include %in% c("Yes", "Maybe") & !pred_life == "larvae") 
-nrow(alb_global) #1936
+nrow(alb_global)
 length(unique(alb_global$StudyID)) #28 studies
 check28 = data.frame(unique(alb_global$StudyID))
 
@@ -88,11 +88,11 @@ unique(original_check28$unique.alb_global.StudyID.)
 rm(original, original_check28)
 ```
 
-Note: a further 2 studies die not report any prey items to species level and we did not include these in this meta-analysis. These were Logan et al (2013) and Teffer et al. (2015). Thus we retained 26 studies with 1027 rows of prey species-level diet observations.
+Note: a further 2 studies did not report any prey items to species level and we did not include these in this meta-analysis. These were Logan et al (2013) and Teffer et al. (2015). Thus we retained 26 studies with 995 rows of prey species-level diet observations.
 
 ```{r Albacore diet data by prey species identified, tidy=TRUE}
 alb_global = alb_global %>%
-  dplyr::filter(TaxLev == "species") #1027 rows and 77 vars
+  dplyr::filter(TaxLev == "species") #995 rows and 77 vars
 nrow(alb_global) 
 length(unique(alb_global$StudyID)) #28 studies
 
@@ -122,7 +122,8 @@ alb_global = alb_global %>%
                              #prey_age_reported_1 == "NA" ~ "none",
                              prey_age_reported_1 == "larvae" ~ "larva",
                              prey_age_reported_1 == "juvenile" ~ "juvenile",
-                             prey_age_reported_1 == "adult" ~ "adult"))
+                             prey_age_reported_1 == "adult" ~ "adult")) %>%
+  arrange(StudyID)
   #1028 obsm 43 vars
   #calculates the gape length and height limits
   #Reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
@@ -162,6 +163,8 @@ Note that we lose two replicates here:
 
 - Williams 2015 (NZ_L_2010) due to data entry error or copy/paste error, data have been copied over.
 
+There are 69 observations of albacore gut content data from 26 studies moving forward.
+
 ```{r Covariates df, tidy = TRUE}
 
 alb_covars = alb_global %>%
@@ -179,15 +182,22 @@ alb_covars = alb_global %>%
 alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_")
 
 length(unique(alb_covars$StudyID)) #26
-length(unique(alb_covars$rep_ID)) #70
+length(unique(alb_covars$rep_ID)) #69
+```
 
+Save diet and covariate dfs:
+
+```{r Save diet and covariate dfs}
 #Merge these back to the diet df
 alb_global_diet = alb_global %>%
   left_join(alb_covars)
 
 write.csv(alb_covars, here::here("data/2_output_data/alb_covars.csv"), row.names = FALSE)
-
+write.csv(alb_global_diet, here::here("data/2_output_data/alb_global_diet_total.csv"), 
+          row.names = FALSE) 
+#995 observations and 46 variables
 ```
+
 
 ### Table S3 content
 
@@ -208,7 +218,7 @@ alb_table_S3 = alb_global %>%
          rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = "_"))
 
 unique(alb_table_S3$StudyID) #26
-unique(alb_table_S3$rep_ID) #70
+unique(alb_table_S3$rep_ID) #69
 
 write.csv(alb_table_S3, here::here("data/3_output_supp/table_S3.csv"), row.names = FALSE)
 write.csv(alb_table_S3, here::here("outputs_figures/ms_figures/SI_results/table_S3.csv"), row.names = FALSE)
@@ -563,5 +573,8 @@ write.csv(alb_table_S4, here::here("data/3_output_supp/table_S4.csv"), row.names
 
 ## Step 2 GO TO 2_extract_longhurst to work on Figure 1a
 ## Step 3 THEN TO document 3a_alb_data_covars to work on covariate info
-## Step 4 THEN TO 4_species_accum doc to work on Figure 1b and c
-## Step 5 THEN TO 5_trait_phylo_graph for species and trait phylogenetic graphs
+## Step 4 TO 4_species_accum doc to work on Figure 1b and c
+## Step 5 TO 5_trait_phylo_graph for species and trait phylogenetic graphs
+## Step 6 TO 6a_trait_cluster_analysis_divis7 for clustering algorithm analyses & 6b_alb_diet_graph for trait relative frequency of occurrence graphics
+## Step 7 TO 7a-c_trait_model code for trait-based modelling steps.
+

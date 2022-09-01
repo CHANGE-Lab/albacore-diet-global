@@ -22,7 +22,7 @@
 "Actinopterygii","Aulopiformes","Scopelarchidae","Scopelarchus analis","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",6,1,0.9
 "Actinopterygii","Beloniformes","Belonidae","Belone belone","juvenile","juvenile","Can eat larvae based on size","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",8.7,0,7.1
 "Actinopterygii","Beloniformes","Belonidae","Strongylura exilis","juvenile","juvenile","Can eat larvae based on size","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.996677740863787,0,0
-"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","juvenile","juvenile","Can eat larvae based on size","epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",54.35,11.1,23.3
+"Actinopterygii","Beloniformes","Scomberesocidae","Cololabis saira","juvenile","juvenile","Can eat larvae based on size","epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",66.66666667,11.1,23.3
 "Actinopterygii","Beloniformes","Scomberesocidae","Scomberesox saurus","juvenile","juvenile","Can be adult or juvenile life stage based on reported length","epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",64.8148148148148,2.1,26.3
 "Actinopterygii","Beryciformes","Berycidae","Beryx splendens","juvenile","juvenile",NA,"epipelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.6,0.2,0.4
 "Actinopterygii","Beryciformes","Diretmidae","Diretmus argenteus","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","NA",11.4,2.6,4.6
@@ -35,7 +35,7 @@
 "Actinopterygii","Clupeiformes","Engraulidae","Engraulis japonicus","juvenile","juvenile","Watanabe et al. (2004) repoted juvenile primarily consumed, secondary was the adult life stage.","epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","schooling",85.4,52.8,95.2
 "Actinopterygii","Clupeiformes","Engraulidae","Engraulis mordax","juvenile","juvenile","McHugh (1952), Pinkas et al. (1971), Glaser (2010) and Bernard et al. (1985) all reported juvenile life stage consumed","epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",69.7,40.4,23
 "Actinopterygii","Gadiformes","Bregmacerotidae","Bregmaceros mcclellandi","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",2.1,0.3,0.2
-"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",33.33333333,0.5,0
+"Actinopterygii","Gadiformes","Gadidae","Microgadus proximus","juvenile","juvenile",NA,"demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",9.5,0.5,0
 "Actinopterygii","Gadiformes","Gadidae","Micromesistius poutassou","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",72.4,4.5,68.5
 "Actinopterygii","Gadiformes","Lotidae","Gaidropsarus vulgaris","juvenile","juvenile","Could be larva based on trait information","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","solitary",8,0,0
 "Actinopterygii","Gadiformes","Merlucciidae","Merluccius productus","juvenile","juvenile","Glaser (2010) reported juvenile life stage, McHugh (1952) reported larvae / postlarvae","demersal","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",100,19,30
@@ -78,10 +78,10 @@
 "Actinopterygii","Osmeriformes","Microstomatidae","Nansenia macrolepis","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",13.6,5,4.2
 "Actinopterygii","Osmeriformes","Opisthoproctidae","Monacoa grimaldii","adult","adult",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0,0
 "Actinopterygii","Osmeriformes","Osmeridae","Thaleichthys pacificus","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",33.33333333,0,0
-"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",33.33333333,0,0
+"Actinopterygii","Perciformes","Anarhichadidae","Anarrhichthys ocellatus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",1.136363636,0,0
 "Actinopterygii","Perciformes","Blenniidae","Blennius ocellaris","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",5.55555555555556,0,0
 "Actinopterygii","Perciformes","Bramidae","Brama brama","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0,0,0
-"Actinopterygii","Perciformes","Bramidae","Brama orcini","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3,0.1593117731,0
+"Actinopterygii","Perciformes","Bramidae","Brama orcini","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3,0.1529519731,0
 "Actinopterygii","Perciformes","Bramidae","Pterycombus petersii","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.7,0.1,2.2
 "Actinopterygii","Perciformes","Bramidae","Taractes asper","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",0,0,0
 "Actinopterygii","Perciformes","Caproidae","Antigonia capros","juvenile","juvenile",NA,"epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",3,0,0
@@ -96,10 +96,10 @@
 "Actinopterygii","Perciformes","Centrolophidae","Centrolophus niger","juvenile","juvenile",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_yes","1.0","season_yes","schooling",1.85185185185185,0,0
 "Actinopterygii","Perciformes","Centrolophidae","Icichthys lockingtoni","juvenile","juvenile",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",1,0,0
 "Actinopterygii","Perciformes","Chiasmodontidae","Chiasmodon niger","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",9.5,1.7,1.6
-"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.3,0.01593117731,0
+"Actinopterygii","Perciformes","Coryphaenidae","Coryphaena hippurus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_no","1.0","season_yes","schooling",0.3,0.01529519731,0
 "Actinopterygii","Perciformes","Embiotocidae","Cymatogaster aggregata","adult","adult",NA,"demersal","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",0.5,0.1,0
 "Actinopterygii","Perciformes","Gempylidae","Diplospinus multistriatus","juvenile","juvenile","We've noted that there are pelagic eggs and larvae","mesopelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","solitary",8,0,0
-"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",5.2,0.7487653338,0.5
+"Actinopterygii","Perciformes","Gempylidae","Gempylus serpens","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",5.2,0.7188742735,0.5
 "Actinopterygii","Perciformes","Gempylidae","Lepidocybium flavobrunneum","juvenile","juvenile",NA,"mesopelagic","continental slope","1.0","diel_yes","refuge_no","1.0","season_yes","shoaling",1.6,0,0
 "Actinopterygii","Perciformes","Gempylidae","Nealotus tripes","juvenile","juvenile","Based on traits","mesopelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","shoaling",3,0,0.1
 "Actinopterygii","Perciformes","Gempylidae","Nesiarchus nasutus","juvenile","juvenile","Based on traits","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",3,0,0
@@ -117,7 +117,7 @@
 "Actinopterygii","Perciformes","Nomeidae","Psenes pellucidus","juvenile","juvenile",NA,"epipelagic","oceanic","0.0","diel_no","refuge_yes","1.0","season_yes","shoaling",3,0,0
 "Actinopterygii","Perciformes","Pomacentridae","Chromis punctipinnis","juvenile","juvenile",NA,"demersal","reef-associated","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",0,0,0
 "Actinopterygii","Perciformes","Priacanthidae","Cookeolus japonicus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",0.5,0.2,0
-"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.6,0.1433805958,0
+"Actinopterygii","Perciformes","Scombridae","Katsuwonus pelamis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",0.6,0.1376567758,0
 "Actinopterygii","Perciformes","Scombridae","Scomber japonicus","juvenile","juvenile","McHugh (1952) reported ""larvae & young"", most likely were post-larvae -- juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",3,0.306044376434583,0.00609243441494352
 "Actinopterygii","Perciformes","Scombridae","Scomber scombrus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",1.1,0.4,0.2
 "Actinopterygii","Perciformes","Scombrolabracidae","Scombrolabrax heterolepis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.5,0,0
@@ -126,14 +126,14 @@
 "Actinopterygii","Perciformes","Sparidae","Spondyliosoma cantharus","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",1.85185185185185,0,0
 "Actinopterygii","Perciformes","Stromateidae","Peprilus simillimus","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","1.0","season_yes","schooling",0.5,0.1,0
 "Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus atlanticus","juvenile","juvenile","Could explain tunicates in albacore diets?","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",14.2857142857143,0,0
-"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","juvenile","juvenile","Could explain tunicates in albacore diets?","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",0.6,0.04779353194,0
+"Actinopterygii","Perciformes","Tetragonuridae","Tetragonurus cuvieri","juvenile","juvenile","Could explain tunicates in albacore diets?","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",0.6,0.04588559192,0
 "Actinopterygii","Pleuronectiformes","Bothidae","Arnoglossus imperialis","juvenile","juvenile","Potentially even larva","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",24.0740740740741,0,0
 "Actinopterygii","Pleuronectiformes","Paralichthyidae","Citharichthys sordidus","juvenile","juvenile","Potentially even larva","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
 "Actinopterygii","Pleuronectiformes","Pleuronectidae","Pleuronichthys decurrens","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",33.33333333,0,0
 "Actinopterygii","Pleuronectiformes","Pleutonectidae","Microstomus pacificus","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","1.0","diel_yes","refuge_yes","1.0","season_yes","shoaling",0,0,0
 "Actinopterygii","Pleutonectiformes","Pleuronectidae","Glyptocephalus zachirus","juvenile","juvenile","Most likely juvenile / young-of-year","demersal","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",0,0,0
 "Actinopterygii","Scorpaeniformes","Agonidae","Bathyagonus pentacanthus","juvenile","juvenile","Based on traits","epipelagic","continental shelf","0.0","diel_no","refuge_no","0.0","season_no","solitary",0,0,0
-"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",33.33333333,0,0
+"Actinopterygii","Scorpaeniformes","Anoplopomatidae","Anoplopoma fimbria","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_no","1.0","season_yes","shoaling",0.9345794393,0,0
 "Actinopterygii","Scorpaeniformes","Dactylopteridae","Dactyloptena orientalis","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","0.0","season_no","shoaling",1.1,0.1,0
 "Actinopterygii","Scorpaeniformes","Gonatidae","Helicolenus dactylopterus","juvenile","juvenile",NA,"epipelagic","continental shelf","0.0","diel_no","refuge_yes","1.0","season_yes","solitary",16,0,0
 "Actinopterygii","Scorpaeniformes","Peristediidae","Peristedion gracile","juvenile","juvenile","Probably larva","demersal","continental shelf","0.0","diel_no","refuge_yes","0.0","season_no","shoaling",3,0,0
@@ -166,7 +166,7 @@
 "Actinopterygii","Tetraodontiformes","Balistidae","Canthidermis maculata","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_yes","0.0","season_no","schooling",1.6,0.1,0
 "Actinopterygii","Tetraodontiformes","Molidae","Masturus lanceolatus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","solitary",0.5,0.1,0
 "Actinopterygii","Tetraodontiformes","Molidae","Ranzania laevis","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","solitary",2.2,1.3,1.6
-"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","solitary",0.3,0.01593117731,0
+"Actinopterygii","Tetraodontiformes","Ostraciidae","Lactoria diaphana","juvenile","juvenile",NA,"epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","solitary",0.3,0.01529519731,0
 "Actinopterygii","Tetraodontiformes","Ostraciidae","Ostracion cubicus","juvenile","juvenile","Could be larval but lacking size info","epipelagic","oceanic","0.0","diel_no","refuge_yes","0.0","season_no","solitary",1.6,0.2,0
 "Actinopterygii","Tetraodontiformes","Tetraodontidae","Lagocephalus lagocephalus","juvenile","juvenile","Could be larval but lacking size info","epipelagic","coastal","0.0","diel_no","refuge_no","1.0","season_yes","solitary",1.6,0,0
 "Cephalopoda","Decapodiformes","Chtenopterygidae","Chtenopteryx sicula","juvenile","juvenile",NA,"mesopelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",33.3333333333333,0,0
@@ -299,11 +299,11 @@
 "Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia gigas","adult","adult",NA,"bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",0.7,0.1,0
 "Malacostraca","Lophogastrida","Gnathophausiidae","Neognathophausia ingens","juvenile","juvenile","Large - giant red mysid shrimp","bathypelagic","oceanic","1.0","diel_yes","refuge_no","0.0","season_no","schooling",11.1111111111111,0,0
 "Malacostraca","Stomatopoda","Lysiosquillidae","Lysiosquilla tredecimdentata","juvenile","juvenile","Based on trait","epipelagic","coastal","1.0","diel_yes","refuge_no","0.0","season_no","schooling",7.9,0.9,0.7
-"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","0.0","diel_no","refuge_yes","NA","season_NA","solitary",0.3,0.04779353194,0
+"Malacostraca","Stomatopoda","Odontodactylidae","Odontodactylus hansenii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","0.0","diel_no","refuge_yes","NA","season_NA","solitary",0.3,0.04588559192,0
 "Malacostraca","Stomatopoda","Odontodacylidae","Odontodactylus scyllarus","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","0.0","season_no","schooling",27,5.1,2.4
 "Malacostraca","Stomatopoda","Squillidae","Natosquilla investigatoris","adult","adult","Based on trait","epipelagic","oceanic","0.0","diel_no","refuge_no","NA","season_NA","schooling",2,1.8,1.5
 "Malacostraca","Stomatopoda","Squilllidae","Neoanchisquilla tuberculata","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","continental shelf","1.0","diel_yes","refuge_no","NA","season_NA","schooling",9.5,1.1,0.4
-"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","1.0","diel_yes","refuge_no","NA","season_NA","shoaling",0.6,0.03186235463,0
+"Malacostraca","Stomatopoda","Protosquillidae","Echinosquilla guerinii","juvenile","juvenile","Most likely juvenile / young-of-year","epipelagic","coastal","1.0","diel_yes","refuge_no","NA","season_NA","shoaling",0.6,0.03059039462,0
 "Thaliacea","Pyrosomatida","Pyrosomatidae","Pyrosoma atlanticum","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","NA","season_NA","schooling",2.85714285714286,0,0
 "Thaliacea","Salpida","Salpidae","Salpa maxima","adult","adult",NA,"epipelagic","oceanic","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",4.8,1.9,1.3
 "Thaliacea","Salpida","Salpidae","Soestia zonaria","adult","adult",NA,"epipelagic","coastal","1.0","diel_yes","refuge_no","1.0","season_yes","schooling",8.57142857142857,0,0

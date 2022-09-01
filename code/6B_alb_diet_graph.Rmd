@@ -30,6 +30,8 @@ library(ggplot2)
 library(viridis)
 library(RColorBrewer)
 library(ggh4x)
+library(scales)
+
 #library(wesanderson)
 
 ```
@@ -37,23 +39,23 @@ library(ggh4x)
 
 ## Load Data
 
-```{r Load frequency of occurrence data}
+```{r Load frequency of occurrence data, tidy=TRUE}
 
-#diet_fo_wide <- read.csv(here("./data/output_data/alb_global_wide_dietfo.csv"))
+#diet_fo_wide <- read.csv(here("./data/output_data/alb_global_diet_wide_dietfo.csv"))
 
-alb_global = read.csv(here::here("data/2_output_data/alb_global_diet.csv"), check.names = FALSE)
+alb_global_diet = read.csv(here::here("data/2_output_data/alb_global_diet_total.csv"), check.names = FALSE)
 
 prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divis.k7.csv")) %>%
   select(-c(X, dendlabs, maxFO:maxM))
 
 ```
 
-```{r Create df for range graph}
+```{r Combine diet and cluster info, tidy=TRUE}
 
-alb_diet_clust = alb_global %>%
+alb_diet_clust = alb_global_diet %>%
   left_join(prob.prey.cl) %>%
   filter(prob.clust.num != "NA") %>% #> 0 #, pFOuse > 5
-  select(StudyID, rep_ID, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
+  select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
 #unique(alb_diet_clust$prob.clust.num)
 #unique(alb_diet_clust$OceanBasin)
 
@@ -62,27 +64,120 @@ alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
 
 ```
 
-## Total data + manip for diet composition
+## Index of relative importance for FO
 
-### DF for range graph
+Here we will calculate a normalised metric or index for diet composition, of relative contribution to the total frequency of occurrence of all species’ within each trait guild, normalised for each replicate diet observation.
 
-### Total Data Figures
+### DF for FO index of relative importance
+
+```{r Create df for range graph, tidy=TRUE}
+
+index_alb_diet_clust = alb_diet_clust %>%
+  group_by(StudyID, rep_ID, YearEnd, OceanBasin, prob.clust.num) %>%
+  dplyr::summarize(clustFO = sum(pFOuse, na.rm=TRUE)) 
+
+totals_alb_diet_clust = alb_diet_clust %>%
+  group_by(StudyID, rep_ID, YearEnd, OceanBasin) %>%
+  dplyr::summarize(totalFO = sum(pFOuse, na.rm=TRUE)) 
+
+index_alb_diet_clust_data = index_alb_diet_clust %>%
+  left_join(totals_alb_diet_clust) %>%
+  mutate(relFO = clustFO/totalFO) %>%
+  dplyr::filter(relFO > 0)
+
+index_alb_diet_clust_data$yearrepID <- paste(index_alb_diet_clust_data$YearEnd, index_alb_diet_clust_data$rep_ID, sep = "_")
+
+write.csv(index_alb_diet_clust_data, here::here("data/2_output_data/index_alb_diet_clust_data.csv"))
+```
+
+```{r Load index data, tidy=TRUE}
+
+index_alb_diet_clust_data = read.csv(here::here("data/2_output_data/index_alb_diet_clust_data.csv")) %>%
+  select(-X)
+
+length(unique(index_alb_diet_clust_data$StudyID)) #studies containing useable FO data
+length(unique(index_alb_diet_clust_data$rep_ID)) #observations of useable FO data
+```
+
+### Colour palette
 
 Match the colour palette for clusters in these and other graphs in the MS.
 
-```{r Colour palette for cluster graphs}
+```{r Colour palette for cluster graphs, tidy=TRUE}
 
 fig3.pal <- c("#00496F", "#59A082", "#0A718F", 
               "#EDA417", "#EDD746", 
               "#E7720B", "#DD4124")
-library(scales)
-show_col(fig3.pal)
+scales::show_col(fig3.pal)
 
 ```
 
+### Figure for index data - stacked bar
+
+```{r Try stacked bar chart}
+
+index_cluster_bar = index_alb_diet_clust_data %>%
+  ggplot() +
+  geom_bar(data = index_alb_diet_clust_data, 
+             aes(y=relFO, x=yearrepID, #group=rep_ID, 
+                 fill=as.factor(prob.clust.num)),
+             width = 1, stat = "identity") + #, position = "jitter", , position="identity"
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=34),
+        axis.title.x=element_blank(),
+        axis.text=element_text(size=26),
+        axis.text.x = element_text(angle = 90, vjust = 1, hjust=1),
+        legend.text=element_text(size=34),
+        legend.title=element_text(size=34),
+        legend.position = "top") +
+  labs(x="Years sampled", y="Relative %FO")+
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
+  facet_grid(OceanBasin~.)+ #, scales ="free"
+  theme(strip.text = element_text(face="bold", size=rel(3)))
+index_cluster_bar
+
+ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
+ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
+```
+
+### Figure for index data - scatter - extra
+
+```{r Try scatterplot relative FO, eval=FALSE}
+
+index_cluster_scatter = index_alb_diet_clust_data %>%
+  #filter(pFOuse > 5) %>%
+  ggplot() +
+  geom_point(data = index_alb_diet_clust_data, 
+             aes(y=relFO, x=YearEnd, group=prob.clust.num, fill=prob.clust.num),
+             size=5, shape=23, position = "dodge"
+             ) +
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  theme(panel.grid.major = element_blank(),
+        axis.title=element_text(size=24),
+        axis.text=element_text(size=24),
+        legend.text=element_text(size=24),
+        legend.title=element_text(size=24),
+        legend.position = "top") +
+  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
+  #ylim(0,90)+
+  xlim(1900,2019)+
+  facet_grid(OceanBasin~.)+ #, scales ="free"
+  #force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
+  #                 rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
+  theme(strip.text = element_text(face="bold", size=rel(2)))
+index_cluster_scatter
+
+ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = index_cluster_scatter, width = 24, height = 16, dpi = 300)
+
+```
+
+## Total data + manip for diet composition
+
 #### Scatterplots
 
-```{r Try scatterplot pFO}
+```{r Try scatterplot pFO, message=FALSE}
 
 diet_cluster_scatter = alb_diet_clust %>%
   filter(pFOuse > 5) %>%
@@ -114,7 +209,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot
 
 ```
 
-```{r Try scatterplot pN}
+```{r Try scatterplot pN, message=FALSE}
 
 diet_cluster_scatterN = alb_diet_clust %>%
   filter(pN > 5) %>%
@@ -144,7 +239,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterN.jpeg"), plot 
 
 ```
 
-```{r Try scatterplot pM}
+```{r Try scatterplot pM, message=FALSE}
 
 diet_cluster_scatterM = alb_diet_clust %>%
   filter(pN > 5) %>%
@@ -175,7 +270,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterM.jpeg"), plot 
 
 #### Boxplots
 
-```{r Try boxplot FO}
+```{r Try boxplot FO, message=FALSE}
 
 diet_cluster_box = alb_diet_clust %>%
   filter(pFOuse > 5) %>%
@@ -211,7 +306,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_boxFO.jpeg"), plot = d
 
 #### Violin plots
 
-```{r Try violin FO}
+```{r Try violin FO, message=FALSE}
 
 diet_cluster_violin = alb_diet_clust %>%
   filter(pFOuse > 5) %>%
@@ -245,7 +340,7 @@ ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violinFO.jpeg"), plot 
 
 ```
 
-```{r Try violin and scatter FO}
+```{r Try violin and scatter FO, message=FALSE}
 
 diet_cluster_violin_scatter = alb_diet_clust %>%
   filter(pFOuse > 5) %>%
@@ -281,102 +376,5 @@ diet_cluster_violin_scatter
 
 ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"), plot = diet_cluster_violin_scatter, width = 24, height = 16, dpi = 300)
 
-
-```
-
-## Index of relative importance for FO
-
-### DF for FO index of relative importance
-
-```{r Load index data}
-
-index_alb_diet_clust_data = read.csv(here::here("data/2_output_data/index_alb_diet_clust_data.csv")) %>%
-  select(-X)
-
-unique(index_alb_diet_clust_data$StudyID)
-unique(index_alb_diet_clust_data$rep_ID)
-
-```
-
-```{r Create df for range graph}
-
-index_alb_diet_clust = alb_diet_clust %>%
-  group_by(StudyID, rep_ID, YearEnd, OceanBasin, prob.clust.num) %>%
-  dplyr::summarize(clustFO = sum(pFOuse, na.rm=TRUE)) 
-
-totals_alb_diet_clust = alb_diet_clust %>%
-  group_by(StudyID, rep_ID, YearEnd, OceanBasin) %>%
-  dplyr::summarize(totalFO = sum(pFOuse, na.rm=TRUE)) 
-
-index_alb_diet_clust_data = index_alb_diet_clust %>%
-  left_join(totals_alb_diet_clust) %>%
-  mutate(relFO = clustFO/totalFO) %>%
-  dplyr::filter(relFO > 0)
-
-index_alb_diet_clust_data$yearrepID <- paste(index_alb_diet_clust_data$YearEnd, index_alb_diet_clust_data$rep_ID, sep = "_")
-
-table(index_alb_diet_clust_data$rep_ID, index_alb_diet_clust_data$OceanBasin)
-
-write.csv(index_alb_diet_clust_data, here::here("data/2_output_data/index_alb_diet_clust_data.csv"))
-
-```
-
-### Figure for index data - scatter
-
-```{r Try scatterplot relative FO}
-
-index_cluster_scatter = index_alb_diet_clust_data %>%
-  #filter(pFOuse > 5) %>%
-  ggplot() +
-  geom_point(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=YearEnd, group=prob.clust.num, fill=prob.clust.num),
-             size=5, shape=23, position = "dodge") +
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
-  theme(panel.grid.major = element_blank(),
-        axis.title=element_text(size=24),
-        axis.text=element_text(size=24),
-        legend.text=element_text(size=24),
-        legend.title=element_text(size=24),
-        legend.position = "top") +
-  labs(x="Years sampled", y="Range in frequency of occurrence (%)")+
-  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
-  #ylim(0,90)+
-  xlim(1900,2019)+
-  facet_grid(OceanBasin~.)+ #, scales ="free"
-  #force_panelsizes(cols = c(0.6, 0.85, 1, 1, 0.4, 0.4),
-  #                 rows = c(0.6, 0.6, 0.6, 1, 1, 0.6, 0.6)) +
-  theme(strip.text = element_text(face="bold", size=rel(2)))
-index_cluster_scatter
-
-#ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = diet_cluster_scatter, width = 24, height = 16, dpi = 300)
-
-```
-
-### Figure for index data - stacked bar
-
-```{r Try stacked bar chart}
-
-index_cluster_bar = index_alb_diet_clust_data %>%
-  ggplot() +
-  geom_bar(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=yearrepID, #group=rep_ID, 
-                 fill=as.factor(prob.clust.num)),
-             width = 1, stat = "identity") + #, position = "jitter", , position="identity"
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
-  theme(panel.grid.major = element_blank(),
-        axis.title=element_text(size=34),
-        axis.title.x=element_blank(),
-        axis.text=element_text(size=26),
-        axis.text.x = element_text(angle = 90, vjust = 1, hjust=1),
-        legend.text=element_text(size=34),
-        legend.title=element_text(size=34),
-        legend.position = "top") +
-  labs(x="Years sampled", y="Relative %FO")+
-  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
-  facet_grid(OceanBasin~.)+ #, scales ="free"
-  theme(strip.text = element_text(face="bold", size=rel(3)))
-index_cluster_bar
-
-ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
 
 ```
