@@ -29,7 +29,7 @@ This document contains code for data manipulation and refinement, to pipe to mul
 
 - We therefore removed 173 species with low prevalence (occurs < 2 times), under code chunk 4.
 
-- The data are longer (58 obs) than they are wide (129 species).
+- The data are longer (57 obs) than they are wide (129 species).
 
 - Decision not to use phylogenetic order information, not enough replication at the individual order level, could define a phylogeny as in PGLMM example code below and that actually accounts for phylogenetic structure and relatedness rather than treating phylogenetic information as a trait: https://daijiang.github.io/phyr/reference/pglmm_compare.html 
 
@@ -396,7 +396,7 @@ summary(alb_trait_use_longhurst$prob.clust.num) #good distribution of species wi
 
 Here we filter our prey species (presence/absence data) by the species that were also used for cluster analysis, because we have complete trait information for these species, as well as frequency of occurrence data.
 
-```{r FILTER PREY BY PROB TRAITS, tidy=TRUE, warning=FALSE, message=FALSE}
+```{r FILTER PREY BY PROB Longhurst data, tidy=TRUE, warning=FALSE, message=FALSE}
 
 alb_prey_use_longhurst <- alb_prey_use_longhurst_spp[colnames(alb_prey_use_longhurst_spp) %in% rownames(alb_trait_use_longhurst)]
 

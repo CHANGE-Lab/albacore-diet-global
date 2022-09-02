@@ -11,7 +11,10 @@ output:
 
 ## About
 
-This document contains code for loading mostly manipulated data for global albacore prey communities consumed and for conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses.
+This document contains code for loading mostly manipulated data for global albacore prey communities consumed and for conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses. Note that current analyses in this document includes the following distribution of observations:
+
+Mediterranean    N Atlantic     N Pacific
+       9            21            28      
 
 ## Current work
 
@@ -104,7 +107,7 @@ alb_covars_use = read.csv(here::here("./data/2_output_data/alb_covars_use.csv"))
 #As factors
 alb_covars_use[,1:ncol(alb_covars_use)] =  lapply(alb_covars_use[,1:ncol(alb_covars_use)], as.factor)
 
-unique(alb_covars_use$StudyID)
+length(unique(alb_covars_use$StudyID))
 
 ```
 
@@ -187,6 +190,10 @@ summary(alb_covars_use$pred_life)
 #       38         20
 
 summary(alb_covars_use$OceanBasin)
+#Mediterranean    N Atlantic     N Pacific
+#       9            21            28      
+
+summary(alb_covars_use$code)
 #Mediterranean    N Atlantic     N Pacific
 #       9            21            28      
 
@@ -329,9 +336,6 @@ ocean_clusters_many_graph = levelplot(temp,
 
 print(ocean_clusters_many_graph)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many_graph.pdf"), 
-       plot = as.ggplot(ocean_clusters_many_graph), width=12, height=12, dpi=300)
-
 ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_clusters_many_graph.jpeg"), 
        plot = as.ggplot(ocean_clusters_many_graph), width=12, height=12, dpi=300)
 
@@ -382,9 +386,6 @@ ocean_cluster_LASSO_graph = levelplot(temp,
                      colorkey=list(labels=list(cex=1.5)))
 
 print(ocean_cluster_LASSO_graph)
-
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO_graph.pdf"), 
-       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
 
 ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/ocean_cluster_LASSO_graph.jpeg"), 
        plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
@@ -565,7 +566,7 @@ alb_pa_ord = metaMDS(alb_prey_pa_use,
                      trymax = 1000,#10000, #1000
                      k=3) #could increase to k = 4
 
-saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_nMDS_pa.rds"))
+saveRDS(alb_pa_ord, here::here("outputs_figures/traitglms/ocean_models_2022/alb_nMDS_pa.rds"))
 
 #Note pb with this!! insufficient data?
 
@@ -583,7 +584,8 @@ Extract NMDS coordinates and associate with co-variates/grouping factors
 
 #Extract NMDS coordinates and associate with co-variates/grouping factors
 #Using the scores function from vegan to extract the site scores and convert to a data.frame
-data.scores <- as.data.frame(scores(alb_pa_ord))  #, "species"
+data.scores = as.data.frame(alb_pa_ord$points)
+
 #create a column of site names, from the rownames of data.scores
 data.scores$points <- rownames(data.scores)
 #bind treatment labels and score values
@@ -649,7 +651,7 @@ nMDS_ocean <- hull.data.ocean %>%
 
 nMDS_ocean
 
-ggsave(here("outputs_figures/traitglms/ocean_models_2022/nMDS_ocean.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/nMDS_ocean.jpeg"), 
        plot = nMDS_ocean, width = 8, height = 8, dpi = 300)
 
 ```

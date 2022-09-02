@@ -1,5 +1,4 @@
 "","covar","mod_type","model","deviance","aic"
-"1","ocean basin","species","ocean_spp",3080.27666846838,3854.27666846838
-"2","ocean basin","phylo","ocean_phylo_many",3961.82575932541,4331.82575932541
-"3","ocean basin","traits","ocean_trait_many",4146.84437426357,4432.84437426357
-"4","ocean basin","guilds","ocean_clusters_many",4146.38475047225,4432.38475047225
+"1","Ocean Basin","species","ocean_spp",2174.4493782222,3038.4493782222
+"2","Ocean Basin","traits","ocean_trait_many",3334.03894971663,3722.03894971663
+"3","Ocean Basin","guilds","ocean_clusters_many",3350.24531084919,3738.24531084919
