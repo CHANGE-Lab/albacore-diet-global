@@ -62,6 +62,7 @@ alb_diet_clust = alb_global_diet %>%
 alb_diet_clust$YearEnd = as.integer(alb_diet_clust$YearEnd)
 alb_diet_clust$prob.clust.num = as.factor(alb_diet_clust$prob.clust.num)
 
+unique(alb_diet_clust$StudyID) #26
 ```
 
 ## Index of relative importance for FO

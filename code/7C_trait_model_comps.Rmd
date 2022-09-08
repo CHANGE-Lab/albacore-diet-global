@@ -103,12 +103,10 @@ dim(alb_trait_use)
 #Traits - select and manipulate that df - ideally we want to use the same df here
 traits_use = alb_trait_use[,c(3:6,8)] %>%
   dplyr::rename(cluster = prob.clust.num) 
-
 str(traits_use)
-
 ```
 
-```{r Save interaction models}
+```{r Load models}
 #Species model
 ocean_spp = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
 ocean_clusters_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
@@ -175,30 +173,42 @@ an_ocean_trait_many
 
 ```{r ANOVA table output for MS}
 
-anova_comp = anova.traitglm(ocean_spp
-                            , ocean_trait_many
+#anova_comp1 = anova.traitglm(ocean_spp
+                            #, ocean_trait_many
                             #, ocean_clusters_many
-                            )
+                            #)
 
-saveRDS(anova_comp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
-
-anova_comp$table
-
+#saveRDS(anova_comp1, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
+anova_comp1 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
+anova_comp1$table
 ```
 
 ```{r ANOVA table output for MS 2}
 
-anova_comp = anova.traitglm(ocean_spp
+#anova_comp2 = anova.traitglm(ocean_spp
                             #, ocean_trait_many
-                            , ocean_clusters_many
-                            )
+#                            , ocean_clusters_many
+#                            )
 
-saveRDS(anova_comp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_clusters.rds"))
-
-anova_comp$table
+#saveRDS(anova_comp2, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_clusters.rds"))
+anova_comp2 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_clusters.rds"))
+anova_comp2$table
 
 ```
 
+```{r ANOVA table output for MS 3, eval=FALSE}
+
+anova_comp3 = anova.traitglm(ocean_spp
+                            , ocean_trait_many
+                            , ocean_clusters_many
+                            )
+
+saveRDS(anova_comp3, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_three.rds"))
+anova_comp3 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/aanova_comp_three.rds"))
+
+anova_comp2$table
+
+```
 ## Conclusions
 
 UPDATE THESE...
@@ -220,17 +230,12 @@ The interaction model that included ocean basin + life stage had the lowest AIC 
 ocean_spp
 #Cluster*env models (manyglm and LASSO)
 ocean_clusters_many
-#Phylo*env models (manyglm and LASSO)
-ocean_phylo_many
 #Trait*env models
 ocean_trait_many
 
 #LASSO glms
 ocean_trait_LASSO$deviance
 ocean_cluster_LASSO$deviance
-ocean_phylo_LASSO$deviance
-summary(ocean_phylo_trait_LASSO)
-ocean_phylo_trait_LASSO$deviance
 
 ```
 
@@ -244,7 +249,6 @@ model = c("ocean_spp", "ocean_trait_many",  "ocean_clusters_many")
 mod_type = c("species", "traits", "cluster")
 
 covar = c("Ocean Basin", "Ocean Basin",  "Ocean Basin")
-
 
 deviance = c(ocean_spp$deviance, ocean_trait_many$deviance, ocean_clusters_many$deviance)
 
@@ -294,12 +298,10 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpe
 ```{r Model list for outputs LASSO, eval=FALSE}
 
 #Species*env models
-ocean_spp_LASSO
+ocean_spp_LASSO$deviance
 #LASSO glms
 ocean_trait_LASSO$deviance
 ocean_cluster_LASSO$deviance
-ocean_phylo_LASSO$deviance
-
 
 ```
 
