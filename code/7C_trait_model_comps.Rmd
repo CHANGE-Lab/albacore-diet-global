@@ -5,7 +5,11 @@ output: html_document
 
 ## About
 
-Here we undertake model comparisons for traitglms.
+* Here we undertake model comparisons for traitglms.
+
+* Note to perform summary call and anova calls for model outputs.
+
+* We can obtain the null and residual deviance explained from the summary output; see this discussion on stackexchange: https://stats.stackexchange.com/questions/108995/interpreting-residual-and-null-deviance-in-glm-r 
 
 ## Workspace
 
@@ -125,6 +129,8 @@ ocean_trait_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2
 
 ```{r Model Output ocean_spp}
 ocean_spp
+ocean_spp_sum = summary(ocean_spp)
+ocean_spp_sum
 ```
 
 ```{r Anova ocean_spp}
@@ -133,15 +139,14 @@ ocean_spp
 #saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp
-
-View(an_ocean_spp$table)
-
 ```
 
 ### Model: ocean_clusters_many
 
 ```{r Model Output ocean_clusters_many}
 ocean_clusters_many
+ocean_clusters_sum = summary(ocean_clusters_many)
+ocean_clusters_sum 
 ```
 
 ```{r Anova ocean_clusters_many}
@@ -150,13 +155,14 @@ ocean_clusters_many
 #saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many
-
 ```
 
 ### Model: ocean_trait_many
 
 ```{r Model Output ocean_trait_many}
 ocean_trait_many
+ocean_trait_sum = summary(ocean_trait_many)
+ocean_trait_sum
 ```
 
 
