@@ -289,6 +289,7 @@ ocean_spp
 ocean_spp$deviance
 #check model output if needed
 
+#predict.traitglm(ocean_spp)
 ```
 
 ```{r SPP ocean manyglm eval, tidy=TRUE, message=FALSE, warning=FALSE}
