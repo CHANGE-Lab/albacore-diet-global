@@ -282,8 +282,8 @@ summary(spp_many, nBoot=99)
 
 ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
-                      family = binomial(link = "logit"),
-                      composition = TRUE #note that col.intercepts = TRUE is the default
+                      family = binomial(link = "logit")#,
+                      #composition = TRUE #note that col.intercepts = TRUE is the default
                       ) #note default is "manyglm"
 ocean_spp
 ocean_spp$deviance

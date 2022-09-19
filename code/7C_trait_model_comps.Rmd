@@ -337,6 +337,13 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpe
 
 ```
 
+```{r LASSO summary call trial}
+summary(ocean_spp_LASSO)
+summary(ocean_trait_LASSO)
+summary(ocean_cluster_LASSO)
+```
+
+
 ### Model list - LASSO
 
 ```{r Model list for outputs LASSO, eval=FALSE}
