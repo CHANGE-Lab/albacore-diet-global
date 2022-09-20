@@ -136,8 +136,8 @@ ocean_full_spp_LASSO = readRDS(file = here::here("outputs_figures/traitglms/ocea
 
 ```{r Model Output ocean_spp}
 ocean_spp
-#ocean_spp_sum = summary(ocean_spp, nBoot=1)
-#saveRDS(ocean_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
+ocean_spp_sum = summary(ocean_spp, nBoot=1)
+saveRDS(ocean_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
 
 ocean_spp_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
 ocean_spp_sum 
@@ -145,7 +145,7 @@ ocean_spp_sum$statistic
 ```
 
 ```{r Anova ocean_spp}
-#an_ocean_spp = anova(ocean_spp, nBoot = 10, test = "wald")
+an_ocean_spp = anova(ocean_spp, nBoot = 10, test = "wald")
 #an_ocean_spp = anova.traitglm(ocean_spp, nBoot = 10, p.uni="adjusted")
 saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
@@ -161,8 +161,8 @@ an_ocean_spp
 
 ```{r Model Output ocean_clusters_many}
 ocean_clusters_many
-#ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
-#saveRDS(ocean_clusters_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
+ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+saveRDS(ocean_clusters_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
 
 ocean_clusters_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
 ocean_clusters_sum 
@@ -181,8 +181,8 @@ an_ocean_clusters_many
 
 ```{r Model Output ocean_trait_many}
 ocean_trait_many
-#ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
-#saveRDS(ocean_trait_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
+ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+saveRDS(ocean_trait_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
 
 ocean_trait_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
 ocean_trait_sum
@@ -202,8 +202,8 @@ an_ocean_trait_many
 
 ```{r Model output ocean_full_many}
 ocean_full_many
-#ocean_full_sum = summary(ocean_full_many, nBoot=10)
-#saveRDS(ocean_full_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
+ocean_full_sum = summary(ocean_full_many, nBoot=10)
+saveRDS(ocean_full_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
 
 ocean_full_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
 ocean_full_sum 
@@ -211,8 +211,8 @@ ocean_full_sum$statistic
 ```
 
 ```{r Anova ocean_full_many}
-#an_ocean_full_many = anova.traitglm(ocean_full_many)
-#saveRDS(an_ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
+an_ocean_full_many = anova.traitglm(ocean_full_many)
+saveRDS(an_ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
 an_ocean_full_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
 an_ocean_full_many
 ```
@@ -241,11 +241,12 @@ an_ocean_full_spp_many
 ```{r ANOVA table output for MS}
 
 anova_comp1 = anova.traitglm(ocean_full_spp_many
-                            , ocean_trait_many
-                            , ocean_clusters_many
-                            , nBoot = 10
-                            , test = "wald"
-                            )
+                             , ocean_full_many
+                             , ocean_trait_many
+                             , ocean_clusters_many
+                             , nBoot = 10
+                             , test = "wald"
+                             )
 
 #saveRDS(anova_comp1, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
 #anova_comp1 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))

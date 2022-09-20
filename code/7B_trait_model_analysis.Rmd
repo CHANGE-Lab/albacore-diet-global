@@ -3,8 +3,8 @@ title: "Albacore Diet Synthesis C Trait Modelling"
 author: "Natasha Hardy"
 date: "15/04/2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 # Trait variation in albacore diet across geographies
@@ -32,12 +32,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
-#If need to clear 'Environment'
-#First view environment if you like
-#ls()
-#To clear your environment
-#remove(list = ls())
-
 # general
 library(tidyverse)
 library(readxl)
@@ -61,7 +55,6 @@ library(viridis)
 library("grid")
 library("ggplotify")
 
-
 #modelling
 library(Hmisc)
 library(mgcv)
@@ -72,8 +65,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("code/traitglm.R")
-source("code/get_polys.R")
+source(here::here("code/traitglm.R"))
+source(here::here("code/get_polys.R"))
 
 ```
 
@@ -227,7 +220,7 @@ str(traits_use)
 
 ## NULL MANY GLM
 
-```{r spp manyglm}
+```{r null manyglm, eval=FALSE}
 null_many <- manyglm(alb_prey_pa_use_mv ~ 1, family = binomial(link = "logit"))
 plot(null_many)
 anova(null_many, nBoot=99)
@@ -240,7 +233,7 @@ summary(null_many, nBoot=99)
 ```{r spp manyglm}
 spp_many <- manyglm(alb_prey_pa_use_mv ~ alb_covars_use$OceanBasin, family = binomial(link = "logit"))
 plot(spp_many)
-anova(spp_many, nBoot=99)
+anova(spp_many, nBoot=99, test = "wald")
 anova(spp_many, p.uni="adjusted", nBoot=99)
 summary(spp_many, nBoot=99)
 saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/spp_many.rds"))
@@ -306,7 +299,7 @@ plot(resids.full); abline(c(0,0),col="red")
 
 **SPP LASSO - Ocean Basin**
 
-```{r SPP ocean manyglm}
+```{r SPP ocean LASSO}
 
 ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
@@ -336,6 +329,7 @@ ocean_clusters_many <- traitglm(L = alb_prey_pa_use_mv,
                                 ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
+ocean_clusters_many
 ocean_clusters_many$deviance
 ```
 
@@ -573,10 +567,9 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_L
 
 ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
                             R = alb_covars_use$OceanBasin,
-                            Q = alb_trait_use[,c(1,3:6,8)], 
-                            #alb_trait_use[,c(1,7)], # #alb_trait_use$prey_sp #alb_trait_use[,c(1,3:6)],
-                            family=binomial(link = "logit")
-                            #composition = TRUE
+                            Q = alb_trait_use[,c(1,3:6)], 
+                            family=binomial(link = "logit"),
+                            composition = TRUE
                             ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
@@ -588,16 +581,50 @@ ocean_full_many$deviance
 
 ocean_full_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                              R = alb_covars_use$OceanBasin,
-                             Q = alb_trait_use[,c(1,3:6,8)],
-                             #alb_trait_use[,c(1,7)], # #alb_trait_use$prey_sp #alb_trait_use[,c(1,3:6)], 
+                             Q = alb_trait_use[,c(1,3:6)],
                              family=binomial(link = "logit"),
-                             method="glm1path"
+                             method="glm1path",
+                            composition = TRUE
                              ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_full_LASSO$deviance
 #Returns the deviance of a fitted multivariate model object for abundance data.
 deviance(ocean_full_LASSO)
+```
+
+### Spp info model
+
+```{r Full spp model ocean manyglm}
+
+ocean_full_spp_many <- traitglm(L = alb_prey_pa_use_mv,
+                            R = alb_covars_use$OceanBasin,
+                            Q = alb_trait_use$prey_sp, 
+                            family=binomial(link = "logit"),
+                            composition = TRUE
+                            ) 
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+ocean_full_spp_many
+ocean_full_spp_many$deviance
+```
+
+
+```{r Full spp model ocean LASSO}
+
+ocean_full_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                             R = alb_covars_use$OceanBasin,
+                             Q = alb_trait_use$prey_sp, 
+                            family=binomial(link = "logit"),
+                             method="glm1path",
+                            composition = TRUE
+                             ) 
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+ocean_full_spp_LASSO
+ocean_full_spp_LASSO$deviance
+#Returns the deviance of a fitted multivariate model object for abundance data.
+deviance(ocean_full_spp_LASSO)
 ```
 
 ### SAVE THESE
@@ -617,14 +644,8 @@ saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_mo
 ```
 
 ```{r save additional models}
-#saveRDS(ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
-#saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_LASSO.rds"))
-
-#saveRDS(ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_trait_many.rds"))
-#saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_trait_LASSO.rds"))
-
-#saveRDS(ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_cluster_many.rds"))
-#saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_cluster_LASSO.rds"))
+saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+saveRDS(ocean_full_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_LASSO.rds"))
 
 saveRDS(ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_many.rds"))
 saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_LASSO.rds"))
@@ -679,7 +700,7 @@ str(treatment.scores)
 
 Convex Hull calculations
 
-```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
+```{r Convex hulls Ocean Basin, eval = FALSE, include = FALSE}
 # Taxonomic groups (specific)
 #Create convex hulls for the space occupied by each Taxonomic values
 unique(treatment.scores$OceanBasin)
@@ -740,7 +761,7 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/nMDS_ocean.jpeg")
 
 Convex Hull calculations
 
-```{r Convex hulls - Predator Life Stage, eval = FALSE, include = FALSE}
+```{r Convex hulls Predator Life Stage, eval = FALSE, include = FALSE}
 # Taxonomic groups (specific)
 #Create convex hulls for the space occupied by each Taxonomic values
 unique(treatment.scores$pred_life_adjust)
@@ -760,7 +781,7 @@ str(hull.data.lf)
 
 nMDS for Predator Life Stage
 
-```{r nMDS Ocean Basin, eval = FALSE, include = FALSE}
+```{r nMDS Predator Life Stage, eval = FALSE, include = FALSE}
 
 nMDS_life <- hull.data.lf %>% 
   ggplot() + 
@@ -793,15 +814,3 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/nMDS_life.jpeg"),
        plot = nMDS_ocean, width = 8, height = 8, dpi = 300)
 
 ```
-
-## EXTRA CODE
-
-```{r integers to numeric}
-
-#Data are integers, could be numeric if modelling issues
-
-#Example code
-#alb_adult_prey[,1:ncol(alb_adult_prey)] =  lapply(alb_adult_prey[,1:ncol(alb_adult_prey)], as.numeric)
-
-```
-
