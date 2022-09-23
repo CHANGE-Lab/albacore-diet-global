@@ -1,0 +1,403 @@
+---
+title: "Diet Synthesis C Model Comparisons"
+output: html_document
+---
+
+## About
+
+* Here we undertake model comparisons for traitglms.
+
+* Note to perform summary call and anova calls for model outputs.
+
+* We can obtain the null and residual deviance explained from the summary output; see this discussion on stackexchange: https://stats.stackexchange.com/questions/108995/interpreting-residual-and-null-deviance-in-glm-r 
+
+## Workspace
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
+#If need to clear 'Environment'
+#First view environment if you like
+#ls()
+#To clear your environment
+#remove(list = ls())
+
+# general
+library(tidyverse)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(devtools)
+library(reshape2)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+library(pander)
+
+# graphics
+library(ggplot2)
+library(lattice)
+library(graphics)
+library(RColorBrewer)
+library(gridExtra)
+library(captioner)
+library(viridis)
+library("grid")
+library("ggplotify")
+
+
+#modelling
+library(Hmisc)
+library(mgcv)
+library(unmarked)
+library(lme4)
+library(mvabund)
+library(tweedie)
+library(vegan)
+
+## mvabund bug source code
+source(here::here("code/traitglm.R"))
+source(here::here("code/get_polys.R"))
+
+```
+
+
+## READ MODELS & DATA BACK IN
+
+```{r Load Prey data (L)}
+
+#L - species df
+alb_prey_pa_use = read.csv(here::here("./data/2_output_data/alb_prey_pa_use.csv"))
+dim(alb_prey_pa_use)
+# Then create the mvabund matrix
+alb_prey_pa_use_mv = as.mvabund(alb_prey_pa_use)
+
+```
+
+```{r Load Covar data (R)}
+#R - covars df
+alb_covars_use = read.csv(here::here("./data/2_output_data/alb_covars_use.csv"))
+
+#As factors
+alb_covars_use[,1:ncol(alb_covars_use)] =  lapply(alb_covars_use[,1:ncol(alb_covars_use)], as.factor)
+```
+
+```{r Load Trait data (Q)}
+
+#Q - trait df
+alb_trait_use = read.csv(here::here("./data/2_output_data/alb_trait_use.csv"))
+#Needs species as rows
+#Assign speces as rownames
+rownames(alb_trait_use) <- alb_trait_use$prey_sp
+#Order species list if needed
+alb_trait_use <- alb_trait_use[ order(row.names(alb_trait_use)), ]
+#Traits as factors for analyses
+alb_trait_use[,1:ncol(alb_trait_use)] =  lapply(alb_trait_use[,1:ncol(alb_trait_use)], as.factor)
+
+dim(alb_trait_use)
+
+```
+
+```{r Select covars traits and levels}
+
+#Traits - select and manipulate that df - ideally we want to use the same df here
+traits_use = alb_trait_use[,c(3:6,8)] %>%
+  dplyr::rename(cluster = prob.clust.num) 
+str(traits_use)
+```
+
+```{r Load models}
+#Species model
+ocean_spp = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+ocean_clusters_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+ocean_trait_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+
+#LASSO glms
+ocean_spp_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_LASSO.rds"))
+ocean_cluster_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO.rds"))
+ocean_trait_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_LASSO.rds"))
+
+#Full models
+ocean_full_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_many.rds"))
+ocean_full_LASSO = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_LASSO.rds"))
+
+ocean_full_spp_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+ocean_full_spp_LASSO = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_LASSO.rds"))
+
+```
+
+## MODEL COMPARISON
+
+### Model: ocean_spp
+
+```{r Model Output ocean_spp}
+#ocean_spp
+#ocean_spp_sum = summary(ocean_spp, nBoot=1)
+#saveRDS(ocean_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
+#ocean_spp_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
+#ocean_spp_sum 
+#ocean_spp_sum$statistic
+```
+
+```{r Anova ocean_spp}
+an_ocean_spp = anova(ocean_spp, nBoot = 10, test = "LR")
+#an_ocean_spp = anova.traitglm(ocean_spp, nBoot = 10, p.uni="adjusted")
+#saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
+#an_ocean_spp = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
+an_ocean_spp
+```
+
+```{r Extracting deviance explained}
+#sum(an_ocean_spp$uni.test[2,])
+#an_ocean_spp$uni.test[2,]
+```
+
+### Model: ocean_clusters_many
+
+```{r Model Output ocean_clusters_many}
+#ocean_clusters_many
+#ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+#saveRDS(ocean_clusters_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
+
+#ocean_clusters_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
+#ocean_clusters_sum 
+#ocean_clusters_sum$statistic
+```
+
+```{r Anova ocean_clusters_many}
+
+an_ocean_clusters_many = anova.traitglm(ocean_clusters_many, nBoot = 10, test = "LR")
+#saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
+#an_ocean_clusters_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
+an_ocean_clusters_many
+```
+
+### Model: ocean_trait_many
+
+```{r Model Output ocean_trait_many}
+#ocean_trait_many
+#ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+#saveRDS(ocean_trait_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
+
+#ocean_trait_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
+#ocean_trait_sum
+#ocean_trait_sum$statistic
+```
+
+```{r Anova ocean_trait_many}
+
+an_ocean_trait_many = anova.traitglm(ocean_trait_many, nBoot = 10, test = "LR")
+#saveRDS(an_ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
+#an_ocean_trait_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
+an_ocean_trait_many
+
+```
+
+### Model: ocean_full_many
+
+```{r Model output ocean_full_many}
+#ocean_full_many
+#ocean_full_sum = summary(ocean_full_many, nBoot=10)
+#saveRDS(ocean_full_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
+
+#ocean_full_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
+#ocean_full_sum 
+#ocean_full_sum$statistic
+```
+
+```{r Anova ocean_full_many}
+an_ocean_full_many = anova.traitglm(ocean_full_many, nBoot = 10, test = "LR")
+#saveRDS(an_ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
+#an_ocean_full_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
+an_ocean_full_many
+```
+
+### Model: ocean_full_spp_many
+
+```{r Model output ocean_full_spp_many}
+#ocean_full_spp_many
+#ocean_full_spp_sum = summary(ocean_full_spp_many, nBoot=10)
+#saveRDS(ocean_full_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_sum.rds"))
+
+#ocean_full_spp_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_sum.rds"))
+#ocean_full_spp_sum 
+#ocean_full_spp_sum$statistic
+```
+
+```{r Anova ocean_full_spp_many}
+an_ocean_full_spp_many = anova.traitglm(ocean_full_spp_many, nBoot = 10, test = "LR")
+#saveRDS(an_ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_spp_many.rds"))
+#an_ocean_full_spp_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_spp_many.rds"))
+an_ocean_full_spp_many
+```
+
+## Create ANOVA table output for MS
+
+```{r ANOVA table output for MS}
+
+#anova_comp1 = anova.traitglm(ocean_full_spp_many , ocean_full_many, ocean_trait_many, ocean_clusters_many, nBoot = 10, test = "wald")
+
+#saveRDS(anova_comp1, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
+#anova_comp1 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
+#anova_comp1
+#anova_comp1$table
+```
+
+## Conclusions
+
+UPDATE THESE...
+
+The species models had the lowest residual deviance explained, and typically higher AIC values. Traits models performed slightly better than cluster models, but not massive difference. Both cluster and trait sets of models outperformed species models.
+
+The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
+The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
+
+  
+## Model Comp Outputs
+
+### Model List - manyglm
+
+```{r Model list for outputs, eval=FALSE}
+
+#Species*env models
+ocean_spp
+#Cluster*env models (manyglm and LASSO)
+ocean_clusters_many
+#Trait*env models
+ocean_trait_many
+
+#LASSO glms
+ocean_trait_LASSO$deviance
+ocean_cluster_LASSO$deviance
+
+```
+
+### Model outputs - manyglm
+  
+```{r Make output dataframe, eval=FALSE}
+
+model = c("ocean_spp", "ocean_trait_many",  "ocean_clusters_many")
+
+mod_type = c("species", "traits", "cluster")
+
+covar = c("Ocean Basin", "Ocean Basin",  "Ocean Basin")
+
+deviance = c(ocean_spp$deviance, ocean_trait_many$deviance, ocean_clusters_many$deviance)
+
+aic = c(ocean_spp$AICsum, ocean_trait_many$AICsum, ocean_clusters_many$AICsum)
+
+mod_dev = data.frame(covar, mod_type, model, deviance, aic)
+
+mod_dev$mod_type[mod_dev$mod_type == "cluster"] <- "guilds"
+
+write.csv(mod_dev, here::here("data/2_output_data/mod_dev_apr2022.csv"))
+
+```
+
+```{r Make output graph, eval=FALSE}
+
+mod_dev$mod_type = as.factor(mod_dev$mod_type)
+mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "guilds"))
+levels(mod_dev$mod_type)
+
+mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mod_type)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  #ylim(2500,4360) +
+  theme_classic() + 
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "top") +
+  xlab("Covariate fitted to model") + ylab("Deviance explained") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type")+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
+
+mod_dev_graph
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph.pdf"), 
+       plot = mod_dev_graph, width=8, height=4, dpi=300)
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph.jpeg"), 
+       plot = mod_dev_graph, width=, height=4, dpi=300)
+
+```
+
+```{r LASSO summary call trial, eval=FALSE}
+summary(ocean_spp_LASSO)
+summary(ocean_trait_LASSO)
+summary(ocean_cluster_LASSO)
+```
+
+### Model list - LASSO
+
+Prints the lambda and deviance.
+
+```{r Model list for outputs LASSO, eval=FALSE}
+
+#Species*env models
+ocean_spp_LASSO$deviance
+#LASSO glms
+ocean_trait_LASSO$deviance
+ocean_cluster_LASSO$deviance
+
+```
+
+### Model outputs without phylo - LASSO
+  
+```{r Make output dataframe LASSO, eval=FALSE}
+
+model = c("ocean_spp", "ocean_trait_LASSO",  "ocean_clusters_LASSO")
+
+mod_type = c("species", "traits", "cluster")
+
+covar = c("Ocean Basin", "Ocean Basin",  "Ocean Basin")
+
+deviance = c(ocean_spp_LASSO$deviance, ocean_trait_LASSO$deviance, ocean_cluster_LASSO$deviance)
+
+mod_dev_lasso = data.frame(covar, mod_type, model, deviance)
+
+mod_dev_lasso$mod_type[mod_dev_lasso$mod_type == "cluster"] <- "guilds"
+
+write.csv(mod_dev, here::here("data/2_output_data/mod_dev_lasso_apr2022.csv"))
+
+```
+
+```{r Make output graph LASSO, eval=FALSE}
+mod_dev_lasso$mod_type = as.factor(mod_dev_lasso$mod_type)
+mod_dev_lasso$mod_type = factor(mod_dev_lasso$mod_type, 
+                          levels = c("species", "phylo", "traits", "guilds"))
+levels(mod_dev_lasso$mod_type)
+
+mod_dev_graph_lasso = ggplot(data = mod_dev_lasso, 
+                             aes(x = deviance, y = mod_type, fill = mod_type)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  theme_classic() +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=18),
+        #axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=18),
+        legend.position = "right") +
+  #coord_flip()+
+  xlab("Deviance explained") + ylab("Covariate fitted to model") + 
+  scale_fill_viridis_d(option="D", begin = 0.2, end = 0.9, name = "Model type",
+                       guide = guide_legend(reverse = TRUE))+
+  facet_grid(.~ covar) +
+  theme(strip.text.x = element_text(size = 18))
+
+mod_dev_graph_lasso
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph_lasso.pdf"), 
+       plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph_lasso.jpeg"), 
+       plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
+
+```

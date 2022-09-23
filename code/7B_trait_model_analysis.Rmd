@@ -276,8 +276,8 @@ saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022
 
 ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
-                      family = binomial(link = "logit"),
-                      composition = TRUE #note that col.intercepts = TRUE is the default
+                      family = binomial(link = "logit")#,
+                      #composition = TRUE #note that col.intercepts = TRUE is the default
                       ) #note default is "manyglm"
 ocean_spp
 ocean_spp$deviance
@@ -304,8 +304,8 @@ plot(resids.full); abline(c(0,0),col="red")
 ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
                       family = binomial(link = "logit"),
-                      method = "glm1path",
-                      composition = TRUE
+                      method = "glm1path"#,
+                      #composition = TRUE
                       ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
@@ -563,28 +563,27 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_L
 
 ### Full model
 
-```{r Full model ocean manyglm}
+```{r Full spp trait model ocean manyglm}
 
 ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
                             R = alb_covars_use$OceanBasin,
                             Q = alb_trait_use[,c(1,3:6)], 
-                            family=binomial(link = "logit"),
-                            composition = TRUE
+                            family=binomial(link = "logit")#,
+                            #composition = TRUE
                             ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_full_many$deviance
 ```
 
-
-```{r Full model ocean LASSO}
+```{r Full spp trait model ocean LASSO}
 
 ocean_full_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                              R = alb_covars_use$OceanBasin,
                              Q = alb_trait_use[,c(1,3:6)],
                              family=binomial(link = "logit"),
-                             method="glm1path",
-                            composition = TRUE
+                             method="glm1path"#,
+                             #composition = TRUE
                              ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
@@ -593,15 +592,15 @@ ocean_full_LASSO$deviance
 deviance(ocean_full_LASSO)
 ```
 
-### Spp info model
+### Species as trait model 
 
 ```{r Full spp model ocean manyglm}
 
 ocean_full_spp_many <- traitglm(L = alb_prey_pa_use_mv,
                             R = alb_covars_use$OceanBasin,
                             Q = alb_trait_use$prey_sp, 
-                            family=binomial(link = "logit"),
-                            composition = TRUE
+                            family=binomial(link = "logit")#,
+                            #composition = TRUE
                             ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
@@ -613,12 +612,12 @@ ocean_full_spp_many$deviance
 ```{r Full spp model ocean LASSO}
 
 ocean_full_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
-                             R = alb_covars_use$OceanBasin,
-                             Q = alb_trait_use$prey_sp, 
-                            family=binomial(link = "logit"),
-                             method="glm1path",
-                            composition = TRUE
-                             ) 
+                                 R = alb_covars_use$OceanBasin,
+                                 Q = alb_trait_use$prey_sp,
+                                 family=binomial(link = "logit"),
+                                 method="glm1path"#
+                                 #composition = TRUE
+                                 ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_full_spp_LASSO
@@ -629,7 +628,7 @@ deviance(ocean_full_spp_LASSO)
 
 ### SAVE THESE
 
-```{r Save interaction models}
+```{r Save key models}
 
 #Manyglm
 saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
@@ -643,7 +642,7 @@ saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_mo
 
 ```
 
-```{r save additional models}
+```{r Save additional models}
 saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
 saveRDS(ocean_full_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_LASSO.rds"))
 
@@ -655,7 +654,7 @@ saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_mod
 
 ### Ordination
 
-```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
+```{r Visualise nMDS ordinations PA, eval = FALSE, include = FALSE}
 
 
 #PA
