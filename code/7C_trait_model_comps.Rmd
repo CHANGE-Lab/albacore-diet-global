@@ -58,8 +58,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("code/traitglm.R")
-source("code/get_polys.R")
+source(here::here("code/traitglm.R"))
+source(here::here("code/get_polys.R"))
 
 ```
 
@@ -136,8 +136,8 @@ ocean_full_spp_LASSO = readRDS(file = here::here("outputs_figures/traitglms/ocea
 
 ```{r Model Output ocean_spp}
 ocean_spp
-ocean_spp_sum = summary(ocean_spp, nBoot=1)
-saveRDS(ocean_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
+#ocean_spp_sum = summary(ocean_spp, nBoot=1)
+#saveRDS(ocean_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
 
 ocean_spp_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_sum.rds"))
 ocean_spp_sum 
@@ -145,9 +145,9 @@ ocean_spp_sum$statistic
 ```
 
 ```{r Anova ocean_spp}
-an_ocean_spp = anova(ocean_spp, nBoot = 10, test = "wald")
+#an_ocean_spp = anova(ocean_spp, nBoot = 10, test = "wald")
 #an_ocean_spp = anova.traitglm(ocean_spp, nBoot = 10, p.uni="adjusted")
-saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
+#saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_spp.rds"))
 an_ocean_spp
 ```
@@ -161,8 +161,8 @@ an_ocean_spp
 
 ```{r Model Output ocean_clusters_many}
 ocean_clusters_many
-ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
-saveRDS(ocean_clusters_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
+#ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+#saveRDS(ocean_clusters_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
 
 ocean_clusters_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_sum.rds"))
 ocean_clusters_sum 
@@ -171,8 +171,8 @@ ocean_clusters_sum$statistic
 
 ```{r Anova ocean_clusters_many}
 
-an_ocean_clusters_many = anova.traitglm(ocean_clusters_many, nBoot = 10, test = "wald")
-saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
+#an_ocean_clusters_many = anova.traitglm(ocean_clusters_many, nBoot = 10, test = "wald")
+#saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_clusters_many.rds"))
 an_ocean_clusters_many
 ```
@@ -181,8 +181,8 @@ an_ocean_clusters_many
 
 ```{r Model Output ocean_trait_many}
 ocean_trait_many
-ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
-saveRDS(ocean_trait_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
+#ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+#saveRDS(ocean_trait_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
 
 ocean_trait_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_sum.rds"))
 ocean_trait_sum
@@ -191,8 +191,8 @@ ocean_trait_sum$statistic
 
 ```{r Anova ocean_trait_many}
 
-an_ocean_trait_many = anova.traitglm(ocean_trait_many, nBoot = 10, test = "wald")
-saveRDS(an_ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
+#an_ocean_trait_many = anova.traitglm(ocean_trait_many, nBoot = 10, test = "wald")
+#saveRDS(an_ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
 an_ocean_trait_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_trait_many.rds"))
 an_ocean_trait_many
 
@@ -202,8 +202,8 @@ an_ocean_trait_many
 
 ```{r Model output ocean_full_many}
 ocean_full_many
-ocean_full_sum = summary(ocean_full_many, nBoot=10)
-saveRDS(ocean_full_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
+#ocean_full_sum = summary(ocean_full_many, nBoot=10)
+#saveRDS(ocean_full_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
 
 ocean_full_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_sum.rds"))
 ocean_full_sum 
@@ -211,27 +211,27 @@ ocean_full_sum$statistic
 ```
 
 ```{r Anova ocean_full_many}
-an_ocean_full_many = anova.traitglm(ocean_full_many)
-saveRDS(an_ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
+#an_ocean_full_many = anova.traitglm(ocean_full_many, nBoot = 10, test = "wald")
+#saveRDS(an_ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
 an_ocean_full_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_many.rds"))
 an_ocean_full_many
 ```
 
 ### Model: ocean_full_spp_many
 
-```{r Model output ocean_full_many}
+```{r Model output ocean_full_spp_many}
 ocean_full_spp_many
-ocean_full_spp_sum = summary(ocean_full_spp_many, nBoot=10)
-saveRDS(ocean_full_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_sum.rds"))
+#ocean_full_spp_sum = summary(ocean_full_spp_many, nBoot=10)
+#saveRDS(ocean_full_spp_sum, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_sum.rds"))
 
 ocean_full_spp_sum = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_sum.rds"))
 ocean_full_spp_sum 
 ocean_full_spp_sum$statistic
 ```
 
-```{r Anova ocean_full_many}
-an_ocean_full_spp_many = anova.traitglm(ocean_full_spp_many, nBoot = 10, test = "wald")
-saveRDS(an_ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_spp_many.rds"))
+```{r Anova ocean_full_spp_many}
+#an_ocean_full_spp_many = anova.traitglm(ocean_full_spp_many, nBoot = 10, test = "wald")
+#saveRDS(an_ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_spp_many.rds"))
 an_ocean_full_spp_many = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/an_ocean_full_spp_many.rds"))
 an_ocean_full_spp_many
 ```
@@ -240,51 +240,19 @@ an_ocean_full_spp_many
 
 ```{r ANOVA table output for MS}
 
-anova_comp1 = anova.traitglm(ocean_full_spp_many
-                             , ocean_full_many
-                             , ocean_trait_many
-                             , ocean_clusters_many
-                             , nBoot = 10
-                             , test = "wald"
-                             )
+#anova_comp1 = anova.traitglm(ocean_full_spp_many , ocean_full_many, ocean_trait_many, ocean_clusters_many, nBoot = 10, test = "wald")
 
 #saveRDS(anova_comp1, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
 #anova_comp1 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_traits.rds"))
-anova_comp1
-anova_comp1$table
-```
-
-```{r ANOVA table output for MS 2, include =FALSE, eval=FALSE}
-anova_comp2 = anova.traitglm(#ocean_spp
-                            ocean_trait_many
-                            , ocean_clusters_many
-                            )
-
-#saveRDS(anova_comp2, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_clusters.rds"))
-anova_comp2 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_clusters.rds"))
-anova_comp2$table
-```
-
-```{r ANOVA table output for MS 3, include =FALSE, eval=FALSE}
-
-anova_comp3 = anova(ocean_spp
-                            , ocean_trait_many
-                            , ocean_clusters_many
-                            )
-
-
-
-saveRDS(anova_comp3, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/anova_comp_three.rds"))
-anova_comp3 = readRDS(file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/aanova_comp_three.rds"))
-anova_comp3$table
+#anova_comp1
+#anova_comp1$table
 ```
 
 ## Conclusions
 
 UPDATE THESE...
 
-The species models had the lowest residual deviance explained, and typically higher AIC values. Then phylo model also lower.
-Traits models performed slightly better than cluster models, but not massive difference. Both cluster and trait sets of models outperformed species models.
+The species models had the lowest residual deviance explained, and typically higher AIC values. Traits models performed slightly better than cluster models, but not massive difference. Both cluster and trait sets of models outperformed species models.
 
 The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
 The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
@@ -309,7 +277,6 @@ ocean_cluster_LASSO$deviance
 
 ```
 
-
 ### Model outputs - manyglm
   
 ```{r Make output dataframe}
@@ -333,6 +300,7 @@ write.csv(mod_dev, here::here("data/2_output_data/mod_dev_apr2022.csv"))
 ```
 
 ```{r Make output graph}
+
 mod_dev$mod_type = as.factor(mod_dev$mod_type)
 mod_dev$mod_type = factor(mod_dev$mod_type, levels = c("species", "traits", "guilds"))
 levels(mod_dev$mod_type)
@@ -355,10 +323,10 @@ mod_dev_graph = ggplot(data = mod_dev, aes(x = mod_type, y = deviance, fill = mo
 
 mod_dev_graph
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph.pdf"), 
        plot = mod_dev_graph, width=8, height=4, dpi=300)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph.jpeg"), 
        plot = mod_dev_graph, width=, height=4, dpi=300)
 
 ```
@@ -367,12 +335,12 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph.jpe
 summary(ocean_spp_LASSO)
 summary(ocean_trait_LASSO)
 summary(ocean_cluster_LASSO)
-
-BIC(ocean_cluster_LASSO)
 ```
 
 
 ### Model list - LASSO
+
+Prints the lambda and deviance.
 
 ```{r Model list for outputs LASSO, eval=FALSE}
 
@@ -430,10 +398,10 @@ mod_dev_graph_lasso = ggplot(data = mod_dev_lasso,
 
 mod_dev_graph_lasso
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.pdf"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph_lasso.pdf"), 
        plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/mod_dev_graph_lasso.jpeg"), 
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/mod_dev_graph_lasso.jpeg"), 
        plot = mod_dev_graph_lasso, width=6, height=4, dpi=300)
 
 ```
