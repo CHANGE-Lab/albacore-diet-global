@@ -223,8 +223,6 @@ str(traits_use)
 ```{r null manyglm, eval=FALSE}
 null_many <- manyglm(alb_prey_pa_use_mv ~ 1, family = binomial(link = "logit"))
 plot(null_many)
-anova(null_many, nBoot=99)
-anova(null_many, p.uni="adjusted", nBoot=99)
 summary(null_many, nBoot=99)
 ```
 
@@ -281,6 +279,7 @@ ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
                       ) #note default is "manyglm"
 ocean_spp
 ocean_spp$deviance
+anova(ocean_spp)
 #check model output if needed
 
 #predict.traitglm(ocean_spp)
