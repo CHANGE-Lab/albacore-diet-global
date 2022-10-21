@@ -65,8 +65,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source(here::here("code/traitglm.R"))
-source(here::here("code/get_polys.R"))
+#source(here::here("code/traitglm.R"))
+#source(here::here("code/get_polys.R"))
 
 ```
 
@@ -223,18 +223,20 @@ str(traits_use)
 ```{r null manyglm, eval=FALSE}
 null_many <- manyglm(alb_prey_pa_use_mv ~ 1, family = binomial(link = "logit"))
 plot(null_many)
-summary(null_many, nBoot=99)
+#summary(null_many, nBoot=99)
 ```
 
 ## SPP MANY GLM
 
 ```{r spp manyglm}
-spp_many <- manyglm(alb_prey_pa_use_mv ~ alb_covars_use$OceanBasin, family = binomial(link = "logit"))
+spp_many <- manyglm(alb_prey_pa_use_mv ~ alb_covars_use$OceanBasin, family = "negative.binomial"
+                    #family = binomial(link = "logit")
+                    )
 plot(spp_many)
 anova(spp_many, nBoot=99, test = "wald")
 anova(spp_many, p.uni="adjusted", nBoot=99)
 summary(spp_many, nBoot=99)
-saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/spp_many.rds"))
+#saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/spp_many.rds"))
 ```
 
 ## TRAIT GLMS
@@ -274,14 +276,14 @@ saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022
 
 ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
-                      family = binomial(link = "logit"),
+                      family = "negative.binomial",
+                      #family = binomial(link = "logit"),
                       composition = TRUE #note that col.intercepts = TRUE is the default
                       ) #note default is "manyglm"
 ocean_spp
-ocean_spp$deviance
-anova(ocean_spp)
-#check model output if needed
-
+#ocean_spp$deviance
+an_ocean_spp = anova(ocean_spp, nBoot = 10)
+an_ocean_spp
 #predict.traitglm(ocean_spp)
 ```
 
@@ -323,13 +325,16 @@ Trait (cluster)*Env (ocean basin) - Manyglm
 ocean_clusters_many <- traitglm(L = alb_prey_pa_use_mv,
                                 R = alb_covars_use$OceanBasin,
                                 Q = traits_use$cluster,
-                                family=binomial(link = "logit"),
+                                family = "negative.binomial",
+                                #family = binomial(link = "logit"),
                                 composition = TRUE
                                 ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_clusters_many
-ocean_clusters_many$deviance
+#ocean_clusters_many$deviance
+an_ocean_clusters_many = anova(ocean_clusters_many, nBoot = 10)
+an_ocean_clusters_many 
 ```
 
 ```{r Plot clusters ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
@@ -468,7 +473,10 @@ ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
                              ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
-ocean_trait_many$deviance
+ocean_trait_many
+#ocean_trait_many$deviance
+an_ocean_trait_many = anova(ocean_trait_many, nBoot = 10)
+an_ocean_trait_many
 ```
 
 ```{r Plot traits ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}

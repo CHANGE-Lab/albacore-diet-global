@@ -1,0 +1,298 @@
+---
+title: "Albacore Diet Synthesis C Trait Modelling"
+author: "Natasha Hardy"
+date: "15/04/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Trait variation in albacore diet across geographies
+
+## About
+
+This document contains code for loading mostly manipulated data for global albacore prey communities consumed and for conducting multivariate community analyses and traitglm on albacore diets across ocean basins, using habitat association, gregariousness traits and cluster # output from cluster analyses. Note that current analyses in this document includes the following distribution of observations:
+
+Mediterranean    N Atlantic     N Pacific
+       9            21            28      
+
+## Current work
+
+Troubleshoot following analysis: BM suggested (email from 3/06/2020):
+You might also see differences between upwelling systems (e.g. California Current, Canary Current) vs. downwelling systems (e.g. Agulhas Current, both coasts of Australia), but that should also fall out in the ocean basin analysis, given the sample distribution
+
+
+## Workspace
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#library("rstudioapi")
+#setwd(dirname(getActiveDocumentContext()$path))
+```
+
+```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
+# general
+library(tidyverse)
+library(dplyr)
+library(devtools)
+library(here)
+"%notin%" = Negate('%in%')
+here::here()
+
+# graphics
+library(ggplot2)
+library(lattice)
+library(graphics)
+
+#modelling
+library(mvabund)
+
+## mvabund bug source code
+#source(here::here("code/traitglm.R"))
+#source(here::here("code/get_polys.R"))
+
+```
+
+## Data needs
+
+For Ocean Basin analysis:
+
+- Species (L): alb_prey_pa_use ==> "./data/output_data/alb_prey_pa_use.csv"
+
+- Env/Site (R): alb_covars_use ==> "./data/output_data/alb_covars_use.csv"
+
+- Traits (Q): alb_trait_use ==> "./data/output_data/alb_trait_use.csv"
+
+Can also use either of the above for life stage of predator assessment + report results to Desiree.
+
+## Load DFs for analyses
+
+```{r Load Prey data (L)}
+
+#L - species df
+alb_prey_pa_use = read.csv(here::here("./data/2_output_data/alb_prey_pa_use.csv"))
+dim(alb_prey_pa_use)
+
+```
+
+```{r Load Covar data (R)}
+
+#R - covars df
+alb_covars_use = read.csv(here::here("./data/2_output_data/alb_covars_use.csv"))
+
+#As factors
+alb_covars_use[,1:ncol(alb_covars_use)] =  lapply(alb_covars_use[,1:ncol(alb_covars_use)], as.factor)
+
+```
+
+```{r Load Trait data (Q)}
+
+#Q - trait df
+alb_trait_use = read.csv(here::here("./data/2_output_data/alb_trait_use.csv"))
+
+#Needs species as rows
+#Assign speces as rownames
+rownames(alb_trait_use) <- alb_trait_use$prey_sp
+#Order species list if needed
+alb_trait_use <- alb_trait_use[ order(row.names(alb_trait_use)), ]
+#Traits as factors for analyses
+alb_trait_use[,1:ncol(alb_trait_use)] =  lapply(alb_trait_use[,1:ncol(alb_trait_use)], as.factor)
+
+dim(alb_trait_use)
+
+```
+
+
+## DF Checks
+
+**Covars**
+
+```{r Covars values check, eval=FALSE}
+
+#Summary stats on covars
+unique(alb_covars_use$StudyID) #22 studies
+unique(alb_covars_use$OceanBasin) #3 Ocean basins
+
+```
+
+## DF manips for multivariate analyses
+
+```{r Check names and df dimensions}
+
+## Make sure species names match abund matrix
+rownames(alb_trait_use) == colnames(alb_prey_pa_use) #awesome!
+
+# Then create the mvabund matrix
+alb_prey_pa_use_mv = as.mvabund(alb_prey_pa_use)
+
+#Check again that species names match trait values
+rownames(alb_trait_use) == colnames(alb_prey_pa_use_mv) #awesome!
+
+#Check all matrix dimensions
+dim(alb_trait_use) #good
+dim(alb_prey_pa_use_mv) #good
+dim(alb_covars_use) #good
+
+```
+
+```{r Select covars traits and levels}
+
+#Traits - select and manipulate that df - ideally we want to use the same df here
+traits_use = alb_trait_use[,c(3:6,8)] %>%
+  dplyr::rename(cluster = prob.clust.num) 
+
+str(traits_use)
+```
+
+## TRAIT GLMS
+
+### Species model
+
+**SPP Manyglm - Ocean Basin**
+
+```{r SPP ocean manyglm}
+
+ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
+                      R = alb_covars_use$OceanBasin,
+                      family = "binomial",
+                      #family = binomial(link = "logit"),
+                      composition = TRUE #note that col.intercepts = TRUE is the default
+                      ) #note default is "manyglm"
+ocean_spp
+#ocean_spp$deviance
+an_ocean_spp = anova(ocean_spp, nBoot = 10)
+an_ocean_spp
+#predict.traitglm(ocean_spp)
+```
+
+```{r SPP ocean manyglm eval, tidy=TRUE, message=FALSE, warning=FALSE}
+
+#Check model output - residuals TEST
+qqnorm(residuals(ocean_spp)[which(residuals(ocean_spp)<10000)]); abline(c(0,1),col="red")
+
+#omit non-finite residuals FULL MODEL
+resids.full = residuals(ocean_spp)[is.finite((residuals(ocean_spp)))]
+plot(resids.full); abline(c(0,0),col="red")
+
+```
+
+### Trait guild model
+
+**MANYGLM Clusters - Ocean Basin**
+
+Trait (cluster)*Env (ocean basin) - Manyglm
+
+```{r Clusters ocean manyglm}
+
+ocean_clusters_many <- traitglm(L = alb_prey_pa_use_mv,
+                                R = alb_covars_use$OceanBasin,
+                                Q = traits_use$cluster,
+                                family = "binomial",
+                                #family = binomial(link = "logit"),
+                                composition = TRUE
+                                ) 
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+ocean_clusters_many
+#ocean_clusters_many$deviance
+an_ocean_clusters_many = anova(ocean_clusters_many, nBoot = 10)
+an_ocean_clusters_many 
+
+ocean_ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+ocean_ocean_clusters_sum
+```
+
+### Trait models
+
+**MANYGLM Trait values - Ocean Basin**
+
+Trait (trait matrix)*Env (ocean basin) - Manyglm
+
+```{r Traits ocean manyglm}
+
+ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
+                             R = alb_covars_use$OceanBasin,
+                             Q = traits_use[,1:4], #traits_use[,1:5]
+                             family=binomial(link = "logit"),
+                             composition = TRUE
+                             ) 
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+ocean_trait_many
+#ocean_trait_many$deviance
+an_ocean_trait_many = anova(ocean_trait_many, nBoot = 10)
+an_ocean_trait_many
+
+ocean_ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+ocean_ocean_trait_sum
+```
+
+### Species as trait model 
+
+**MANYGLM Species as traits - Ocean Basin**
+
+```{r Full spp model ocean manyglm}
+
+ocean_full_spp_many <- traitglm(L = alb_prey_pa_use_mv,
+                            R = alb_covars_use$OceanBasin,
+                            Q = alb_trait_use$prey_sp, 
+                            family=binomial(link = "logit")#,
+                            #composition = TRUE
+                            ) 
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+ocean_full_spp_many
+
+an_ocean_full_spp_many = anova(ocean_full_spp_many, nBoot = 10)
+an_ocean_full_spp_many
+```
+
+### Full model
+
+**MANYGLM Speceis + Trait values - Ocean Basin**
+
+```{r Full spp trait model ocean manyglm}
+
+ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
+                            R = alb_covars_use$OceanBasin,
+                            Q = alb_trait_use[,c(1,3:6)], 
+                            family=binomial(link = "logit")#,
+                            #composition = TRUE
+                            ) 
+
+an_ocean_full_many = anova(ocean_full_many, nBoot = 10)
+an_ocean_full_many
+
+ocean_full_spp_sum = summary(ocean_full_many, nBoot=10)
+ocean_full_spp_sum
+```
+
+### Model comparison
+
+```{r all outputs}
+an_ocean_spp
+an_ocean_clusters_many
+an_ocean_trait_many
+an_ocean_full_many
+an_ocean_full_spp_many
+```
+
+```{r model comparisons, eval=FALSE}
+anova.traitglm(ocean_full_many, ocean_spp)
+
+```
+
+
+
+### SAVE THESE
+
+```{r Save key models, eval=FALSE}
+
+#Manyglm
+saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+saveRDS(ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+
+```

@@ -82,8 +82,8 @@ library(tweedie)
 library(vegan)
 
 ## mvabund bug source code
-source("code/traitglm.R")
-source("code/get_polys.R")
+#source("code/traitglm.R")
+#source("code/get_polys.R")
 
 ```
 
@@ -111,12 +111,12 @@ Now we need to check for and remove any zero-sum columns or rows of data, and lo
 ```{r Species PA (L) remove low abundance taxa, tidy=TRUE, warning=FALSE, message=FALSE}
 #Check for empty columns
 which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2) #Remove
-length(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2)) #173 species have low prevalence
+length(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<3)) #173 species have low prevalence
 names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))
 
 #alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
 
-alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<1))]
+alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
 
 #Check for empty rows
 which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #None
@@ -140,6 +140,26 @@ dim(alb_prey_use_spp) #134 species & 58 observations
 
 ```
 
+## Check (L) multivariate data
+
+```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
+
+
+#PA
+check_nmds = metaMDS(alb_prey_use_spp,
+                     distance="bray",
+                     trymax = 20,#10000, #1000
+                     k=3) #could increase to k = 4
+
+#saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_prob_nMDS_pa.rds"))
+
+#Note pb with this!! insufficient data?
+
+ordiplot(check_nmds, type = "none") #creates blank plot
+orditorp(check_nmds, display = "species", col = "black", air=0.01) #labels traits
+orditorp(check_nmds, display = "sites", col = "red", air=0.01) #labels traits
+
+```
 
 ## Traits (Q)
 
@@ -445,29 +465,6 @@ dim(alb_covars) #49 observations for 9 covars
 
 ```
 
-
-## Check multivariate data
-
-### Ordination
-
-```{r Visualise - nMDS ordinations PA, eval = FALSE, include = FALSE}
-
-
-#PA
-check_nmds = metaMDS(alb_prey_use,
-                     distance="bray",
-                     trymax = 20,#10000, #1000
-                     k=3) #could increase to k = 4
-
-#saveRDS(alb_pa_ord, here("outputs_figures/traitglms/alb_prob_nMDS_pa.rds"))
-
-#Note pb with this!! insufficient data?
-
-pl <- ordiplot(check_nmds, type = "none")
-points(pl, "sites", pch=21, col="red", bg="yellow")
-text(pl, "species", col="blue", cex=0.9)
-
-```
 
 ## SAVE DFS FOR ANALYSES
 
