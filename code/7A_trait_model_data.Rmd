@@ -116,7 +116,7 @@ names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))
 
 #alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
 
-alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<2))]
+alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])<3))]
 
 #Check for empty rows
 which(rowSums(alb_prey_use[,10:ncol(alb_prey_use)])==0) #None
