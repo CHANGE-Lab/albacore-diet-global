@@ -49,8 +49,8 @@ library(graphics)
 library(mvabund)
 
 ## mvabund bug source code
-#source(here::here("code/traitglm.R"))
-#source(here::here("code/get_polys.R"))
+source(here::here("code/traitglm.R"))
+source(here::here("code/get_polys.R"))
 
 ```
 
@@ -146,6 +146,23 @@ str(traits_use)
 ```
 
 ## TRAIT GLMS - MANYGLMS
+
+### Read in models
+
+```{r Save key models, eval=FALSE}
+
+#Manyglm
+ocean_spp = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+ocean_clusters_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+ocean_trait_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+ocean_full_spp_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+
+#Anovas
+an_ocean_spp = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_anova.rds"))
+ocean_clusters_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+an_ocean_trait_many = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many_anova.rds"))
+
+```
 
 ### Species model
 
@@ -304,25 +321,6 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_m
 
 ```
 
-### Species as trait model 
-
-**MANYGLM Species as traits - Ocean Basin**
-
-```{r Full spp model ocean manyglm}
-
-ocean_full_spp_many <- traitglm(L = alb_prey_pa_use_mv,
-                            R = alb_covars_use$OceanBasin,
-                            Q = alb_trait_use$prey_sp, 
-                            family=binomial(link = "logit")#,
-                            #composition = TRUE
-                            ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_full_spp_many
-
-an_ocean_full_spp_many = anova(ocean_full_spp_many, nBoot = 10)
-an_ocean_full_spp_many
-```
 
 ### Full model
 
@@ -336,12 +334,13 @@ ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
                             family=binomial(link = "logit")#,
                             #composition = TRUE
                             ) 
+ocean_full_many
 
 an_ocean_full_many = anova(ocean_full_many, nBoot = 10)
 an_ocean_full_many
 
-ocean_full_spp_sum = summary(ocean_full_many, nBoot=10)
-ocean_full_spp_sum
+#ocean_full_spp_sum = summary(ocean_full_many, nBoot=10)
+#ocean_full_spp_sum
 ```
 
 ### Model comparison
@@ -350,6 +349,18 @@ ocean_full_spp_sum
 an_ocean_spp
 an_ocean_clusters_many
 an_ocean_trait_many
+```
+
+## SAVE MANYGLMS
+
+```{r Save key models, eval=FALSE}
+
+#Manyglm
+saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+saveRDS(ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+
 ```
 
 ## TRAIT GLMS - LASSO
@@ -491,14 +502,13 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_L
 
 ```
 
-### SAVE THESE
-
+## SAVE LASSOS
 ```{r Save key models, eval=FALSE}
 
 #Manyglm
-saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
-saveRDS(ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
-saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
-saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+saveRDS(ocean_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+saveRDS(ocean_clusters_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+#saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
 
 ```
