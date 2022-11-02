@@ -51,7 +51,6 @@ library(mvabund)
 ## mvabund bug source code
 source(here::here("code/traitglm.R"))
 source(here::here("code/get_polys.R"))
-
 ```
 
 ## Data needs
