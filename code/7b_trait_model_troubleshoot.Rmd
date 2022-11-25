@@ -179,14 +179,19 @@ ocean_spp
 saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
 
 #ocean_spp$deviance
-an_ocean_spp = anova(ocean_spp, test = "LR", nBoot = 10)
+an_ocean_spp = anova(ocean_spp, #test = "LR", 
+                     nBoot = 10
+                     )
 an_ocean_spp
 #predict.traitglm(ocean_spp)
 saveRDS(an_ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_anova.rds"))
 
-#ocean_ocean_spp_sum = summary(ocean_spp, nBoot=10)
-#ocean_ocean_spp_sum
-#saveRDS(ocean_ocean_spp_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_summary.rds"))
+ocean_ocean_spp_sum = summary(ocean_spp, 
+                              nBoot=10, 
+                              #nBoot=100, 
+                              show.time=TRUE)
+ocean_ocean_spp_sum
+saveRDS(ocean_ocean_spp_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_summary.rds"))
 ```
 
 ```{r SPP ocean manyglm eval, tidy=TRUE, message=FALSE, warning=FALSE}
@@ -224,9 +229,9 @@ an_ocean_clusters_many = anova(ocean_clusters_many, test = "LR", nBoot = 10)
 an_ocean_clusters_many 
 saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many_anova.rds"))
 
-#ocean_ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
-#ocean_ocean_clusters_sum
-#saveRDS(ocean_ocean_clusters_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many_summary.rds"))
+ocean_ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+ocean_ocean_clusters_sum
+saveRDS(ocean_ocean_clusters_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many_summary.rds"))
 ```
 
 ```{r Plot clusters ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
