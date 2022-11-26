@@ -256,7 +256,6 @@ The species models had the lowest residual deviance explained, and typically hig
 The best model in terms of residual deviance explained was the latitude + traits model, however, did have higher AIC scores.
 The interaction model that included ocean basin + life stage had the lowest AIC but low deviance explained.
 
-  
 ## Model Comp Outputs
 
 ### Model List - manyglm

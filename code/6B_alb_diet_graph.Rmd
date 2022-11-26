@@ -36,7 +36,6 @@ library(scales)
 
 ```
 
-
 ## Load Data
 
 ```{r Load frequency of occurrence data, tidy=TRUE}
@@ -54,7 +53,7 @@ prob.prey.cl = read.csv(here::here("data/2_output_data/prob.prey.clusternum.divi
 
 alb_diet_clust = alb_global_diet %>%
   left_join(prob.prey.cl) %>%
-  filter(prob.clust.num != "NA") %>% #> 0 #, pFOuse > 5
+  #filter(prob.clust.num != "NA") %>% #> 0 #, pFOuse > 5
   select(StudyID, rep_ID, YearEnd, OceanBasin, OceanBasinQ, prey_class:prey_sp, pFOuse, pN, pM, prob.clust.num)
 #unique(alb_diet_clust$prob.clust.num)
 #unique(alb_diet_clust$OceanBasin)
@@ -105,10 +104,11 @@ length(unique(index_alb_diet_clust_data$rep_ID)) #observations of useable FO dat
 Match the colour palette for clusters in these and other graphs in the MS.
 
 ```{r Colour palette for cluster graphs, tidy=TRUE}
-
+unique(index_alb_diet_clust_data$prob.clust.num)
 fig3.pal <- c("#00496F", "#EDD746", 
               "#0A718F", "#59A082", 
-              "#EDA417", "#E7720B", "#DD4124")
+              "#EDA417", "#E7720B", "#DD4124",
+              "#787878")
 scales::show_col(fig3.pal)
 ```
 
@@ -119,26 +119,48 @@ scales::show_col(fig3.pal)
 index_cluster_bar = index_alb_diet_clust_data %>%
   ggplot() +
   geom_bar(data = index_alb_diet_clust_data, 
-             aes(y=relFO, x=yearrepID, #group=rep_ID, 
+             aes(y=relFO, x= yearrepID, #interaction(YearEnd, rep_ID), #yearrepID, #group=rep_ID, YearEnd:rep_ID, 
                  fill=as.factor(prob.clust.num)),
              width = 1, stat = "identity") + #, position = "jitter", , position="identity"
   #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
   theme(panel.grid.major = element_blank(),
-        axis.title=element_text(size=34),
+        axis.title=element_text(size=45),
         axis.title.x=element_blank(),
-        axis.text=element_text(size=26),
-        axis.text.x = element_text(angle = 90, vjust = 1, hjust=1),
-        legend.text=element_text(size=34),
-        legend.title=element_text(size=34),
-        legend.position = "top") +
+        axis.text=element_text(size=34),
+        #axis.text.x = element_blank(),#
+        axis.text.x = element_text(angle = 70, vjust = 1, hjust=1),
+        legend.text=element_text(size=45),
+        legend.title=element_text(size=45),
+        #legend.position = "top"
+        legend.position = c(.15, .85),
+        legend.background = element_rect(fill="lightgrey")
+        )+
   labs(x="Years sampled", y="Relative %FO")+
-  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds") +
-  facet_grid(OceanBasin~.)+ #, scales ="free"
-  theme(strip.text = element_text(face="bold", size=rel(3)))
+  scale_x_discrete(labels= c("1880 (Jordan, 1880)", 
+  "1928 (Bouxin, 1934-40)", "1929 (Bouxin, 1934-40)", "1930 (Bouxin, 1934-40)", "1931 (Bouxin, 1934-40)", "1932  (Bouxin, 1934-40)", "1933  (Bouxin, 1934-40)", 
+  "1941 (Hart, 1948)", "1941 (Hart, 1948)", "1945 (Hart, 1948)", "1946 (Hart, 1948)", "1946 (Hart, 1948)", "1947 (Hart, 1948)", "1949 (Hart, 1948)",
+  "1957 (Iversen, 1962)", "1964 (Matthews, 1977)", "1968 (Ortiz Zarate, 1987)", "1968 (Pinkas, 1971)", "1968 (Pinkas, 1971)", "1968 (Pinkas, 1971)",
+  "1969 (Pinkas, 1971)", "1969 (Pinkas, 1971)", "1971 (Aloncle, 1973)", "1983 (Bernard, 1985)", "1992 (Bello, 1999)", "1993 (Pusineri, 2005)", "1994 (Bello, 1999)",
+  "1998 (Dos Santos, 2002)", "2001 (Watanabe, 2004)", "2002 (Watanabe, 2004)", "2002 (Watanabe, 2004)", "2004 (Goni, 2011)", "2005 (Goni, 2011)",
+  "2005 (Goni, 2011)", "2005 (Goni, 2011)", "2005 (Goni, 2011)", "2005 (Goni, 2011)", "2006 (Consoli, 2008)", "2006 (Glaser, 2015)", "2006 (Goni, 2011)",
+  "2006 (Goni, 2011)", "2006 (Goni, 2011)", "2006 (Goni, 2011)", "2006 (Goni, 2011)", "2006 (Young, 2010)", "2006 (Young, 2010)", "2007 (Goni, 2011)",
+  "2007 (Salman, 2009)", "2008 (Goni, 2011)", "2008 (Romeo, 2012)", "2008 (Williams, 2015)", "2009 (Williams, 2015)", "2010 (Madigan, 2015)",
+  "2010 (Williams, 2015)", "2010 (Williams, 2015)", "2010 (Williams, 2015)", "2014 (Romanov, 2020)", "2014 (Romanov, 2020)", "2014 (Romanov, 2020)",
+  "2015 (Romanov, 2020)")) + #unique(index_alb_diet_clust_data$StudyID)
+  scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds",
+                    labels = c("1 (non-diel migrating mesopelagics)", "2 (diel migrating mesopelagics)", "3 (coastal and shelf epipelagics)",
+                            "4 (coastal and shelf demersals)", "5 (oceanic epipelagics)", "6 (seasonal, continental shelf)", 
+                            "7 (resident continental shelf)", "NA (not classified)")) +
+  facet_grid(OceanBasin~.)+ #, scales ="free", StudyID, scales ="free_x"
+  theme(strip.text = element_text(face="bold", size=rel(4)))
 index_cluster_bar
 
-ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
-ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 30, height = 30, dpi = 300)
+#unique(index_alb_diet_clust_data$YearEnd)
+#unique(index_alb_diet_clust_data$StudyID)
+#levels(as.factor(index_alb_diet_clust_data$yearrepID))
+
+ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
+ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
 ```
 
 ### Figure for index data - scatter - extra
@@ -152,7 +174,7 @@ index_cluster_scatter = index_alb_diet_clust_data %>%
              aes(y=relFO, x=YearEnd, group=prob.clust.num, fill=prob.clust.num),
              size=5, shape=23, position = "dodge"
              ) +
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
+  geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
   theme(panel.grid.major = element_blank(),
         axis.title=element_text(size=24),
         axis.text=element_text(size=24),

@@ -273,7 +273,8 @@ Trait (trait matrix)*Env (ocean basin) - Manyglm
 ```{r Traits ocean manyglm}
 
 ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
-                             R = alb_covars_use$OceanBasin,
+                             #R = alb_covars_use$OceanBasin,
+                             R = alb_covars_use[,c(3,4)],
                              Q = traits_use[,1:4], #traits_use[,1:5]
                              family=binomial(link = "logit"),
                              composition = TRUE
@@ -284,13 +285,14 @@ ocean_trait_many
 saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
 
 #ocean_trait_many$deviance
-an_ocean_trait_many = anova(ocean_trait_many, test = "LR", nBoot = 10)
+an_ocean_trait_many = anova(ocean_trait_many, #test = "LR", 
+                            nBoot = 10)
 an_ocean_trait_many
 saveRDS(an_ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many_anova.rds"))
 
-#ocean_ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
-#ocean_ocean_trait_sum
-#saveRDS(ocean_ocean_trait_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many_summary.rds"))
+ocean_ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+ocean_ocean_trait_sum
+saveRDS(ocean_ocean_trait_sum, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many_summary.rds"))
 ```
 
 ```{r Plot traits ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
@@ -369,6 +371,16 @@ saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_
 
 ## TRAIT GLMS - LASSO
 
+### Read in models
+
+```{r Save key models, eval=FALSE}
+#Manyglm
+ocean_spp_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
+ocean_clusters_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
+ocean_trait_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
+#saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
+```
+
 ### Species traitglm LASSO
 
 **SPP LASSO - Ocean Basin**
@@ -421,13 +433,13 @@ rownames(temp) = c("Mediterranean",
                    "N Pacific"#, "S Pacific"
                    )
 
-colnames(temp) = c("C1",
-                   "C2",
-                   "C3",
-                   "C4",
-                   "C5",
-                   "C6",
-                   "C7")
+colnames(temp) = c("1",
+                   "2",
+                   "3",
+                   "4",
+                   "5",
+                   "6",
+                   "7")
 
 ocean_cluster_LASSO_graph = levelplot(temp, 
                      xlab=list("", cex=1.5), #Ocean Basins
@@ -508,11 +520,9 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_L
 
 ## SAVE LASSOS
 ```{r Save key models, eval=FALSE}
-
 #Manyglm
 saveRDS(ocean_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
 saveRDS(ocean_clusters_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
 saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
 #saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
-
 ```
