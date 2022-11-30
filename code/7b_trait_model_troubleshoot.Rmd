@@ -138,7 +138,7 @@ dim(alb_covars_use) #good
 ```{r Select covars traits and levels}
 
 #Traits - select and manipulate that df - ideally we want to use the same df here
-traits_use = alb_trait_use[,c(3:6,8)] %>%
+traits_use = alb_trait_use[,c(5:8,10)] %>%
   dplyr::rename(cluster = prob.clust.num) 
 
 str(traits_use)
@@ -393,10 +393,43 @@ ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                       method = "glm1path"#,
                       #composition = TRUE
                       ) 
-saveRDS(ocean_spp_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_LASSO.rds"))
+#saveRDS(ocean_spp_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_LASSO.rds"))
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_spp_LASSO$deviance
+
+```
+
+```{r Plot phylo ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(ocean_spp_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(ocean_spp_LASSO$fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "N Pacific"
+                   )
+
+colnames(temp) #= c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda", "Clupeiformes", "Decapoda", "Decapodiformes",
+                #   "Euphausiacea", "Gadiformes", "Littorinimorpha", "Myctophiformes", "Myopsida", "Octopoda", "Oegopsida",
+                #   "Ophidiiformes", "Perciformes", "Pleuronectiformes", "Scorpaeniformes", "Sepiida", "Siphonophorae", "Stephanoberyciformes",
+                #   "Stomiiformes", "Syngnathiformes")
+
+ocean_spp_LASSO_graph = levelplot(temp, 
+                     xlab=list("", cex=1.5), #Ocean Basins
+                     ylab=list("Trait Guilds", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
+
+print(ocean_spp_LASSO_graph)
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
 
 ```
 
@@ -415,7 +448,7 @@ ocean_cluster_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                                 method="glm1path",
                                 composition = TRUE
                                 ) 
-saveRDS(ocean_cluster_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO.rds"))
+#saveRDS(ocean_cluster_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO.rds"))
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_cluster_LASSO$deviance
@@ -430,7 +463,8 @@ temp = t(as.matrix(ocean_cluster_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "N Pacific"#, "S Pacific"
+                   "N Pacific", 
+                   "S Pacific"
                    )
 
 colnames(temp) = c("1",
@@ -473,7 +507,7 @@ ocean_trait_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                               method="glm1path",
                               composition = TRUE
                               ) 
-saveRDS(ocean_trait_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_LASSO.rds"))
+#saveRDS(ocean_trait_LASSO, here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_LASSO.rds"))
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_trait_LASSO$deviance
@@ -487,8 +521,8 @@ temp = t(as.matrix(ocean_trait_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "N Pacific"#,
-                   #"S Pacific"
+                   "N Pacific",
+                   "S Pacific"
                    )
 
 colnames(temp) = c("Vert. habitat - demersal",
@@ -518,7 +552,60 @@ ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_L
 
 ```
 
+### Phylo for Supp Info
+
+### Trait guild tratglm LASSO
+
+**GLM1PATH Clusters - Ocean Basin**
+
+Using method = glm1path == LASSO model.
+
+```{r Phylo ocean LASSO}
+
+ocean_phylo_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                                R = alb_covars_use$OceanBasin,
+                                Q = alb_trait_use$prey_order,
+                                family=binomial(link = "logit"),
+                                method="glm1path",
+                                composition = TRUE
+                                ) 
+```
+
+```{r Plot phylo ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(ocean_phylo_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(ocean_phylo_LASSO$fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "N Pacific"
+                   )
+
+colnames(temp) = c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda", "Clupeiformes", "Decapoda", "Decapodiformes",
+                   "Euphausiacea", "Gadiformes", "Littorinimorpha", "Myctophiformes", "Myopsida", "Octopoda", "Oegopsida",
+                   "Ophidiiformes", "Perciformes", "Pleuronectiformes", "Scorpaeniformes", "Sepiida", "Siphonophorae", "Stephanoberyciformes",
+                   "Stomiiformes", "Syngnathiformes")
+
+ocean_phylo_LASSO_graph = levelplot(temp, 
+                     xlab=list("", cex=1.5), #Ocean Basins
+                     ylab=list("Trait Guilds", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
+
+print(ocean_phylo_LASSO_graph)
+
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
+ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
+
+```
+
 ## SAVE LASSOS
+
 ```{r Save key models, eval=FALSE}
 #Manyglm
 saveRDS(ocean_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))

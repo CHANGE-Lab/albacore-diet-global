@@ -100,7 +100,7 @@ Load presence/absence data. Originally 58 observations and 316 for N Atlantic, N
 alb_prey_pa = read.csv(paste(here::here("data/2_output_data/alb_global_wide_dietpa.csv"),
                                    sep=""), check.names=FALSE) %>% #, row.names = 1
   dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %>% #remove species outlier
-  filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values
+  filter(OceanBasin %notin% c("Indian", "S Atlantic", "S Pacific")) #not enough replication for these values #
 
 print(dim(alb_prey_pa)) #58 316 from 70 obs after removing the other ocean basins noted above
 
@@ -171,7 +171,7 @@ Using output of the cluster analyses, this included 292 species and 10 trait var
 
 alb_prob_clust = read.csv(paste(here::here("./data/2_output_data/prob.prey.clusternum.divis.k7.csv"), 
                                 sep=""), header=T, row.names = 1) %>%
-   dplyr::select(prey_sp:prob.clust.num)
+   dplyr::select(prey_class:prey_order, prey_sp:prob.clust.num)
 
 dim(alb_prob_clust) #we obtain 292 species, 11 traits or covariates
 ```
@@ -195,7 +195,7 @@ Here, we filter out low occurrences using 'alb_prob_pa' df. Note that we obtain 
 ```{r Manip trait DF (Q) , tidy=TRUE, warning=FALSE, message=FALSE}
 
 alb_trait_use = alb_prob_clust %>%
-  select(prey_sp, life_stage, vert_habitat, horz_habitat,
+  select(prey_class:prey_order, prey_sp, life_stage, vert_habitat, horz_habitat,
          diel_migrant_cat, season_cat, gregarious, prob.clust.num)
 
 #Relabel to add underscore in names
@@ -206,7 +206,7 @@ rownames(alb_trait_use) <- alb_trait_use$prey_sp
 alb_trait_use <- alb_trait_use[ order(row.names(alb_trait_use)), ]
 
 #Ensure traits are treated as factors for now
-alb_trait_use[,3:8] <- lapply(alb_trait_use[,3:8], factor) #to convert to factors
+alb_trait_use[,5:10] <- lapply(alb_trait_use[,5:10], factor) #to convert to factors
 
 #Need to filter by prey species we want to use.
 alb_trait_use = alb_trait_use %>%
@@ -223,6 +223,10 @@ str(alb_trait_use)
 Here we check the trait values for each trait, and check the distribution of values. Note we merge certain values with low occurrences of species within them, and if we have a logical reason to merge.
 
 ```{r Trait values check, warning=FALSE, message=FALSE}
+summary(as.factor(alb_trait_use$prey_class))
+
+summary(as.factor(alb_trait_use$prey_order))
+
 summary(alb_trait_use$life_stage) #low numbers for larva, do not use
 
 summary(alb_trait_use$vert_habitat) #use

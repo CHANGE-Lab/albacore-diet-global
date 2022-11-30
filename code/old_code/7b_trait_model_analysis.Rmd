@@ -230,7 +230,7 @@ dim(alb_covars_use) #good
 ```{r Select covars traits and levels}
 
 #Traits - select and manipulate that df - ideally we want to use the same df here
-traits_use = alb_trait_use[,c(4:9)] %>%
+traits_use = alb_trait_use[,c(5:10)] %>%
   dplyr::rename(cluster = prob.clust.num) 
 
 levels(traits_use$gregarious)
