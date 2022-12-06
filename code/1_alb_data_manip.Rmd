@@ -569,6 +569,7 @@ summary(as.factor(alb_table_S4$prey_age_reported_1))
 summary(as.factor(alb_table_S4$life_stage))
 
 write.csv(alb_table_S4, here::here("data/3_output_supp/table_S4.csv"), row.names = FALSE)
+write.csv(alb_table_S4, here::here("outputs_figures/ms_figures/SI_results/table_S4.csv"), row.names = FALSE)
 ```
 
 ## Step 2 GO TO 2_extract_longhurst to work on Figure 1a

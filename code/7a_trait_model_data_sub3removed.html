@@ -11,9 +11,8 @@
 
 <meta name="author" content="Natasha Hardy" />
 
-<meta name="date" content="2019-10-10" />
 
-<title>Step 1 Data Manip</title>
+<title>Albacore Diet Synthesis C</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,636 +349,973 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Step 1 Data Manip</h1>
+<h1 class="title toc-ignore">Albacore Diet Synthesis C</h1>
 <h4 class="author">Natasha Hardy</h4>
-<h4 class="date">October 10, 2019</h4>
+<h4 class="date">15/04/2021</h4>
 
 </div>
 
 
+<div id="trait-variation-in-albacore-diet-across-geographies" class="section level1">
+<h1>Trait variation in albacore diet across geographies</h1>
 <div id="about" class="section level2">
 <h2>About</h2>
-<p>This document contains code for manipulating trait information for 5
-prey traits, and life history estimation, for albacore prey species from
-our global meta-analysis of albacore diet composition.</p>
-<p>Relates to following sections of MS:</p>
-<p>“2.2 Prey life stage estimation See MS”</p>
-<p>“2.3 Prey trait information</p>
-<p>For each prey species and main life stage distinctions (i.e., larva,
-juvenile, adult), we collected trait information for four habitat use
-traits and one behavioural trait known to affect the likelihood of a
-pelagic predator encountering, attacking and capturing prey (Green et
-al., 2019). These were: (i) vertical and (ii) horizontal habitat
-association, (iii) presence of diel vertical migration, (iv) presence of
-seasonal migration and (v) aggregation behaviour (Supplementary Data,
-Table S4 &amp; S5). For analyses, we include the phylogenetic Order
-verified using Open Tree of Life Data (OpenTree et al, 2020). Trait data
-were compiled for a broader database construction effort of traits that
-inform predator-prey interactions for albacore (Gleiber et al. in prep).
-We further describe how prey species’ trait values were collected in
-Appendix B (Supporting Information).”</p>
+<p>This document contains code for data manipulation and refinement, to
+pipe to multivariate community analyses and traitglm on albacore diets
+across ocean basins, using habitat association, gregariousness traits
+and cluster # output from cluster analyses.</p>
 </div>
-<div id="workpsace" class="section level2">
-<h2>Workpsace</h2>
-<pre class="r"><code>#R documentation
-library(pander)
-# general
-library(tidyverse)
-library(readxl)
-library(readr)
-library(plyr)
-library(dplyr)
-library(devtools)
-library(here)
-&quot;%notin%&quot; = Negate(&#39;%in%&#39;)
-here::here()</code></pre>
-<pre><code>## [1] &quot;/Users/tashhardy/Documents/GitHub/albacore-diet-global&quot;</code></pre>
+<div id="blueprint-for-paragraphs" class="section level2">
+<h2>Blueprint for paragraphs:</h2>
+<ol style="list-style-type: decimal">
+<li><p>(Results) Describe the dominant significant traits and non-sig
+traits in relation to albacore age and geography sampled (Fig.
+R3).</p></li>
+<li><p>Relate to clusters (potential additional
+analysis/figure).</p></li>
+<li><p>Discussion - Investigate how species traits may be used to
+explain variation in prey use by albacore tuna using a multi-matrix
+approach.</p></li>
+</ol>
 </div>
-<div id="outputs" class="section level2">
-<h2>Outputs</h2>
-<p>List of outputs created for analyses:</p>
+<div id="current-issues-limitations-to-discuss-in-paper" class="section level2">
+<h2>Current Issues / Limitations to discuss in paper</h2>
 <ul>
-<li><p>Prey species’ coarse trait information
-<em>data/2_output_data/prey_trait_select.csv</em></p></li>
-<li><p>Albacore diet data
-<em>data/2_output_data/alb_global_diet.csv</em></p></li>
-<li><p>Albacore diet sampling covariates
-<em>data/2_output_data/alb_covars.csv</em></p></li>
-<li><p>And many more for supplementary information!</p></li>
+<li><p>We did use community data that included single occurrence
+species, this meant species that only occurred once in albacore diets
+across the world. As these are also associated with trait information
+and we aim to use traits to explain differences in communities, we were
+interested in using this information.</p></li>
+<li><p>In a traditional multivariate analysis, single occurrence species
+would inflate differences between communities that are analysed on a
+species-only basis, whilst our sampling (a.k.a. tuna foraging) does not
+adequately pick up these rarer species. It is possible that the
+‘composition=TRUE’ argument in traitglm() would likely assist in
+accounting for species, it does not constitute a full accounting of
+potential random variance from species low abundances.</p></li>
+<li><p>We therefore removed 206 species with low prevalence (occurs &lt;
+3 times), under code chunk 4.</p></li>
+<li><p>The data are longer (57 obs) than they are wide (98
+species).</p></li>
+<li><p>Decision not to use phylogenetic order information, not enough
+replication at the individual order level, could define a phylogeny as
+in PGLMM example code below and that actually accounts for phylogenetic
+structure and relatedness rather than treating phylogenetic information
+as a trait: <a href="https://daijiang.github.io/phyr/reference/pglmm_compare.html" class="uri">https://daijiang.github.io/phyr/reference/pglmm_compare.html</a></p></li>
 </ul>
 </div>
-<div id="dataframes" class="section level2">
-<h2>Dataframes</h2>
-<div id="diet-raw-data" class="section level3">
-<h3>Diet raw data</h3>
-<p>Load diet data and merge with prey size trait information, and
-undertake necessary data selection and manipulation of variables.</p>
-<p>Note: total dataset contained 2051 rows of individual observations of
-prey items from 32 studies.</p>
-<pre class="r"><code># Load diet data spreadsheet
-alb_global = as.data.frame(read_xlsx(here::here(&quot;data/1_input_data/albacore_diet_global.xlsx&quot;),
-    sheet = &quot;albacore_diet_global&quot;))  #2051 rows and 77 vars
-nrow(alb_global)</code></pre>
-<pre><code>## [1] 2051</code></pre>
-<pre class="r"><code>length(unique(alb_global$StudyID))  #32 studies</code></pre>
-<pre><code>## [1] 32</code></pre>
-<pre class="r"><code>original = data.frame(unique(alb_global$StudyID))</code></pre>
-<p>Note: 3 studies investigated the diets of larval albacore tuna
-(Catalan et al. 2007, Uotani et al. 1982, and Young &amp; Davis 1990)
-and one (Hart 1942) contained data that was also published again in a
-longer time series (Hart 1948). These four were thus excluded from
-further analyses of juvenile and adult tuna diets, with 1837
-observations of prey items consumed from 28 studies.</p>
-<pre class="r"><code>alb_global = alb_global %&gt;%
-    dplyr::filter(Include %in% c(&quot;Yes&quot;, &quot;Maybe&quot;) &amp; !pred_life == &quot;larvae&quot;)
-nrow(alb_global)</code></pre>
-<pre><code>## [1] 1837</code></pre>
-<pre class="r"><code>length(unique(alb_global$StudyID))  #28 studies</code></pre>
-<pre><code>## [1] 28</code></pre>
-<pre class="r"><code>check28 = data.frame(unique(alb_global$StudyID))
-
-original_check28 = original %&gt;%
-    anti_join(check28)</code></pre>
-<pre><code>## Joining, by = &quot;unique.alb_global.StudyID.&quot;</code></pre>
-<pre class="r"><code>unique(original_check28$unique.alb_global.StudyID.)</code></pre>
-<pre><code>## [1] &quot;Catalan2007&quot;     &quot;Hart1942&quot;        &quot;Uotani1981&quot;      &quot;Young&amp;Davis1990&quot;</code></pre>
-<pre class="r"><code>rm(original, original_check28)</code></pre>
-<p>Note: a further 2 studies did not report any prey items to species
-level and we did not include these in this meta-analysis. These were
-Logan et al (2013) and Teffer et al. (2015). Thus we retained 26 studies
-with 995 rows of prey species-level diet observations.</p>
-<pre class="r"><code>alb_global = alb_global %&gt;%
-    dplyr::filter(TaxLev == &quot;species&quot;)  #995 rows and 77 vars
-nrow(alb_global)</code></pre>
-<pre><code>## [1] 995</code></pre>
-<pre class="r"><code>length(unique(alb_global$StudyID))  #28 studies</code></pre>
-<pre><code>## [1] 26</code></pre>
-<pre class="r"><code>check26 = data.frame(unique(alb_global$StudyID))
-
-check26_check28 = check28 %&gt;%
-    anti_join(check26)</code></pre>
-<pre><code>## Joining, by = &quot;unique.alb_global.StudyID.&quot;</code></pre>
-<pre class="r"><code>unique(check26_check28$unique.alb_global.StudyID.)</code></pre>
-<pre><code>## [1] &quot;Teffer2015&quot; &quot;Logan2013&quot;</code></pre>
-<pre class="r"><code>rm(check28, check26_check28, check26)</code></pre>
-<p>Data manipulations for global diet dataset for analyses:</p>
-<pre class="r"><code>alb_global = alb_global %&gt;%
-  dplyr::select(StudyID, CiteAuth, CiteYear, OceanBasin, OceanBasinQ, LocatName,
-                LocatLatitude:LocatLongitude, MonthRange, YearEnd, SampleMethod, SampleDepth,
-                stomachs_used,
-                pred_life:est_ref, stomachs_used, prey_class:prey_sp,
-                prey_age_reported_1:prey_age_use, Include, FO, 
-                pFOuse, N, pN, `Total Mass (g)`, pM, maxl_use, maxl_type) %&gt;%
-  #Add gape length information for albacore by study, to relate to potential prey length
-  mutate(gape_lmax = pred_flmean*0.0823+1.758, 
-         gape_height_limit = pred_flmean*0.0246+4.603,
-         prey_age_reported_1=case_when(
-                             #prey_age_reported_1 == &quot;NA&quot; ~ &quot;none&quot;,
-                             prey_age_reported_1 == &quot;larvae&quot; ~ &quot;larva&quot;,
-                             prey_age_reported_1 == &quot;juvenile&quot; ~ &quot;juvenile&quot;,
-                             prey_age_reported_1 == &quot;adult&quot; ~ &quot;adult&quot;)) %&gt;%
-  arrange(StudyID)
-  #1028 obsm 43 vars
-  #calculates the gape length and height limits
-  #Reference paper for this calculation -- Menard et al. (2006) for yellowfin tuna
-
-#Correct data type
-alb_global$maxl_use &lt;- as.numeric(alb_global$maxl_use)
-
-#The NA&#39;s in the reported age for prey column cause problems later and need 
-#to be assigned a categorical value
-alb_global$prey_age_reported_1 &lt;- as.character(alb_global$prey_age_reported_1)
-alb_global$prey_age_reported_1 &lt;- replace_na(alb_global$prey_age_reported_1, &quot;none&quot;)
-#check this
-unique(as.factor(alb_global$prey_age_reported_1))</code></pre>
-<pre><code>## [1] none     adult    juvenile larva   
-## Levels: adult juvenile larva none</code></pre>
-<pre class="r"><code>#Change vector type for YearEnd variable
-alb_global$YearEnd &lt;- as.integer(alb_global$YearEnd)
-
-#Deal with NA&#39;s in stomachs used column
-alb_global$stomachs_used &lt;- as.integer(alb_global$stomachs_used)
-alb_global$stomachs_used &lt;- as.character(alb_global$stomachs_used)
-alb_global$stomachs_used &lt;- replace_na(alb_global$stomachs_used, &quot;not reported&quot;)
-#Check this briefly
-range(alb_global$stomachs_used)</code></pre>
-<pre><code>## [1] &quot;1&quot;            &quot;not reported&quot;</code></pre>
-<pre class="r"><code>length(unique(alb_global$prey_sp)) #308</code></pre>
-<pre><code>## [1] 308</code></pre>
-<pre class="r"><code>#Save total df version
-write.csv(alb_global, here::here(&quot;data/2_output_data/alb_global_diet.csv&quot;), 
-          row.names = FALSE) 
-#1028 observations and 43 variables</code></pre>
+<div id="workspace" class="section level2">
+<h2>Workspace</h2>
 </div>
-<div id="covariates" class="section level3">
-<h3>Covariates</h3>
-<p>Note that we lose two replicates here:</p>
-<ul>
-<li><p>McHugh 1952 (Mexico to USA) due to containing only higher level
-taxa classifications and not species-level data</p></li>
-<li><p>Williams 2015 (NZ_L_2010) due to data entry error or copy/paste
-error, data have been copied over.</p></li>
-</ul>
-<p>There are 69 observations of albacore gut content data from 26
-studies moving forward.</p>
-<pre class="r"><code>alb_covars = alb_global %&gt;%
-    dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:pred_life_est) %&gt;%
-    # , stomachs_used
-distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, LocatLongitude,
-    YearEnd, MonthRange, stomachs_used, pred_life) %&gt;%
-    # , stomachs_used
-mutate(lat_cat = if_else(abs(LocatLatitude) &gt; 23.43662, &quot;temperate&quot;, &quot;tropical&quot;),
-    pred_life_adjust = case_when(pred_life == &quot;juvenile&quot; ~ &quot;juvenile&quot;, pred_life ==
-        &quot;juvenile, adult&quot; ~ &quot;mixed&quot;, pred_life == &quot;none&quot; ~ &quot;mixed&quot;, pred_life ==
-        &quot;adult&quot; ~ &quot;adult&quot;))
+<div id="data-l" class="section level2">
+<h2>Data (L)</h2>
+<p>Load presence/absence data. Originally 58 observations and 316 for N
+Atlantic, N Pacific and Mediterranean. We exclude the Indian, S Atlantic
+and S Pacific from further analyses due to low replication (n &lt;
+7).</p>
+<pre class="r"><code>#Upload + manipulate Species &amp; Covar DF
+#Doesn&#39;t like the here() function now for some reason
+alb_prey_pa = read.csv(paste(here::here(&quot;data/2_output_data/alb_global_wide_dietpa.csv&quot;),
+                                   sep=&quot;&quot;), check.names=FALSE) %&gt;% #, row.names = 1
+  dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %&gt;% #remove species outlier
+  filter(OceanBasin %notin% c(&quot;Indian&quot;, &quot;S Atlantic&quot;, &quot;S Pacific&quot;)) #not enough replication for these values
 
-alb_covars$rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = &quot;_&quot;)
+print(dim(alb_prey_pa)) #58 316 from 70 obs after removing the other ocean basins noted above</code></pre>
+<pre><code>## [1]  57 316</code></pre>
+<pre class="r"><code>summary(as.factor(alb_prey_pa$OceanBasin))</code></pre>
+<pre><code>## Mediterranean    N Atlantic     N Pacific 
+##             9            21            27</code></pre>
+<p>Now we need to check for and remove any zero-sum columns or rows of
+data, and low FO data and adjust the co-variate data.</p>
+<pre class="r"><code># Check for empty columns
+which(colSums(alb_prey_pa[, 10:ncol(alb_prey_pa)]) &lt; 2)  #Remove</code></pre>
+<pre><code>##             Abralia redfieldi           Abraliopsis affinis 
+##                             1                             2 
+##        Abraliopsis gilchristi           Abraliopsis morisii 
+##                             4                             5 
+##             Alepisaurus ferox       Anarrhichthys ocellatus 
+##                             7                            10 
+##     Ancistrocheirus lesueurii            Anoplopoma fimbria 
+##                            12                            14 
+##         Anotopterus nikparini              Antigonia capros 
+##                            15                            17 
+##             Antimora rostrata             Argonauta nodosus 
+##                            18                            21 
+##       Argyropelecus aculeatus          Ateleopus natalensis 
+##                            23                            26 
+##   Atherinopsis californiensis               Atlanta peronii 
+##                            27                            28 
+##             Axius stirhynchus            Balistes punctatus 
+##                            29                            30 
+##          Barathronus parfaiti          Bathophilus flemingi 
+##                            31                            32 
+##      Bathyagonus pentacanthus         Bathylagoides wesethi 
+##                            33                            34 
+##               Beryx splendens       Bregmaceros mcclellandi 
+##                            38                            46 
+##          Calanus finmarchicus         Canthidermis maculata 
+##                            47                            48 
+##          Cavolinia tridentata            Centrolophus niger 
+##                            51                            52 
+##         Ceratias tentaculatus              Chiasmodon niger 
+##                            53                            58 
+##      Chlorophthalmus agassizi          Chromis punctipinnis 
+##                            61                            62 
+##               Clupea pallasii           Cookeolus japonicus 
+##                            66                            68 
+##           Coryphaena hippurus               Cranchia scabra 
+##                            69                            70 
+##             Cubiceps capensis        Cubiceps pauciradiatus 
+##                            71                            73 
+##        Cymatogaster aggregata             Cyphocaris faurei 
+##                            74                            75 
+##       Dactyloptena orientalis         Decapterus macarellus 
+##                            76                            77 
+##          Decapterus macrosoma         Desmodema polystictum 
+##                            78                            79 
+##             Diaphus effulgens               Diaphus lucidus 
+##                            81                            82 
+##              Diaphus luetkeni            Diaphus ostenfeldi 
+##                            83                            84 
+##        Diaphus perspicillatus               Diplodus sargus 
+##                            85                            87 
+##     Diplospinus multistriatus            Diretmus argenteus 
+##                            88                            89 
+##        Echinosquilla guerinii            Engraulis capensis 
+##                            92                            95 
+##        Eucleoteuthis luminosa            Eutrigla gurnardus 
+##                           100                           104 
+##            Funchalia taaningi           Funchalia woodwardi 
+##                           105                           106 
+##          Galiteuthis phyllura              Gempylus serpens 
+##                           109                           110 
+##              Gennadas elegans       Glyptocephalus zachirus 
+##                           111                           112 
+##                Gonatus berryi        Gonatus californiensis 
+##                           114                           115 
+##                  Gonatus onyx                 Gonatus pyros 
+##                           116                           117 
+##     Grimalditeuthis bonplandi          Halichoeres nicholsi 
+##                           119                           120 
+##          Haliphron atlanticus       Heterocarpus laevigatus 
+##                           121                           124 
+## Histioteuthis meleagroteuthis         Hyaloteuthis pelagica 
+##                           128                           130 
+##              Hygophum hygomii              Illex argentinus 
+##                           131                           135 
+##          Janicella spinicauda            Katsuwonus pelamis 
+##                           137                           141 
+##             Lactoria diaphana     Lagocephalus lagocephalus 
+##                           142                           143 
+##            Lampadena luminosa        Lampanyctodes hectoris 
+##                           144                           145 
+##            Lampanyctus alatus         Lampanyctus mexicanus 
+##                           146                           149 
+##               Lanceola sayana    Lepidocybium flavobrunneum 
+##                           150                           151 
+##            Lestidiops similis        Lestrolepis intermedia 
+##                           154                           156 
+##         Leuroglossus stilbius       Liocranchia reinhardtii 
+##                           157                           158 
+##         Lobianchia gemellarii          Lycoteuthis lorigera 
+##                           159                           160 
+##  Lysiosquilla tredecimdentata        Macroparalepis affinis 
+##                           161                           162 
+##                Makaira mazara          Masturus lanceolatus 
+##                           165                           167 
+##       Maurolicus imperatorius       Melanostomias valdiviae 
+##                           168                           173 
+##             Monacoa grimaldii                Mugil cephalus 
+##                           178                           179 
+##      Mullus barbatus barbatus             Myctophum asperum 
+##                           180                           181 
+##          Nannobrachium regale           Nansenia macrolepis 
+##                           183                           185 
+##    Natosquilla investigatoris               Nealotus tripes 
+##                           186                           187 
+##   Neoanchisquilla tuberculata       Neognathophausia ingens 
+##                           189                           191 
+##            Nesiarchus nasutus        Octopoteuthis nielseni 
+##                           192                           194 
+##          Octopoteuthis rugosa       Odontodactylus hansenii 
+##                           195                           200 
+##      Odontodactylus scyllarus                Omosudis lowii 
+##                           201                           203 
+##            Onykia loennbergii   Opisthoteuthis californiana 
+##                           206                           208 
+##              Oplophorus typus     Ornithoteuthis antillarum 
+##                           209                           210 
+##      Ornithoteuthis volatilis             Ostracion cubicus 
+##                           211                           212 
+##            Paralepis speciosa          Parapronoe crustulum 
+##                           215                           217 
+##        Parribacus antarcticus           Peprilus simillimus 
+##                           218                           219 
+##           Peristedion gracile         Photonectes margarita 
+##                           220                           221 
+##             Psenes pellucidus      Pteroctopus tetracirrhus 
+##                           231                           232 
+##          Pterycombus petersii        Pterygioteuthis giardi 
+##                           233                           234 
+##   Pterygioteuthis microlampas           Pyrosoma atlanticum 
+##                           235                           236 
+##     Pyroteuthis margaritifera               Ranzania laevis 
+##                           237                           238 
+##           Rexea prometheoides        Rhinogobiops nicholsii 
+##                           239                           240 
+##         Robustosergia robusta                  Salpa maxima 
+##                           241                           242 
+##             Sardinella aurita     Scombrolabrax heterolepis 
+##                           244                           250 
+##           Scopelarchus analis          Scopelosaurus hoedti 
+##                           251                           253 
+##           Sebastes aleutianus          Sebastes brevispinis 
+##                           255                           256 
+##            Sebastes diploproa       Sebastes helvomaculatus 
+##                           257                           258 
+##              Sebastes maliger             Sebastes miniatus 
+##                           259                           260 
+##             Sebastes proriger              Sebastes wilsoni 
+##                           261                           262 
+##            Sebastes zacentrus             Selene setapinnis 
+##                           263                           264 
+##             Sepietta oweniana               Soestia zonaria 
+##                           265                           266 
+##               Spirula spirula       Spondyliosoma cantharus 
+##                           267                           268 
+##            Sternoptyx obscura    Sthenoteuthis oualaniensis 
+##                           271                           272 
+##      Stigmatoteuthis dofleini        Stigmatoteuthis hoylei 
+##                           273                           274 
+##            Strongylura exilis                 Sudis hyalina 
+##                           276                           278 
+##        Symbolophorus barnardi       Symbolophorus evermanni 
+##                           279                           280 
+##          Systellaspis debilis                Taningia danae 
+##                           282                           283 
+##                Taractes asper        Thaleichthys pacificus 
+##                           284                           289 
+##          Thyrsitoides marleyi        Thysanoteuthis rhombus 
+##                           291                           292 
+##           Todarodes pacificus            Todaropsis eblanae 
+##                           293                           295 
+##            Trachinotus ovatus           Trachurus japonicus 
+##                           296                           298 
+##          Tremoctopus gracilis         Tremoctopus violaceus 
+##                           301                           302 
+##               Vibilia gibbosa       Walvisteuthis rancureli 
+##                           305                           307</code></pre>
+<pre class="r"><code>length(which(colSums(alb_prey_pa[, 10:ncol(alb_prey_pa)]) &lt; 3))  #206 species have low prevalence</code></pre>
+<pre><code>## [1] 206</code></pre>
+<pre class="r"><code>names(which(colSums(alb_prey_pa[, 10:ncol(alb_prey_pa)]) &lt; 2))</code></pre>
+<pre><code>##   [1] &quot;Abralia redfieldi&quot;             &quot;Abraliopsis affinis&quot;          
+##   [3] &quot;Abraliopsis gilchristi&quot;        &quot;Abraliopsis morisii&quot;          
+##   [5] &quot;Alepisaurus ferox&quot;             &quot;Anarrhichthys ocellatus&quot;      
+##   [7] &quot;Ancistrocheirus lesueurii&quot;     &quot;Anoplopoma fimbria&quot;           
+##   [9] &quot;Anotopterus nikparini&quot;         &quot;Antigonia capros&quot;             
+##  [11] &quot;Antimora rostrata&quot;             &quot;Argonauta nodosus&quot;            
+##  [13] &quot;Argyropelecus aculeatus&quot;       &quot;Ateleopus natalensis&quot;         
+##  [15] &quot;Atherinopsis californiensis&quot;   &quot;Atlanta peronii&quot;              
+##  [17] &quot;Axius stirhynchus&quot;             &quot;Balistes punctatus&quot;           
+##  [19] &quot;Barathronus parfaiti&quot;          &quot;Bathophilus flemingi&quot;         
+##  [21] &quot;Bathyagonus pentacanthus&quot;      &quot;Bathylagoides wesethi&quot;        
+##  [23] &quot;Beryx splendens&quot;               &quot;Bregmaceros mcclellandi&quot;      
+##  [25] &quot;Calanus finmarchicus&quot;          &quot;Canthidermis maculata&quot;        
+##  [27] &quot;Cavolinia tridentata&quot;          &quot;Centrolophus niger&quot;           
+##  [29] &quot;Ceratias tentaculatus&quot;         &quot;Chiasmodon niger&quot;             
+##  [31] &quot;Chlorophthalmus agassizi&quot;      &quot;Chromis punctipinnis&quot;         
+##  [33] &quot;Clupea pallasii&quot;               &quot;Cookeolus japonicus&quot;          
+##  [35] &quot;Coryphaena hippurus&quot;           &quot;Cranchia scabra&quot;              
+##  [37] &quot;Cubiceps capensis&quot;             &quot;Cubiceps pauciradiatus&quot;       
+##  [39] &quot;Cymatogaster aggregata&quot;        &quot;Cyphocaris faurei&quot;            
+##  [41] &quot;Dactyloptena orientalis&quot;       &quot;Decapterus macarellus&quot;        
+##  [43] &quot;Decapterus macrosoma&quot;          &quot;Desmodema polystictum&quot;        
+##  [45] &quot;Diaphus effulgens&quot;             &quot;Diaphus lucidus&quot;              
+##  [47] &quot;Diaphus luetkeni&quot;              &quot;Diaphus ostenfeldi&quot;           
+##  [49] &quot;Diaphus perspicillatus&quot;        &quot;Diplodus sargus&quot;              
+##  [51] &quot;Diplospinus multistriatus&quot;     &quot;Diretmus argenteus&quot;           
+##  [53] &quot;Echinosquilla guerinii&quot;        &quot;Engraulis capensis&quot;           
+##  [55] &quot;Eucleoteuthis luminosa&quot;        &quot;Eutrigla gurnardus&quot;           
+##  [57] &quot;Funchalia taaningi&quot;            &quot;Funchalia woodwardi&quot;          
+##  [59] &quot;Galiteuthis phyllura&quot;          &quot;Gempylus serpens&quot;             
+##  [61] &quot;Gennadas elegans&quot;              &quot;Glyptocephalus zachirus&quot;      
+##  [63] &quot;Gonatus berryi&quot;                &quot;Gonatus californiensis&quot;       
+##  [65] &quot;Gonatus onyx&quot;                  &quot;Gonatus pyros&quot;                
+##  [67] &quot;Grimalditeuthis bonplandi&quot;     &quot;Halichoeres nicholsi&quot;         
+##  [69] &quot;Haliphron atlanticus&quot;          &quot;Heterocarpus laevigatus&quot;      
+##  [71] &quot;Histioteuthis meleagroteuthis&quot; &quot;Hyaloteuthis pelagica&quot;        
+##  [73] &quot;Hygophum hygomii&quot;              &quot;Illex argentinus&quot;             
+##  [75] &quot;Janicella spinicauda&quot;          &quot;Katsuwonus pelamis&quot;           
+##  [77] &quot;Lactoria diaphana&quot;             &quot;Lagocephalus lagocephalus&quot;    
+##  [79] &quot;Lampadena luminosa&quot;            &quot;Lampanyctodes hectoris&quot;       
+##  [81] &quot;Lampanyctus alatus&quot;            &quot;Lampanyctus mexicanus&quot;        
+##  [83] &quot;Lanceola sayana&quot;               &quot;Lepidocybium flavobrunneum&quot;   
+##  [85] &quot;Lestidiops similis&quot;            &quot;Lestrolepis intermedia&quot;       
+##  [87] &quot;Leuroglossus stilbius&quot;         &quot;Liocranchia reinhardtii&quot;      
+##  [89] &quot;Lobianchia gemellarii&quot;         &quot;Lycoteuthis lorigera&quot;         
+##  [91] &quot;Lysiosquilla tredecimdentata&quot;  &quot;Macroparalepis affinis&quot;       
+##  [93] &quot;Makaira mazara&quot;                &quot;Masturus lanceolatus&quot;         
+##  [95] &quot;Maurolicus imperatorius&quot;       &quot;Melanostomias valdiviae&quot;      
+##  [97] &quot;Monacoa grimaldii&quot;             &quot;Mugil cephalus&quot;               
+##  [99] &quot;Mullus barbatus barbatus&quot;      &quot;Myctophum asperum&quot;            
+## [101] &quot;Nannobrachium regale&quot;          &quot;Nansenia macrolepis&quot;          
+## [103] &quot;Natosquilla investigatoris&quot;    &quot;Nealotus tripes&quot;              
+## [105] &quot;Neoanchisquilla tuberculata&quot;   &quot;Neognathophausia ingens&quot;      
+## [107] &quot;Nesiarchus nasutus&quot;            &quot;Octopoteuthis nielseni&quot;       
+## [109] &quot;Octopoteuthis rugosa&quot;          &quot;Odontodactylus hansenii&quot;      
+## [111] &quot;Odontodactylus scyllarus&quot;      &quot;Omosudis lowii&quot;               
+## [113] &quot;Onykia loennbergii&quot;            &quot;Opisthoteuthis californiana&quot;  
+## [115] &quot;Oplophorus typus&quot;              &quot;Ornithoteuthis antillarum&quot;    
+## [117] &quot;Ornithoteuthis volatilis&quot;      &quot;Ostracion cubicus&quot;            
+## [119] &quot;Paralepis speciosa&quot;            &quot;Parapronoe crustulum&quot;         
+## [121] &quot;Parribacus antarcticus&quot;        &quot;Peprilus simillimus&quot;          
+## [123] &quot;Peristedion gracile&quot;           &quot;Photonectes margarita&quot;        
+## [125] &quot;Psenes pellucidus&quot;             &quot;Pteroctopus tetracirrhus&quot;     
+## [127] &quot;Pterycombus petersii&quot;          &quot;Pterygioteuthis giardi&quot;       
+## [129] &quot;Pterygioteuthis microlampas&quot;   &quot;Pyrosoma atlanticum&quot;          
+## [131] &quot;Pyroteuthis margaritifera&quot;     &quot;Ranzania laevis&quot;              
+## [133] &quot;Rexea prometheoides&quot;           &quot;Rhinogobiops nicholsii&quot;       
+## [135] &quot;Robustosergia robusta&quot;         &quot;Salpa maxima&quot;                 
+## [137] &quot;Sardinella aurita&quot;             &quot;Scombrolabrax heterolepis&quot;    
+## [139] &quot;Scopelarchus analis&quot;           &quot;Scopelosaurus hoedti&quot;         
+## [141] &quot;Sebastes aleutianus&quot;           &quot;Sebastes brevispinis&quot;         
+## [143] &quot;Sebastes diploproa&quot;            &quot;Sebastes helvomaculatus&quot;      
+## [145] &quot;Sebastes maliger&quot;              &quot;Sebastes miniatus&quot;            
+## [147] &quot;Sebastes proriger&quot;             &quot;Sebastes wilsoni&quot;             
+## [149] &quot;Sebastes zacentrus&quot;            &quot;Selene setapinnis&quot;            
+## [151] &quot;Sepietta oweniana&quot;             &quot;Soestia zonaria&quot;              
+## [153] &quot;Spirula spirula&quot;               &quot;Spondyliosoma cantharus&quot;      
+## [155] &quot;Sternoptyx obscura&quot;            &quot;Sthenoteuthis oualaniensis&quot;   
+## [157] &quot;Stigmatoteuthis dofleini&quot;      &quot;Stigmatoteuthis hoylei&quot;       
+## [159] &quot;Strongylura exilis&quot;            &quot;Sudis hyalina&quot;                
+## [161] &quot;Symbolophorus barnardi&quot;        &quot;Symbolophorus evermanni&quot;      
+## [163] &quot;Systellaspis debilis&quot;          &quot;Taningia danae&quot;               
+## [165] &quot;Taractes asper&quot;                &quot;Thaleichthys pacificus&quot;       
+## [167] &quot;Thyrsitoides marleyi&quot;          &quot;Thysanoteuthis rhombus&quot;       
+## [169] &quot;Todarodes pacificus&quot;           &quot;Todaropsis eblanae&quot;           
+## [171] &quot;Trachinotus ovatus&quot;            &quot;Trachurus japonicus&quot;          
+## [173] &quot;Tremoctopus gracilis&quot;          &quot;Tremoctopus violaceus&quot;        
+## [175] &quot;Vibilia gibbosa&quot;               &quot;Walvisteuthis rancureli&quot;</code></pre>
+<pre class="r"><code># alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin%
+# names(which(colSums(alb_prey_pa[,10:ncol(alb_prey_pa)])&lt;2))]
 
-length(unique(alb_covars$StudyID))  #26</code></pre>
-<pre><code>## [1] 26</code></pre>
-<pre class="r"><code>length(unique(alb_covars$rep_ID))  #69</code></pre>
-<pre><code>## [1] 69</code></pre>
-<p>Save diet and covariate dfs:</p>
-<pre class="r"><code>#Merge these back to the diet df
-alb_global_diet = alb_global %&gt;%
-  left_join(alb_covars)</code></pre>
-<pre><code>## Joining, by = c(&quot;StudyID&quot;, &quot;CiteYear&quot;, &quot;OceanBasin&quot;, &quot;OceanBasinQ&quot;,
-## &quot;LocatName&quot;, &quot;LocatLatitude&quot;, &quot;LocatLongitude&quot;, &quot;MonthRange&quot;, &quot;YearEnd&quot;,
-## &quot;stomachs_used&quot;, &quot;pred_life&quot;)</code></pre>
-<pre class="r"><code>write.csv(alb_covars, here::here(&quot;data/2_output_data/alb_covars.csv&quot;), row.names = FALSE)
-write.csv(alb_global_diet, here::here(&quot;data/2_output_data/alb_global_diet_total.csv&quot;), 
-          row.names = FALSE) 
-#995 observations and 46 variables</code></pre>
+alb_prey_use = alb_prey_pa[colnames(alb_prey_pa) %notin% names(which(colSums(alb_prey_pa[,
+    10:ncol(alb_prey_pa)]) &lt; 3))]
+
+# Check for empty rows
+which(rowSums(alb_prey_use[, 10:ncol(alb_prey_use)]) == 0)  #None</code></pre>
+<pre><code>## integer(0)</code></pre>
+<pre class="r"><code># If so --&gt; remove alb_prey_use = alb_prey_use %&gt;% slice(-c(60,61))</code></pre>
+<p>This results in 58 observations and 134 species that occur &gt;1
+time.</p>
+<pre class="r"><code># Subset species df
+alb_prey_use_spp = alb_prey_use[, 10:ncol(alb_prey_use)]
+
+names(alb_prey_use_spp) &lt;- str_replace_all(names(alb_prey_use_spp), &quot; &quot;, &quot;_&quot;)
+
+# check df
+dim(alb_prey_use_spp)  #98 species &amp; 57 observations</code></pre>
+<pre><code>## [1]  57 101</code></pre>
 </div>
-<div id="table-s3-content" class="section level3">
-<h3>Table S3 content</h3>
-<pre class="r"><code>alb_table_S3 = alb_global %&gt;%
-  dplyr::select(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude:est_ref) %&gt;% 
-  #, stomachs_used
-  distinct(StudyID, CiteYear, OceanBasin, OceanBasinQ, LocatName, LocatLatitude, 
-           LocatLongitude, YearEnd, MonthRange, SampleMethod, SampleDepth, stomachs_used, 
-           pred_life, pred_life_est, pred_age, pred_age_est, pred_flmean, pred_flmean_se, pred_flmean_est, pred_flmin, pred_flmax, pred_flest, est_note, est_ref) %&gt;% 
-  #, stomachs_used
-  mutate(#lat_cat = if_else(abs(LocatLatitude) &gt; 23.43662, &quot;temperate&quot;, &quot;tropical&quot;),
-         pred_life_adjust=case_when(pred_life == &quot;juvenile&quot; ~ &quot;juvenile&quot;,
-                             pred_life == &quot;juvenile, adult&quot; ~ &quot;mixed&quot;,
-                             pred_life == &quot;none&quot; ~ &quot;mixed&quot;,
-                             pred_life == &quot;adult&quot; ~ &quot;adult&quot;),
-         rep_ID = paste(alb_covars$StudyID, row.names(alb_covars), sep = &quot;_&quot;))
-
-unique(alb_table_S3$StudyID) #26</code></pre>
-<pre><code>##  [1] &quot;Aloncle1973&quot;             &quot;Bello1999&quot;              
-##  [3] &quot;Bernard1985&quot;             &quot;Bouxin&amp;Legendre&quot;        
-##  [5] &quot;Clemens&amp;Iselin1963&quot;      &quot;Consoli2008&quot;            
-##  [7] &quot;DosSantos&amp;Haimovici2002&quot; &quot;Glaser2015&quot;             
-##  [9] &quot;Goni2011&quot;                &quot;Hart1948&quot;               
-## [11] &quot;Iversen1962&quot;             &quot;Jordan1880&quot;             
-## [13] &quot;Joubin1918&quot;              &quot;Madigan2015&quot;            
-## [15] &quot;Matthews1977&quot;            &quot;McHugh1952&quot;             
-## [17] &quot;Monaco1888&quot;              &quot;OrtizZarate1987&quot;        
-## [19] &quot;Pinkas1971&quot;              &quot;Pusineri2005&quot;           
-## [21] &quot;Romanov2020&quot;             &quot;Romeo2012&quot;              
-## [23] &quot;Salman&amp;Karakulak2009&quot;    &quot;Watanabe2004&quot;           
-## [25] &quot;Williams2015&quot;            &quot;Young2010&quot;</code></pre>
-<pre class="r"><code>unique(alb_table_S3$rep_ID) #69</code></pre>
-<pre><code>##  [1] &quot;Aloncle1973_1&quot;              &quot;Bello1999_2&quot;               
-##  [3] &quot;Bello1999_3&quot;                &quot;Bernard1985_4&quot;             
-##  [5] &quot;Bouxin&amp;Legendre_5&quot;          &quot;Bouxin&amp;Legendre_6&quot;         
-##  [7] &quot;Bouxin&amp;Legendre_7&quot;          &quot;Bouxin&amp;Legendre_8&quot;         
-##  [9] &quot;Bouxin&amp;Legendre_9&quot;          &quot;Bouxin&amp;Legendre_10&quot;        
-## [11] &quot;Clemens&amp;Iselin1963_11&quot;      &quot;Clemens&amp;Iselin1963_12&quot;     
-## [13] &quot;Clemens&amp;Iselin1963_13&quot;      &quot;Clemens&amp;Iselin1963_14&quot;     
-## [15] &quot;Clemens&amp;Iselin1963_15&quot;      &quot;Clemens&amp;Iselin1963_16&quot;     
-## [17] &quot;Clemens&amp;Iselin1963_17&quot;      &quot;Consoli2008_18&quot;            
-## [19] &quot;DosSantos&amp;Haimovici2002_19&quot; &quot;Glaser2015_20&quot;             
-## [21] &quot;Goni2011_21&quot;                &quot;Goni2011_22&quot;               
-## [23] &quot;Goni2011_23&quot;                &quot;Goni2011_24&quot;               
-## [25] &quot;Goni2011_25&quot;                &quot;Goni2011_26&quot;               
-## [27] &quot;Goni2011_27&quot;                &quot;Goni2011_28&quot;               
-## [29] &quot;Goni2011_29&quot;                &quot;Goni2011_30&quot;               
-## [31] &quot;Goni2011_31&quot;                &quot;Goni2011_32&quot;               
-## [33] &quot;Goni2011_33&quot;                &quot;Hart1948_34&quot;               
-## [35] &quot;Hart1948_35&quot;                &quot;Hart1948_36&quot;               
-## [37] &quot;Hart1948_37&quot;                &quot;Hart1948_38&quot;               
-## [39] &quot;Hart1948_39&quot;                &quot;Iversen1962_40&quot;            
-## [41] &quot;Jordan1880_41&quot;              &quot;Joubin1918_42&quot;             
-## [43] &quot;Madigan2015_43&quot;             &quot;Matthews1977_44&quot;           
-## [45] &quot;McHugh1952_45&quot;              &quot;Monaco1888_46&quot;             
-## [47] &quot;OrtizZarate1987_47&quot;         &quot;Pinkas1971_48&quot;             
-## [49] &quot;Pinkas1971_49&quot;              &quot;Pinkas1971_50&quot;             
-## [51] &quot;Pinkas1971_51&quot;              &quot;Pinkas1971_52&quot;             
-## [53] &quot;Pusineri2005_53&quot;            &quot;Romanov2020_54&quot;            
-## [55] &quot;Romanov2020_55&quot;             &quot;Romanov2020_56&quot;            
-## [57] &quot;Romanov2020_57&quot;             &quot;Romeo2012_58&quot;              
-## [59] &quot;Salman&amp;Karakulak2009_59&quot;    &quot;Watanabe2004_60&quot;           
-## [61] &quot;Watanabe2004_61&quot;            &quot;Watanabe2004_62&quot;           
-## [63] &quot;Williams2015_63&quot;            &quot;Williams2015_64&quot;           
-## [65] &quot;Williams2015_65&quot;            &quot;Williams2015_66&quot;           
-## [67] &quot;Williams2015_67&quot;            &quot;Young2010_68&quot;              
-## [69] &quot;Young2010_69&quot;</code></pre>
-<pre class="r"><code>write.csv(alb_table_S3, here::here(&quot;data/3_output_supp/table_S3.csv&quot;), row.names = FALSE)
-write.csv(alb_table_S3, here::here(&quot;outputs_figures/ms_figures/SI_results/table_S3.csv&quot;), row.names = FALSE)</code></pre>
+<div id="check-l-multivariate-data" class="section level2">
+<h2>Check (L) multivariate data</h2>
 </div>
+<div id="traits-q" class="section level2">
+<h2>Traits (Q)</h2>
+<p>Using output of the cluster analyses, this included 292 species and
+10 trait variables + meta-information.</p>
+<pre class="r"><code>alb_prob_clust = read.csv(paste(here::here(&quot;./data/2_output_data/prob.prey.clusternum.divis.k7.csv&quot;),
+    sep = &quot;&quot;), header = T, row.names = 1) %&gt;%
+    dplyr::select(prey_sp:prob.clust.num)
+
+dim(alb_prob_clust)  #we obtain 292 species, 11 traits or covariates</code></pre>
+<pre><code>## [1] 292  11</code></pre>
+<p>Previously we used order information, there are multiple issues with
+using this information at this stage. Firstly, we lack replication at
+the level of the phylogenetic order used here, secondly we treated
+phylogenetic information as a trait similar to a fixed factor. There are
+better ways to assign variance to phylogeny, including through
+phylogenetic structure, related, branch distances, and many studies
+recommend using phylogeny as a random variable that accounts for latent
+variance attributed to phylogenetic structure and evolution within a
+community rather than as a fixed factor.</p>
+<pre class="r"><code>#add_order = read.csv(paste(here::here(&quot;./data/2_output_data/prey_trait_select.csv&quot;))) %&gt;%
+#  select(prey_sp, prey_order)
+
+#alb_trait_use = alb_prob_clust %&gt;%
+#  left_join(add_order) %&gt;%
+#  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
+#         diel_migrant_cat, season_cat, gregarious, prob.clust.num)</code></pre>
+<p>Here, we filter out low occurrences using ‘alb_prob_pa’ df. Note that
+we obtain 129 (&lt; 134) species and their traits, so we’ll need to
+filter the species df by the traits.</p>
+<pre class="r"><code>alb_trait_use = alb_prob_clust %&gt;%
+    select(prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat,
+        gregarious, prob.clust.num)
+
+# Relabel to add underscore in names
+alb_trait_use$prey_sp = str_replace_all(alb_trait_use$prey_sp, &quot; &quot;, &quot;_&quot;)
+# Assign species as row names
+rownames(alb_trait_use) &lt;- alb_trait_use$prey_sp
+# Order species list
+alb_trait_use &lt;- alb_trait_use[order(row.names(alb_trait_use)), ]
+
+# Ensure traits are treated as factors for now
+alb_trait_use[, 3:8] &lt;- lapply(alb_trait_use[, 3:8], factor)  #to convert to factors
+
+# Need to filter by prey species we want to use.
+alb_trait_use = alb_trait_use %&gt;%
+    filter(prey_sp %in% names(alb_prey_use_spp))
+# we retain 292 species and 8 trait values
+
+dim(alb_trait_use)</code></pre>
+<pre><code>## [1] 98  8</code></pre>
+<pre class="r"><code>str(alb_trait_use)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    98 obs. of  8 variables:
+##  $ prey_sp         : chr  &quot;Abraliopsis_felis&quot; &quot;Acanthephyra_pelagica&quot; &quot;Alpheus_glaber&quot; &quot;Anchylomera_blossevillei&quot; ...
+##  $ life_stage      : chr  &quot;adult&quot; &quot;adult&quot; &quot;larva&quot; &quot;adult&quot; ...
+##  $ vert_habitat    : Factor w/ 3 levels &quot;demersal&quot;,&quot;epipelagic&quot;,..: 2 3 2 2 1 3 3 2 3 1 ...
+##  $ horz_habitat    : Factor w/ 3 levels &quot;coastal&quot;,&quot;continental shelf&quot;,..: 3 3 1 2 2 3 3 3 3 2 ...
+##  $ diel_migrant_cat: Factor w/ 2 levels &quot;diel (no)&quot;,&quot;diel (yes)&quot;: 2 2 2 2 2 2 2 1 2 2 ...
+##  $ season_cat      : Factor w/ 2 levels &quot;season (no)&quot;,..: 2 2 1 2 2 2 2 2 2 2 ...
+##  $ gregarious      : Factor w/ 2 levels &quot;non-schooling&quot;,..: 2 2 2 2 2 2 1 2 2 2 ...
+##  $ prob.clust.num  : Factor w/ 7 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 5 2 7 6 6 2 2 3 2 6 ...</code></pre>
+<p><strong>Trait value checks</strong></p>
+<p>Here we check the trait values for each trait, and check the
+distribution of values. Note we merge certain values with low
+occurrences of species within them, and if we have a logical reason to
+merge.</p>
+<pre class="r"><code>summary(alb_trait_use$life_stage) #low numbers for larva, do not use</code></pre>
+<pre><code>##    Length     Class      Mode 
+##        98 character character</code></pre>
+<pre class="r"><code>summary(alb_trait_use$vert_habitat) #use</code></pre>
+<pre><code>##    demersal  epipelagic mesopelagic 
+##          10          53          35</code></pre>
+<pre class="r"><code>summary(alb_trait_use$horz_habitat) #use</code></pre>
+<pre><code>##           coastal continental shelf           oceanic 
+##                12                34                52</code></pre>
+<pre class="r"><code>summary(alb_trait_use$diel_migrant_cat) #a lot more diel migrants than not</code></pre>
+<pre><code>##  diel (no) diel (yes) 
+##         22         76</code></pre>
+<pre class="r"><code>summary(alb_trait_use$season_cat) #more seasonal taxa than not</code></pre>
+<pre><code>##  season (no) season (yes) 
+##           25           73</code></pre>
+<pre class="r"><code>summary(alb_trait_use$gregarious) #still more gregarious than not, just an artefact of the pelagic prey data.</code></pre>
+<pre><code>## non-schooling     schooling 
+##            16            82</code></pre>
+<pre class="r"><code>summary(as.factor(alb_trait_use$prob.clust.num)) #good distribution of species within clusters</code></pre>
+<pre><code>##  1  2  3  4  5  6  7 
+##  5 27 15  2 20 21  8</code></pre>
+<pre class="r"><code>#summary(as.factor(alb_trait_use$prey_order)) #an unaccounted artefact of the pelagic prey data.</code></pre>
+<p><strong>Cleaning and preparing trait values for analyses</strong></p>
 </div>
-<div id="data-checks-additional-info" class="section level2">
-<h2>Data checks &amp; additional info</h2>
-<div id="prey-life-stage-reported" class="section level3">
-<h3>Prey life stage reported</h3>
-<p>How many prey taxa were reported with an observation or estimation of
-life stage consumed?</p>
-<pre class="r"><code>alb_global_prey_life = alb_global %&gt;%
-  filter(prey_age_reported_1 != &quot;none&quot;,) %&gt;%
-  dplyr::select(prey_class:prey_sp, prey_age_reported_1, pFOuse, pN, pM, maxl_use, maxl_type) %&gt;%
-  group_by(prey_sp, prey_age_reported_1, maxl_type) %&gt;% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
-                   maxN = max(pN, na.rm=TRUE), 
-                   maxM = max(pM, na.rm=TRUE), 
-                   maxL = max(maxl_use, na.rm=TRUE)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;, &#39;prey_age_reported_1&#39;. You can
-## override using the `.groups` argument.</code></pre>
-<pre class="r"><code>length(unique(alb_global_prey_life$prey_sp)) #72 species</code></pre>
-<pre><code>## [1] 72</code></pre>
-<pre class="r"><code>#What percent of the total number of species?
-length(unique(alb_global_prey_life$prey_sp))*100/308</code></pre>
-<pre><code>## [1] 23.37662</code></pre>
-<pre class="r"><code>#23.4%
-#What number of species were identified to which life stage?
-summary(as.factor(alb_global_prey_life$prey_age_reported_1))</code></pre>
-<pre><code>##    adult juvenile    larva 
-##       37       42       11</code></pre>
-<pre class="r"><code>#Note that 13 species had multiple life stage assignments (up to 3)
+<div id="data-l-select" class="section level2">
+<h2>Data (L) – Select</h2>
+<p>Here we filter our prey species (presence/absence data) by the
+species that were also used for cluster analysis, because we have
+complete trait information for these species, as well as frequency of
+occurrence data.</p>
+<pre class="r"><code>alb_prey_use &lt;- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_use)]
 
-write.csv(alb_global_prey_life, here::here(&quot;data/3_output_supp/alb_table_E1_global_prey_life.csv&quot;), row.names = FALSE)</code></pre>
+dim(alb_prey_use)  #58 rows and 129 spp</code></pre>
+<pre><code>## [1] 57 98</code></pre>
 </div>
-<div id="prey-length-info-reported" class="section level3">
-<h3>Prey length info reported</h3>
-<p>How many prey taxa were recorded with lengths of remains measured and
-thus able to calculate likely total lengths?</p>
-<pre class="r"><code>alb_global_prey_lengths = alb_global %&gt;%
-  filter(maxl_use &gt; 0) %&gt;%
-  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM, maxl_use, maxl_type) %&gt;%
-  group_by(prey_sp, maxl_type) %&gt;% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
-                   maxN = max(pN, na.rm=TRUE), 
-                   maxM = max(pM, na.rm=TRUE), 
-                   maxL = max(maxl_use, na.rm=TRUE)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>length(unique(alb_global_prey_lengths$prey_sp)) #43 species</code></pre>
-<pre><code>## [1] 43</code></pre>
-<pre class="r"><code>write.csv(alb_global_prey_lengths, here::here(&quot;data/3_output_supp/alb_table_E2_global_prey_lengths.csv&quot;), row.names = FALSE)</code></pre>
-<p>More precisely, how many prey taxa without reported life stage were
-recorded with lengths of remains measured and thus able to calculate
-likely total lengths? Note we exclude three Cephalopods here because
-their length measurements were for beaks and we did not at the time have
-any conversion calculations to convert those measurements to mantle or
-total lengths.</p>
-<pre class="r"><code>check_prey_life = data.frame(unique(alb_global_prey_life$prey_sp)) %&gt;%
-  dplyr::rename(prey_sp = unique.alb_global_prey_life.prey_sp.)
+<div id="covars-r---manips" class="section level2">
+<h2>Covars (R) - MANIPS</h2>
+<p>Checking the level replication for each covariate. Note that our best
+covars ==&gt; pred_life, OceanBasin, lat_cat, and maybe code (Longhurst)
+- but would need to exclude low numbered levels.</p>
+<pre class="r"><code>alb_covars = alb_prey_pa %&gt;%
+  select(StudyID:pred_life_adjust) #%&gt;%
+  #slice(-c(60,61))
 
-check_length_info = alb_global_prey_lengths %&gt;%
-  anti_join(check_prey_life) %&gt;%
-  filter(!prey_sp %in% c(&quot;Onychoteuthis borealijaponica&quot;, &quot;Onykia robusta&quot;, &quot;Vampyroteuthis infernalis&quot;))</code></pre>
-<pre><code>## Joining, by = &quot;prey_sp&quot;</code></pre>
-<pre class="r"><code>length(unique(check_length_info$prey_sp))</code></pre>
-<pre><code>## [1] 15</code></pre>
-<pre class="r"><code>length(unique(check_length_info$prey_sp))*100/308</code></pre>
-<pre><code>## [1] 4.87013</code></pre>
-<pre class="r"><code>#4.8
+#As factors
+alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.factor)</code></pre>
+<pre class="r"><code>#Check representation
+#summary(alb_adult_covars)
 
-write.csv(check_length_info, here::here(&quot;data/3_output_supp/alb_table_E3_lengths_life_stage.csv&quot;), row.names = FALSE)</code></pre>
-<p>How much data do we then have some near direct estimation capacity
-for life stage and how much is left to estimate?</p>
-<pre class="r"><code>#Species for which we have either reported life stage or measurement info
-length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp))</code></pre>
-<pre><code>## [1] 87</code></pre>
-<pre class="r"><code>#=87
-#Species without that
-308-(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp)))</code></pre>
-<pre><code>## [1] 221</code></pre>
-<pre class="r"><code>#=221
-#Proportion of data with info
-(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp)))*100/308</code></pre>
-<pre><code>## [1] 28.24675</code></pre>
-<pre class="r"><code>#28%
-#Proportion of data without
-(308-(length(unique(alb_global_prey_life$prey_sp))+length(unique(check_length_info$prey_sp))))*100/308</code></pre>
-<pre><code>## [1] 71.75325</code></pre>
-<pre class="r"><code>#72%</code></pre>
+summary(alb_covars$lat_cat) #don&#39;t use
+#temperate  tropical 
+#     57         1 
+
+summary(alb_covars$pred_life) #don&#39;t use
+#  adult juvenile    mixed 
+#   1       38       19
+
+alb_covars$pred_life = factor(alb_covars$pred_life, levels = c(&quot;juvenile&quot;, &quot;adult&quot;, &quot;mixed&quot;),
+                              labels = c(&quot;juvenile&quot;, &quot;mixed&quot;, &quot;mixed&quot;))
+
+summary(alb_covars$OceanBasin)
+#   Mediterranean    N Atlantic     N Pacific     ##S Pacific  #don&#39;t use S Pacific
+#         9            21            28             ##5 
+#Remove Indian and S Atlantic Oceans from analyses
+
+summary(alb_covars$OceanBasinQ)
+#Not going to use
+
+summary(alb_covars$code)
+#Not going to use
+#Build an analysis for CCAL, MEDI, NADR!!
+
+dim(alb_covars) #58 observations for 9 covars</code></pre>
 </div>
-<div id="prey-prevalence-data-reported" class="section level3">
-<h3>Prey prevalence data reported</h3>
-<pre class="r"><code>alb_global_metrics = alb_global %&gt;%
-  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
-  dplyr::select(prey_class:prey_sp, prey_age_reported_1, pFOuse, pN, pM, maxl_use, maxl_type) %&gt;%
-  group_by(prey_sp, prey_age_reported_1, maxl_type) %&gt;% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
-                   maxN = max(pN, na.rm=TRUE), 
-                   maxM = max(pM, na.rm=TRUE), 
-                   maxL = max(maxl_use, na.rm=TRUE)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;, &#39;prey_age_reported_1&#39;. You can
-## override using the `.groups` argument.</code></pre>
-<pre class="r"><code>write.csv(alb_global_metrics, here::here(&quot;data/3_output_supp/albtable_Eglobal_metrics.csv&quot;), row.names = FALSE)</code></pre>
-<pre class="r"><code>alb_global_metrics_basic = alb_global %&gt;%
-  #unique(c(alb_global_prob$prey_sp, alb_global_prob$prey_select))
-  dplyr::select(prey_class:prey_sp, pFOuse, pN, pM) %&gt;%
-  group_by(prey_sp) %&gt;% #, life_stage , pFOuse, pN, pM
-  dplyr::summarize(maxFO = max(pFOuse, na.rm=TRUE), 
-                   maxN = max(pN, na.rm=TRUE), 
-                   maxM = max(pM, na.rm=TRUE)) 
+<div id="df-checks" class="section level2">
+<h2>DF checks</h2>
+<pre class="r"><code>## Make sure species names match abund matrix
+rownames(alb_trait_use) == colnames(alb_prey_use) #awesome!
 
-write.csv(alb_global_metrics_basic, here::here(&quot;data/3_output_supp/alb_table_E5_global_metrics_basic.csv&quot;), row.names = FALSE)</code></pre>
+#Check all matrix dimensions
+dim(alb_trait_use) #129 species and 9 traits
+dim(alb_prey_use) #58 obs, 129 species
+dim(alb_covars) #58 obs, 9 covariates</code></pre>
 </div>
-</div>
-<div id="prey-trait-db" class="section level2">
-<h2>Prey trait db</h2>
-<div id="load-and-check-trait-information" class="section level3">
-<h3>Load and check trait information</h3>
-<p>Loading in data. Note that NH overhauled our prey life stage
-estimation protocol in December 2021 through early 2022, and we have
-thoroughly curated this step. These steps are to investigate how much
-information was gained from this curation step.</p>
-<pre class="r"><code># Load prey trait db
-prey_trait &lt;- as.data.frame(read_xlsx(here::here(&quot;data/1_input_data/prey_trait_db.xlsx&quot;),
-    sheet = &quot;prey_trait_db&quot;))</code></pre>
-<p>Note that there are 308 spp remaining in the global diet db, and
-there are 221 for which we need to resolve which trait information to
-use. Why the difference in species from the trait db? There were 8 prey
-taxa found in the larval albacore tuna diets and were thus previously
-removed.</p>
-<pre class="r"><code>check_spp = prey_trait %&gt;%
-    anti_join(alb_global_metrics_basic, by = &quot;prey_sp&quot;)</code></pre>
-<p>Need to filter by prey species we already have life stage or length
-data to estimate life stage. This leaves 221 species for which we need
-to figure out life stage information.</p>
-<pre class="r"><code>check_traits = prey_trait %&gt;%
-    filter(!prey_sp %in% check_spp$prey_sp) %&gt;%
-    filter(!prey_sp %in% check_prey_life$prey_sp) %&gt;%
-    filter(!prey_sp %in% check_length_info$prey_sp) %&gt;%
-    select(prey_class:trait_confidence_cat, vert_habitat, horz_habitat, season_migrant,
-        diel_migrant)
-
-length(unique(check_traits$prey_sp))  #221.</code></pre>
-<pre><code>## [1] 221</code></pre>
-<p>What meta-information did I annotate for species? There were 65 with
-annotations (and 157 without), likely hinting at a decision that needed
-to be made. But of these some did include the same trait information for
-adult and juvenile life stages, so we can’t be sure from these data
-alone.</p>
-<pre class="r"><code>length(which(check_traits$life_note != &quot;NA&quot;))  #191</code></pre>
-<pre><code>## [1] 191</code></pre>
-<pre class="r"><code>check_traits_a = check_traits %&gt;%
-    slice(which(check_traits$life_note != &quot;NA&quot;))
-length(unique(check_traits_a$prey_sp))</code></pre>
-<pre><code>## [1] 65</code></pre>
-<pre class="r"><code>check_traits_b = check_traits %&gt;%
-    slice(-which(check_traits$life_note != &quot;NA&quot;))
-length(unique(check_traits_b$prey_sp))</code></pre>
-<pre><code>## [1] 157</code></pre>
-<p>Which species have the same or different vertical habitat use
-traits?</p>
-<pre class="r"><code>df_vert = check_traits %&gt;%
-  select(prey_sp, life_stage, vert_habitat) %&gt;%
-  pivot_wider(., names_from = life_stage, values_from = vert_habitat)
-
-check_traits_vert = df_vert %&gt;%
-  slice(which(df_vert$adult == df_vert$juvenile))
-#136 with same
-
-check_traits_vert_not = df_vert %&gt;%
-  slice(-which(df_vert$adult == df_vert$juvenile))
-#84 with different vertical habitat use trait</code></pre>
-<p>Which species have the same or different horizontal habitat use
-traits?</p>
-<pre class="r"><code>df_horz = check_traits %&gt;%
-    select(prey_sp, life_stage, horz_habitat) %&gt;%
-    pivot_wider(., names_from = life_stage, values_from = horz_habitat)
-
-check_traits_horz = df_horz %&gt;%
-    dplyr::slice(which(df_horz$adult == df_horz$juvenile))
-# 182 with same
-
-check_traits_horz_not = df_horz %&gt;%
-    slice(-which(df_horz$adult == df_horz$juvenile))
-# 39 with different vertical habitat use trait</code></pre>
-<p>Which species have the same or different seasonal habitat use
-traits?</p>
-<pre class="r"><code>df_season = check_traits %&gt;%
-    select(prey_sp, life_stage, season_migrant) %&gt;%
-    pivot_wider(., names_from = life_stage, values_from = season_migrant)
-
-check_traits_season = df_season %&gt;%
-    dplyr::slice(which(df_season$adult == df_season$juvenile))
-# 189 with same
-
-check_traits_season_not = df_season %&gt;%
-    slice(-which(df_season$adult == df_season$juvenile))
-# 32 with different vertical habitat use trait</code></pre>
-<p>Which species have the same or different diel vertical migration
-strategy traits?</p>
-<pre class="r"><code>df_diel = check_traits %&gt;%
-    select(prey_sp, life_stage, diel_migrant) %&gt;%
-    pivot_wider(., names_from = life_stage, values_from = diel_migrant)
-
-check_traits_diel = df_diel %&gt;%
-    slice(which(df_diel$adult == df_diel$juvenile))
-# 182 with same
-
-check_traits_diel_not = df_diel %&gt;%
-    slice(-which(df_diel$adult == df_diel$juvenile))
-# 39 with different vertical habitat use trait</code></pre>
-<p>There were 127 species for which trait information did not differ
-between adult and juvenile life stages.</p>
-<pre class="r"><code>check_traits_same = check_traits %&gt;%
-    filter(prey_sp %in% check_traits_season$prey_sp) %&gt;%
-    filter(prey_sp %in% check_traits_diel$prey_sp) %&gt;%
-    filter(prey_sp %in% check_traits_horz$prey_sp) %&gt;%
-    filter(prey_sp %in% check_traits_vert$prey_sp)
-
-length(unique(check_traits_same$prey_sp))  #127</code></pre>
-<pre><code>## [1] 127</code></pre>
-<pre class="r"><code>length(unique(check_traits_same$prey_sp)) * 100/308</code></pre>
-<pre><code>## [1] 41.23377</code></pre>
-<p>There were 94 species for which trait information differed in one or
-more traits for adult and juvenile life stages.</p>
-<pre class="r"><code>check_traits_diff = check_traits %&gt;%
-    filter(!prey_sp %in% check_traits_same$prey_sp)
-# filter(!prey_sp %in% check_traits_diel$prey_sp) %&gt;% filter(!prey_sp %in%
-# check_traits_season$prey_sp) %&gt;% filter(!prey_sp %in%
-# check_traits_horz$prey_sp) %&gt;% filter(!prey_sp %in%
-# check_traits_vert$prey_sp)
-length(unique(check_traits_diff$prey_sp))  #94</code></pre>
-<pre><code>## [1] 94</code></pre>
-<pre class="r"><code>length(unique(check_traits_diff$prey_sp)) * 100/308</code></pre>
-<pre><code>## [1] 30.51948</code></pre>
-<pre class="r"><code>write.csv(check_traits_diff, here::here(&quot;data/3_output_supp/check_traits_diff.csv&quot;),
-    row.names = FALSE)</code></pre>
-<p>Double check that these also add up to 221.</p>
-<pre class="r"><code>length(unique(check_traits_diff$prey_sp)) + length(unique(check_traits_same$prey_sp))  #Needs to add up to 221.</code></pre>
-<pre><code>## [1] 221</code></pre>
-<p>Now check on data proportions for albacore reported or measured and
-how much data this affects. To this we separate how many rows of data
-corresponded to “Estimated” or “Measured” albacore fork lengths. We then
-filter these data to match the species for which different trait
-information was on record but no further meta-information that would
-help establish the prey’s likely life stage or trait information. We
-then report these outputs in the decision tree.</p>
-<pre class="r"><code>check_studyID_df = data.frame(table(alb_global_diet$StudyID)) %&gt;%
-  mutate(prop = Freq*100/1027)
-
-check_spp_alb_measured = alb_global_diet %&gt;%
-  filter(pred_flmean_est == &quot;Measured: study reported&quot;) %&gt;% #Note this is 391 rows of data out of 1027
-  filter(prey_sp %in% check_traits_diff$prey_sp)
+<div id="data-l---for-longhurst-analysis" class="section level2">
+<h2>Data (L) - for Longhurst analysis</h2>
+<p>Load presence/absence data. Originally 58 observations and 316 for N
+Atlantic, N Pacific and Mediterranean. We exclude the Indian, S Atlantic
+and S Pacific from further analyses due to low replication (n &lt;
+7).</p>
+<pre class="r"><code>#Upload + manipulate Species &amp; Covar DF
+#Doesn&#39;t like the here() function now for some reason
+alb_prey_longhurst = read.csv(paste(here::here(&quot;data/2_output_data/alb_global_wide_dietpa.csv&quot;),
+                                   sep=&quot;&quot;), check.names=FALSE) %&gt;% #, row.names = 1
+  dplyr::select(StudyID:ncol(.), -`Nyctiphanes australis`) %&gt;% #remove species outlier
+  filter(OceanBasin %notin% c(&quot;Indian&quot;, &quot;S Atlantic&quot;, &quot;S Pacific&quot;),
+         code %in% c(&quot;CCAL&quot;, &quot;NADR&quot;, &quot;MEDI&quot;)) #not enough replication for these values
   
-391*100/1027 #38% of the data</code></pre>
-<pre><code>## [1] 38.07205</code></pre>
-<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp)) #51 species with measured albacore lengths</code></pre>
-<pre><code>## [1] 51</code></pre>
-<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp))*100/308 #16.5% of species with measured albacore lengths</code></pre>
-<pre><code>## [1] 16.55844</code></pre>
-<pre class="r"><code>check_spp_alb_estimated = alb_global_diet %&gt;%
-  filter(pred_flmean_est == &quot;Estimated: by meta-analysis&quot;) %&gt;% #Note this is 636 rows of data out of 1027
-  filter(prey_sp %in% check_traits_diff$prey_sp) %&gt;%
-  filter(!prey_sp %in% check_spp_alb_measured$prey_sp)
 
-636*100/1027 #62% of the data</code></pre>
-<pre><code>## [1] 61.92795</code></pre>
-<pre class="r"><code>length(unique(check_spp_alb_estimated$prey_sp)) #43 species with estimated albacore lengths</code></pre>
-<pre><code>## [1] 43</code></pre>
-<pre class="r"><code>length(unique(check_spp_alb_estimated$prey_sp))*100/308 #14% of species with measured albacore lengths</code></pre>
-<pre><code>## [1] 13.96104</code></pre>
-<pre class="r"><code>length(unique(check_spp_alb_measured$prey_sp))+length(unique(check_spp_alb_estimated$prey_sp)) #Needs to sum to 94.</code></pre>
-<pre><code>## [1] 94</code></pre>
-<p>Edit decision tree with this information!</p>
+print(dim(alb_prey_longhurst)) #49 316 from 70 obs after removing the other ocean basins noted above</code></pre>
+<pre><code>## [1]  48 316</code></pre>
+<p>Now we need to check for and remove any zero-sum columns or rows of
+data, and low FO data and adjust the co-variate data.</p>
+<pre class="r"><code># Check for empty columns
+which(colSums(alb_prey_longhurst[, 10:ncol(alb_prey_longhurst)]) &lt; 2)  #Remove</code></pre>
+<pre><code>##             Abralia redfieldi           Abraliopsis affinis 
+##                             1                             2 
+##        Abraliopsis gilchristi           Abraliopsis morisii 
+##                             4                             5 
+##             Alepisaurus ferox       Anarrhichthys ocellatus 
+##                             7                            10 
+##     Ancistrocheirus lesueurii            Anoplopoma fimbria 
+##                            12                            14 
+##         Anotopterus nikparini              Antigonia capros 
+##                            15                            17 
+##             Antimora rostrata             Argonauta nodosus 
+##                            18                            21 
+##       Argyropelecus aculeatus          Ateleopus natalensis 
+##                            23                            26 
+##   Atherinopsis californiensis               Atlanta peronii 
+##                            27                            28 
+##             Axius stirhynchus            Balistes punctatus 
+##                            29                            30 
+##          Barathronus parfaiti          Bathophilus flemingi 
+##                            31                            32 
+##      Bathyagonus pentacanthus         Bathylagoides wesethi 
+##                            33                            34 
+##               Beryx splendens                  Brama orcini 
+##                            38                            45 
+##       Bregmaceros mcclellandi          Calanus finmarchicus 
+##                            46                            47 
+##         Canthidermis maculata          Cavolinia tridentata 
+##                            48                            51 
+##            Centrolophus niger         Ceratias tentaculatus 
+##                            52                            53 
+##      Ceratoscopelus warmingii              Chiasmodon niger 
+##                            56                            58 
+##      Chlorophthalmus agassizi          Chromis punctipinnis 
+##                            61                            62 
+##               Clupea pallasii           Cookeolus japonicus 
+##                            66                            68 
+##           Coryphaena hippurus               Cranchia scabra 
+##                            69                            70 
+##             Cubiceps capensis        Cubiceps pauciradiatus 
+##                            71                            73 
+##        Cymatogaster aggregata             Cyphocaris faurei 
+##                            74                            75 
+##       Dactyloptena orientalis         Decapterus macarellus 
+##                            76                            77 
+##          Decapterus macrosoma         Desmodema polystictum 
+##                            78                            79 
+##             Diaphus effulgens               Diaphus lucidus 
+##                            81                            82 
+##              Diaphus luetkeni            Diaphus ostenfeldi 
+##                            83                            84 
+##        Diaphus perspicillatus               Diplodus sargus 
+##                            85                            87 
+##     Diplospinus multistriatus            Diretmus argenteus 
+##                            88                            89 
+##        Echinosquilla guerinii            Engraulis capensis 
+##                            92                            95 
+##           Engraulis japonicus        Eucleoteuthis luminosa 
+##                            97                           100 
+##            Eutrigla gurnardus            Funchalia taaningi 
+##                           104                           105 
+##           Funchalia woodwardi          Galiteuthis phyllura 
+##                           106                           109 
+##              Gempylus serpens              Gennadas elegans 
+##                           110                           111 
+##       Glyptocephalus zachirus           Gonatopsis borealis 
+##                           112                           113 
+##                Gonatus berryi        Gonatus californiensis 
+##                           114                           115 
+##                  Gonatus onyx                 Gonatus pyros 
+##                           116                           117 
+##     Grimalditeuthis bonplandi          Halichoeres nicholsi 
+##                           119                           120 
+##          Haliphron atlanticus       Heterocarpus laevigatus 
+##                           121                           124 
+## Histioteuthis meleagroteuthis         Hyaloteuthis pelagica 
+##                           128                           130 
+##              Hygophum hygomii              Illex argentinus 
+##                           131                           135 
+##          Janicella spinicauda            Katsuwonus pelamis 
+##                           137                           141 
+##             Lactoria diaphana     Lagocephalus lagocephalus 
+##                           142                           143 
+##            Lampadena luminosa        Lampanyctodes hectoris 
+##                           144                           145 
+##            Lampanyctus alatus         Lampanyctus mexicanus 
+##                           146                           149 
+##               Lanceola sayana    Lepidocybium flavobrunneum 
+##                           150                           151 
+##       Leptocotis tenuirostris            Lestidiops similis 
+##                           152                           154 
+##        Lestrolepis intermedia         Leuroglossus stilbius 
+##                           156                           157 
+##       Liocranchia reinhardtii         Lobianchia gemellarii 
+##                           158                           159 
+##          Lycoteuthis lorigera  Lysiosquilla tredecimdentata 
+##                           160                           161 
+##        Macroparalepis affinis                Makaira mazara 
+##                           162                           165 
+##          Masturus lanceolatus       Maurolicus imperatorius 
+##                           167                           168 
+##       Melanostomias valdiviae             Monacoa grimaldii 
+##                           173                           178 
+##                Mugil cephalus      Mullus barbatus barbatus 
+##                           179                           180 
+##             Myctophum asperum          Nannobrachium regale 
+##                           181                           183 
+##           Nansenia macrolepis    Natosquilla investigatoris 
+##                           185                           186 
+##               Nealotus tripes   Neoanchisquilla tuberculata 
+##                           187                           189 
+##       Neognathophausia ingens            Nesiarchus nasutus 
+##                           191                           192 
+##        Octopoteuthis nielseni          Octopoteuthis rugosa 
+##                           194                           195 
+##       Odontodactylus hansenii      Odontodactylus scyllarus 
+##                           200                           201 
+##        Ommastrephes bartramii                Omosudis lowii 
+##                           202                           203 
+##            Onykia loennbergii   Opisthoteuthis californiana 
+##                           206                           208 
+##              Oplophorus typus     Ornithoteuthis antillarum 
+##                           209                           210 
+##      Ornithoteuthis volatilis             Ostracion cubicus 
+##                           211                           212 
+##            Paralepis speciosa          Parapronoe crustulum 
+##                           215                           217 
+##        Parribacus antarcticus           Peprilus simillimus 
+##                           218                           219 
+##           Peristedion gracile         Photonectes margarita 
+##                           220                           221 
+##             Psenes pellucidus      Pteroctopus tetracirrhus 
+##                           231                           232 
+##          Pterycombus petersii        Pterygioteuthis giardi 
+##                           233                           234 
+##   Pterygioteuthis microlampas           Pyrosoma atlanticum 
+##                           235                           236 
+##     Pyroteuthis margaritifera               Ranzania laevis 
+##                           237                           238 
+##           Rexea prometheoides        Rhinogobiops nicholsii 
+##                           239                           240 
+##         Robustosergia robusta                  Salpa maxima 
+##                           241                           242 
+##            Sardina pilchardus             Sardinella aurita 
+##                           243                           244 
+##              Scomber scombrus     Scombrolabrax heterolepis 
+##                           248                           250 
+##           Scopelarchus analis          Scopelosaurus hoedti 
+##                           251                           253 
+##           Sebastes aleutianus          Sebastes brevispinis 
+##                           255                           256 
+##            Sebastes diploproa       Sebastes helvomaculatus 
+##                           257                           258 
+##              Sebastes maliger             Sebastes miniatus 
+##                           259                           260 
+##             Sebastes proriger              Sebastes wilsoni 
+##                           261                           262 
+##            Sebastes zacentrus             Selene setapinnis 
+##                           263                           264 
+##             Sepietta oweniana               Soestia zonaria 
+##                           265                           266 
+##               Spirula spirula       Spondyliosoma cantharus 
+##                           267                           268 
+##            Sternoptyx obscura    Sthenoteuthis oualaniensis 
+##                           271                           272 
+##      Stigmatoteuthis dofleini        Stigmatoteuthis hoylei 
+##                           273                           274 
+##            Strongylura exilis                 Sudis hyalina 
+##                           276                           278 
+##        Symbolophorus barnardi       Symbolophorus evermanni 
+##                           279                           280 
+##          Systellaspis debilis                Taningia danae 
+##                           282                           283 
+##                Taractes asper        Thaleichthys pacificus 
+##                           284                           289 
+##          Thyrsitoides marleyi        Thysanoteuthis rhombus 
+##                           291                           292 
+##           Todarodes pacificus            Todaropsis eblanae 
+##                           293                           295 
+##            Trachinotus ovatus           Trachurus japonicus 
+##                           296                           298 
+##          Tremoctopus gracilis         Tremoctopus violaceus 
+##                           301                           302 
+##               Vibilia gibbosa       Walvisteuthis rancureli 
+##                           305                           307</code></pre>
+<pre class="r"><code>length(which(colSums(alb_prey_longhurst[, 10:ncol(alb_prey_longhurst)]) &lt; 2))  #181 species have low prevalence</code></pre>
+<pre><code>## [1] 184</code></pre>
+<pre class="r"><code>names(which(colSums(alb_prey_longhurst[, 10:ncol(alb_prey_longhurst)]) &lt; 2))</code></pre>
+<pre><code>##   [1] &quot;Abralia redfieldi&quot;             &quot;Abraliopsis affinis&quot;          
+##   [3] &quot;Abraliopsis gilchristi&quot;        &quot;Abraliopsis morisii&quot;          
+##   [5] &quot;Alepisaurus ferox&quot;             &quot;Anarrhichthys ocellatus&quot;      
+##   [7] &quot;Ancistrocheirus lesueurii&quot;     &quot;Anoplopoma fimbria&quot;           
+##   [9] &quot;Anotopterus nikparini&quot;         &quot;Antigonia capros&quot;             
+##  [11] &quot;Antimora rostrata&quot;             &quot;Argonauta nodosus&quot;            
+##  [13] &quot;Argyropelecus aculeatus&quot;       &quot;Ateleopus natalensis&quot;         
+##  [15] &quot;Atherinopsis californiensis&quot;   &quot;Atlanta peronii&quot;              
+##  [17] &quot;Axius stirhynchus&quot;             &quot;Balistes punctatus&quot;           
+##  [19] &quot;Barathronus parfaiti&quot;          &quot;Bathophilus flemingi&quot;         
+##  [21] &quot;Bathyagonus pentacanthus&quot;      &quot;Bathylagoides wesethi&quot;        
+##  [23] &quot;Beryx splendens&quot;               &quot;Brama orcini&quot;                 
+##  [25] &quot;Bregmaceros mcclellandi&quot;       &quot;Calanus finmarchicus&quot;         
+##  [27] &quot;Canthidermis maculata&quot;         &quot;Cavolinia tridentata&quot;         
+##  [29] &quot;Centrolophus niger&quot;            &quot;Ceratias tentaculatus&quot;        
+##  [31] &quot;Ceratoscopelus warmingii&quot;      &quot;Chiasmodon niger&quot;             
+##  [33] &quot;Chlorophthalmus agassizi&quot;      &quot;Chromis punctipinnis&quot;         
+##  [35] &quot;Clupea pallasii&quot;               &quot;Cookeolus japonicus&quot;          
+##  [37] &quot;Coryphaena hippurus&quot;           &quot;Cranchia scabra&quot;              
+##  [39] &quot;Cubiceps capensis&quot;             &quot;Cubiceps pauciradiatus&quot;       
+##  [41] &quot;Cymatogaster aggregata&quot;        &quot;Cyphocaris faurei&quot;            
+##  [43] &quot;Dactyloptena orientalis&quot;       &quot;Decapterus macarellus&quot;        
+##  [45] &quot;Decapterus macrosoma&quot;          &quot;Desmodema polystictum&quot;        
+##  [47] &quot;Diaphus effulgens&quot;             &quot;Diaphus lucidus&quot;              
+##  [49] &quot;Diaphus luetkeni&quot;              &quot;Diaphus ostenfeldi&quot;           
+##  [51] &quot;Diaphus perspicillatus&quot;        &quot;Diplodus sargus&quot;              
+##  [53] &quot;Diplospinus multistriatus&quot;     &quot;Diretmus argenteus&quot;           
+##  [55] &quot;Echinosquilla guerinii&quot;        &quot;Engraulis capensis&quot;           
+##  [57] &quot;Engraulis japonicus&quot;           &quot;Eucleoteuthis luminosa&quot;       
+##  [59] &quot;Eutrigla gurnardus&quot;            &quot;Funchalia taaningi&quot;           
+##  [61] &quot;Funchalia woodwardi&quot;           &quot;Galiteuthis phyllura&quot;         
+##  [63] &quot;Gempylus serpens&quot;              &quot;Gennadas elegans&quot;             
+##  [65] &quot;Glyptocephalus zachirus&quot;       &quot;Gonatopsis borealis&quot;          
+##  [67] &quot;Gonatus berryi&quot;                &quot;Gonatus californiensis&quot;       
+##  [69] &quot;Gonatus onyx&quot;                  &quot;Gonatus pyros&quot;                
+##  [71] &quot;Grimalditeuthis bonplandi&quot;     &quot;Halichoeres nicholsi&quot;         
+##  [73] &quot;Haliphron atlanticus&quot;          &quot;Heterocarpus laevigatus&quot;      
+##  [75] &quot;Histioteuthis meleagroteuthis&quot; &quot;Hyaloteuthis pelagica&quot;        
+##  [77] &quot;Hygophum hygomii&quot;              &quot;Illex argentinus&quot;             
+##  [79] &quot;Janicella spinicauda&quot;          &quot;Katsuwonus pelamis&quot;           
+##  [81] &quot;Lactoria diaphana&quot;             &quot;Lagocephalus lagocephalus&quot;    
+##  [83] &quot;Lampadena luminosa&quot;            &quot;Lampanyctodes hectoris&quot;       
+##  [85] &quot;Lampanyctus alatus&quot;            &quot;Lampanyctus mexicanus&quot;        
+##  [87] &quot;Lanceola sayana&quot;               &quot;Lepidocybium flavobrunneum&quot;   
+##  [89] &quot;Leptocotis tenuirostris&quot;       &quot;Lestidiops similis&quot;           
+##  [91] &quot;Lestrolepis intermedia&quot;        &quot;Leuroglossus stilbius&quot;        
+##  [93] &quot;Liocranchia reinhardtii&quot;       &quot;Lobianchia gemellarii&quot;        
+##  [95] &quot;Lycoteuthis lorigera&quot;          &quot;Lysiosquilla tredecimdentata&quot; 
+##  [97] &quot;Macroparalepis affinis&quot;        &quot;Makaira mazara&quot;               
+##  [99] &quot;Masturus lanceolatus&quot;          &quot;Maurolicus imperatorius&quot;      
+## [101] &quot;Melanostomias valdiviae&quot;       &quot;Monacoa grimaldii&quot;            
+## [103] &quot;Mugil cephalus&quot;                &quot;Mullus barbatus barbatus&quot;     
+## [105] &quot;Myctophum asperum&quot;             &quot;Nannobrachium regale&quot;         
+## [107] &quot;Nansenia macrolepis&quot;           &quot;Natosquilla investigatoris&quot;   
+## [109] &quot;Nealotus tripes&quot;               &quot;Neoanchisquilla tuberculata&quot;  
+## [111] &quot;Neognathophausia ingens&quot;       &quot;Nesiarchus nasutus&quot;           
+## [113] &quot;Octopoteuthis nielseni&quot;        &quot;Octopoteuthis rugosa&quot;         
+## [115] &quot;Odontodactylus hansenii&quot;       &quot;Odontodactylus scyllarus&quot;     
+## [117] &quot;Ommastrephes bartramii&quot;        &quot;Omosudis lowii&quot;               
+## [119] &quot;Onykia loennbergii&quot;            &quot;Opisthoteuthis californiana&quot;  
+## [121] &quot;Oplophorus typus&quot;              &quot;Ornithoteuthis antillarum&quot;    
+## [123] &quot;Ornithoteuthis volatilis&quot;      &quot;Ostracion cubicus&quot;            
+## [125] &quot;Paralepis speciosa&quot;            &quot;Parapronoe crustulum&quot;         
+## [127] &quot;Parribacus antarcticus&quot;        &quot;Peprilus simillimus&quot;          
+## [129] &quot;Peristedion gracile&quot;           &quot;Photonectes margarita&quot;        
+## [131] &quot;Psenes pellucidus&quot;             &quot;Pteroctopus tetracirrhus&quot;     
+## [133] &quot;Pterycombus petersii&quot;          &quot;Pterygioteuthis giardi&quot;       
+## [135] &quot;Pterygioteuthis microlampas&quot;   &quot;Pyrosoma atlanticum&quot;          
+## [137] &quot;Pyroteuthis margaritifera&quot;     &quot;Ranzania laevis&quot;              
+## [139] &quot;Rexea prometheoides&quot;           &quot;Rhinogobiops nicholsii&quot;       
+## [141] &quot;Robustosergia robusta&quot;         &quot;Salpa maxima&quot;                 
+## [143] &quot;Sardina pilchardus&quot;            &quot;Sardinella aurita&quot;            
+## [145] &quot;Scomber scombrus&quot;              &quot;Scombrolabrax heterolepis&quot;    
+## [147] &quot;Scopelarchus analis&quot;           &quot;Scopelosaurus hoedti&quot;         
+## [149] &quot;Sebastes aleutianus&quot;           &quot;Sebastes brevispinis&quot;         
+## [151] &quot;Sebastes diploproa&quot;            &quot;Sebastes helvomaculatus&quot;      
+## [153] &quot;Sebastes maliger&quot;              &quot;Sebastes miniatus&quot;            
+## [155] &quot;Sebastes proriger&quot;             &quot;Sebastes wilsoni&quot;             
+## [157] &quot;Sebastes zacentrus&quot;            &quot;Selene setapinnis&quot;            
+## [159] &quot;Sepietta oweniana&quot;             &quot;Soestia zonaria&quot;              
+## [161] &quot;Spirula spirula&quot;               &quot;Spondyliosoma cantharus&quot;      
+## [163] &quot;Sternoptyx obscura&quot;            &quot;Sthenoteuthis oualaniensis&quot;   
+## [165] &quot;Stigmatoteuthis dofleini&quot;      &quot;Stigmatoteuthis hoylei&quot;       
+## [167] &quot;Strongylura exilis&quot;            &quot;Sudis hyalina&quot;                
+## [169] &quot;Symbolophorus barnardi&quot;        &quot;Symbolophorus evermanni&quot;      
+## [171] &quot;Systellaspis debilis&quot;          &quot;Taningia danae&quot;               
+## [173] &quot;Taractes asper&quot;                &quot;Thaleichthys pacificus&quot;       
+## [175] &quot;Thyrsitoides marleyi&quot;          &quot;Thysanoteuthis rhombus&quot;       
+## [177] &quot;Todarodes pacificus&quot;           &quot;Todaropsis eblanae&quot;           
+## [179] &quot;Trachinotus ovatus&quot;            &quot;Trachurus japonicus&quot;          
+## [181] &quot;Tremoctopus gracilis&quot;          &quot;Tremoctopus violaceus&quot;        
+## [183] &quot;Vibilia gibbosa&quot;               &quot;Walvisteuthis rancureli&quot;</code></pre>
+<pre class="r"><code>alb_prey_use_longhurst = alb_prey_longhurst[colnames(alb_prey_longhurst) %notin%
+    names(which(colSums(alb_prey_longhurst[, 10:ncol(alb_prey_longhurst)]) &lt; 2))]
+
+# Check for empty rows
+which(rowSums(alb_prey_use_longhurst[, 10:ncol(alb_prey_use_longhurst)]) == 0)  #None</code></pre>
+<pre><code>## integer(0)</code></pre>
+<pre class="r"><code># If so --&gt; remove alb_prey_use = alb_prey_use %&gt;% slice(-c(60,61))</code></pre>
+<p>This results in 49 observations and 126 species that occur &gt;1
+time.</p>
+<pre class="r"><code># Subset species df
+alb_prey_use_longhurst_spp = alb_prey_use_longhurst[, 10:ncol(alb_prey_use_longhurst)]
+
+names(alb_prey_use_longhurst_spp) &lt;- str_replace_all(names(alb_prey_use_longhurst_spp),
+    &quot; &quot;, &quot;_&quot;)
+
+# check df
+dim(alb_prey_use_longhurst_spp)  #134 species &amp; 58 observations</code></pre>
+<pre><code>## [1]  48 123</code></pre>
 </div>
-<div id="select-traits-for-analyses" class="section level3">
-<h3>Select traits for analyses</h3>
-<p>Key traits selection for species coarse traits: for habitat
-association, seasonal, vertical migration and aggregation behaviour.</p>
-<pre class="r"><code>prey_trait_select = prey_trait %&gt;%
-    filter(!prey_sp %in% check_spp$prey_sp) %&gt;%
-    dplyr::select(prey_class:prey_sp, life_stage, diet_likely, life_note, vert_habitat,
-        horz_habitat, diel_migrant, diel_migrant_cat, refuge_cat, season_migrant,
-        season_cat, gregarious_primary) %&gt;%
-    filter(life_stage == diet_likely)
+<div id="traits-q---for-longhurst-analysis" class="section level2">
+<h2>Traits (Q) - for Longhurst analysis</h2>
+<p>Here, we filter out low occurrences using ‘alb_prob_pa’ df and select
+species used for Longhurst analyses. Note that we obtain 129 (&lt; 134)
+species and their traits, so we’ll need to filter the species df by the
+traits.</p>
+<pre class="r"><code># Relabel to add underscore in names
+alb_prob_clust$prey_sp = str_replace_all(alb_prob_clust$prey_sp, &quot; &quot;, &quot;_&quot;)
+# Assign species as row names
+rownames(alb_prob_clust) &lt;- alb_prob_clust$prey_sp
+# Order species list
+alb_prob_clust &lt;- alb_trait_use[order(row.names(alb_prob_clust)), ]
 
-prey_trait_select$prey_sp[duplicated(prey_trait_select$prey_sp)]</code></pre>
-<pre><code>## character(0)</code></pre>
-<pre class="r"><code>str(prey_trait_select)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    308 obs. of  15 variables:
-##  $ prey_class        : chr  &quot;Actinopterygii&quot; &quot;Actinopterygii&quot; &quot;Actinopterygii&quot; &quot;Actinopterygii&quot; ...
-##  $ prey_order        : chr  &quot;Argentiniformes&quot; &quot;Argentiniformes&quot; &quot;Ateleopodiformes&quot; &quot;Atheriniformes&quot; ...
-##  $ prey_family       : chr  &quot;Bathylagidae&quot; &quot;Bathylagidae&quot; &quot;Ateleopodidae&quot; &quot;Atherinidae&quot; ...
-##  $ prey_sp           : chr  &quot;Bathylagoides wesethi&quot; &quot;Leuroglossus stilbius&quot; &quot;Ateleopus natalensis&quot; &quot;Atherinopsis californiensis&quot; ...
-##  $ life_stage        : chr  &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
-##  $ diet_likely       : chr  &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; &quot;juvenile&quot; ...
-##  $ life_note         : chr  NA NA NA NA ...
-##  $ vert_habitat      : chr  &quot;mesopelagic&quot; &quot;mesopelagic&quot; &quot;demersal&quot; &quot;epipelagic&quot; ...
-##  $ horz_habitat      : chr  &quot;oceanic&quot; &quot;oceanic&quot; &quot;continental shelf&quot; &quot;coastal&quot; ...
-##  $ diel_migrant      : chr  &quot;0.0&quot; &quot;1.0&quot; &quot;NA&quot; &quot;0.0&quot; ...
-##  $ diel_migrant_cat  : chr  &quot;diel_no&quot; &quot;diel_yes&quot; &quot;diel_UN&quot; &quot;diel_no&quot; ...
-##  $ refuge_cat        : chr  &quot;refuge_no&quot; &quot;refuge_no&quot; &quot;refuge_NA&quot; &quot;refuge_no&quot; ...
-##  $ season_migrant    : chr  &quot;1.0&quot; &quot;1.0&quot; &quot;NA&quot; &quot;1.0&quot; ...
-##  $ season_cat        : chr  &quot;season_yes&quot; &quot;season_yes&quot; &quot;season_NA&quot; &quot;season_yes&quot; ...
-##  $ gregarious_primary: chr  &quot;schooling&quot; &quot;schooling&quot; &quot;shoaling&quot; &quot;schooling&quot; ...</code></pre>
-<p>This resulted in 93 adult, 210 juvenile and 5 larval prey taxa in the
-trait database.</p>
-<pre class="r"><code>prey_trait_select_use = prey_trait_select %&gt;%
-  filter(prey_sp %in% unique(alb_global_metrics_basic$prey_sp)) %&gt;%
-  left_join(alb_global_metrics_basic)</code></pre>
-<pre><code>## Joining, by = &quot;prey_sp&quot;</code></pre>
-<pre class="r"><code>summary(as.factor(prey_trait_select_use$life_stage))</code></pre>
+alb_trait_use_longhurst = alb_prob_clust %&gt;%
+    select(prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat,
+        gregarious, prob.clust.num) %&gt;%
+    filter(prey_sp %in% names(alb_prey_use_longhurst_spp))
+
+# Ensure traits are treated as factors for now
+alb_trait_use_longhurst[, 2:8] &lt;- lapply(alb_trait_use_longhurst[, 2:8], factor)  #to convert to factors
+
+dim(alb_trait_use_longhurst)  #121 species, 8 trait variables</code></pre>
+<pre><code>## [1] 94  8</code></pre>
+<pre class="r"><code>str(alb_trait_use_longhurst)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    94 obs. of  8 variables:
+##  $ prey_sp         : chr  &quot;Anchylomera_blossevillei&quot; &quot;Phrosina_semilunata&quot; &quot;Ancistroteuthis_lichtensteinii&quot; &quot;Anotopterus_pharao&quot; ...
+##  $ life_stage      : Factor w/ 3 levels &quot;adult&quot;,&quot;juvenile&quot;,..: 1 1 2 2 1 2 2 3 2 1 ...
+##  $ vert_habitat    : Factor w/ 3 levels &quot;demersal&quot;,&quot;epipelagic&quot;,..: 2 2 1 3 3 3 2 2 2 2 ...
+##  $ horz_habitat    : Factor w/ 3 levels &quot;coastal&quot;,&quot;continental shelf&quot;,..: 2 2 2 3 3 3 3 1 3 3 ...
+##  $ diel_migrant_cat: Factor w/ 2 levels &quot;diel (no)&quot;,&quot;diel (yes)&quot;: 2 2 2 2 2 2 1 2 2 2 ...
+##  $ season_cat      : Factor w/ 2 levels &quot;season (no)&quot;,..: 2 2 2 2 2 2 2 1 2 2 ...
+##  $ gregarious      : Factor w/ 2 levels &quot;non-schooling&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ prob.clust.num  : Factor w/ 7 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 6 6 6 2 2 2 3 7 5 5 ...</code></pre>
+<p><strong>Trait value checks</strong></p>
+<p>Here we check the trait values for each trait, and check the
+distribution of values. Note we merge certain values with low
+occurrences of species within them, and if we have a logical reason to
+merge.</p>
+<pre class="r"><code>summary(alb_trait_use_longhurst$life_stage) #low numbers for larva, do not use</code></pre>
 <pre><code>##    adult juvenile    larva 
-##       93      210        5</code></pre>
-<pre class="r"><code>write.csv(prey_trait_select_use, here::here(&quot;data/2_output_data/prey_trait_select.csv&quot;), row.names = FALSE)</code></pre>
+##       33       57        4</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$vert_habitat) #use</code></pre>
+<pre><code>##    demersal  epipelagic mesopelagic 
+##          10          50          34</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$horz_habitat) #use</code></pre>
+<pre><code>##           coastal continental shelf           oceanic 
+##                11                32                51</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$diel_migrant_cat) #a lot more diel migrants than not</code></pre>
+<pre><code>##  diel (no) diel (yes) 
+##         21         73</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$season_cat) #more seasonal taxa than not</code></pre>
+<pre><code>##  season (no) season (yes) 
+##           24           70</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$gregarious) #still more gregarious than not, just an artefact of the pelagic prey data.</code></pre>
+<pre><code>## non-schooling     schooling 
+##            16            78</code></pre>
+<pre class="r"><code>summary(alb_trait_use_longhurst$prob.clust.num) #good distribution of species within clusters</code></pre>
+<pre><code>##  1  2  3  4  5  6  7 
+##  5 26 14  2 19 20  8</code></pre>
+<pre class="r"><code>#summary(as.factor(alb_trait_use$prey_order)) #an unaccounted artefact of the pelagic prey data.</code></pre>
 </div>
-<div id="table-s4-content---life-stage-and-measurements" class="section level3">
-<h3>Table S4 content - life stage and measurements</h3>
-<p>Include this in meta-information.</p>
-<pre class="r"><code>prey_trait_select_use = read.csv(here::here(&quot;data/2_output_data/prey_trait_select.csv&quot;))
+<div id="data-l-select-1" class="section level2">
+<h2>Data (L) – Select</h2>
+<p>Here we filter our prey species (presence/absence data) by the
+species that were also used for cluster analysis, because we have
+complete trait information for these species, as well as frequency of
+occurrence data.</p>
+<pre class="r"><code>alb_prey_use_longhurst &lt;- alb_prey_use_longhurst_spp[colnames(alb_prey_use_longhurst_spp) %in%
+    rownames(alb_trait_use_longhurst)]
 
-alb_table_S4 = alb_global %&gt;%
-  #filter(maxl_use &gt; 0) %&gt;%
-  dplyr::select(prey_class:prey_sp, prey_age_reported_1, maxl_use, maxl_type, gape_lmax) %&gt;%
-  group_by(prey_sp, prey_age_reported_1, maxl_type) %&gt;% #, life_stage , pFOuse, pN, pM maxl_use, , gape_lmax
-  dplyr::summarize(`maxL (cm)` = max(maxl_use/10, na.rm=TRUE),
-                   `maxGape (cm)` = max(gape_lmax, na.rm=TRUE)) %&gt;%
-  left_join(prey_trait_select_use, by=&quot;prey_sp&quot;) %&gt;%
-  select(-c(prey_class:prey_family, diet_likely, vert_habitat:maxM))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;prey_sp&#39;, &#39;prey_age_reported_1&#39;. You can
-## override using the `.groups` argument.</code></pre>
-<pre class="r"><code>summary(as.factor(alb_table_S4$prey_age_reported_1))</code></pre>
-<pre><code>##    adult juvenile    larva     none 
-##       37       42       11      288</code></pre>
-<pre class="r"><code>summary(as.factor(alb_table_S4$life_stage))</code></pre>
-<pre><code>##    adult juvenile    larva 
-##      116      251       11</code></pre>
-<pre class="r"><code>write.csv(alb_table_S4, here::here(&quot;data/3_output_supp/table_S4.csv&quot;), row.names = FALSE)
-write.csv(alb_table_S4, here::here(&quot;outputs_figures/ms_figures/SI_results/table_S4.csv&quot;), row.names = FALSE)</code></pre>
+dim(alb_prey_use_longhurst)  #49 rows and 121 spp</code></pre>
+<pre><code>## [1] 48 94</code></pre>
 </div>
+<div id="covars-r---manips-1" class="section level2">
+<h2>Covars (R) - MANIPS</h2>
+<p>Checking the level replication for each covariate. Note that our best
+covars ==&gt; pred_life, OceanBasin, lat_cat, and maybe code (Longhurst)
+- but would need to exclude low numbered levels.</p>
+<pre class="r"><code>alb_covars_longhurst = alb_prey_longhurst %&gt;%
+  select(StudyID:pred_life_adjust) #%&gt;%
+  #slice(-c(60,61))
+
+#As factors
+alb_covars_longhurst[,1:ncol(alb_covars_longhurst)] =  lapply(alb_covars_longhurst[,1:ncol(alb_covars_longhurst)], as.factor)</code></pre>
+<pre class="r"><code>#Check representation
+#summary(alb_adult_covars)
+
+summary(alb_covars_longhurst$lat_cat) #don&#39;t use
+#temperate 
+#     49   
+
+summary(alb_covars_longhurst$pred_life) #don&#39;t use
+#  juvenile  mixed 
+#    33       16
+
+summary(alb_covars_longhurst$OceanBasin)
+#   Mediterranean    N Atlantic     N Pacific 
+#         9            16            24       
+#Remove Indian and S Atlantic Oceans from analyses
+
+summary(alb_covars_longhurst$code)
+#Build an analysis for CCAL, MEDI, NADR!!
+#CCAL MEDI NADR 
+#  24    9   16
+
+dim(alb_covars) #49 observations for 9 covars</code></pre>
 </div>
-<div id="step-2-go-to-2_extract_longhurst-to-work-on-figure-1a" class="section level2">
-<h2>Step 2 GO TO 2_extract_longhurst to work on Figure 1a</h2>
+<div id="save-dfs-for-analyses" class="section level2">
+<h2>SAVE DFS FOR ANALYSES</h2>
+<p>Save for Ocean Basin analysis.</p>
+<pre class="r"><code>#L - species df
+write.csv(alb_prey_use, here::here(&quot;./data/2_output_data/alb_prey_pa_use.csv&quot;), row.names=FALSE)
+
+#R - covars df
+write.csv(alb_covars, here::here(&quot;./data/2_output_data/alb_covars_use.csv&quot;), row.names=FALSE)
+
+#Q - trait df
+write.csv(alb_trait_use, here::here(&quot;./data/2_output_data/alb_trait_use.csv&quot;), row.names=FALSE)</code></pre>
+<p>Save for Longhurst Province Code analysis</p>
+<pre class="r"><code>#L - species df
+write.csv(alb_prey_use_longhurst, here::here(&quot;./data/2_output_data/alb_prey_pa_use_longhurst.csv&quot;), row.names=FALSE)
+
+#R - covars df
+write.csv(alb_covars_longhurst, here::here(&quot;./data/2_output_data/alb_covars_longhurst.csv&quot;), row.names=FALSE)
+
+#Q - trait df
+write.csv(alb_trait_use_longhurst, here::here(&quot;./data/2_output_data/alb_trait_use_longhurst.csv&quot;), row.names=FALSE)</code></pre>
 </div>
-<div id="step-3-then-to-document-3a_alb_data_covars-to-work-on-covariate-info" class="section level2">
-<h2>Step 3 THEN TO document 3a_alb_data_covars to work on covariate
-info</h2>
-</div>
-<div id="step-4-to-4_species_accum-doc-to-work-on-figure-1b-and-c" class="section level2">
-<h2>Step 4 TO 4_species_accum doc to work on Figure 1b and c</h2>
-</div>
-<div id="step-5-to-5_trait_phylo_graph-for-species-and-trait-phylogenetic-graphs" class="section level2">
-<h2>Step 5 TO 5_trait_phylo_graph for species and trait phylogenetic
-graphs</h2>
-</div>
-<div id="step-6-to-6a_trait_cluster_analysis_divis7-for-clustering-algorithm-analyses-6b_alb_diet_graph-for-trait-relative-frequency-of-occurrence-graphics" class="section level2">
-<h2>Step 6 TO 6a_trait_cluster_analysis_divis7 for clustering algorithm
-analyses &amp; 6b_alb_diet_graph for trait relative frequency of
-occurrence graphics</h2>
-</div>
-<div id="step-7-to-7a-c_trait_model-code-for-trait-based-modelling-steps." class="section level2">
-<h2>Step 7 TO 7a-c_trait_model code for trait-based modelling
-steps.</h2>
 </div>
 
 

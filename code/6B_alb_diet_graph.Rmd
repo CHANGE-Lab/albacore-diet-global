@@ -159,7 +159,7 @@ index_cluster_bar
 #unique(index_alb_diet_clust_data$StudyID)
 #levels(as.factor(index_alb_diet_clust_data$yearrepID))
 
-ggsave(here::here("outputs_figures/diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
 ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
 ```
 
@@ -191,7 +191,7 @@ index_cluster_scatter = index_alb_diet_clust_data %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 index_cluster_scatter
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = index_cluster_scatter, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_scatterFO.jpeg"), plot = index_cluster_scatter, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -227,7 +227,7 @@ diet_cluster_scatter = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_scatter
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterFO.jpeg"), plot = diet_cluster_scatter, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_scatterFO.jpeg"), plot = diet_cluster_scatter, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -257,7 +257,7 @@ diet_cluster_scatterN = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_scatterN
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterN.jpeg"), plot = diet_cluster_scatterN, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_scatterN.jpeg"), plot = diet_cluster_scatterN, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -286,7 +286,7 @@ diet_cluster_scatterM = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_scatterM
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_scatterM.jpeg"), plot = diet_cluster_scatterM, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_scatterM.jpeg"), plot = diet_cluster_scatterM, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -322,7 +322,7 @@ diet_cluster_box = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_box
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_boxFO.jpeg"), plot = diet_cluster_box, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_boxFO.jpeg"), plot = diet_cluster_box, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -358,7 +358,7 @@ diet_cluster_violin = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_violin
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violinFO.jpeg"), plot = diet_cluster_violin, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_violinFO.jpeg"), plot = diet_cluster_violin, width = 24, height = 16, dpi = 300)
 
 ```
 
@@ -396,7 +396,7 @@ diet_cluster_violin_scatter = alb_diet_clust %>%
   theme(strip.text = element_text(face="bold", size=rel(2)))
 diet_cluster_violin_scatter
 
-ggsave(here::here("outputs_figures/diet_comp/diet_cluster_violin_scatterFO.jpeg"), plot = diet_cluster_violin_scatter, width = 24, height = 16, dpi = 300)
+ggsave(here::here("outputs_figures/4_diet_comp/diet_cluster_violin_scatterFO.jpeg"), plot = diet_cluster_violin_scatter, width = 24, height = 16, dpi = 300)
 
 
 ```

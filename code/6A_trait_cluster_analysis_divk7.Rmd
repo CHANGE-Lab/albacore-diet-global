@@ -246,7 +246,7 @@ Below we are using simplified habitat use trait values + gregarious (as binary) 
 prob.stats.df.divisive <- cstats.table(prob.gower.dist, prob.divisive.clust, 15)
 prob.stats.df.divisive
 View(prob.stats.df.divisive)
-write.csv(prob.stats.df.divisive, here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.stats.df.divisive.hab.csv"))
+write.csv(prob.stats.df.divisive, here("outputs_figures/3_clusters/prob.stats.df.divisive.hab.csv"))
 
 ```
 
@@ -274,7 +274,7 @@ prob.div.elbow = ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.d
   labs(x = "Num.of clusters", y = "Within clusters sum of squares (SS)") +
   theme(plot.title = element_text(hjust = 0.5))
 prob.div.elbow
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.div.elbow.hab.png'), 
+ggsave(here('outputs_figures/3_clusters/prob.div.elbow.hab.png'), 
        plot=prob.div.elbow, width=8, height=8, dpi=300)
 
 ## Silhouette
@@ -289,7 +289,7 @@ prob.div.silh = ggplot(data = data.frame(t(cstats.table(prob.gower.dist, prob.di
   labs(x = "Num.of clusters", y = "Average silhouette width") +
   theme(plot.title = element_text(hjust = 0.5))
 prob.div.silh
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.div.silh.hab.png'), 
+ggsave(here('outputs_figures/3_clusters/prob.div.silh.hab.png'), 
        plot=prob.div.silh, width=8, height=8, dpi=300)
 
 ```
@@ -320,7 +320,7 @@ prob.dendro.graph <- ggplot(prob.ggd1, theme = theme_minimal()) +
   labs(x = "Num. observations", y = "Height", title = "Dendrogram, k = 6")
 prob.dendro.graph
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.horz.k7.png'), plot=prob.dendro.graph, width=8, height=8, dpi=300)
 
 ```
 
@@ -336,7 +336,7 @@ prob.dendro.rad
 #No labels on this one, labels were too cluttered/problems
 #Save radial dendrogram for chat
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.rad.k7.png'), plot=prob.dendro.rad, width=8, height=8, dpi=300)
 
 ```
 
@@ -379,7 +379,7 @@ ggd1 <- ggd1 + theme(panel.grid.major = element_blank(),
 ggd1 <- ggd1 + ylim(max(get_branches_heights(prob.dendro)), -1)
 ggd1
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.vertlabs.k7.pdf'), plot=ggd1, width=5, height=20, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.vertlabs.k7.pdf'), plot=ggd1, width=5, height=20, dpi=300)
 
 #With labels removed!!!
 
@@ -388,7 +388,7 @@ prob.dendro.vert <- ggplot(prob.ggd1, horiz = TRUE, labels = FALSE) +
 #coord_polar(theta="x")
 prob.dendro.vert 
 #Export as .png
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.vert2.k7.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.vert2.k7.png'), plot=prob.dendro.vert, width=5, height=12, dpi=300)
 
 
 ```
@@ -408,7 +408,7 @@ prob.prey.cl <- cbind(prey_traits, prob.clust.num)
 
 #View(prob.prey.cl)
 
-write.csv(prob.prey.cl, here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.prey.clusternum.divis.k7.csv"))
+write.csv(prob.prey.cl, here("outputs_figures/3_clusters/prob.prey.clusternum.divis.k7.csv"))
 write.csv(prob.prey.cl, here("data/2_output_data/prob.prey.clusternum.divis.k7.csv"))
 
 ```
@@ -469,8 +469,8 @@ heatmap.c <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = level))
   theme(strip.text = element_text(face="bold", size=rel(2)))
 heatmap.c
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.clean.pdf'), plot=heatmap.c, width=12, height=12, dpi=300)
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatcounts.divis.k7.clean.jpeg'), plot=heatmap.c, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.heatcounts.divis.k7.clean.pdf'), plot=heatmap.c, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.heatcounts.divis.k7.clean.jpeg'), plot=heatmap.c, width=12, height=12, dpi=300)
 
 
 heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(level, ordered = T))) +
@@ -488,8 +488,8 @@ heatmap.p <- ggplot(prob.clust.long, aes(x = factor(prob.clust.num), y = factor(
   theme(strip.text = element_text(face="bold", size=rel(2)))
 heatmap.p
 
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.clean.pdf'), plot=heatmap.p, width=12, height=12, dpi=300)
-ggsave(here('outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/prob.dendro.heatpercent.divis.k7.clean.jpeg'), plot=heatmap.p, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.heatpercent.divis.k7.clean.pdf'), plot=heatmap.p, width=12, height=12, dpi=300)
+ggsave(here('outputs_figures/3_clusters/prob.dendro.heatpercent.divis.k7.clean.jpeg'), plot=heatmap.p, width=12, height=12, dpi=300)
 
 library(plyr)
 
@@ -602,6 +602,6 @@ trait_nMDS_prob_fig
 #Note plyr can mess with this!!
 detach("package:plyr", unload=TRUE)
 
-ggsave(here::here("outputs_figures/clusters/prob_cluster_mar2022/div_hab/k7/trait_nMDS_prob_clusters_div7_b.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
+ggsave(here::here("outputs_figures/3_clusters/trait_nMDS_prob_clusters_div7_b.png"), plot = trait_nMDS_prob_fig, width = 8, height = 8, dpi = 300)
 
 ```

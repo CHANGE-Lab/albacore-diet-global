@@ -595,13 +595,13 @@ Including code for saving this graph. Code for saving output for all other figur
 
 #Basic phylogenies
 
-ggsave("prob_basic.png",
-  #here("../output_figures/ms_figures/prob_basic.png"), 
+ggsave(#"prob_basic.png",
+  here::here("./output_figures/2_phylo_graphs/prey_prob/prob_basic.png"),
   plot=prob_basic, width=8, height=8, dpi=300)
 
-ggsave("prob_basic_lab.png",
-  #here('./output_figures/phylo_graphs/prey_prob/prob_basic_lab.png'), 
-  plot=prob_basic_lab, width=10, height=10, dpi=300)
+ggsave(#"prob_basic_lab.png",
+       here::here("./output_figures/2_phylo_graphs/prey_prob/prob_basic_lab.png"),
+       plot=prob_basic_lab, width=10, height=10, dpi=300)
 ```
 
 **Phylogeny by Class**
@@ -644,7 +644,8 @@ ggsave("prob_maxm.png",
 ```{r Save Figures - habitat use, include = FALSE, eval=FALSE}
 
 #Save vertical graph
-ggsave("prob_hab1.png",
+ggsave(#"prob_hab1.png",
+       here::here("./output_figures/2_phylo_graphs/prey_prob/prob_hab1.png"),
        #here('./output_figures/diet_phylo/prey_prob/prob_hab1.png'), 
        plot=habitat_traits_prob1, width=13, height=10, dpi=300)
 

@@ -34,40 +34,23 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r Workspace, echo=FALSE, message=FALSE, results='hide'}
 # general
 library(tidyverse)
-library(readxl)
-library(plyr)
 library(dplyr)
 library(devtools)
-library(reshape2)
 library(here)
 "%notin%" = Negate('%in%')
 here::here()
-library(pander)
 
 # graphics
 library(ggplot2)
 library(lattice)
 library(graphics)
-library(RColorBrewer)
-library(gridExtra)
-library(captioner)
-library(viridis)
-library("grid")
-library("ggplotify")
-
+library(ggplotify)
 #modelling
-library(Hmisc)
-library(mgcv)
-library(unmarked)
-library(lme4)
 library(mvabund)
-library(tweedie)
-library(vegan)
 
 ## mvabund bug source code
-#source(here::here("code/traitglm.R"))
-#source(here::here("code/get_polys.R"))
-
+source(here::here("code/traitglm.R"))
+source(here::here("code/get_polys.R"))
 ```
 
 ## Data needs
@@ -100,9 +83,6 @@ alb_covars_use = read.csv(here::here("./data/2_output_data/alb_covars_use.csv"))
 #As factors
 alb_covars_use[,1:ncol(alb_covars_use)] =  lapply(alb_covars_use[,1:ncol(alb_covars_use)], as.factor)
 
-length(unique(alb_covars_use$StudyID))
-
-table(alb_covars_use$StudyID, alb_covars_use$OceanBasin)
 ```
 
 ```{r Load Trait data (Q)}
@@ -125,36 +105,6 @@ dim(alb_trait_use)
 
 ## DF Checks
 
-**Traits**
-
-Check trait values distribution if needed.
-
-```{r Trait values check, eval=FALSE, warning=FALSE, message=FALSE}
-
-summary(alb_trait_use$vert_habitat) #USE
-
-summary(alb_trait_use$horz_habitat) #USE
-
-summary(alb_trait_use$diel_migrant_cat) #USE
-
-summary(alb_trait_use$season_cat) #USE
-
-summary(alb_trait_use$prob.clust.num) #USE
-
-```
-
-Trait variable levels look good.
-
-```{r Trait factor levels, warning=FALSE, message=FALSE}
-
-levels(alb_trait_use$vert_habitat) #check
-
-levels(alb_trait_use$horz_habitat) #check
-
-#levels(alb_trait_use$gregarious) #check
-
-```
-
 **Covars**
 
 ```{r Covars values check, eval=FALSE}
@@ -162,30 +112,6 @@ levels(alb_trait_use$horz_habitat) #check
 #Summary stats on covars
 unique(alb_covars_use$StudyID) #22 studies
 unique(alb_covars_use$OceanBasin) #3 Ocean basins
-
-```
-
-We'll be using the best covars based on balance and replication ==> pred_life, OceanBasin, lat_cat.
-
-```{r Covar factor levels, eval=FALSE}
-#Check representation
-#summary(alb_adult_covars)
-
-summary(alb_covars_use$lat_cat)
-#Now
-#   56        1
-
-summary(alb_covars_use$pred_life)
-#  adult juvenile    mixed 
-#   1       37       19
-
-summary(alb_covars_use$OceanBasin)
-#Mediterranean    N Atlantic     N Pacific
-#       9            21            27      
-
-summary(alb_covars_use$code)
-#CCAL CNRY MEDI NADR NASW NECS NPPF NPTG 
-#  23    3    9   16    1    1    3    1 
 
 ```
 
@@ -218,76 +144,59 @@ traits_use = alb_trait_use[,c(3:6,8)] %>%
 str(traits_use)
 ```
 
-## NULL MANY GLM
+## TRAIT GLMS - MANYGLMS
 
-```{r null manyglm, eval=FALSE}
-null_many <- manyglm(alb_prey_pa_use_mv ~ 1, family = binomial(link = "logit"))
-plot(null_many)
-#summary(null_many, nBoot=99)
+### Read in models
+
+```{r Read in manyglm models and anovas}
+
+#Manyglm
+ocean_spp = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp.rds"))
+ocean_clusters_many = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many.rds"))
+ocean_trait_many = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_many.rds"))
+ocean_full_spp_many = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_full_spp_many.rds"))
+
+#Anovas
+an_ocean_spp = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp_anova.rds"))
+an_ocean_clusters_many = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many_anova.rds"))
+an_ocean_trait_many = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_many_anova.rds"))
+#an_ocean_full_spp = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/an_ocean_full_spp.rds"))
 ```
-
-## SPP MANY GLM
-
-```{r spp manyglm}
-spp_many <- manyglm(alb_prey_pa_use_mv ~ alb_covars_use$OceanBasin, family = "negative.binomial"
-                    #family = binomial(link = "logit")
-                    )
-plot(spp_many)
-anova(spp_many, nBoot=99, test = "wald")
-anova(spp_many, p.uni="adjusted", nBoot=99)
-summary(spp_many, nBoot=99)
-#saveRDS(spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/spp_many.rds"))
-```
-
-## TRAIT GLMS
-
-### MODEL TALLY
-
-**Null model**
-
-- ocean_null?
-
-**Species only model**
-
-- ocean_spp (redone, 2022)
-
-**Manyglms for model comparisons**
-
-- ocean_clusters_many (redone, 2022)
-
-- ocean_phylo_many (redone, 2022)
-
-- ocean_trait_many (redone, 2022)
-
-**LASSO glm1path models for significance testing**
-
-- ocean_cluster_LASSO (redone, 2022)
-
-- ocean_phylo_LASSO (redone, 2022)
-
-- ocean_trait_LASSO (redone, 2022)
-
 
 ### Species model
 
 **SPP Manyglm - Ocean Basin**
 
-```{r SPP ocean manyglm}
+```{r SPP ocean manyglm, eval=FALSE}
 
 ocean_spp <- traitglm(L = alb_prey_pa_use_mv,
                       R = alb_covars_use$OceanBasin,
-                      family = "negative.binomial",
-                      #family = binomial(link = "logit"),
-                      composition = TRUE #note that col.intercepts = TRUE is the default
+                      family = binomial(link = "logit")#,
+                      #composition = TRUE #note that col.intercepts = TRUE is the default
                       ) #note default is "manyglm"
 ocean_spp
+saveRDS(ocean_spp, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp.rds"))
+```
+
+```{r Species ocean manyglm output, eval=FALSE}
 #ocean_spp$deviance
-an_ocean_spp = anova(ocean_spp, nBoot = 10)
+an_ocean_spp = anova(ocean_spp, #test = "LR", 
+                     nBoot = 100
+                     )
 an_ocean_spp
 #predict.traitglm(ocean_spp)
+saveRDS(an_ocean_spp, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp_anova.rds"))
+
+#ocean_ocean_spp_sum = summary(ocean_spp, 
+#                              nBoot=100,
+#                              show.time=TRUE)
+#ocean_ocean_spp_sum
+#saveRDS(ocean_ocean_spp_sum, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp_summary.rds"))
 ```
 
 ```{r SPP ocean manyglm eval, tidy=TRUE, message=FALSE, warning=FALSE}
+ocean_spp
+an_ocean_spp
 
 #Check model output - residuals TEST
 qqnorm(residuals(ocean_spp)[which(residuals(ocean_spp)<10000)]); abline(c(0,1),col="red")
@@ -298,46 +207,41 @@ plot(resids.full); abline(c(0,0),col="red")
 
 ```
 
-**SPP LASSO - Ocean Basin**
-
-```{r SPP ocean LASSO}
-
-ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
-                      R = alb_covars_use$OceanBasin,
-                      family = binomial(link = "logit"),
-                      method = "glm1path"#,
-                      #composition = TRUE
-                      ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_spp_LASSO$deviance
-
-```
-
 ### Trait guild model
 
 **MANYGLM Clusters - Ocean Basin**
 
 Trait (cluster)*Env (ocean basin) - Manyglm
 
-```{r Clusters ocean manyglm}
+```{r Clusters ocean manyglm, eval=FALSE}
 
 ocean_clusters_many <- traitglm(L = alb_prey_pa_use_mv,
                                 R = alb_covars_use$OceanBasin,
                                 Q = traits_use$cluster,
-                                family = "negative.binomial",
-                                #family = binomial(link = "logit"),
+                                family = binomial(link = "logit"),
                                 composition = TRUE
                                 ) 
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_clusters_many
+saveRDS(ocean_clusters_many, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many.rds"))
+```
+
+```{r Clusters ocean manyglm output, eval=FALSE}
+
 #ocean_clusters_many$deviance
-an_ocean_clusters_many = anova(ocean_clusters_many, nBoot = 10)
+an_ocean_clusters_many = anova(ocean_clusters_many, test = "LR", nBoot = 10)
 an_ocean_clusters_many 
+saveRDS(an_ocean_clusters_many, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many_anova.rds"))
+
+ocean_ocean_clusters_sum = summary(ocean_clusters_many, nBoot=10)
+ocean_ocean_clusters_sum
+saveRDS(ocean_ocean_clusters_sum, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many_summary.rds"))
 ```
 
 ```{r Plot clusters ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+ocean_clusters_many
+an_ocean_clusters_many
 
 a        = max( abs(ocean_clusters_many$fourth.corner) )
 colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
@@ -360,100 +264,10 @@ ocean_clusters_many_graph = levelplot(temp,
 
 print(ocean_clusters_many_graph)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many_graph.jpeg"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many_graph.jpeg"), 
        plot = as.ggplot(ocean_clusters_many_graph), width=12, height=12, dpi=300)
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many_graph.pdf"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_many_graph.pdf"), 
        plot = as.ggplot(ocean_clusters_many_graph), width=12, height=12, dpi=300)
-
-```
-
-**GLM1PATH Clusters - Ocean Basin**
-
-Using method = glm1path == LASSO model.
-
-```{r Clusters ocean LASSO}
-
-ocean_cluster_LASSO <- traitglm(L = alb_prey_pa_use_mv,
-                                R = alb_covars_use$OceanBasin,
-                                Q = traits_use$cluster,
-                                family=binomial(link = "logit"),
-                                method="glm1path",
-                                composition = TRUE
-                                ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_cluster_LASSO$deviance
-
-```
-
-```{r Plot clusters ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
-
-a        = max( abs(ocean_cluster_LASSO$fourth.corner) )
-colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
-temp = t(as.matrix(ocean_cluster_LASSO$fourth.corner))
-
-rownames(temp) = c("Mediterranean",
-                   "N Atlantic",
-                   "N Pacific"#, "S Pacific"
-                   )
-
-colnames(temp) = c("C1",
-                   "C2",
-                   "C3",
-                   "C4",
-                   "C5",
-                   "C6",
-                   "C7")
-
-ocean_cluster_LASSO_graph = levelplot(temp, 
-                     xlab=list("", cex=1.5), #Ocean Basins
-                     ylab=list("Trait Guilds", cex=1.5), 
-                     col.regions=colort(100), 
-                     at=seq(-a, a,length=100),
-                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
-                     colorkey=list(labels=list(cex=1.5)))
-
-print(ocean_cluster_LASSO_graph)
-
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO_graph.jpeg"), 
-       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO_graph.pdf"), 
-       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
-
-```
-
-Plot 2nd corner
-
-```{r Plot 2nd query,echo=FALSE,message=FALSE, warning=FALSE}
-
-dim(as.data.frame(ocean_cluster_LASSO$coefficients))
-
-ocean_cluster_LASSO$coefficients[192:198]
-
-a        = max( abs(ocean_cluster_LASSO$coefficients[192:198]) )
-second = t(as.matrix(ocean_cluster_LASSO$coefficients[192:198]))
-View(second)
-
-rownames(second) = " "
-colnames(second) = c(#"Mediterranean",
-                     #"N Atlantic",
-                     #"N Pacific",
-                     "C1",
-                     "C2",
-                     "C3",
-                     "C4",
-                     "C5",
-                     "C6",
-                     "C7")
-
-plot.2nd = levelplot(second, 
-                     xlab=list("Coefficients", cex=1.5),
-                     ylab=list("Main Effects", cex=1.5), 
-                     col.regions=colort(100), 
-                     at=seq(-a, a,length=100),
-                     scales = list(x=list(rot = 45, cex=1.3, tck=0, tick.number=1),
-                                   y=list(cex=1.2)), colorkey=list(labels=list(cex=1.3)))
-print(plot.2nd)
 
 ```
 
@@ -463,10 +277,11 @@ print(plot.2nd)
 
 Trait (trait matrix)*Env (ocean basin) - Manyglm
 
-```{r Traits ocean manyglm}
+```{r Traits ocean manyglm, eval=FALSE}
 
 ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
-                             R = alb_covars_use$OceanBasin,
+                             #R = alb_covars_use$OceanBasin,
+                             R = alb_covars_use[,c(3,4)],
                              Q = traits_use[,1:4], #traits_use[,1:5]
                              family=binomial(link = "logit"),
                              composition = TRUE
@@ -474,12 +289,24 @@ ocean_trait_many <- traitglm(L = alb_prey_pa_use_mv,
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
 ocean_trait_many
+saveRDS(ocean_trait_many, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_many.rds"))
+```
+
+```{r Traits ocean manyglm output, eval=FALSE}
 #ocean_trait_many$deviance
-an_ocean_trait_many = anova(ocean_trait_many, nBoot = 10)
+an_ocean_trait_many = anova(ocean_trait_many, #test = "LR", 
+                            nBoot = 10)
 an_ocean_trait_many
+saveRDS(an_ocean_trait_many, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_many_anova.rds"))
+
+ocean_ocean_trait_sum = summary(ocean_trait_many, nBoot=10)
+ocean_ocean_trait_sum
+saveRDS(ocean_ocean_trait_sum, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_many_summary.rds"))
 ```
 
 ```{r Plot traits ocean manyglm, tidy=TRUE, message=FALSE, warning=FALSE}
+ocean_trait_many
+an_ocean_trait_many
 
 a        = max( abs(ocean_trait_many$fourth.corner) )
 colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
@@ -504,18 +331,138 @@ ocean_trait_many_graph = levelplot(temp,
 
 print(ocean_trait_many_graph)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_many_graph.pdf"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_traits_many_graph.pdf"), 
        plot = as.ggplot(ocean_trait_many_graph), width=12, height=12, dpi=300)
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_many_graph.jpeg"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_traits_many_graph.jpeg"), 
        plot = as.ggplot(ocean_trait_many_graph), width=12, height=12, dpi=300)
 
 ```
+
+
+### Full model
+
+**MANYGLM Speceis + Trait values - Ocean Basin**
+
+```{r Full spp trait model ocean manyglm, eval=FALSE}
+
+ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
+                            R = alb_covars_use$OceanBasin,
+                            Q = alb_trait_use[,c(1,3:6)], 
+                            family=binomial(link = "logit")#,
+                            #composition = TRUE
+                            ) 
+ocean_full_many
+saveRDS(ocean_full_many, here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_full_spp_many.rds"))
+```
+
+```{r Full spp model output, eval=FALSE}
+#an_ocean_full_many = anova(ocean_full_many, nBoot = 10)
+#an_ocean_full_many
+#ocean_full_spp_sum = summary(ocean_full_many, nBoot=10)
+#ocean_full_spp_sum
+```
+
+### Model comparison
+
+```{r all outputs}
+an_ocean_spp
+an_ocean_clusters_many
+an_ocean_trait_many
+```
+
+## TRAIT GLMS - LASSO
+
+### Read in models
+
+```{r Read in LASSO models}
+#Manyglm
+ocean_spp_LASSO = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_spp_LASSO.rds"))
+ocean_clusters_LASSO = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_clusters_LASSO.rds"))
+ocean_trait_LASSO = readRDS(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_trait_LASSO.rds"))
+#ocean_phylo_LASSO = readRDS(here::here("outputs_figures/traitglms/ocean_models_PA/ocean_phylo_LASSO.rds"))
+```
+
+### Species traitglm LASSO
+
+**SPP LASSO - Ocean Basin**
+
+```{r SPP ocean LASSO, eval=FALSE}
+
+ocean_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                      R = alb_covars_use$OceanBasin,
+                      family = binomial(link = "logit"),
+                      method = "glm1path"#,
+                      #composition = TRUE
+                      ) 
+saveRDS(ocean_spp_LASSO, here::here("outputs_figures/traitglms/ocean_models_PA/ocean_spp_LASSO.rds"))
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+```
+
+### Trait guild tratglm LASSO
+
+**GLM1PATH Clusters - Ocean Basin**
+
+Using method = glm1path == LASSO model.
+
+```{r Clusters ocean LASSO, eval=FALSE}
+
+ocean_cluster_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                                R = alb_covars_use$OceanBasin,
+                                Q = traits_use$cluster,
+                                family=binomial(link = "logit"),
+                                method="glm1path",
+                                composition = TRUE
+                                ) 
+saveRDS(ocean_cluster_LASSO, here::here("outputs_figures/traitglms/ocean_models_PA/ocean_cluster_LASSO.rds"))
+#note default is "manyglm"
+#note that col.intercepts = TRUE is the default
+```
+
+```{r Plot clusters ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
+
+a        = max( abs(ocean_cluster_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(ocean_cluster_LASSO$fourth.corner))
+
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "N Pacific", 
+                   "S Pacific"
+                   )
+
+colnames(temp) = c("1",
+                   "2",
+                   "3",
+                   "4",
+                   "5",
+                   "6",
+                   "7")
+
+ocean_cluster_LASSO_graph = levelplot(temp, 
+                     xlab=list("", cex=1.5), #Ocean Basins
+                     ylab=list("Trait Guilds", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
+
+print(ocean_cluster_LASSO_graph)
+
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_cluster_LASSO_graph.jpeg"), 
+       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_cluster_LASSO_graph.pdf"), 
+       plot = as.ggplot(ocean_cluster_LASSO_graph), width=8, height=8, dpi=300)
+
+```
+
+### Trait information traitglm LASSO
 
 *GLM1PATH Trait values - Ocean Basin**
 
 Using method = glm1path == LASSO model.
 
-```{r Traits ocean LASSO}
+```{r Traits ocean LASSO, eval=FALSE}
 
 ocean_trait_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                               R = alb_covars_use$OceanBasin,
@@ -524,9 +471,9 @@ ocean_trait_LASSO <- traitglm(L = alb_prey_pa_use_mv,
                               method="glm1path",
                               composition = TRUE
                               ) 
+saveRDS(ocean_trait_LASSO, here::here("outputs_figures/traitglms/ocean_models_PA/ocean_trait_LASSO.rds"))
 #note default is "manyglm"
 #note that col.intercepts = TRUE is the default
-ocean_trait_LASSO$deviance
 ```
 
 ```{r Plot traits ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
@@ -537,8 +484,8 @@ temp = t(as.matrix(ocean_trait_LASSO$fourth.corner))
 
 rownames(temp) = c("Mediterranean",
                    "N Atlantic",
-                   "N Pacific"#,
-                   #"S Pacific"
+                   "N Pacific",
+                   "S Pacific"
                    )
 
 colnames(temp) = c("Vert. habitat - demersal",
@@ -561,262 +508,62 @@ ocean_LASSO_graph = levelplot(temp,
 
 print(ocean_LASSO_graph)
 
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_LASSO_graph.pdf"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_traits_LASSO_graph.pdf"), 
        plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_traits_LASSO_graph.jpeg"), 
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_traits_LASSO_graph.jpeg"), 
        plot = as.ggplot(ocean_LASSO_graph), width=12, height=8, dpi=300)
 
 ```
 
-### Full model
+### Phylo for Supp Info
 
-```{r Full spp trait model ocean manyglm}
+### Trait guild tratglm LASSO
 
-ocean_full_many <- traitglm(L = alb_prey_pa_use_mv,
-                            R = alb_covars_use$OceanBasin,
-                            Q = alb_trait_use[,c(1,3:6)], 
-                            family=binomial(link = "logit")#,
-                            #composition = TRUE
-                            ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_full_many$deviance
+**GLM1PATH Clusters - Ocean Basin**
+
+Using method = glm1path == LASSO model.
+
+```{r Phylo ocean LASSO, eval=FALSE}
+
+ocean_phylo_LASSO <- traitglm(L = alb_prey_pa_use_mv,
+                                R = alb_covars_use$OceanBasin,
+                                Q = alb_trait_use$prey_order,
+                                family=binomial(link = "logit"),
+                                method="glm1path",
+                                composition = TRUE
+                                )
+saveRDS(ocean_phylo_LASSO, file = here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_phylo_LASSO.rds"))
 ```
 
-```{r Full spp trait model ocean LASSO}
+```{r Plot phylo ocean LASSO, tidy=TRUE, message=FALSE, warning=FALSE}
 
-ocean_full_LASSO <- traitglm(L = alb_prey_pa_use_mv,
-                             R = alb_covars_use$OceanBasin,
-                             Q = alb_trait_use[,c(1,3:6)],
-                             family=binomial(link = "logit"),
-                             method="glm1path"#,
-                             #composition = TRUE
-                             ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_full_LASSO$deviance
-#Returns the deviance of a fitted multivariate model object for abundance data.
-deviance(ocean_full_LASSO)
-```
+a        = max( abs(ocean_phylo_LASSO$fourth.corner) )
+colort   = colorRampPalette(c("blue","grey","red")) #can replace "grey" with "white"
+temp = t(as.matrix(ocean_phylo_LASSO$fourth.corner))
 
-### Species as trait model 
+rownames(temp) = c("Mediterranean",
+                   "N Atlantic",
+                   "N Pacific"
+                   )
 
-```{r Full spp model ocean manyglm}
+colnames(temp) = c("Amphipoda", "Aulopiformes", "Beloniformes", "Caenogastropoda", "Clupeiformes", "Decapoda", "Decapodiformes",
+                   "Euphausiacea", "Gadiformes", "Littorinimorpha", "Myctophiformes", "Myopsida", "Octopoda", "Oegopsida",
+                   "Ophidiiformes", "Perciformes", "Pleuronectiformes", "Scorpaeniformes", "Sepiida", "Siphonophorae", "Stephanoberyciformes",
+                   "Stomiiformes", "Syngnathiformes")
 
-ocean_full_spp_many <- traitglm(L = alb_prey_pa_use_mv,
-                            R = alb_covars_use$OceanBasin,
-                            Q = alb_trait_use$prey_sp, 
-                            family=binomial(link = "logit")#,
-                            #composition = TRUE
-                            ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_full_spp_many
-ocean_full_spp_many$deviance
-```
+ocean_phylo_LASSO_graph = levelplot(temp, 
+                     xlab=list("", cex=1.5), #Ocean Basins
+                     ylab=list("Trait Guilds", cex=1.5), 
+                     col.regions=colort(100), 
+                     at=seq(-a, a,length=100),
+                     scales = list(x=list(rot = 45, cex=1.5), y=list(cex=1.5)), 
+                     colorkey=list(labels=list(cex=1.5)))
 
+print(ocean_phylo_LASSO_graph)
 
-```{r Full spp model ocean LASSO}
-
-ocean_full_spp_LASSO <- traitglm(L = alb_prey_pa_use_mv,
-                                 R = alb_covars_use$OceanBasin,
-                                 Q = alb_trait_use$prey_sp,
-                                 family=binomial(link = "logit"),
-                                 method="glm1path"#
-                                 #composition = TRUE
-                                 ) 
-#note default is "manyglm"
-#note that col.intercepts = TRUE is the default
-ocean_full_spp_LASSO
-ocean_full_spp_LASSO$deviance
-#Returns the deviance of a fitted multivariate model object for abundance data.
-deviance(ocean_full_spp_LASSO)
-```
-
-### SAVE THESE
-
-```{r Save key models}
-
-#Manyglm
-saveRDS(ocean_spp, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp.rds"))
-saveRDS(ocean_clusters_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_clusters_many.rds"))
-saveRDS(ocean_trait_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_many.rds"))
-
-#LASSO glms
-saveRDS(ocean_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_spp_LASSO.rds"))
-saveRDS(ocean_cluster_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_cluster_LASSO.rds"))
-saveRDS(ocean_trait_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_trait_LASSO.rds"))
-
-```
-
-```{r Save additional models}
-saveRDS(ocean_full_spp_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_many.rds"))
-saveRDS(ocean_full_spp_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_spp_LASSO.rds"))
-
-saveRDS(ocean_full_many, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_many.rds"))
-saveRDS(ocean_full_LASSO, file = here::here("outputs_figures/traitglms/ocean_models_2022_PA/ocean_full_LASSO.rds"))
-```
-
-## nMDS illustrate assemblage
-
-### Ordination
-
-```{r Visualise nMDS ordinations PA, eval = FALSE, include = FALSE}
-
-
-#PA
-alb_pa_ord = metaMDS(alb_prey_pa_use,
-                     distance="jaccard",
-                     #trymax=20,
-                     trymax = 1000,#10000, #1000
-                     k=3) #could increase to k = 4
-
-saveRDS(alb_pa_ord, here::here("outputs_figures/traitglms/ocean_models_2022/alb_nMDS_pa.rds"))
-
-#Note pb with this!! insufficient data?
-
-pl <- ordiplot(alb_pa_ord, type = "none")
-points(pl, "sites", pch=21, col="red", bg="yellow")
-text(pl, "species", col="blue", cex=0.9)
-
-```
-
-### nMDS - composition
-
-Extract NMDS coordinates and associate with co-variates/grouping factors
-
-```{r Data scores for plotting, eval = FALSE, include = FALSE}
-
-alb_pa_ord = readRDS(here::here("outputs_figures/traitglms/ocean_models_2022/alb_nMDS_pa.rds"))
-
-#Extract NMDS coordinates and associate with co-variates/grouping factors
-#Using the scores function from vegan to extract the site scores and convert to a data.frame
-data.scores = as.data.frame(alb_pa_ord$points)
-
-#create a column of site names, from the rownames of data.scores
-data.scores$points <- rownames(data.scores)
-#bind treatment labels and score values
-treatment.scores <- cbind(alb_covars_use, data.scores)
-#Check
-str(treatment.scores)  
-#Awesome
-```
-
-### Ocean Basin
-
-Convex Hull calculations
-
-```{r Convex hulls Ocean Basin, eval = FALSE, include = FALSE}
-# Taxonomic groups (specific)
-#Create convex hulls for the space occupied by each Taxonomic values
-unique(treatment.scores$OceanBasin)
-#Taxonomic group - hull loop
-oc = as.character(unique(treatment.scores$OceanBasin))
-for(i in 1:length(oc)) {
-  temp = oc[i]
-  df = treatment.scores[treatment.scores$OceanBasin == temp, ][chull(treatment.scores[treatment.scores$OceanBasin == temp, c("MDS1", "MDS2")]), ]
-  assign(paste0('grp.',temp), df)
-}
-
-#combine the hull data
-hull.data.ocean <- rbind(`grp.N Atlantic`, `grp.Mediterranean`, `grp.N Pacific`)  
-
-str(hull.data.ocean)
-#Just wondering how do 174 species (obs) become 46???
-
-```
-
-nMDS for Ocean Basin
-
-```{r nMDS Ocean Basin, eval = FALSE, include = FALSE}
-
-nMDS_ocean <- hull.data.ocean %>% 
-  ggplot() + 
-  geom_polygon(data = hull.data.ocean, 
-               aes(x = MDS1, y = MDS2, 
-                   fill = OceanBasin), alpha=0.30) + # add the convex hulls
-  geom_point(data = treatment.scores, 
-             aes(x = MDS1, y = MDS2, colour = OceanBasin), 
-             size = 2) + # add the point markers
-  coord_equal() +
-  theme_bw()  +
-  theme(axis.text.x = element_blank(),  # remove x-axis text
-        axis.text.y = element_blank(), # remove y-axis text
-        axis.ticks = element_blank(),  # remove axis ticks
-        axis.title.x = element_text(size=18), # remove x-axis labels
-        axis.title.y = element_text(size=18), # remove y-axis labels
-        legend.title = element_text(size = 18), 
-        legend.text = element_text(size = 18),
-        legend.justification = c(0,0.5),
-        #panel.background = element_rect(fill = "lightgrey"), 
-        panel.grid.major = element_blank(),  #remove major-grid labels
-        panel.grid.minor = element_blank(),  #remove minor-grid labels
-        plot.background = element_blank()) +
-  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin") + 
-  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Ocean Basin")
-
-nMDS_ocean
-
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/nMDS_ocean.jpeg"), 
-       plot = nMDS_ocean, width = 8, height = 8, dpi = 300)
-
-```
-
-
-### Life Stage
-
-Convex Hull calculations
-
-```{r Convex hulls Predator Life Stage, eval = FALSE, include = FALSE}
-# Taxonomic groups (specific)
-#Create convex hulls for the space occupied by each Taxonomic values
-unique(treatment.scores$pred_life_adjust)
-#Taxonomic group - hull loop
-lf = as.character(unique(treatment.scores$pred_life_adjust))
-for(i in 1:length(lf)) {
-  temp = lf[i]
-  df = treatment.scores[treatment.scores$pred_life_adjust == temp, ][chull(treatment.scores[treatment.scores$pred_life_adjust == temp, c("MDS1", "MDS2")]), ]
-  assign(paste0('grp.',temp), df)
-}
-
-#combine the hull data
-hull.data.lf <- rbind(`grp.adult`, `grp.juvenile`, `grp.mixed`)  
-
-str(hull.data.lf)
-```
-
-nMDS for Predator Life Stage
-
-```{r nMDS Predator Life Stage, eval = FALSE, include = FALSE}
-
-nMDS_life <- hull.data.lf %>% 
-  ggplot() + 
-  geom_polygon(data = hull.data.lf, 
-               aes(x = MDS1, y = MDS2, 
-                   fill = pred_life_adjust), alpha=0.30) + # add the convex hulls
-  geom_point(data = treatment.scores, 
-             aes(x = MDS1, y = MDS2, colour = pred_life_adjust), 
-             size = 2) + # add the point markers
-  coord_equal() +
-  theme_bw()  +
-  theme(axis.text.x = element_blank(),  # remove x-axis text
-        axis.text.y = element_blank(), # remove y-axis text
-        axis.ticks = element_blank(),  # remove axis ticks
-        axis.title.x = element_text(size=18), # remove x-axis labels
-        axis.title.y = element_text(size=18), # remove y-axis labels
-        legend.title = element_text(size = 18), 
-        legend.text = element_text(size = 18),
-        legend.justification = c(0,0.5),
-        #panel.background = element_rect(fill = "lightgrey"), 
-        panel.grid.major = element_blank(),  #remove major-grid labels
-        panel.grid.minor = element_blank(),  #remove minor-grid labels
-        plot.background = element_blank()) +
-  scale_colour_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Albacore life stage") + 
-  scale_fill_viridis(option="magma", discrete = TRUE, begin = 0.8, end = 0.2, name = "Albacore life stage")
-
-nMDS_life
-
-ggsave(here::here("outputs_figures/traitglms/ocean_models_2022/nMDS_life.jpeg"), 
-       plot = nMDS_ocean, width = 8, height = 8, dpi = 300)
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_phylo_LASSO_graph.jpeg"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
+ggsave(here::here("outputs_figures/5_traitglms/ocean_models_PA/ocean_phylo_LASSO_graph.pdf"), 
+       plot = as.ggplot(ocean_phylo_LASSO_graph), width=8, height=12, dpi=300)
 
 ```

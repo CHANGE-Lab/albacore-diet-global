@@ -54,13 +54,17 @@ head(longhurst)
 plot(longhurst)
 ```
 
-```{r plot longhurst province shp}
+```{r plot longhurst province shp, message=FALSE}
 
 # Plot provinces should work as before, just with annoying warning messages
+sf_use_s2(FALSE)
 longMap <- baseMap + geom_sf(data = longhurst, aes(fill = ProvCode), size = .2, col = "grey50", alpha=.4)+
   theme_bw() + theme(legend.position="none", axis.title = element_blank()) +
-  geom_sf_text(data = longhurst %>% dplyr::group_by(ProvCode) %>% dplyr::summarize(n()), aes(label = ProvCode), 
-                colour = "grey20", check_overlap = TRUE) +
+  geom_sf_text(data = longhurst %>% 
+                 dplyr::group_by(ProvCode) %>% 
+                 dplyr::summarize(n()), 
+               aes(label = ProvCode),
+               colour = "grey20", check_overlap = TRUE) +
   scale_fill_viridis_d()+ coord_sf(expand = FALSE)
 longMap
 ```
@@ -68,7 +72,7 @@ longMap
 
 ### Manipulate Longhurst shp to spatial polygon df
 
-```{r manip longhurst shapefile to spatial polygon df, message=FALSE, tidy=TRUE}
+```{r manip longhurst shapefile to spatial polygon df, message=FALSE}
 
 longs <- sf:::as_Spatial(longhurst) # SpatialPolygonsDataFrame
 
@@ -77,7 +81,7 @@ st_crs(longs)
 
 ### Albacore data
 
-```{r read in and manipulate albacore data, message=FALSE, tidy=TRUE}
+```{r read in and manipulate albacore data, message=FALSE}
 
 alb <- read.csv(here::here("data/2_output_data/alb_covars.csv"), head = TRUE, sep= ",")
 rep_ID = alb$rep_ID
@@ -103,8 +107,8 @@ albMap <- longMap +
   ylim(c(-55, 63))
 albMap
 
-ggsave("outputs_figures/maps/alb_global_map_f.pdf", plot = albMap, dpi = 300)
-ggsave("outputs_figures/maps/alb_global_map_f.jpeg", plot = albMap, dpi = 300)
+ggsave(here::here("outputs_figures/1_maps/alb_global_map_f.pdf"), plot = albMap, dpi = 300)
+ggsave(here::here("outputs_figures/1_maps/alb_global_map_f.jpeg"), plot = albMap, dpi = 300)
 ```
 
 ## Old Code

@@ -204,7 +204,7 @@ alb_covars_esti_plot <- alb_covars_esti %>%
                                         size=1.75))
 alb_covars_esti_plot
 
-ggsave(here::here("outputs_figures/ms_figures/alb_covars_size_esti_plot.jpeg"), 
+ggsave(here::here("outputs_figures/ms_figures/SI_results/figS2_alb_covars_size_esti_plot.jpeg"), 
        plot = alb_covars_esti_plot, width=8, height=8, dpi=300)
 
 ```
@@ -420,6 +420,6 @@ write.csv(alb_global_dietm, here::here("data/2_output_data/alb_global_wide_dietm
 
 ```
 
-## ADD ???
+## EXTRA
 
-Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"
+If using - Manually add the gyre vs. upwelling / front ecosystems in excel to "alb_covars_longhurst.csv"

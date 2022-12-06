@@ -167,7 +167,7 @@ plotgg1 <- ggplot(data=Alb.mean.long3, aes(x = Sites, y = Richness, ymax =  UPR,
 
 plotgg1
 
-ggsave(here("outputs_figures/alb_mean_accum_legend.jpeg"), plot=plotgg1, height = 8, width = 12, dpi = 300)
+ggsave(here("outputs_figures/ms_figures/fig1_map_spp/alb_mean_accum_legend.jpeg"), plot=plotgg1, height = 8, width = 12, dpi = 300)
 
 ```
 
@@ -231,7 +231,7 @@ plotgg2 <- ggplot(data=Alb.acc.long3, aes(x = Sites, y = Richness, ymax =  UPR, 
 
 plotgg2
 
-ggsave(here("outputs_figures/alb_step_accum_simple.jpeg"), 
+ggsave(here("outputs_figures/ms_figures/fig1_map_spp/alb_step_accum_simple.jpeg"), 
        plot=plotgg2, height = 8, width = 10, dpi = 300)
 
 ```
@@ -310,7 +310,7 @@ plotgg3 <- ggplot(data=Alb.acc.long3, aes(x = Year, y = Richness, ymax =  UPR, y
 
 plotgg3
 
-ggsave(here("outputs_figures/alb_step_accum_year_nl.jpeg"), plot=plotgg3, height = 8, width = 12, dpi = 300)
+ggsave(here("outputs_figures/ms_figures/fig1_map_spp/alb_step_accum_year_nl.jpeg"), plot=plotgg3, height = 8, width = 12, dpi = 300)
 
 ```
 
@@ -342,7 +342,7 @@ Accum.plot.1 <- ggplot(data = Alb.acc.long3, aes(y=Richness, x=Year, colour=Grou
   geom_errorbar(data = Alb.acc.long3, aes(ymin=Richness-SD, ymax=Richness+SD), width=.2)
 Accum.plot.1
 
-ggsave(here("outputs_figures/accum.plot1.jpeg"), plot=Accum.plot, height = 8, width = 12, dpi = 300)
+ggsave(here("outputs_figures/ms_figures/fig1_map_spp/accum.plot1.jpeg"), plot=Accum.plot, height = 8, width = 12, dpi = 300)
 ```
 
 ## Comms with Roeland Kindt

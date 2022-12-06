@@ -7,7 +7,7 @@ output: html_document
 
 ## About
 
-Here we check on dataframe information and summary statistics for reporting in the methods, results and discussion of the paper.
+Here we check on dataframe information and summary statistics for reporting in the methods, results and discussion of the paper. This mostly contains extra code and suggestions for checking other datasets. Most of this has been done in other code documents.
 
 ## Workspace
 
@@ -76,7 +76,7 @@ print(paste0("(iv) percent numerical biomass data for ", ncol(diet_mass[,10:ncol
 
 ### 3.1 Biological and Trait Diversity
 
-**Results text** -- Through a historical and global synthesis of albacore tuna diets using reported stomach content data from the 1880’s–2010’s, we report a large biodiversity in the diets of albacore tunas. A total of 550 individual taxa identified in the diets of juvenile and adult albacore tuna across the world’s oceans, representing 203 families of prey taxa, mainly of ray-finned fishes (n = 108 families of prey), cephalopods (n = 29), and crustaceans (Malacostraca n = 45, Hexanauplia n = 6), but also several taxa of pelagic gastropods (n = 6), salps (n = 2) and hydrozoans (n = 1), and one elasmobranch (n = 1) (ESM data).
+**Results text** -- Through a historical and global synthesis of albacore tuna diets using reported stomach content data from the 1880’s–2010’s, we report a large biodiversity in the diets of albacore tunas. A total of 587 individual taxa identified in the diets of juvenile and adult albacore tuna across the world’s oceans, representing 203 families of prey taxa, mainly of ray-finned fishes (n = 108 families of prey), cephalopods (n = 29), and crustaceans (Malacostraca n = 45, Hexanauplia n = 6), but also several taxa of pelagic gastropods (n = 6), salps (n = 2) and hydrozoans (n = 1), and one elasmobranch (n = 1) (ESM data).
 
 ```{r Summary stats for all diet taxa by class and family, tidy=TRUE, message=FALSE}
 
@@ -96,7 +96,7 @@ diet_fam_sum = diet_class_sum %>%
 print(diet_fam_sum)
 ```
 
-Of these, 312 taxa were reported to species level. In addition to consumption data, we obtained reliable trait information, at the appropriate life stage likely consumed by albacore tuna for 298 individual species. 
+Of these, 312 taxa were reported to species level. In addition to consumption data, we obtained reliable trait information, at the appropriate life stage likely consumed by albacore tuna for 292 individual species. 
 
 ```{r Summary stats for species level taxa consumed, tidy=TRUE, message=FALSE}
 
@@ -126,7 +126,7 @@ print(nrow(prey_probable_traits))
 
 ## Phylogenetic and Traits Final Graphs
 
-Of these, 298 species parsed to phylogenetic trees (Fig. 2a, will work on cleaning phylo code later). Notably, only a subset of species are frequently observed in their diets: 26 species occur in > 50% of samples within studies across the world’s oceans (+ESM), a further 44 species are relatively common, reported  in > 25% of samples (Fig. 2c). Uncommon prey species are often excluded from further analyses due to insufficient data and therefore difficulties in diet modelling. However, we posit that they contribute to diet variability in sharing consumable traits with more common prey species. # Report trait diversity observed and that recur in prey species, hotspots and traits that were most common - for habitat use, morphological and aggregation traits.
+Of these, 292 species parsed to phylogenetic trees and were associated with complete trait information (Fig. 2a, will work on cleaning phylo code later). Notably, only a subset of species are frequently observed in their diets: 26 species occur in > 50% of samples within studies across the world’s oceans (+ESM), a further 44 species are relatively common, reported  in > 25% of samples (Fig. 2c). Uncommon prey species are often excluded from further analyses due to insufficient data and therefore difficulties in diet modelling. However, we posit that they contribute to diet variability in sharing consumable traits with more common prey species. # Report trait diversity observed and that recur in prey species, hotspots and traits that were most common - for habitat use, morphological and aggregation traits.
 
 ## Discussion paragraphs
 
