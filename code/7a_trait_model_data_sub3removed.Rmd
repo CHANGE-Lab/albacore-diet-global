@@ -176,15 +176,15 @@ dim(alb_prob_clust) #we obtain 292 species, 11 traits or covariates
 
 Previously we used order information, there are multiple issues with using this information at this stage. Firstly, we lack replication at the level of the phylogenetic order used here, secondly we treated phylogenetic information as a trait similar to a fixed factor. There are better ways to assign variance to phylogeny, including through phylogenetic structure, related, branch distances, and many studies recommend using phylogeny as a random variable that accounts for latent variance attributed to phylogenetic structure and evolution within a community rather than as a fixed factor.
 
-```{r Traits with phylogenetic order info, eval=FALSE}
+```{r Traits with phylogenetic order info}
 
-#add_order = read.csv(paste(here::here("./data/2_output_data/prey_trait_select.csv"))) %>%
-#  select(prey_sp, prey_order)
+add_order = read.csv(paste(here::here("./data/2_output_data/prey_trait_select.csv"))) %>%
+  select(prey_sp, prey_order)
 
-#alb_trait_use = alb_prob_clust %>%
-#  left_join(add_order) %>%
-#  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
-#         diel_migrant_cat, season_cat, gregarious, prob.clust.num)
+alb_trait_use = alb_prob_clust %>%
+  left_join(add_order) %>%
+  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
+         diel_migrant_cat, season_cat, gregarious, prob.clust.num)
 
 ```
 
@@ -192,9 +192,9 @@ Here, we filter out low occurrences using 'alb_prob_pa' df. Note that we obtain 
 
 ```{r Manip trait DF (Q) for oceans, tidy=TRUE, warning=FALSE, message=FALSE}
 
-alb_trait_use = alb_prob_clust %>%
-  select(prey_sp, life_stage, vert_habitat, horz_habitat,
-         diel_migrant_cat, season_cat, gregarious, prob.clust.num)
+#alb_trait_use = alb_prob_clust %>%
+#  select(prey_sp, life_stage, vert_habitat, horz_habitat,
+#         diel_migrant_cat, season_cat, gregarious, prob.clust.num)
 
 #Relabel to add underscore in names
 alb_trait_use$prey_sp = str_replace_all(alb_trait_use$prey_sp, " ", "_")
@@ -204,7 +204,7 @@ rownames(alb_trait_use) <- alb_trait_use$prey_sp
 alb_trait_use <- alb_trait_use[ order(row.names(alb_trait_use)), ]
 
 #Ensure traits are treated as factors for now
-alb_trait_use[,3:8] <- lapply(alb_trait_use[,3:8], factor) #to convert to factors
+alb_trait_use[,4:9] <- lapply(alb_trait_use[,4:9], factor) #to convert to factors
 
 #Need to filter by prey species we want to use.
 alb_trait_use = alb_trait_use %>%
@@ -213,7 +213,6 @@ alb_trait_use = alb_trait_use %>%
 
 dim(alb_trait_use)
 str(alb_trait_use)
-
 ```
 
 **Trait value checks**
@@ -248,8 +247,7 @@ Here we filter our prey species (presence/absence data) by the species that were
 
 alb_prey_use <- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_use)]
 
-dim(alb_prey_use) #58 rows and 129 spp
-
+dim(alb_prey_use)
 ```
 
 ## Covars (R) - MANIPS

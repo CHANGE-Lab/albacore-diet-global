@@ -739,19 +739,19 @@ phylogenetic structure, related, branch distances, and many studies
 recommend using phylogeny as a random variable that accounts for latent
 variance attributed to phylogenetic structure and evolution within a
 community rather than as a fixed factor.</p>
-<pre class="r"><code>#add_order = read.csv(paste(here::here(&quot;./data/2_output_data/prey_trait_select.csv&quot;))) %&gt;%
-#  select(prey_sp, prey_order)
+<pre class="r"><code>add_order = read.csv(paste(here::here(&quot;./data/2_output_data/prey_trait_select.csv&quot;))) %&gt;%
+  select(prey_sp, prey_order)
 
-#alb_trait_use = alb_prob_clust %&gt;%
-#  left_join(add_order) %&gt;%
-#  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
-#         diel_migrant_cat, season_cat, gregarious, prob.clust.num)</code></pre>
+alb_trait_use = alb_prob_clust %&gt;%
+  left_join(add_order) %&gt;%
+  select(prey_sp, prey_order, life_stage, vert_habitat, horz_habitat,
+         diel_migrant_cat, season_cat, gregarious, prob.clust.num)</code></pre>
+<pre><code>## Joining, by = &quot;prey_sp&quot;</code></pre>
 <p>Here, we filter out low occurrences using ‘alb_prob_pa’ df. Note that
 we obtain 129 (&lt; 134) species and their traits, so we’ll need to
 filter the species df by the traits.</p>
-<pre class="r"><code>alb_trait_use = alb_prob_clust %&gt;%
-    select(prey_sp, life_stage, vert_habitat, horz_habitat, diel_migrant_cat, season_cat,
-        gregarious, prob.clust.num)
+<pre class="r"><code># alb_trait_use = alb_prob_clust %&gt;% select(prey_sp, life_stage, vert_habitat,
+# horz_habitat, diel_migrant_cat, season_cat, gregarious, prob.clust.num)
 
 # Relabel to add underscore in names
 alb_trait_use$prey_sp = str_replace_all(alb_trait_use$prey_sp, &quot; &quot;, &quot;_&quot;)
@@ -761,7 +761,7 @@ rownames(alb_trait_use) &lt;- alb_trait_use$prey_sp
 alb_trait_use &lt;- alb_trait_use[order(row.names(alb_trait_use)), ]
 
 # Ensure traits are treated as factors for now
-alb_trait_use[, 3:8] &lt;- lapply(alb_trait_use[, 3:8], factor)  #to convert to factors
+alb_trait_use[, 4:9] &lt;- lapply(alb_trait_use[, 4:9], factor)  #to convert to factors
 
 # Need to filter by prey species we want to use.
 alb_trait_use = alb_trait_use %&gt;%
@@ -769,10 +769,11 @@ alb_trait_use = alb_trait_use %&gt;%
 # we retain 292 species and 8 trait values
 
 dim(alb_trait_use)</code></pre>
-<pre><code>## [1] 98  8</code></pre>
+<pre><code>## [1] 98  9</code></pre>
 <pre class="r"><code>str(alb_trait_use)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    98 obs. of  8 variables:
+<pre><code>## &#39;data.frame&#39;:    98 obs. of  9 variables:
 ##  $ prey_sp         : chr  &quot;Abraliopsis_felis&quot; &quot;Acanthephyra_pelagica&quot; &quot;Alpheus_glaber&quot; &quot;Anchylomera_blossevillei&quot; ...
+##  $ prey_order      : chr  &quot;Oegopsida&quot; &quot;Decapoda&quot; &quot;Decapoda&quot; &quot;Amphipoda&quot; ...
 ##  $ life_stage      : chr  &quot;adult&quot; &quot;adult&quot; &quot;larva&quot; &quot;adult&quot; ...
 ##  $ vert_habitat    : Factor w/ 3 levels &quot;demersal&quot;,&quot;epipelagic&quot;,..: 2 3 2 2 1 3 3 2 3 1 ...
 ##  $ horz_habitat    : Factor w/ 3 levels &quot;coastal&quot;,&quot;continental shelf&quot;,..: 3 3 1 2 2 3 3 3 3 2 ...
@@ -817,7 +818,7 @@ complete trait information for these species, as well as frequency of
 occurrence data.</p>
 <pre class="r"><code>alb_prey_use &lt;- alb_prey_use_spp[colnames(alb_prey_use_spp) %in% rownames(alb_trait_use)]
 
-dim(alb_prey_use)  #58 rows and 129 spp</code></pre>
+dim(alb_prey_use)</code></pre>
 <pre><code>## [1] 57 98</code></pre>
 </div>
 <div id="covars-r---manips" class="section level2">
