@@ -4,6 +4,8 @@
 
 This GitHub Repo and Project contains all current and archived older versions of code used to create the figures, undertake analyses and outputs for many of the tables for the global albacore diet meta-analysis paper.
 
+**In Review:** Fish & Fisheries
+
 **Preprint link:** Update when preprint submitted
 
 **Publication:** Update when published
@@ -16,7 +18,7 @@ This GitHub Repo and Project contains all current and archived older versions of
 
 **Authors:** Natasha A. Hardy*1, Cindy Matuch 2, Zachary Roote 1, Iris George 1, Barbara A. Muhling3,4, Michael G. Jacox5,6, Elliott L. Hazen4,5, Steven J. Bograd3,5, Larry B. Crowder 7, Stephanie J. Green1
 
-**Corresponding author:** nahardy@ualberta.ca; Department of Biological Sciences, CW 422 Biological Sciences Building, University of Alberta, Edmonton, Alberta, Canada, T6G 2E9
+**Corresponding author:** Natasha Hardy; Department of Biological Sciences, CW 422 Biological Sciences Building, University of Alberta, Edmonton, Alberta, Canada, T6G 2E9
 
 **Author affiliations**
 
@@ -28,7 +30,7 @@ This GitHub Repo and Project contains all current and archived older versions of
 
 4 NOAA Southwest Fisheries Science Center, San Diego, CA, United States
 
-5 NOAA Southwest Fisheries Science Center, Monterey, CA, United States
+5 NOAA Southwest Fisheries Science Center, Environmental Research Division, Monterey, CA, United States
 
 6 NOAA Physical Sciences Laboratory, Boulder, CO, United States
 
