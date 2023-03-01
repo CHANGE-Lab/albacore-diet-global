@@ -132,7 +132,7 @@ index_cluster_bar = index_alb_diet_clust_data %>%
         legend.text=element_text(size=45),
         legend.title=element_text(size=45),
         #legend.position = "top"
-        legend.position = c(.15, .85),
+        legend.position = c(.20, .85),
         legend.background = element_rect(fill="lightgrey")
         )+
   labs(x="Years sampled", y="Relative %FO")+
@@ -148,9 +148,14 @@ index_cluster_bar = index_alb_diet_clust_data %>%
   "2010 (Williams, 2015)", "2010 (Williams, 2015)", "2010 (Williams, 2015)", "2014 (Romanov, 2020)", "2014 (Romanov, 2020)", "2014 (Romanov, 2020)",
   "2015 (Romanov, 2020)")) + #unique(index_alb_diet_clust_data$StudyID)
   scale_fill_manual(values=fig3.pal, name="Prey Trait Guilds",
-                    labels = c("1 (non-diel migrating mesopelagics)", "2 (diel migrating mesopelagics)", "3 (coastal and shelf epipelagics)",
-                            "4 (coastal and shelf demersals)", "5 (oceanic epipelagics)", "6 (seasonal, continental shelf)", 
-                            "7 (resident continental shelf)", "NA (not classified)")) +
+                    labels = c("1 (non-diel migrating mesopelagics)", 
+                               "2 (diel migrating mesopelagics)", 
+                               "3 (coastal and shelf epipelagics)",
+                               "4 (coastal and shelf demersals)", 
+                               "5 (oceanic epipelagics)", 
+                               "6 (seasonal, continental shelf)",
+                               "7 (resident continental shelf)", 
+                               "NA (not classified)")) +
   facet_grid(OceanBasin~.)+ #, scales ="free", StudyID, scales ="free_x"
   theme(strip.text = element_text(face="bold", size=rel(4)))
 index_cluster_bar
@@ -159,8 +164,11 @@ index_cluster_bar
 #unique(index_alb_diet_clust_data$StudyID)
 #levels(as.factor(index_alb_diet_clust_data$yearrepID))
 
-ggsave(here::here("outputs_figures/4_diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
-ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
+#ggsave(here::here("outputs_figures/4_diet_comp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
+#ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO.jpeg"), plot = index_cluster_bar, width = 42, height = 33, dpi = 300)
+
+ggsave(here::here("outputs_figures/4_diet_comp/index_cluster_barFO_b.jpeg"), plot = index_cluster_bar, width = 32, height = 24, dpi = 300)
+ggsave(here::here("outputs_figures/ms_figures/fig4_dietcomp/index_cluster_barFO_b.jpeg"), plot = index_cluster_bar, width = 32, height = 24, dpi = 300)
 ```
 
 ### Figure for index data - scatter - extra
