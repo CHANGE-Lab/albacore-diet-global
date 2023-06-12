@@ -271,11 +271,11 @@ alb_covars[,1:ncol(alb_covars)] =  lapply(alb_covars[,1:ncol(alb_covars)], as.fa
 
 summary(alb_covars$lat_cat) #don't use
 #temperate  tropical 
-#     57         1 
+#     56         1 
 
 summary(alb_covars$pred_life) #don't use
 #  adult juvenile    mixed 
-#   1       38       19
+#   1       37       19
 
 alb_covars$pred_life = factor(alb_covars$pred_life, levels = c("juvenile", "adult", "mixed"),
                               labels = c("juvenile", "mixed", "mixed"))
@@ -293,7 +293,7 @@ summary(alb_covars$code)
 #Build an analysis for CCAL, MEDI, NADR!!
 
 dim(alb_covars) #58 observations for 9 covars
-
+unique(alb_covars$StudyID)
 ```
 
 ## DF checks

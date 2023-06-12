@@ -44,25 +44,31 @@ We obtain the following quantitative data:
 ```{r Summary stats for quantitative diet data, tidy=TRUE, message=FALSE}
 
 # Presence/Absence data
-diet_pa = read.csv(here("data/2_output_data/alb_global_wide_dietpa.csv")) 
+diet_pa = read.csv(here::here("data/2_output_data/alb_global_wide_dietpa.csv")) 
 print(paste0("(i) presence/absence data for ", ncol(diet_pa[,10:ncol(diet_pa)]), 
              " species and ", nrow(diet_pa), " observations"))
+unique(diet_pa$StudyID) #26
+
+summary(as.factor(diet_pa$OceanBasin))
 
 # % FO data
-diet_fo = read.csv(here("data/2_output_data/alb_global_wide_dietfo.csv")) 
+diet_fo = read.csv(here::here("data/2_output_data/alb_global_wide_dietfo.csv")) 
 print(paste0("(ii) percent frequency of occurrence for ", ncol(diet_fo[,10:ncol(diet_fo)]),
              " species and ", nrow(diet_fo), " observations"))
+unique(diet_fo$StudyID) #26
 
 # % Numerical data
 
-diet_num = read.csv(here("data/2_output_data/alb_global_wide_dietn.csv"))
+diet_num = read.csv(here::here("data/2_output_data/alb_global_wide_dietn.csv"))
 print(paste0("(iii) percent numerical abundance data for ", ncol(diet_num[,10:ncol(diet_num)]),
              " species and ", nrow(diet_num), " observations"))
+unique(diet_num$StudyID) #26
 
 # % Biomass data
-diet_mass = read.csv(here("data/2_output_data/alb_global_wide_dietm.csv"))
+diet_mass = read.csv(here::here("data/2_output_data/alb_global_wide_dietm.csv"))
 print(paste0("(iv) percent numerical biomass data for ", ncol(diet_mass[,10:ncol(diet_mass)]),
              " species and ", nrow(diet_mass), " observations"))
+unique(diet_mass$StudyID) #26
 
 ```
 
